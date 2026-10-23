@@ -1,4 +1,4 @@
-package com.example.masar_al_lugha
+package com.masar.allugha
 
 import io.flutter.embedding.android.FlutterActivity
 

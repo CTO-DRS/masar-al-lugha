@@ -46,3 +46,8 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# v4.0: release signing secrets must NEVER be committed
+key.properties
+*.jks
+*.keystore

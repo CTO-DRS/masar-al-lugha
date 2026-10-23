@@ -1,0 +1,87 @@
+# ARCHITECTURE — Masar Al-Lugha v4.0
+
+## 1. Layered view (post-v4.0)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Presentation        lib/screens/*  lib/widgets/*            │
+│                     (Flutter widgets only; no business law) │
+├─────────────────────────────────────────────────────────────┤
+│ Application         lib/scope.dart (AppScope DI + l10n ext) │
+│                     lib/app_state.dart (ChangeNotifier;     │
+│                      gamification, streaks, badges, prefs;  │
+│                      persistence seam: load / save / flush  │
+│                      / _migrateSchema — see §2)             │
+├─────────────────────────────────────────────────────────────┤
+│ Domain              lib/models.dart (Course/Unit/Lesson/    │
+│                     Vocab/Exercise/CardData)                │
+│                     lib/srs.dart (spaced repetition)        │
+│                     lib/exercise_gen.dart (item generator)  │
+│                     lib/placement.dart (v4.0)               │
+├─────────────────────────────────────────────────────────────┤
+│ Data                SharedPreferences via lib/app_state.dart│
+│                     (schema v2, corrupt-backup, export/     │
+│                     import, debounced writes — see §2)      │
+├─────────────────────────────────────────────────────────────┤
+│ Services            lib/services/tts.dart (flutter_tts)     │
+└─────────────────────────────────────────────────────────────┘
+Assets: assets/data/course_{en,ur,fr}.json (read-only content)
+```
+
+Rules enforced in v4.0:
+- Widgets never decode/persist state directly; they go through `AppScope.of(context)`.
+- Domain code (`srs.dart`, `exercise_gen.dart`, `placement.dart`, `models.dart`) is
+  Flutter-free and unit-testable.
+- All persistence flows through four AppState methods (`load`, `save`, `flush`,
+  `_migrateSchema`) — a single de-facto seam. Extracting it into a standalone
+  `ProfileStore` class is planned for v4.1 (see docs/ROADMAP.md); the swap to any
+  other backend then touches only that class, not UI or domain code.
+
+## 2. Storage decision (v4.0) — SharedPreferences, hardened
+
+**Measured:** the heaviest possible profile is ~3,000 SRS cards. Encoded JSON at that
+scale is ~350 KB and encodes in single-digit milliseconds on a modern phone
+(verified by unit test `test/storage_test.dart` at 3,000 cards — round-trip
+fidelity + encode/decode timing + size budget all asserted). Android SharedPreferences
+handles multi-hundred-KB string values reliably.
+
+**Chosen:** keep SharedPreferences **but** fix its real weaknesses:
+1. *Write amplification* — v3.3 saved on every tap → v4.0 debounces saves (≤1 write/2s)
+   and force-flushes on app pause.
+2. *Silent corruption* — v3.3 discarded unreadable JSON → v4.0 snapshots corrupt payloads
+   to `progress_backup_v1` before recovering, so data is forensically recoverable.
+3. *No versioning* — v4.0 writes `schema: 2` and includes a documented migration path.
+4. *No portability* — v4.0 adds Settings export/import (validated JSON).
+
+**Why not SQLite/Drift now:** the profile is a single small document (not relational),
+migration would put the *only* copy of user progress at risk for zero functional gain,
+and every native plugin complicates the reproducible local build. The storage seam makes
+the later swap a contained change. This decision is re-evaluated if profiles exceed ~1 MB
+or per-card queries are needed.
+
+## 3. Learning engine (v4.0) — honest description
+
+`srs.dart` is an **SM-2-inspired lite scheduler** (Anki-style ease/interval with learning
+steps), **not a full FSRS implementation** — it has no difficulty/stability memory states,
+no power-law forgetting curve, no optimizer. UI copy and docs say "FSRS-inspired";
+nowhere does the app claim certified FSRS.
+
+Pipeline: lesson exercises record **per-word** results → lesson end feeds real outcomes
+(mistakes → `learning`, clean → `review`) → flashcards serve due reviews + a **daily
+new-card cap (10)** built **only** from lessons already completed → `placement.dart`
+(option) lets re-learners skip ahead by sampling across units.
+
+## 4. Content pipeline
+
+Python generators (append-only IDs) → `assets/data/*.json` → validated by
+`scripts/validate_content.py` (duplicate IDs, required fields, id-format sanity,
+per-lesson emoji conflicts) in CI → APK. Old vocab IDs are never mutated so
+existing user progress keeps resolving.
+
+## 5. Build & release
+
+- `applicationId com.masar.allugha`, namespace aligned in v4.0.
+- Local reproducible build without NDK: `flutter.installedNdkVersions` bypass +
+  `shared_preferences_android` pinned to a no-jni release.
+- CI: GitHub Actions builds a debug-signed release APK artifact on every push
+  (`build-apk.yml`); release signing stays out of the repo by design.

@@ -25,8 +25,17 @@ jobs:
           flutter-version: "3.47.7"
           cache: true
 
+      - name: Validate course content (v4.0 gate)
+        run: python3 scripts/validate_content.py
+
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Verify formatting (v4.0 gate)
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
 
       - name: Run tests
         run: flutter test
