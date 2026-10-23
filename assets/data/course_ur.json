@@ -1876,6 +1876,1242 @@
      ]
     }
    ]
+  },
+  {
+   "id": "ur_u11",
+   "color": "#FF9600",
+   "titleAr": "المنزل والمدينة",
+   "titleEn": "Home & City",
+   "lessons": [
+    {
+     "id": "ur_u11_l1",
+     "titleAr": "أثاث المنزل",
+     "titleEn": "Household Items",
+     "vocab": [
+      {
+       "id": "ur_صوفہ",
+       "target": "صوفہ",
+       "translationAr": "الأريكة",
+       "phonetic": "صو-فا",
+       "emoji": "🛋️",
+       "exampleTarget": "صوفہ نرم ہے",
+       "exampleAr": "الأريكة ناعمة"
+      },
+      {
+       "id": "ur_بستر",
+       "target": "بستر",
+       "translationAr": "السرير",
+       "phonetic": "بس-تر",
+       "emoji": "🛏️",
+       "exampleTarget": "بستر نرم ہے",
+       "exampleAr": "السرير ناعم"
+      },
+      {
+       "id": "ur_آئینہ",
+       "target": "آئینہ",
+       "translationAr": "المرآة",
+       "phonetic": "آ-ئی-نا",
+       "emoji": "🪞",
+       "exampleTarget": "آئینہ دیکھو",
+       "exampleAr": "انظر في المرآة"
+      },
+      {
+       "id": "ur_چراغ",
+       "target": "چراغ",
+       "translationAr": "المصباح",
+       "phonetic": "چر-اغ",
+       "emoji": "💡",
+       "exampleTarget": "چراغ جلا دو",
+       "exampleAr": "أضئ المصباح"
+      },
+      {
+       "id": "ur_کنجی",
+       "target": "کنجی",
+       "translationAr": "المفتاح",
+       "phonetic": "کن-جی",
+       "emoji": "🔑",
+       "exampleTarget": "کنجی کہاں ہے؟",
+       "exampleAr": "أين المفتاح؟"
+      },
+      {
+       "id": "ur_جھاڑو",
+       "target": "جھاڑو",
+       "translationAr": "المكنسة",
+       "phonetic": "جھا-ڑو",
+       "emoji": "🧹",
+       "exampleTarget": "جھاڑو لگاؤ",
+       "exampleAr": "كنّس الأرض"
+      },
+      {
+       "id": "ur_صابن",
+       "target": "صابن",
+       "translationAr": "الصابون",
+       "phonetic": "صا-بن",
+       "emoji": "🧼",
+       "exampleTarget": "ہاتھ صابن سے دھوئیں",
+       "exampleAr": "اغسل يديك بالصابون"
+      },
+      {
+       "id": "ur_بالٹی",
+       "target": "بالٹی",
+       "translationAr": "الدلو",
+       "phonetic": "بال-ٹی",
+       "emoji": "🪣"
+      },
+      {
+       "id": "ur_پردہ",
+       "target": "پردہ",
+       "translationAr": "الستارة",
+       "phonetic": "پر-دہ",
+       "emoji": "🪟",
+       "exampleTarget": "پردہ بند کرو",
+       "exampleAr": "أغلق الستارة"
+      },
+      {
+       "id": "ur_فرش",
+       "target": "فرش",
+       "translationAr": "الأرضية",
+       "phonetic": "فر-ش",
+       "emoji": "🟫"
+      },
+      {
+       "id": "ur_تکیہ",
+       "target": "تکیہ",
+       "translationAr": "الوسادة",
+       "phonetic": " تک-یہ",
+       "emoji": "🛌",
+       "exampleTarget": "تکیہ رکھو",
+       "exampleAr": "ضع الوسادة"
+      },
+      {
+       "id": "ur_پیالا",
+       "target": "پیالا",
+       "translationAr": "الفنجان",
+       "phonetic": "پی-ا-لا",
+       "emoji": "☕",
+       "exampleTarget": "چائے کا پیالا",
+       "exampleAr": "فنجان شاي"
+      }
+     ]
+    },
+    {
+     "id": "ur_u11_l2",
+     "titleAr": "أماكن المدينة",
+     "titleEn": "City Places",
+     "vocab": [
+      {
+       "id": "ur_ہسپتال",
+       "target": "ہسپتال",
+       "translationAr": "المستشفى",
+       "phonetic": "ہس-پ-تال",
+       "emoji": "🏥",
+       "exampleTarget": "ہسپتال قریب ہے",
+       "exampleAr": "المستشفى قريب"
+      },
+      {
+       "id": "ur_دکان",
+       "target": "دکان",
+       "translationAr": "المتجر",
+       "phonetic": "دو-کان",
+       "emoji": "🏬",
+       "exampleTarget": "دکان کھلی ہے",
+       "exampleAr": "المتجر مفتوح"
+      },
+      {
+       "id": "ur_پارک",
+       "target": "پارک",
+       "translationAr": "المنتزه",
+       "phonetic": "پا-رک",
+       "emoji": "🌳",
+       "exampleTarget": "پارک میں چلیں",
+       "exampleAr": "لنتجول في المنتزه"
+      },
+      {
+       "id": "ur_کالج",
+       "target": "کالج",
+       "translationAr": "الكلية",
+       "phonetic": "کا-لج",
+       "emoji": "🎓"
+      },
+      {
+       "id": "ur_بینک",
+       "target": "بینک",
+       "translationAr": "البنك",
+       "phonetic": "بین-ک",
+       "emoji": "🏦",
+       "exampleTarget": "بینک بند ہے",
+       "exampleAr": "البنك مغلق"
+      },
+      {
+       "id": "ur_عمارت",
+       "target": "عمارت",
+       "translationAr": "المبنى",
+       "phonetic": "عما-رت",
+       "emoji": "🏢"
+      },
+      {
+       "id": "ur_پل",
+       "target": "پل",
+       "translationAr": "الجسر",
+       "phonetic": "پُل",
+       "emoji": "🌉",
+       "exampleTarget": "پل پر چلو",
+       "exampleAr": "امش على الجسر"
+      },
+      {
+       "id": "ur_چوک",
+       "target": "چوک",
+       "translationAr": "الساحة",
+       "phonetic": "چوک",
+       "emoji": "⛲"
+      },
+      {
+       "id": "ur_ریسٹورنٹ",
+       "target": "ریسٹورنٹ",
+       "translationAr": "المطعم",
+       "phonetic": "ریس-ٹو-رنٹ",
+       "emoji": "🍽️",
+       "exampleTarget": "ریسٹورنٹ میں کھانا",
+       "exampleAr": "طعام في المطعم"
+      },
+      {
+       "id": "ur_سنیما",
+       "target": "سنیما",
+       "translationAr": "السينما",
+       "phonetic": "سن-ی-ما",
+       "emoji": "🎬"
+      },
+      {
+       "id": "ur_لائبریری",
+       "target": "لائبریری",
+       "translationAr": "المكتبة",
+       "phonetic": "لائ-بر-ری",
+       "emoji": "📚"
+      },
+      {
+       "id": "ur_پولیس_اسٹیشن",
+       "target": "پولیس اسٹیشن",
+       "translationAr": "مركز الشرطة",
+       "phonetic": "پو-لیس اس-ٹیشن",
+       "emoji": "👮"
+      }
+     ]
+    },
+    {
+     "id": "ur_u11_l3",
+     "titleAr": "عبارات المدينة",
+     "titleEn": "City Talk",
+     "vocab": [
+      {
+       "id": "ur_یہ_کتنا_ہے؟",
+       "target": "یہ کتنا ہے؟",
+       "translationAr": "بكم هذا؟",
+       "phonetic": "یہ کت-نا ہے؟",
+       "emoji": "❓"
+      },
+      {
+       "id": "ur_بائیں_مڑیں",
+       "target": "بائیں مڑیں",
+       "translationAr": "انعطف يساراً",
+       "phonetic": "بائ-یں مڑ-یں",
+       "emoji": "⬅️"
+      },
+      {
+       "id": "ur_دائیں_مڑیں",
+       "target": "دائیں مڑیں",
+       "translationAr": "انعطف يميناً",
+       "phonetic": "دائ-یں مڑ-یں",
+       "emoji": "➡️"
+      },
+      {
+       "id": "ur_سیدھے_جائیں",
+       "target": "سیدھے جائیں",
+       "translationAr": "اذهب مستقيماً",
+       "phonetic": "سید-ھے جا-ئیں",
+       "emoji": "⬆️"
+      },
+      {
+       "id": "ur_مدد_کیجیے",
+       "target": "مدد کیجیے",
+       "translationAr": "ساعدني",
+       "phonetic": "مدد کی-جی-ے",
+       "emoji": "🆘"
+      },
+      {
+       "id": "ur_رستہ_دکھائیے",
+       "target": "رستہ دکھائیے",
+       "translationAr": "دلني على الطريق",
+       "phonetic": "رس-تہ دکھا-ئی-ے",
+       "emoji": "🧭"
+      },
+      {
+       "id": "ur_قریب_ہے",
+       "target": "قریب ہے",
+       "translationAr": "قريب",
+       "phonetic": "ق-ریب ہے",
+       "emoji": "📍"
+      },
+      {
+       "id": "ur_دور_ہے",
+       "target": "دور ہے",
+       "translationAr": "بعيد",
+       "phonetic": "دور ہے",
+       "emoji": "🗺️"
+      },
+      {
+       "id": "ur_رکشہ",
+       "target": "رکشہ",
+       "translationAr": "توك توك",
+       "phonetic": "رک-شہ",
+       "emoji": "🛺"
+      },
+      {
+       "id": "ur_ٹریفک",
+       "target": "ٹریفک",
+       "translationAr": "المرور",
+       "phonetic": "ٹری-فک",
+       "emoji": "🚦",
+       "exampleTarget": "ٹریفک زیادہ ہے",
+       "exampleAr": "المرور كثيف"
+      },
+      {
+       "id": "ur_پارکنگ",
+       "target": "پارکنگ",
+       "translationAr": "موقف السيارات",
+       "phonetic": "پا-رک-نگ",
+       "emoji": "🅿️"
+      },
+      {
+       "id": "ur_خدا_کا_شکر_ہے",
+       "target": "خدا کا شکر ہے",
+       "translationAr": "الحمد لله",
+       "phonetic": "خدا کا شُکر ہے",
+       "emoji": "🙏"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u12",
+   "color": "#2B70C9",
+   "titleAr": "المدرسة والعمل",
+   "titleEn": "School & Work",
+   "lessons": [
+    {
+     "id": "ur_u12_l1",
+     "titleAr": "في المدرسة",
+     "titleEn": "At School",
+     "vocab": [
+      {
+       "id": "ur_کلاس",
+       "target": "کلاس",
+       "translationAr": "الصف",
+       "phonetic": "کلاس",
+       "emoji": "👩‍🏫",
+       "exampleTarget": "کلاس شروع ہوئی",
+       "exampleAr": "بدأ الدرس"
+      },
+      {
+       "id": "ur_طالب_علم",
+       "target": "طالب علم",
+       "translationAr": "الطالب",
+       "phonetic": "تا-لب ع-لم",
+       "emoji": "🧑‍🎓",
+       "exampleTarget": "طالب علم محنتی ہے",
+       "exampleAr": "الطالب مجتهد"
+      },
+      {
+       "id": "ur_کاپی",
+       "target": "کاپی",
+       "translationAr": "الدفتر",
+       "phonetic": "کا-پی",
+       "emoji": "📓"
+      },
+      {
+       "id": "ur_پنسل",
+       "target": "پنسل",
+       "translationAr": "قلم رصاص",
+       "phonetic": "پن-سل",
+       "emoji": "✏️"
+      },
+      {
+       "id": "ur_ربر",
+       "target": "ربر",
+       "translationAr": "الممحاة",
+       "phonetic": "رب-ر",
+       "emoji": "🧽"
+      },
+      {
+       "id": "ur_بورڈ",
+       "target": "بورڈ",
+       "translationAr": "السبورة",
+       "phonetic": "بور-ڈ",
+       "emoji": "🖍️"
+      },
+      {
+       "id": "ur_امتحان",
+       "target": "امتحان",
+       "translationAr": "الامتحان",
+       "phonetic": "ام-ت-حان",
+       "emoji": "📋",
+       "exampleTarget": "امتحان قریب ہے",
+       "exampleAr": "الامتحان قريب"
+      },
+      {
+       "id": "ur_سبق",
+       "target": "سبق",
+       "translationAr": "الدرس",
+       "phonetic": "سَبق",
+       "emoji": "📖",
+       "exampleTarget": "سبق یاد کرو",
+       "exampleAr": "احفظ الدرس"
+      },
+      {
+       "id": "ur_ہوم_ورک",
+       "target": "ہوم ورک",
+       "translationAr": "الواجب",
+       "phonetic": "ہوم ورک",
+       "emoji": "📝",
+       "exampleTarget": "ہوم ورک مکمل کرو",
+       "exampleAr": "أنجز واجبك"
+      },
+      {
+       "id": "ur_سوال",
+       "target": "سوال",
+       "translationAr": "السؤال",
+       "phonetic": "س-وال",
+       "emoji": "❓",
+       "exampleTarget": "سوال پوچھو",
+       "exampleAr": "اطرح سؤالاً"
+      },
+      {
+       "id": "ur_جواب",
+       "target": "جواب",
+       "translationAr": "الجواب",
+       "phonetic": "ج-واب",
+       "emoji": "✅",
+       "exampleTarget": "جواب صحیح ہے",
+       "exampleAr": "الجواب صحيح"
+      },
+      {
+       "id": "ur_چھٹی",
+       "target": "چھٹی",
+       "translationAr": "الإجازة",
+       "phonetic": "چھٹ-ی",
+       "emoji": "🏖️",
+       "exampleTarget": "ہفتے کو چھٹی ہوتی ہے",
+       "exampleAr": "السبت عطلة"
+      }
+     ]
+    },
+    {
+     "id": "ur_u12_l2",
+     "titleAr": "في المكتب",
+     "titleEn": "At the Office",
+     "vocab": [
+      {
+       "id": "ur_آفس",
+       "target": "آفس",
+       "translationAr": "المكتب",
+       "phonetic": "آ-فس",
+       "emoji": "🏢",
+       "exampleTarget": "آفس میں کام",
+       "exampleAr": "عمل في المكتب"
+      },
+      {
+       "id": "ur_کمپنی",
+       "target": "کمپنی",
+       "translationAr": "الشركة",
+       "phonetic": "کمپ-نی",
+       "emoji": "🏬"
+      },
+      {
+       "id": "ur_ملاقات",
+       "target": "ملاقات",
+       "translationAr": "اللقاء",
+       "phonetic": "مل-ا-قات",
+       "emoji": "🤝",
+       "exampleTarget": "ملاقات مقرر ہے",
+       "exampleAr": "اللقاء محدد"
+      },
+      {
+       "id": "ur_گاہک",
+       "target": "گاہک",
+       "translationAr": "العميل",
+       "phonetic": "گا-ہک",
+       "emoji": "🧍",
+       "exampleTarget": "گاہک آیا ہے",
+       "exampleAr": "جاء العميل"
+      },
+      {
+       "id": "ur_رپورٹ",
+       "target": "رپورٹ",
+       "translationAr": "التقرير",
+       "phonetic": "ر-پورٹ",
+       "emoji": "📊",
+       "exampleTarget": "رپورٹ تیار کرو",
+       "exampleAr": "أعد التقرير"
+      },
+      {
+       "id": "ur_پروجیکٹ",
+       "target": "پروجیکٹ",
+       "translationAr": "المشروع",
+       "phonetic": "پرو-جیکٹ",
+       "emoji": "📁"
+      },
+      {
+       "id": "ur_اوور_ٹائم",
+       "target": "اوور ٹائم",
+       "translationAr": "العمل الإضافي",
+       "phonetic": "او-ور تا-ئیم",
+       "emoji": "⏰"
+      },
+      {
+       "id": "ur_مینیجر",
+       "target": "مینیجر",
+       "translationAr": "المدير",
+       "phonetic": "م-نی-جر",
+       "emoji": "👔"
+      },
+      {
+       "id": "ur_اشتہار",
+       "target": "اشتہار",
+       "translationAr": "الإعلان",
+       "phonetic": "اش-ت-ہار",
+       "emoji": "📢"
+      },
+      {
+       "id": "ur_کمائی",
+       "target": "کمائی",
+       "translationAr": "الكسب",
+       "phonetic": "ک-ما-ئی",
+       "emoji": "💵",
+       "exampleTarget": "محنت سے کمائی",
+       "exampleAr": "الكسب بالجهد"
+      },
+      {
+       "id": "ur_نوکری",
+       "target": "نوکری",
+       "translationAr": "الوظيفة",
+       "phonetic": "نوک-ری",
+       "emoji": "💼",
+       "exampleTarget": "نوکری مل گئی",
+       "exampleAr": "حصلت على وظيفة"
+      },
+      {
+       "id": "ur_ڈیوٹی",
+       "target": "ڈیوٹی",
+       "translationAr": "المناوبة",
+       "phonetic": "ڈی-وٹی",
+       "emoji": "🗓️"
+      }
+     ]
+    },
+    {
+     "id": "ur_u12_l3",
+     "titleAr": "عبارات العمل",
+     "titleEn": "Work Talk",
+     "vocab": [
+      {
+       "id": "ur_میرا_کام_ہے",
+       "target": "میرا کام ہے",
+       "translationAr": "عندي عمل",
+       "phonetic": "م-یرا کام ہے",
+       "emoji": "🛠️"
+      },
+      {
+       "id": "ur_وقت_پورا_ہوا",
+       "target": "وقت پورا ہوا",
+       "translationAr": "انتهى الوقت",
+       "phonetic": "وق-ت پو-را ہوا",
+       "emoji": "⌚"
+      },
+      {
+       "id": "ur_بہت_خوب",
+       "target": "بہت خوب",
+       "translationAr": "أحسنت",
+       "phonetic": "بہ-ت خوب",
+       "emoji": "👏"
+      },
+      {
+       "id": "ur_کوشش_کرو",
+       "target": "کوشش کرو",
+       "translationAr": "حاول",
+       "phonetic": "کو-شش کرو",
+       "emoji": "💪"
+      },
+      {
+       "id": "ur_مجھے_سمجھ_نہیں_آیا",
+       "target": "مجھے سمجھ نہیں آیا",
+       "translationAr": "لم أفهم",
+       "phonetic": "مجھے سم-جھ نہیں آیا",
+       "emoji": "🤷"
+      },
+      {
+       "id": "ur_کام_ختم_کرو",
+       "target": "کام ختم کرو",
+       "translationAr": "أنهِ العمل",
+       "phonetic": "کام ختم کرو",
+       "emoji": "✅"
+      },
+      {
+       "id": "ur_میں_مصروف_ہوں",
+       "target": "میں مصروف ہوں",
+       "translationAr": "أنا مشغول",
+       "phonetic": "میں مص-روف ہوں",
+       "emoji": "🗂️"
+      },
+      {
+       "id": "ur_کل_ملتے_ہیں",
+       "target": "کل ملتے ہیں",
+       "translationAr": "نلتقي غداً",
+       "phonetic": "کل مل-تے ہیں",
+       "emoji": "🤝"
+      },
+      {
+       "id": "ur_خوشخبری",
+       "target": "خوشخبری",
+       "translationAr": "خبر سار",
+       "phonetic": "خوش-خب-ری",
+       "emoji": "🎉"
+      },
+      {
+       "id": "ur_نیا_کام",
+       "target": "نیا کام",
+       "translationAr": "عمل جديد",
+       "phonetic": "نیا کام",
+       "emoji": "🆕"
+      },
+      {
+       "id": "ur_محنت_کرو",
+       "target": "محنت کرو",
+       "translationAr": "اجتهد",
+       "phonetic": "محن-ت کرو",
+       "emoji": "🧱"
+      },
+      {
+       "id": "ur_اللہ_کامیابی_دے",
+       "target": "اللہ کامیابی دے",
+       "translationAr": "الله يوفقك",
+       "phonetic": "اللہ کا-میا-بی دے",
+       "emoji": "🌟"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u13",
+   "color": "#00CD9C",
+   "titleAr": "الرياضة وأوقات الفراغ",
+   "titleEn": "Sports & Free Time",
+   "lessons": [
+    {
+     "id": "ur_u13_l1",
+     "titleAr": "الرياضات",
+     "titleEn": "Sports",
+     "vocab": [
+      {
+       "id": "ur_کرکٹ",
+       "target": "کرکٹ",
+       "translationAr": "الكريكيت",
+       "phonetic": "کر-کٹ",
+       "emoji": "🏏",
+       "exampleTarget": "کرکٹ مقبول کھیل ہے",
+       "exampleAr": "الكريكيت لعبة شعبية"
+      },
+      {
+       "id": "ur_فٹبال",
+       "target": "فٹبال",
+       "translationAr": "كرة القدم",
+       "phonetic": "فٹ-بال",
+       "emoji": "⚽",
+       "exampleTarget": "فٹبال کھیلو",
+       "exampleAr": "العب كرة القدم"
+      },
+      {
+       "id": "ur_ہاکی",
+       "target": "ہاکی",
+       "translationAr": "الهوكي",
+       "phonetic": "ہا-کی",
+       "emoji": "🏑"
+      },
+      {
+       "id": "ur_والی_بال",
+       "target": "والی بال",
+       "translationAr": "الكرة الطائرة",
+       "phonetic": "والی بال",
+       "emoji": "🏐"
+      },
+      {
+       "id": "ur_ٹیبل_ٹینس",
+       "target": "ٹیبل ٹینس",
+       "translationAr": "تنس الطاولة",
+       "phonetic": "ٹی-بل ٹی-نس",
+       "emoji": "🏓"
+      },
+      {
+       "id": "ur_تیراکی",
+       "target": "تیراکی",
+       "translationAr": "السباحة",
+       "phonetic": "ت-را-کی",
+       "emoji": "🏊",
+       "exampleTarget": "تیراکی سیکھو",
+       "exampleAr": "تعلم السباحة"
+      },
+      {
+       "id": "ur_دوڑ",
+       "target": "دوڑ",
+       "translationAr": "الجري",
+       "phonetic": "دو-ڑ",
+       "emoji": "🏃",
+       "exampleTarget": "دوڑ لگاؤ",
+       "exampleAr": "اجرِ"
+      },
+      {
+       "id": "ur_جمناسٹک",
+       "target": "جمناسٹک",
+       "translationAr": "الجمباز",
+       "phonetic": "جم-ناس-ٹک",
+       "emoji": "🤸"
+      },
+      {
+       "id": "ur_مکے_بازی",
+       "target": "مکے بازی",
+       "translationAr": "الملاكمة",
+       "phonetic": "مُ-کے با-زی",
+       "emoji": "🥊"
+      },
+      {
+       "id": "ur_شطرنج",
+       "target": "شطرنج",
+       "translationAr": "الشطرنج",
+       "phonetic": "شط-رن-ج",
+       "emoji": "♟️",
+       "exampleTarget": "شطرنج کھیلیں",
+       "exampleAr": "هيا نلعب الشطرنج"
+      },
+      {
+       "id": "ur_گھڑ_دوڑ",
+       "target": "گھڑ دوڑ",
+       "translationAr": "سباق الخيل",
+       "phonetic": "گھ-ڑ دو-ڑ",
+       "emoji": "🐎"
+      },
+      {
+       "id": "ur_نشانہ_بازی",
+       "target": "نشانہ بازی",
+       "translationAr": "الرماية",
+       "phonetic": "نشا-نہ با-زی",
+       "emoji": "🎯"
+      }
+     ]
+    },
+    {
+     "id": "ur_u13_l2",
+     "titleAr": "الهوايات",
+     "titleEn": "Hobbies",
+     "vocab": [
+      {
+       "id": "ur_پڑھنا",
+       "target": "پڑھنا",
+       "translationAr": "القراءة",
+       "phonetic": "پڑھ-نا",
+       "emoji": "📚",
+       "exampleTarget": "کتاب پڑھنا اچھا ہے",
+       "exampleAr": "قراءة الكتاب جيدة"
+      },
+      {
+       "id": "ur_کھانا_پکانا",
+       "target": "کھانا پکانا",
+       "translationAr": "الطبخ",
+       "phonetic": "کھا-نا پ-کا-نا",
+       "emoji": "👩‍🍳",
+       "exampleTarget": "مجھے کھانا پکانا پسند ہے",
+       "exampleAr": "أحب الطبخ"
+      },
+      {
+       "id": "ur_باغبانی",
+       "target": "باغبانی",
+       "translationAr": "البستنة",
+       "phonetic": "با-غ-با-نی",
+       "emoji": "🌱"
+      },
+      {
+       "id": "ur_مصوری",
+       "target": "مصوری",
+       "translationAr": "الرسم",
+       "phonetic": "مص-وری",
+       "emoji": "🎨"
+      },
+      {
+       "id": "ur_گانا_گانا",
+       "target": "گانا گانا",
+       "translationAr": "الغناء",
+       "phonetic": "گا-نا گا-نا",
+       "emoji": "🎤",
+       "exampleTarget": "خوبصورت گانا",
+       "exampleAr": "أغنية جميلة"
+      },
+      {
+       "id": "ur_سیر",
+       "target": "سیر",
+       "translationAr": "التنزه",
+       "phonetic": "سیر",
+       "emoji": "🚶",
+       "exampleTarget": "سیر کو جائیں",
+       "exampleAr": "لنخرج في نزهة"
+      },
+      {
+       "id": "ur_تصویر_لینا",
+       "target": "تصویر لینا",
+       "translationAr": "التقاط الصور",
+       "phonetic": "ت-صویر لی-نا",
+       "emoji": "📷"
+      },
+      {
+       "id": "ur_مچھلی_پکڑنا",
+       "target": "مچھلی پکڑنا",
+       "translationAr": "صيد السمك",
+       "phonetic": "مچھ-لی پک-ڑنا",
+       "emoji": "🎣"
+      },
+      {
+       "id": "ur_سائیکل_چلانا",
+       "target": "سائیکل چلانا",
+       "translationAr": "ركوب الدراجة",
+       "phonetic": "سائیکل چلا-نا",
+       "emoji": "🚴"
+      },
+      {
+       "id": "ur_کپڑے_سینا",
+       "target": "کپڑے سینا",
+       "translationAr": "خياطة الملابس",
+       "phonetic": "ک-پڑے سی-نا",
+       "emoji": "🪡"
+      },
+      {
+       "id": "ur_محفل",
+       "target": "محفل",
+       "translationAr": "المناسبة",
+       "phonetic": "مح-فل",
+       "emoji": "🎪"
+      },
+      {
+       "id": "ur_آرام",
+       "target": "آرام",
+       "translationAr": "الراحة",
+       "phonetic": "آ-رام",
+       "emoji": "😌",
+       "exampleTarget": "تھوڑا آرام کرو",
+       "exampleAr": "استرح قليلاً"
+      }
+     ]
+    },
+    {
+     "id": "ur_u13_l3",
+     "titleAr": "عبارات الفراغ",
+     "titleEn": "Free Time Talk",
+     "vocab": [
+      {
+       "id": "ur_آپ_کا_شوق_کیا_ہے؟",
+       "target": "آپ کا شوق کیا ہے؟",
+       "translationAr": "ما هوايتك؟",
+       "phonetic": "آپ کا شوق کیا ہے؟",
+       "emoji": "🤔"
+      },
+      {
+       "id": "ur_مجھے_پسند_ہے",
+       "target": "مجھے پسند ہے",
+       "translationAr": "أحب ذلك",
+       "phonetic": "مجھے پسند ہے",
+       "emoji": "❤️"
+      },
+      {
+       "id": "ur_چلو_کھیلیں",
+       "target": "چلو کھیلیں",
+       "translationAr": "هيا نلعب",
+       "phonetic": "چ-لو کھی-لیں",
+       "emoji": "🎮"
+      },
+      {
+       "id": "ur_کتنا_مزہ_تھا",
+       "target": "کتنا مزہ تھا",
+       "translationAr": "كم كان ممتعاً",
+       "phonetic": "کت-نا مزہ تھا",
+       "emoji": "🎊"
+      },
+      {
+       "id": "ur_ہر_ہفتے",
+       "target": "ہر ہفتے",
+       "translationAr": "كل أسبوع",
+       "phonetic": "ہر ہف-تے",
+       "emoji": "📅"
+      },
+      {
+       "id": "ur_آج_فارغ_ہوں",
+       "target": "آج فارغ ہوں",
+       "translationAr": "أنا متفرغ اليوم",
+       "phonetic": "آج فار-غ ہوں",
+       "emoji": "😎"
+      },
+      {
+       "id": "ur_ساتھ_چلیں",
+       "target": "ساتھ چلیں",
+       "translationAr": "لنذهب معاً",
+       "phonetic": "ساتھ چلیں",
+       "emoji": "🤝"
+      },
+      {
+       "id": "ur_کھیل_دیکھنا_پسند_ہے؟",
+       "target": "کھیل دیکھنا پسند ہے؟",
+       "translationAr": "هل تحب مشاهدة المباريات؟",
+       "phonetic": "کھیل دیکھ-نا پسند ہے؟",
+       "emoji": "🏟️"
+      },
+      {
+       "id": "ur_جیت_گئے",
+       "target": "جیت گئے",
+       "translationAr": "لقد فزتم",
+       "phonetic": "جی-ت گئے",
+       "emoji": "🏆"
+      },
+      {
+       "id": "ur_ہار_گئے",
+       "target": "ہار گئے",
+       "translationAr": "لقد خسرنا",
+       "phonetic": "ہار گئے",
+       "emoji": "😞"
+      },
+      {
+       "id": "ur_اچھا_کھیل",
+       "target": "اچھا کھیل",
+       "translationAr": "لعبة جيدة",
+       "phonetic": "اچھا کھیل",
+       "emoji": "👍"
+      },
+      {
+       "id": "ur_کل_کھیلیں_گے",
+       "target": "کل کھیلیں گے",
+       "translationAr": "سنلعب غداً",
+       "phonetic": "کل کھی-لیں گے",
+       "emoji": "⏳"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u14",
+   "color": "#CE82FF",
+   "titleAr": "التقنية والحياة العصرية",
+   "titleEn": "Technology",
+   "lessons": [
+    {
+     "id": "ur_u14_l1",
+     "titleAr": "الأجهزة",
+     "titleEn": "Devices",
+     "vocab": [
+      {
+       "id": "ur_اسمارٹ_فون",
+       "target": "اسمارٹ فون",
+       "translationAr": "الهاتف الذكي",
+       "phonetic": "اسمارٹ فون",
+       "emoji": "📱"
+      },
+      {
+       "id": "ur_لیپ_ٹاپ",
+       "target": "لیپ ٹاپ",
+       "translationAr": "الحاسوب المحمول",
+       "phonetic": "لیپ ٹاپ",
+       "emoji": "💻",
+       "exampleTarget": "لیپ ٹاپ نیا ہے",
+       "exampleAr": "الحاسوب المحمول جديد"
+      },
+      {
+       "id": "ur_انٹرنیٹ",
+       "target": "انٹرنیٹ",
+       "translationAr": "الإنترنت",
+       "phonetic": "ان-ٹر-نیٹ",
+       "emoji": "🌐",
+       "exampleTarget": "انٹرنیٹ تیز ہے",
+       "exampleAr": "الإنترنت سريع"
+      },
+      {
+       "id": "ur_ہیڈفون",
+       "target": "ہیڈفون",
+       "translationAr": "سماعات الرأس",
+       "phonetic": "ہیڈ-فون",
+       "emoji": "🎧"
+      },
+      {
+       "id": "ur_چارجر",
+       "target": "چارجر",
+       "translationAr": "الشاحن",
+       "phonetic": "چار-جر",
+       "emoji": "🔌",
+       "exampleTarget": "چارجر لگاؤ",
+       "exampleAr": "أوصل الشاحن"
+      },
+      {
+       "id": "ur_بیٹری",
+       "target": "بیٹری",
+       "translationAr": "البطارية",
+       "phonetic": "بی-ٹری",
+       "emoji": "🔋",
+       "exampleTarget": "بیٹری ختم ہو گئی",
+       "exampleAr": "نفدت البطارية"
+      },
+      {
+       "id": "ur_ویڈیو",
+       "target": "ویڈیو",
+       "translationAr": "الفيديو",
+       "phonetic": "وی-ڈی-و",
+       "emoji": "🎬",
+       "exampleTarget": "ویڈیو دیکھو",
+       "exampleAr": "شاهد الفيديو"
+      },
+      {
+       "id": "ur_تصویر",
+       "target": "تصویر",
+       "translationAr": "الصورة",
+       "phonetic": "ت-صویر",
+       "emoji": "🖼️",
+       "exampleTarget": "یہ تصویر خوبصورت ہے",
+       "exampleAr": "هذه الصورة جميلة"
+      },
+      {
+       "id": "ur_اسکرین",
+       "target": "اسکرین",
+       "translationAr": "الشاشة",
+       "phonetic": "اس-کرین",
+       "emoji": "🖥️"
+      },
+      {
+       "id": "ur_کی_بورڈ",
+       "target": "کی بورڈ",
+       "translationAr": "لوحة المفاتيح",
+       "phonetic": "کی بورڈ",
+       "emoji": "⌨️"
+      },
+      {
+       "id": "ur_ٹی_وی",
+       "target": "ٹی وی",
+       "translationAr": "التلفاز",
+       "phonetic": "ٹی وی",
+       "emoji": "📺",
+       "exampleTarget": "ٹی وی دیکھنا",
+       "exampleAr": "مشاهدة التلفاز"
+      },
+      {
+       "id": "ur_ڈیجیٹل_کیمرہ",
+       "target": "ڈیجیٹل کیمرہ",
+       "translationAr": "الكاميرا الرقمية",
+       "phonetic": "ڈی-جی-ٹل کیم-رہ",
+       "emoji": "📸"
+      }
+     ]
+    },
+    {
+     "id": "ur_u14_l2",
+     "titleAr": "الإنترنت والتطبيقات",
+     "titleEn": "Internet & Apps",
+     "vocab": [
+      {
+       "id": "ur_ایپ",
+       "target": "ایپ",
+       "translationAr": "التطبيق",
+       "phonetic": "ایپ",
+       "emoji": "📲",
+       "exampleTarget": "نیا ایپ ڈاؤن لوڈ کرو",
+       "exampleAr": "حمّل تطبيقاً جديداً"
+      },
+      {
+       "id": "ur_واٹس_ایپ",
+       "target": "واٹس ایپ",
+       "translationAr": "واتساب",
+       "phonetic": "واٹس ایپ",
+       "emoji": "💬",
+       "exampleTarget": "واٹس ایپ پر بات کرو",
+       "exampleAr": "تحدث على واتساب"
+      },
+      {
+       "id": "ur_پیغام",
+       "target": "پیغام",
+       "translationAr": "الرسالة",
+       "phonetic": "پی-غام",
+       "emoji": "✉️",
+       "exampleTarget": "نیا پیغام آیا",
+       "exampleAr": "وصلت رسالة جديدة"
+      },
+      {
+       "id": "ur_کال",
+       "target": "کال",
+       "translationAr": "المكالمة",
+       "phonetic": "کال",
+       "emoji": "📞",
+       "exampleTarget": "کال اٹھاؤ",
+       "exampleAr": "رد على المكالمة"
+      },
+      {
+       "id": "ur_لاک",
+       "target": "لاک",
+       "translationAr": "القفل",
+       "phonetic": "لا-ک",
+       "emoji": "🔒",
+       "exampleTarget": "فون لاک کرو",
+       "exampleAr": "اقفل الهاتف"
+      },
+      {
+       "id": "ur_پاس_ورڈ",
+       "target": "پاس ورڈ",
+       "translationAr": "كلمة السر",
+       "phonetic": "پاس ورڈ",
+       "emoji": "🔑"
+      },
+      {
+       "id": "ur_ویب_سائٹ",
+       "target": "ویب سائٹ",
+       "translationAr": "الموقع الإلكتروني",
+       "phonetic": "ویب سائٹ",
+       "emoji": "🌍"
+      },
+      {
+       "id": "ur_تلاش",
+       "target": "تلاش",
+       "translationAr": "البحث",
+       "phonetic": "ت-لاش",
+       "emoji": "🔍",
+       "exampleTarget": "گوگل پر تلاش کرو",
+       "exampleAr": "ابحث في جوجل"
+      },
+      {
+       "id": "ur_ڈاؤن_لوڈ",
+       "target": "ڈاؤن لوڈ",
+       "translationAr": "التنزيل",
+       "phonetic": "ڈاؤن لوڈ",
+       "emoji": "⬇️"
+      },
+      {
+       "id": "ur_اپلوڈ",
+       "target": "اپلوڈ",
+       "translationAr": "الرفع",
+       "phonetic": "اپ-لوڈ",
+       "emoji": "⬆️"
+      },
+      {
+       "id": "ur_ڈیٹا",
+       "target": "ڈیٹا",
+       "translationAr": "البيانات",
+       "phonetic": "ڈا-ٹا",
+       "emoji": "📶",
+       "exampleTarget": "ڈیٹا ختم ہے",
+       "exampleAr": "نفدت البيانات"
+      },
+      {
+       "id": "ur_چارجنگ",
+       "target": "چارجنگ",
+       "translationAr": "الشحن",
+       "phonetic": "چار-جنگ",
+       "emoji": "⚡",
+       "exampleTarget": "چارجنگ ضروری ہے",
+       "exampleAr": "الشحن ضروري"
+      }
+     ]
+    },
+    {
+     "id": "ur_u14_l3",
+     "titleAr": "عبارات التقنية",
+     "titleEn": "Tech Talk",
+     "vocab": [
+      {
+       "id": "ur_مجھے_فون_کریں",
+       "target": "مجھے فون کریں",
+       "translationAr": "اتصل بي هاتفياً",
+       "phonetic": "مجھے فون کریں",
+       "emoji": "☎️"
+      },
+      {
+       "id": "ur_فوری_پیغام_بھیجو",
+       "target": "فوری پیغام بھیجو",
+       "translationAr": "أرسل رسالة عاجلة",
+       "phonetic": "فوری پی-غام بھی-جو",
+       "emoji": "✉️"
+      },
+      {
+       "id": "ur_انٹرنیٹ_نہیں_چل_رہا",
+       "target": "انٹرنیٹ نہیں چل رہا",
+       "translationAr": "لا يعمل الإنترنت",
+       "phonetic": "ان-ٹر-نیٹ نہیں چل رہا",
+       "emoji": "📵"
+      },
+      {
+       "id": "ur_سکرین_شاٹ_لو",
+       "target": "سکرین شاٹ لو",
+       "translationAr": "التقط لقطة شاشة",
+       "phonetic": "س-کرین شاٹ لو",
+       "emoji": "📱"
+      },
+      {
+       "id": "ur_ویڈیو_کال_کرو",
+       "target": "ویڈیو کال کرو",
+       "translationAr": "اجرِ مكالمة فيديو",
+       "phonetic": "وی-ڈی-و کال کرو",
+       "emoji": "🎥"
+      },
+      {
+       "id": "ur_بجلی_گئی_ہے",
+       "target": "بجلی گئی ہے",
+       "translationAr": "انقطعت الكهرباء",
+       "phonetic": "بج-لی گئی ہے",
+       "emoji": "🕯️"
+      },
+      {
+       "id": "ur_واائی_فائی_کا_پاس_ورڈ_کیا_ہے؟",
+       "target": "واائی فائی کا پاس ورڈ کیا ہے؟",
+       "translationAr": "ما كلمة سر الواي فاي؟",
+       "phonetic": "واائی فائی کا پاس ورڈ کیا ہے؟",
+       "emoji": "📶"
+      },
+      {
+       "id": "ur_میری_آواز_سنائی_دے_رہی_ہے؟",
+       "target": "میری آواز سنائی دے رہی ہے؟",
+       "translationAr": "هل تسمع صوتي؟",
+       "phonetic": "میری آواز سنائی دے رہی ہے؟",
+       "emoji": "👂"
+      },
+      {
+       "id": "ur_تصویر_بھیجو",
+       "target": "تصویر بھیجو",
+       "translationAr": "أرسل صورة",
+       "phonetic": "ت-صویر بھی-جو",
+       "emoji": "📸"
+      },
+      {
+       "id": "ur_یہ_ایپ_مفید_ہے",
+       "target": "یہ ایپ مفید ہے",
+       "translationAr": "هذا التطبيق مفيد",
+       "phonetic": "یہ ایپ م-فید ہے",
+       "emoji": "👍"
+      },
+      {
+       "id": "ur_بیٹری_چارج_کرو",
+       "target": "بیٹری چارج کرو",
+       "translationAr": "اشحن البطارية",
+       "phonetic": "بی-ٹری چارج کرو",
+       "emoji": "🔋"
+      },
+      {
+       "id": "ur_ٹیکنالوجی_آسان_ہے",
+       "target": "ٹیکنالوجی آسان ہے",
+       "translationAr": "التقنية سهلة",
+       "phonetic": "ٹیک-نا-لو-جی آ-سان ہے",
+       "emoji": "🤖"
+      }
+     ]
+    }
+   ]
   }
  ]
 }

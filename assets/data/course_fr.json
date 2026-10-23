@@ -1937,6 +1937,1144 @@
      ]
     }
    ]
+  },
+  {
+   "id": "fr_u9",
+   "color": "#FF9600",
+   "titleAr": "المنزل",
+   "titleEn": "The House",
+   "lessons": [
+    {
+     "id": "fr_u9_l1",
+     "titleAr": "أجزاء المنزل",
+     "titleEn": "Parts of the House",
+     "vocab": [
+      {
+       "id": "fr_le_toit",
+       "target": "Le toit",
+       "translationAr": "السقف",
+       "phonetic": "تو-ا",
+       "emoji": "🏠",
+       "exampleTarget": "Le toit est rouge",
+       "exampleAr": "السقف أحمر"
+      },
+      {
+       "id": "fr_la_terrasse",
+       "target": "La terrasse",
+       "translationAr": "الشرفة",
+       "phonetic": "ت-راس",
+       "emoji": "🌇"
+      },
+      {
+       "id": "fr_le_garage",
+       "target": "Le garage",
+       "translationAr": "الكراج",
+       "phonetic": "غا-راج",
+       "emoji": "🚙"
+      },
+      {
+       "id": "fr_le_couloir",
+       "target": "Le couloir",
+       "translationAr": "الممر",
+       "phonetic": "كُو-لواه",
+       "emoji": "🚶"
+      },
+      {
+       "id": "fr_la_cave",
+       "target": "La cave",
+       "translationAr": "القبو",
+       "phonetic": "كا-ڤ",
+       "emoji": "🕳️"
+      },
+      {
+       "id": "fr_létage",
+       "target": "L'étage",
+       "translationAr": "الطابق",
+       "phonetic": "لِ-تاج",
+       "emoji": "🪜"
+      },
+      {
+       "id": "fr_la_cheminée",
+       "target": "La cheminée",
+       "translationAr": "المدفأة",
+       "phonetic": "ش-م-ني",
+       "emoji": "🔥"
+      },
+      {
+       "id": "fr_le_placard",
+       "target": "Le placard",
+       "translationAr": "الخزانة",
+       "phonetic": "پلا-كار",
+       "emoji": "🗄️"
+      },
+      {
+       "id": "fr_le_tiroir",
+       "target": "Le tiroir",
+       "translationAr": "الدرج",
+       "phonetic": "ت-رواه",
+       "emoji": "🗂️"
+      },
+      {
+       "id": "fr_le_tapis",
+       "target": "Le tapis",
+       "translationAr": "السجادة",
+       "phonetic": "تا-پي",
+       "emoji": "🟥",
+       "exampleTarget": "Le tapis est propre",
+       "exampleAr": "السجادة نظيفة"
+      },
+      {
+       "id": "fr_le_rideau",
+       "target": "Le rideau",
+       "translationAr": "الستارة",
+       "phonetic": "رِ-دو",
+       "emoji": "🪟"
+      },
+      {
+       "id": "fr_la_bougie",
+       "target": "La bougie",
+       "translationAr": "الشمعة",
+       "phonetic": "بو-ژی",
+       "emoji": "🕯️"
+      }
+     ]
+    },
+    {
+     "id": "fr_u9_l2",
+     "titleAr": "الأثاث",
+     "titleEn": "Furniture",
+     "vocab": [
+      {
+       "id": "fr_le_canapé",
+       "target": "Le canapé",
+       "translationAr": "الأريكة",
+       "phonetic": "كا-نا-پي",
+       "emoji": "🛋️",
+       "exampleTarget": "Le canapé est confortable",
+       "exampleAr": "الأريكة مريحة"
+      },
+      {
+       "id": "fr_larmoire",
+       "target": "L'armoire",
+       "translationAr": "الدولاب",
+       "phonetic": "أر-مواه",
+       "emoji": "🚪"
+      },
+      {
+       "id": "fr_létagère",
+       "target": "L'étagère",
+       "translationAr": "الرف",
+       "phonetic": "لِ-تا-ژير",
+       "emoji": "🗃️"
+      },
+      {
+       "id": "fr_la_couverture",
+       "target": "La couverture",
+       "translationAr": "الغطاء",
+       "phonetic": "كو-ڤير-تير",
+       "emoji": "🛌"
+      },
+      {
+       "id": "fr_loreiller",
+       "target": "L'oreiller",
+       "translationAr": "الوسادة",
+       "phonetic": "لو-را-يي",
+       "emoji": "🛏️"
+      },
+      {
+       "id": "fr_le_fauteuil",
+       "target": "Le fauteuil",
+       "translationAr": "المقعد المريح",
+       "phonetic": "ف-توي",
+       "emoji": "🪑"
+      },
+      {
+       "id": "fr_le_vase",
+       "target": "Le vase",
+       "translationAr": "المزهرية",
+       "phonetic": "ڤاز",
+       "emoji": "🏺"
+      },
+      {
+       "id": "fr_le_cadre",
+       "target": "Le cadre",
+       "translationAr": "الإطار",
+       "phonetic": "كاد-ر",
+       "emoji": "🖼️"
+      },
+      {
+       "id": "fr_la_plante",
+       "target": "La plante",
+       "translationAr": "النبتة",
+       "phonetic": "پلانت",
+       "emoji": "🪴",
+       "exampleTarget": "La plante a besoin d'eau",
+       "exampleAr": "النبتة تحتاج ماء"
+      },
+      {
+       "id": "fr_le_ventilateur",
+       "target": "Le ventilateur",
+       "translationAr": "المروحة",
+       "phonetic": "ڤان-تي-لا-تير",
+       "emoji": "🪭"
+      },
+      {
+       "id": "fr_le_panier",
+       "target": "Le panier",
+       "translationAr": "السلة",
+       "phonetic": "پا-نيي",
+       "emoji": "🧺"
+      },
+      {
+       "id": "fr_le_seau",
+       "target": "Le seau",
+       "translationAr": "الدلو",
+       "phonetic": "سو",
+       "emoji": "🪣"
+      }
+     ]
+    },
+    {
+     "id": "fr_u9_l3",
+     "titleAr": "في المنزل",
+     "titleEn": "At Home",
+     "vocab": [
+      {
+       "id": "fr_range_ta_chambre",
+       "target": "Range ta chambre",
+       "translationAr": "رتّب غرفتك",
+       "phonetic": "ران-ژ تا شام-بر",
+       "emoji": "🧹"
+      },
+      {
+       "id": "fr_lave_les_mains",
+       "target": "Lave les mains",
+       "translationAr": "اغسل يديك",
+       "phonetic": "لا-ڤ لي مان",
+       "emoji": "🧼"
+      },
+      {
+       "id": "fr_ferme_le_rideau",
+       "target": "Ferme le rideau",
+       "translationAr": "أغلق الستارة",
+       "phonetic": "فيرم لو رِ-دو",
+       "emoji": "🪟"
+      },
+      {
+       "id": "fr_allume_la_lumière",
+       "target": "Allume la lumière",
+       "translationAr": "أضئ النور",
+       "phonetic": "آ-لوم لا لوميير",
+       "emoji": "💡"
+      },
+      {
+       "id": "fr_il_fait_chaud_ici",
+       "target": "Il fait chaud ici",
+       "translationAr": "الجو حار هنا",
+       "phonetic": "إل فِي شو إسي",
+       "emoji": "🥵"
+      },
+      {
+       "id": "fr_il_fait_froid",
+       "target": "Il fait froid",
+       "translationAr": "الجو بارد",
+       "phonetic": "إل فِي فروا",
+       "emoji": "🥶"
+      },
+      {
+       "id": "fr_le_dîner_est_prêt",
+       "target": "Le dîner est prêt",
+       "translationAr": "العشاء جاهز",
+       "phonetic": "لو ديني إي بري",
+       "emoji": "🍽️"
+      },
+      {
+       "id": "fr_je_vais_me_coucher",
+       "target": "Je vais me coucher",
+       "translationAr": "سأنام",
+       "phonetic": "جو ڤِي مي كو-شي",
+       "emoji": "😴"
+      },
+      {
+       "id": "fr_passe_laspirateur",
+       "target": "Passe l'aspirateur",
+       "translationAr": "مرّر المكنسة الكهربائية",
+       "phonetic": "پاس لا-س-پي-را-تير",
+       "emoji": "🌀"
+      },
+      {
+       "id": "fr_sors_la_poubelle",
+       "target": "Sors la poubelle",
+       "translationAr": "أخرج السلة",
+       "phonetic": "سور لا بو-بل",
+       "emoji": "🗑️"
+      },
+      {
+       "id": "fr_la_maison_est_propre",
+       "target": "La maison est propre",
+       "translationAr": "البيت نظيف",
+       "phonetic": "لا مِيزون إي پرو-پر",
+       "emoji": "✨"
+      },
+      {
+       "id": "fr_viens_ici",
+       "target": "Viens ici",
+       "translationAr": "تعال هنا",
+       "phonetic": "ڤيان إسي",
+       "emoji": "👋"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u10",
+   "color": "#1CB0F6",
+   "titleAr": "المدينة والمواصلات",
+   "titleEn": "City & Transport",
+   "lessons": [
+    {
+     "id": "fr_u10_l1",
+     "titleAr": "في المدينة",
+     "titleEn": "In the City",
+     "vocab": [
+      {
+       "id": "fr_la_bibliothèque",
+       "target": "La bibliothèque",
+       "translationAr": "المكتبة",
+       "phonetic": "بي-بلْيو-تيك",
+       "emoji": "📚"
+      },
+      {
+       "id": "fr_le_musée",
+       "target": "Le musée",
+       "translationAr": "المتحف",
+       "phonetic": "مو-زي",
+       "emoji": "🏛️"
+      },
+      {
+       "id": "fr_le_théâtre",
+       "target": "Le théâtre",
+       "translationAr": "المسرح",
+       "phonetic": "تيا-تر",
+       "emoji": "🎭"
+      },
+      {
+       "id": "fr_le_cinéma",
+       "target": "Le cinéma",
+       "translationAr": "السينما",
+       "phonetic": "سي-ن-ما",
+       "emoji": "🎬",
+       "exampleTarget": "On va au cinéma ?",
+       "exampleAr": "هل نذهب للسينما؟"
+      },
+      {
+       "id": "fr_la_banque",
+       "target": "La banque",
+       "translationAr": "البنك",
+       "phonetic": "بانك",
+       "emoji": "🏦"
+      },
+      {
+       "id": "fr_la_boulangerie",
+       "target": "La boulangerie",
+       "translationAr": "المخبز",
+       "phonetic": "بو-لان-ژري",
+       "emoji": "🥐"
+      },
+      {
+       "id": "fr_la_boucherie",
+       "target": "La boucherie",
+       "translationAr": "ملحمية اللحم",
+       "phonetic": "بو-شري",
+       "emoji": "🥩"
+      },
+      {
+       "id": "fr_le_parc",
+       "target": "Le parc",
+       "translationAr": "المنتزه",
+       "phonetic": "پارك",
+       "emoji": "🌳"
+      },
+      {
+       "id": "fr_léglise",
+       "target": "L'église",
+       "translationAr": "الكنيسة",
+       "phonetic": "لِ-غيز",
+       "emoji": "⛪"
+      },
+      {
+       "id": "fr_le_stade",
+       "target": "Le stade",
+       "translationAr": "الملعب",
+       "phonetic": "ستاد",
+       "emoji": "🏟️"
+      },
+      {
+       "id": "fr_la_plage",
+       "target": "La plage",
+       "translationAr": "الشاطئ",
+       "phonetic": "پلا-ژ",
+       "emoji": "🏖️"
+      },
+      {
+       "id": "fr_le_zoo",
+       "target": "Le zoo",
+       "translationAr": "حديقة الحيوان",
+       "phonetic": "زو",
+       "emoji": "🦁"
+      }
+     ]
+    },
+    {
+     "id": "fr_u10_l2",
+     "titleAr": "المواصلات",
+     "titleEn": "Transport",
+     "vocab": [
+      {
+       "id": "fr_le_métro",
+       "target": "Le métro",
+       "translationAr": "المترو",
+       "phonetic": "مي-ترو",
+       "emoji": "🚇"
+      },
+      {
+       "id": "fr_le_camion",
+       "target": "Le camion",
+       "translationAr": "الشاحنة",
+       "phonetic": "كا-ميون",
+       "emoji": "🚚"
+      },
+      {
+       "id": "fr_la_moto",
+       "target": "La moto",
+       "translationAr": "الدراجة النارية",
+       "phonetic": "مو-تو",
+       "emoji": "🏍️"
+      },
+      {
+       "id": "fr_lhélicoptère",
+       "target": "L'hélicoptère",
+       "translationAr": "الطائرة العمودية",
+       "phonetic": "لي-لي-كو-پي-تير",
+       "emoji": "🚁"
+      },
+      {
+       "id": "fr_le_ferry",
+       "target": "Le ferry",
+       "translationAr": "العبّارة",
+       "phonetic": "ف-ري",
+       "emoji": "⛴️"
+      },
+      {
+       "id": "fr_le_carrefour",
+       "target": "Le carrefour",
+       "translationAr": "التقاطع",
+       "phonetic": "كار-فور",
+       "emoji": "🚦"
+      },
+      {
+       "id": "fr_le_trottoir",
+       "target": "Le trottoir",
+       "translationAr": "الرصيف",
+       "phonetic": "ترو-تواه",
+       "emoji": "🚶"
+      },
+      {
+       "id": "fr_le_rond_point",
+       "target": "Le rond-point",
+       "translationAr": "الدوار",
+       "phonetic": "رون-پوان",
+       "emoji": "🔄"
+      },
+      {
+       "id": "fr_lautoroute",
+       "target": "L'autoroute",
+       "translationAr": "الطريق السريع",
+       "phonetic": "لوت-روت",
+       "emoji": "🛣️"
+      },
+      {
+       "id": "fr_le_tunnel",
+       "target": "Le tunnel",
+       "translationAr": "النفق",
+       "phonetic": "تو-نيل",
+       "emoji": "🕳️"
+      },
+      {
+       "id": "fr_le_parking",
+       "target": "Le parking",
+       "translationAr": "الموقف",
+       "phonetic": "پار-كينگ",
+       "emoji": "🅿️"
+      },
+      {
+       "id": "fr_le_sud",
+       "target": "Le sud",
+       "translationAr": "الجنوب",
+       "phonetic": "سود",
+       "emoji": "⬇️"
+      }
+     ]
+    },
+    {
+     "id": "fr_u10_l3",
+     "titleAr": "التسوق",
+     "titleEn": "Shopping",
+     "vocab": [
+      {
+       "id": "fr_le_portefeuille",
+       "target": "Le portefeuille",
+       "translationAr": "المحفظة",
+       "phonetic": "پورت-فوي",
+       "emoji": "👛"
+      },
+      {
+       "id": "fr_la_pièce",
+       "target": "La pièce",
+       "translationAr": "العملة المعدنية",
+       "phonetic": "پييس",
+       "emoji": "🪙"
+      },
+      {
+       "id": "fr_le_distributeur",
+       "target": "Le distributeur",
+       "translationAr": "الصراف الآلي",
+       "phonetic": "ديس-تي-بو-تير",
+       "emoji": "🏧"
+      },
+      {
+       "id": "fr_marchander",
+       "target": "Marchander",
+       "translationAr": "يساوم",
+       "phonetic": "مار-شان-دِ",
+       "emoji": "🤲"
+      },
+      {
+       "id": "fr_le_caddie",
+       "target": "Le caddie",
+       "translationAr": "عربة التسوق",
+       "phonetic": "كا-دي",
+       "emoji": "🛒"
+      },
+      {
+       "id": "fr_la_caissière",
+       "target": "La caissière",
+       "translationAr": "أمينة الصندوق",
+       "phonetic": "كي-سيير",
+       "emoji": "🧑‍💼"
+      },
+      {
+       "id": "fr_la_file_dattente",
+       "target": "La file d'attente",
+       "translationAr": "الصف",
+       "phonetic": "فيل دا-ت",
+       "emoji": "🧍"
+      },
+      {
+       "id": "fr_le_colis",
+       "target": "Le colis",
+       "translationAr": "الطرد",
+       "phonetic": "كو-لي",
+       "emoji": "📦"
+      },
+      {
+       "id": "fr_la_livraison",
+       "target": "La livraison",
+       "translationAr": "التوصيل",
+       "phonetic": "لي-ڤري-زون",
+       "emoji": "🛵"
+      },
+      {
+       "id": "fr_en_ligne",
+       "target": "En ligne",
+       "translationAr": "عبر الإنترنت",
+       "phonetic": "آن-ليني",
+       "emoji": "💻"
+      },
+      {
+       "id": "fr_le_reçu",
+       "target": "Le reçu",
+       "translationAr": "الإيصال",
+       "phonetic": "لو رُو",
+       "emoji": "🧾"
+      },
+      {
+       "id": "fr_la_garantie",
+       "target": "La garantie",
+       "translationAr": "الضمان",
+       "phonetic": "لا غا-ران-تي",
+       "emoji": "🛡️"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u11",
+   "color": "#2B70C9",
+   "titleAr": "المدرسة والعمل",
+   "titleEn": "School & Work",
+   "lessons": [
+    {
+     "id": "fr_u11_l1",
+     "titleAr": "في المدرسة",
+     "titleEn": "At School",
+     "vocab": [
+      {
+       "id": "fr_le_cahier",
+       "target": "Le cahier",
+       "translationAr": "الدفتر",
+       "phonetic": "كا-يي",
+       "emoji": "📓",
+       "exampleTarget": "Ouvre ton cahier",
+       "exampleAr": "افتح دفترك"
+      },
+      {
+       "id": "fr_le_stylo",
+       "target": "Le stylo",
+       "translationAr": "القلم الجاف",
+       "phonetic": "س-تي-لو",
+       "emoji": "🖊️"
+      },
+      {
+       "id": "fr_le_crayon",
+       "target": "Le crayon",
+       "translationAr": "قلم الرصاص",
+       "phonetic": "كرا-يون",
+       "emoji": "✏️"
+      },
+      {
+       "id": "fr_la_gomme",
+       "target": "La gomme",
+       "translationAr": "الممحاة",
+       "phonetic": "گو-م",
+       "emoji": "🧽"
+      },
+      {
+       "id": "fr_la_règle",
+       "target": "La règle",
+       "translationAr": "المسطرة",
+       "phonetic": "ريگل",
+       "emoji": "📏"
+      },
+      {
+       "id": "fr_le_cartable",
+       "target": "Le cartable",
+       "translationAr": "الحقيبة المدرسية",
+       "phonetic": "كار-تابل",
+       "emoji": "🎒"
+      },
+      {
+       "id": "fr_les_ciseaux",
+       "target": "Les ciseaux",
+       "translationAr": "المقص",
+       "phonetic": "سي-زو",
+       "emoji": "✂️"
+      },
+      {
+       "id": "fr_la_colle",
+       "target": "La colle",
+       "translationAr": "الصمغ",
+       "phonetic": "كول",
+       "emoji": "🧴"
+      },
+      {
+       "id": "fr_le_tableau",
+       "target": "Le tableau",
+       "translationAr": "السبورة",
+       "phonetic": "تا-بلو",
+       "emoji": "🖍️"
+      },
+      {
+       "id": "fr_le_professeur",
+       "target": "Le professeur",
+       "translationAr": "المعلم",
+       "phonetic": "پرو-ف-سير",
+       "emoji": "👨‍🏫"
+      },
+      {
+       "id": "fr_lélève",
+       "target": "L'élève",
+       "translationAr": "الطالب",
+       "phonetic": "لِ-ليڤ",
+       "emoji": "🧑‍🎓"
+      },
+      {
+       "id": "fr_la_récréation",
+       "target": "La récréation",
+       "translationAr": "الفسحة",
+       "phonetic": "رِ-كر-يا-سيون",
+       "emoji": "🛝"
+      }
+     ]
+    },
+    {
+     "id": "fr_u11_l2",
+     "titleAr": "المواد الدراسية",
+     "titleEn": "School Subjects",
+     "vocab": [
+      {
+       "id": "fr_les_mathématiques",
+       "target": "Les mathématiques",
+       "translationAr": "الرياضيات",
+       "phonetic": "ما-تي-ما-تيك",
+       "emoji": "➗"
+      },
+      {
+       "id": "fr_la_science",
+       "target": "La science",
+       "translationAr": "العلوم",
+       "phonetic": "سيانس",
+       "emoji": "🔬"
+      },
+      {
+       "id": "fr_lhistoire",
+       "target": "L'histoire",
+       "translationAr": "التاريخ",
+       "phonetic": "إس-تواه",
+       "emoji": "🏛️"
+      },
+      {
+       "id": "fr_la_géographie",
+       "target": "La géographie",
+       "translationAr": "الجغرافيا",
+       "phonetic": "ژيو-غرافي",
+       "emoji": "🌍"
+      },
+      {
+       "id": "fr_la_musique",
+       "target": "La musique",
+       "translationAr": "الموسيقى",
+       "phonetic": "مو-زيك",
+       "emoji": "🎵"
+      },
+      {
+       "id": "fr_le_sport",
+       "target": "Le sport",
+       "translationAr": "الرياضة",
+       "phonetic": "سبور",
+       "emoji": "🏅"
+      },
+      {
+       "id": "fr_la_physique",
+       "target": "La physique",
+       "translationAr": "الفيزياء",
+       "phonetic": "في-زيك",
+       "emoji": "⚛️"
+      },
+      {
+       "id": "fr_la_chimie",
+       "target": "La chimie",
+       "translationAr": "الكيمياء",
+       "phonetic": "شي-مي",
+       "emoji": "🧪"
+      },
+      {
+       "id": "fr_la_biologie",
+       "target": "La biologie",
+       "translationAr": "الأحياء",
+       "phonetic": "بي-لو-ژي",
+       "emoji": "🧬"
+      },
+      {
+       "id": "fr_la_religion",
+       "target": "La religion",
+       "translationAr": "التربية الدينية",
+       "phonetic": "ر-لي-جيون",
+       "emoji": "🕌"
+      },
+      {
+       "id": "fr_le_dessin",
+       "target": "Le dessin",
+       "translationAr": "الرسم",
+       "phonetic": "دي-سان",
+       "emoji": "🖌️"
+      },
+      {
+       "id": "fr_larabe",
+       "target": "L'arabe",
+       "translationAr": "اللغة العربية",
+       "phonetic": "لا-راب",
+       "emoji": "📖"
+      }
+     ]
+    },
+    {
+     "id": "fr_u11_l3",
+     "titleAr": "في العمل",
+     "titleEn": "At Work",
+     "vocab": [
+      {
+       "id": "fr_le_bureau",
+       "target": "Le bureau",
+       "translationAr": "المكتب",
+       "phonetic": "بي-رو",
+       "emoji": "🏢",
+       "exampleTarget": "Je vais au bureau",
+       "exampleAr": "أذهب إلى المكتب"
+      },
+      {
+       "id": "fr_le_collègue",
+       "target": "Le collègue",
+       "translationAr": "الزميل",
+       "phonetic": "كو-ليگ",
+       "emoji": "🤝"
+      },
+      {
+       "id": "fr_la_réunion",
+       "target": "La réunion",
+       "translationAr": "الاجتماع",
+       "phonetic": "ري-يونيون",
+       "emoji": "🗓️"
+      },
+      {
+       "id": "fr_le_patron",
+       "target": "Le patron",
+       "translationAr": "المدير",
+       "phonetic": "پا-ترون",
+       "emoji": "👔"
+      },
+      {
+       "id": "fr_le_salaire",
+       "target": "Le salaire",
+       "translationAr": "الراتب",
+       "phonetic": "سا-لير",
+       "emoji": "💵"
+      },
+      {
+       "id": "fr_la_pause_café",
+       "target": "La pause café",
+       "translationAr": "استراحة القهوة",
+       "phonetic": "پوز كا-فِ",
+       "emoji": "☕"
+      },
+      {
+       "id": "fr_le_rendez_vous",
+       "target": "Le rendez-vous",
+       "translationAr": "الموعد",
+       "phonetic": "رو-ند-ڤو",
+       "emoji": "⏰"
+      },
+      {
+       "id": "fr_lentreprise",
+       "target": "L'entreprise",
+       "translationAr": "الشركة",
+       "phonetic": "أون-تر-پريز",
+       "emoji": "🏬"
+      },
+      {
+       "id": "fr_lemployé",
+       "target": "L'employé",
+       "translationAr": "الموظف",
+       "phonetic": "لان-پلو-يي",
+       "emoji": "💼"
+      },
+      {
+       "id": "fr_le_projet",
+       "target": "Le projet",
+       "translationAr": "المشروع",
+       "phonetic": "پرو-ژِ",
+       "emoji": "📁"
+      },
+      {
+       "id": "fr_la_présentation",
+       "target": "La présentation",
+       "translationAr": "العرض التقديمي",
+       "phonetic": "پي-ري-زان-تا-سيون",
+       "emoji": "📊"
+      },
+      {
+       "id": "fr_le_succès",
+       "target": "Le succès",
+       "translationAr": "النجاح",
+       "phonetic": "سو-كسي",
+       "emoji": "🏆"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u12",
+   "color": "#00CD9C",
+   "titleAr": "الرياضة والترفيه",
+   "titleEn": "Sports & Leisure",
+   "lessons": [
+    {
+     "id": "fr_u12_l1",
+     "titleAr": "الرياضات",
+     "titleEn": "Sports",
+     "vocab": [
+      {
+       "id": "fr_le_basket_ball",
+       "target": "Le basket-ball",
+       "translationAr": "كرة السلة",
+       "phonetic": "باس-كي-بول",
+       "emoji": "🏀"
+      },
+      {
+       "id": "fr_le_volley_ball",
+       "target": "Le volley-ball",
+       "translationAr": "الكرة الطائرة",
+       "phonetic": "ڤو-لي-بول",
+       "emoji": "🏐"
+      },
+      {
+       "id": "fr_le_tennis",
+       "target": "Le tennis",
+       "translationAr": "التنس",
+       "phonetic": "ت-نيس",
+       "emoji": "🎾"
+      },
+      {
+       "id": "fr_le_baseball",
+       "target": "Le baseball",
+       "translationAr": "البيسبول",
+       "phonetic": "باس-بول",
+       "emoji": "⚾"
+      },
+      {
+       "id": "fr_le_golf",
+       "target": "Le golf",
+       "translationAr": "الغولف",
+       "phonetic": "غولف",
+       "emoji": "⛳"
+      },
+      {
+       "id": "fr_la_boxe",
+       "target": "La boxe",
+       "translationAr": "الملاكمة",
+       "phonetic": "بوكس",
+       "emoji": "🥊"
+      },
+      {
+       "id": "fr_le_judo",
+       "target": "Le judo",
+       "translationAr": "الجودو",
+       "phonetic": "جو-دو",
+       "emoji": "🥋"
+      },
+      {
+       "id": "fr_le_ski",
+       "target": "Le ski",
+       "translationAr": "التزلج",
+       "phonetic": "سكي",
+       "emoji": "⛷️"
+      },
+      {
+       "id": "fr_la_natation",
+       "target": "La natation",
+       "translationAr": "السباحة",
+       "phonetic": "نا-تا-سيون",
+       "emoji": "🏊"
+      },
+      {
+       "id": "fr_le_surf",
+       "target": "Le surf",
+       "translationAr": "ركوب الأمواج",
+       "phonetic": "سيرف",
+       "emoji": "🏄"
+      },
+      {
+       "id": "fr_le_patinage",
+       "target": "Le patinage",
+       "translationAr": "التزلج على الجليد",
+       "phonetic": "پا-تي-ناژ",
+       "emoji": "⛸️"
+      },
+      {
+       "id": "fr_le_marathon",
+       "target": "Le marathon",
+       "translationAr": "الماراثون",
+       "phonetic": "ما-را-تون",
+       "emoji": "🏅"
+      }
+     ]
+    },
+    {
+     "id": "fr_u12_l2",
+     "titleAr": "الهوايات",
+     "titleEn": "Hobbies",
+     "vocab": [
+      {
+       "id": "fr_la_couture",
+       "target": "La couture",
+       "translationAr": "الخياطة",
+       "phonetic": "كو-تور",
+       "emoji": "🪡"
+      },
+      {
+       "id": "fr_le_tricot",
+       "target": "Le tricot",
+       "translationAr": "الحياكة",
+       "phonetic": "ت-ري-كو",
+       "emoji": "🧶"
+      },
+      {
+       "id": "fr_la_calligraphie",
+       "target": "La calligraphie",
+       "translationAr": "فن الخط",
+       "phonetic": "كا-لي-غرافي",
+       "emoji": "🖋️"
+      },
+      {
+       "id": "fr_la_poterie",
+       "target": "La poterie",
+       "translationAr": "الفخار",
+       "phonetic": "پو-طري",
+       "emoji": "🏺"
+      },
+      {
+       "id": "fr_la_pêche",
+       "target": "La pêche",
+       "translationAr": "صيد السمك",
+       "phonetic": "پيش",
+       "emoji": "🎣"
+      },
+      {
+       "id": "fr_le_camping",
+       "target": "Le camping",
+       "translationAr": "التخييم",
+       "phonetic": "كام-پينگ",
+       "emoji": "⛺"
+      },
+      {
+       "id": "fr_les_échecs",
+       "target": "Les échecs",
+       "translationAr": "الشطرنج",
+       "phonetic": "ليشك",
+       "emoji": "♟️"
+      },
+      {
+       "id": "fr_la_guitare",
+       "target": "La guitare",
+       "translationAr": "الغيتار",
+       "phonetic": "كي-تار",
+       "emoji": "🎸"
+      },
+      {
+       "id": "fr_le_piano",
+       "target": "Le piano",
+       "translationAr": "البيانو",
+       "phonetic": "بي-ا-نو",
+       "emoji": "🎹"
+      },
+      {
+       "id": "fr_la_photographie",
+       "target": "La photographie",
+       "translationAr": "التصوير",
+       "phonetic": "فو-تو-غرافي",
+       "emoji": "📷"
+      },
+      {
+       "id": "fr_laventure",
+       "target": "L'aventure",
+       "translationAr": "المغامرة",
+       "phonetic": "لا-ڤان-تور",
+       "emoji": "🧭"
+      },
+      {
+       "id": "fr_le_bricolage",
+       "target": "Le bricolage",
+       "translationAr": "الأعمال اليدوية",
+       "phonetic": "ب-ري-كو-لاژ",
+       "emoji": "🔨"
+      }
+     ]
+    },
+    {
+     "id": "fr_u12_l3",
+     "titleAr": "نتسلى معاً",
+     "titleEn": "Having Fun",
+     "vocab": [
+      {
+       "id": "fr_on_joue",
+       "target": "On joue ?",
+       "translationAr": "هل نلعب؟",
+       "phonetic": "أون جو",
+       "emoji": "🎮"
+      },
+      {
+       "id": "fr_cest_amusant",
+       "target": "C'est amusant !",
+       "translationAr": "إنه ممتع!",
+       "phonetic": "سِ تا-مو-زان",
+       "emoji": "🎉"
+      },
+      {
+       "id": "fr_jadore_le_foot",
+       "target": "J'adore le foot !",
+       "translationAr": "أعشق كرة القدم!",
+       "phonetic": "جا-دور لو فوت",
+       "emoji": "⚽"
+      },
+      {
+       "id": "fr_tu_aimes_le_sport",
+       "target": "Tu aimes le sport ?",
+       "translationAr": "هل تحب الرياضة؟",
+       "phonetic": "تو إيم لو سبور",
+       "emoji": "🏀"
+      },
+      {
+       "id": "fr_je_suis_libre",
+       "target": "Je suis libre",
+       "translationAr": "أنا حر",
+       "phonetic": "جو سوي ليبر",
+       "emoji": "😎"
+      },
+      {
+       "id": "fr_viens_avec_moi",
+       "target": "Viens avec moi",
+       "translationAr": "تعال معي",
+       "phonetic": "ڤيان آ-ڤيك موا",
+       "emoji": "👋"
+      },
+      {
+       "id": "fr_cest_parti",
+       "target": "C'est parti !",
+       "translationAr": "هيا بنا!",
+       "phonetic": "سِ پار-تي",
+       "emoji": "🚀"
+      },
+      {
+       "id": "fr_bravo",
+       "target": "Bravo !",
+       "translationAr": "برافو!",
+       "phonetic": "برا-ڤو",
+       "emoji": "👏"
+      },
+      {
+       "id": "fr_encore_une_fois",
+       "target": "Encore une fois",
+       "translationAr": "مرة أخرى",
+       "phonetic": "آن-كور أون فوا",
+       "emoji": "🔁"
+      },
+      {
+       "id": "fr_quest_ce_quon_fait",
+       "target": "Qu'est-ce qu'on fait ?",
+       "translationAr": "ماذا نفعل؟",
+       "phonetic": "كِس-كو فِ",
+       "emoji": "🤔"
+      },
+      {
+       "id": "fr_je_gagne",
+       "target": "Je gagne !",
+       "translationAr": "أفوز!",
+       "phonetic": "جو غان-ي",
+       "emoji": "🥇"
+      },
+      {
+       "id": "fr_le_week_end",
+       "target": "Le week-end",
+       "translationAr": "نهاية الأسبوع",
+       "phonetic": "لو ويك-إند",
+       "emoji": "🗓️"
+      }
+     ]
+    }
+   ]
   }
  ]
 }

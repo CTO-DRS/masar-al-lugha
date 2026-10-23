@@ -4747,6 +4747,2312 @@
      ]
     }
    ]
+  },
+  {
+   "id": "en_u19",
+   "color": "#FF9600",
+   "titleAr": "المنزل والأثاث",
+   "titleEn": "Home & Furniture",
+   "lessons": [
+    {
+     "id": "en_u19_l1",
+     "titleAr": "أشياء المنزل",
+     "titleEn": "House Objects",
+     "vocab": [
+      {
+       "id": "en_fridge",
+       "target": "Fridge",
+       "translationAr": "ثلاجة",
+       "phonetic": "فريدج",
+       "emoji": "🧊",
+       "exampleTarget": "The fridge is cold",
+       "exampleAr": "الثلاجة باردة"
+      },
+      {
+       "id": "en_oven",
+       "target": "Oven",
+       "translationAr": "فرن",
+       "phonetic": "أوڤن",
+       "emoji": "🥧",
+       "exampleTarget": "The bread is in the oven",
+       "exampleAr": "الخبز في الفرن"
+      },
+      {
+       "id": "en_kettle",
+       "target": "Kettle",
+       "translationAr": "غلاية",
+       "phonetic": "كِتل",
+       "emoji": "🫖"
+      },
+      {
+       "id": "en_tap",
+       "target": "Tap",
+       "translationAr": "صنبور",
+       "phonetic": "تاپ",
+       "emoji": "🚰",
+       "exampleTarget": "Close the tap",
+       "exampleAr": "أغلق الصنبور"
+      },
+      {
+       "id": "en_cupboard",
+       "target": "Cupboard",
+       "translationAr": "خزانة المطبخ",
+       "phonetic": "كابورد",
+       "emoji": "🗄️"
+      },
+      {
+       "id": "en_shelf",
+       "target": "Shelf",
+       "translationAr": "رف",
+       "phonetic": "شِلف",
+       "emoji": "🗃️",
+       "exampleTarget": "Put the book on the shelf",
+       "exampleAr": "ضع الكتاب على الرف"
+      },
+      {
+       "id": "en_carpet",
+       "target": "Carpet",
+       "translationAr": "سجادة",
+       "phonetic": "كارپت",
+       "emoji": "🟥"
+      },
+      {
+       "id": "en_curtain",
+       "target": "Curtain",
+       "translationAr": "ستارة",
+       "phonetic": "كِرتن",
+       "emoji": "🪟",
+       "exampleTarget": "Open the curtain",
+       "exampleAr": "افتح الستارة"
+      },
+      {
+       "id": "en_lamp",
+       "target": "Lamp",
+       "translationAr": "مصباح",
+       "phonetic": "لامپ",
+       "emoji": "💡",
+       "exampleTarget": "Turn on the lamp",
+       "exampleAr": "أضئ المصباح"
+      },
+      {
+       "id": "en_candle",
+       "target": "Candle",
+       "translationAr": "شمعة",
+       "phonetic": "كاندل",
+       "emoji": "🕯️",
+       "exampleTarget": "Light the candle",
+       "exampleAr": "أشعل الشمعة"
+      },
+      {
+       "id": "en_broom",
+       "target": "Broom",
+       "translationAr": "مكنسة",
+       "phonetic": "بروم",
+       "emoji": "🧹"
+      },
+      {
+       "id": "en_bucket",
+       "target": "Bucket",
+       "translationAr": "دلو",
+       "phonetic": "باكت",
+       "emoji": "🪣"
+      }
+     ]
+    },
+    {
+     "id": "en_u19_l2",
+     "titleAr": "الأثاث والراحة",
+     "titleEn": "Furniture & Comfort",
+     "vocab": [
+      {
+       "id": "en_mattress",
+       "target": "Mattress",
+       "translationAr": "مرتبة",
+       "phonetic": "ماتريس",
+       "emoji": "🛏️"
+      },
+      {
+       "id": "en_sheet",
+       "target": "Sheet",
+       "translationAr": "ملاءة",
+       "phonetic": "شيت",
+       "emoji": "🛌"
+      },
+      {
+       "id": "en_hanger",
+       "target": "Hanger",
+       "translationAr": "علقة ملابس",
+       "phonetic": "هانجر",
+       "emoji": "👔",
+       "exampleTarget": "Hang your jacket",
+       "exampleAr": "علّق جاكتك"
+      },
+      {
+       "id": "en_drawer",
+       "target": "Drawer",
+       "translationAr": "درج",
+       "phonetic": "دروَّر",
+       "emoji": "🗂️"
+      },
+      {
+       "id": "en_bench",
+       "target": "Bench",
+       "translationAr": "مقعد طويل",
+       "phonetic": "بنش",
+       "emoji": "🏞️"
+      },
+      {
+       "id": "en_stool",
+       "target": "Stool",
+       "translationAr": "مقعد بلا ظهر",
+       "phonetic": "ستول",
+       "emoji": "🪑"
+      },
+      {
+       "id": "en_vase",
+       "target": "Vase",
+       "translationAr": "مزهرية",
+       "phonetic": "ڤاز",
+       "emoji": "🏺"
+      },
+      {
+       "id": "en_frame",
+       "target": "Frame",
+       "translationAr": "إطار صورة",
+       "phonetic": "فرايم",
+       "emoji": "🖼️"
+      },
+      {
+       "id": "en_plant",
+       "target": "Plant",
+       "translationAr": "نبتة",
+       "phonetic": "پلانت",
+       "emoji": "🪴",
+       "exampleTarget": "Water the plant",
+       "exampleAr": "اسقِ النبتة"
+      },
+      {
+       "id": "en_mat",
+       "target": "Mat",
+       "translationAr": "حصيرة",
+       "phonetic": "مات",
+       "emoji": "🟩"
+      },
+      {
+       "id": "en_fan",
+       "target": "Fan",
+       "translationAr": "مروحة",
+       "phonetic": "فان",
+       "emoji": "🪭",
+       "exampleTarget": "The fan is on",
+       "exampleAr": "المروحة تعمل"
+      },
+      {
+       "id": "en_swing",
+       "target": "Swing",
+       "translationAr": "أرجوحة",
+       "phonetic": "سوينغ",
+       "emoji": "🛝"
+      }
+     ]
+    },
+    {
+     "id": "en_u19_l3",
+     "titleAr": "المطبخ وأدواته",
+     "titleEn": "Kitchen Tools",
+     "vocab": [
+      {
+       "id": "en_pot",
+       "target": "Pot",
+       "translationAr": "قدر",
+       "phonetic": "پوت",
+       "emoji": "🍲",
+       "exampleTarget": "The pot is hot",
+       "exampleAr": "القدر ساخن"
+      },
+      {
+       "id": "en_pan",
+       "target": "Pan",
+       "translationAr": "مقلاة",
+       "phonetic": "پان",
+       "emoji": "🍳"
+      },
+      {
+       "id": "en_bowl",
+       "target": "Bowl",
+       "translationAr": "زبدية",
+       "phonetic": "بول",
+       "emoji": "🥣"
+      },
+      {
+       "id": "en_tray",
+       "target": "Tray",
+       "translationAr": "صينية",
+       "phonetic": "تري",
+       "emoji": "🍱"
+      },
+      {
+       "id": "en_jar",
+       "target": "Jar",
+       "translationAr": "برطمان",
+       "phonetic": "جار",
+       "emoji": "🫙"
+      },
+      {
+       "id": "en_toaster",
+       "target": "Toaster",
+       "translationAr": "محمصة",
+       "phonetic": "توستر",
+       "emoji": "🍞"
+      },
+      {
+       "id": "en_blender",
+       "target": "Blender",
+       "translationAr": "خلاط",
+       "phonetic": "بلِندر",
+       "emoji": "🥤"
+      },
+      {
+       "id": "en_napkin",
+       "target": "Napkin",
+       "translationAr": "منديل المائدة",
+       "phonetic": "ناپكين",
+       "emoji": "🧻"
+      },
+      {
+       "id": "en_teapot",
+       "target": "Teapot",
+       "translationAr": "إبريق شاي",
+       "phonetic": "تيپوت",
+       "emoji": "🫖",
+       "exampleTarget": "Pour the tea",
+       "exampleAr": "اسكب الشاي"
+      },
+      {
+       "id": "en_pitcher",
+       "target": "Pitcher",
+       "translationAr": "إبريق ماء",
+       "phonetic": "پيچر",
+       "emoji": "🧃"
+      },
+      {
+       "id": "en_chopsticks",
+       "target": "Chopsticks",
+       "translationAr": "عيدان الطعام",
+       "phonetic": "چوب-ستيكس",
+       "emoji": "🥢"
+      },
+      {
+       "id": "en_mug",
+       "target": "Mug",
+       "translationAr": "كوب",
+       "phonetic": "مَگ",
+       "emoji": "☕"
+      }
+     ]
+    },
+    {
+     "id": "en_u19_l4",
+     "titleAr": "عبارات المنزل",
+     "titleEn": "Home Talk",
+     "vocab": [
+      {
+       "id": "en_where_is_the_key",
+       "target": "Where is the key?",
+       "translationAr": "أين المفتاح؟",
+       "phonetic": "وير إز ذا كي؟",
+       "emoji": "🔑"
+      },
+      {
+       "id": "en_turn_off_the_light",
+       "target": "Turn off the light",
+       "translationAr": "أطفئ الضوء",
+       "phonetic": "ترن أوف ذا لايت",
+       "emoji": "🔦"
+      },
+      {
+       "id": "en_its_time_for_bed",
+       "target": "It's time for bed",
+       "translationAr": "حان وقت النوم",
+       "phonetic": "إتس تايم فور بِد",
+       "emoji": "🌙"
+      },
+      {
+       "id": "en_come_in_please",
+       "target": "Come in, please",
+       "translationAr": "تفضل بالدخول",
+       "phonetic": "كَم إن، پليز",
+       "emoji": "🚪"
+      },
+      {
+       "id": "en_make_yourself_at_home",
+       "target": "Make yourself at home",
+       "translationAr": "استرِح في بيتنا",
+       "phonetic": "ميك يورسِلف آت هوم",
+       "emoji": "🏡"
+      },
+      {
+       "id": "en_the_door_is_locked",
+       "target": "The door is locked",
+       "translationAr": "الباب مقفل",
+       "phonetic": "ذا دور إز لاكد",
+       "emoji": "🔒"
+      },
+      {
+       "id": "en_open_the_window",
+       "target": "Open the window",
+       "translationAr": "افتح النافذة",
+       "phonetic": "أوپن ذا ويندو",
+       "emoji": "🪟"
+      },
+      {
+       "id": "en_dinner_is_ready",
+       "target": "Dinner is ready!",
+       "translationAr": "العشاء جاهز!",
+       "phonetic": "دِنر إز ريدي!",
+       "emoji": "🍽️"
+      },
+      {
+       "id": "en_clean_your_room",
+       "target": "Clean your room",
+       "translationAr": "نظف غرفتك",
+       "phonetic": "كلين يور روم",
+       "emoji": "🧹"
+      },
+      {
+       "id": "en_im_going_to_bed",
+       "target": "I'm going to bed",
+       "translationAr": "سأنام الآن",
+       "phonetic": "آم گوينغ تو بِد",
+       "emoji": "😴"
+      },
+      {
+       "id": "en_whats_for_breakfast",
+       "target": "What's for breakfast?",
+       "translationAr": "ما الفطور؟",
+       "phonetic": "واتس فور برِكفست؟",
+       "emoji": "🥣"
+      },
+      {
+       "id": "en_welcome_home",
+       "target": "Welcome home",
+       "translationAr": "أهلاً بعودتك",
+       "phonetic": "ويلكَم هوم",
+       "emoji": "🏠"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u20",
+   "color": "#1CB0F6",
+   "titleAr": "المدينة والأماكن",
+   "titleEn": "City & Places",
+   "lessons": [
+    {
+     "id": "en_u20_l1",
+     "titleAr": "أماكن في المدينة",
+     "titleEn": "Places in the City",
+     "vocab": [
+      {
+       "id": "en_library",
+       "target": "Library",
+       "translationAr": "مكتبة",
+       "phonetic": "لاي-برري",
+       "emoji": "📚",
+       "exampleTarget": "I borrow books from the library",
+       "exampleAr": "أستعير الكتب من المكتبة"
+      },
+      {
+       "id": "en_museum",
+       "target": "Museum",
+       "translationAr": "متحف",
+       "phonetic": "ميوزيم",
+       "emoji": "🏛️",
+       "exampleTarget": "The museum is old",
+       "exampleAr": "المتحف قديم"
+      },
+      {
+       "id": "en_theater",
+       "target": "Theater",
+       "translationAr": "مسرح",
+       "phonetic": "ثيا-تر",
+       "emoji": "🎭"
+      },
+      {
+       "id": "en_cinema",
+       "target": "Cinema",
+       "translationAr": "سينما",
+       "phonetic": "سينما",
+       "emoji": "🎬",
+       "exampleTarget": "Let's go to the cinema",
+       "exampleAr": "لنذهب إلى السينما"
+      },
+      {
+       "id": "en_bank",
+       "target": "Bank",
+       "translationAr": "بنك",
+       "phonetic": "بانك",
+       "emoji": "🏦"
+      },
+      {
+       "id": "en_playground",
+       "target": "Playground",
+       "translationAr": "ملعب أطفال",
+       "phonetic": "پلاي-گراوند",
+       "emoji": "🛝"
+      },
+      {
+       "id": "en_zoo",
+       "target": "Zoo",
+       "translationAr": "حديقة حيوان",
+       "phonetic": "زو",
+       "emoji": "🦁"
+      },
+      {
+       "id": "en_bakery",
+       "target": "Bakery",
+       "translationAr": "مخبز",
+       "phonetic": "بيكري",
+       "emoji": "🥐"
+      },
+      {
+       "id": "en_butcher",
+       "target": "Butcher",
+       "translationAr": "جزار",
+       "phonetic": "بوچر",
+       "emoji": "🥩"
+      },
+      {
+       "id": "en_salon",
+       "target": "Salon",
+       "translationAr": "صالون حلاقة",
+       "phonetic": "سالون",
+       "emoji": "💈"
+      },
+      {
+       "id": "en_court",
+       "target": "Court",
+       "translationAr": "محكمة",
+       "phonetic": "كورت",
+       "emoji": "⚖️"
+      },
+      {
+       "id": "en_factory",
+       "target": "Factory",
+       "translationAr": "مصنع",
+       "phonetic": "فاکتري",
+       "emoji": "🏭"
+      }
+     ]
+    },
+    {
+     "id": "en_u20_l2",
+     "titleAr": "الاتجاهات والمواصلات",
+     "titleEn": "Directions & Transport",
+     "vocab": [
+      {
+       "id": "en_north",
+       "target": "North",
+       "translationAr": "شمال",
+       "phonetic": "نورث",
+       "emoji": "⬆️"
+      },
+      {
+       "id": "en_south",
+       "target": "South",
+       "translationAr": "جنوب",
+       "phonetic": "ساوث",
+       "emoji": "⬇️"
+      },
+      {
+       "id": "en_east",
+       "target": "East",
+       "translationAr": "شرق",
+       "phonetic": "إيست",
+       "emoji": "🌅"
+      },
+      {
+       "id": "en_west",
+       "target": "West",
+       "translationAr": "غرب",
+       "phonetic": "ويست",
+       "emoji": "🌇"
+      },
+      {
+       "id": "en_crosswalk",
+       "target": "Crosswalk",
+       "translationAr": "ممر مشاة",
+       "phonetic": "كروس-واك",
+       "emoji": "🚸",
+       "exampleTarget": "Cross at the crosswalk",
+       "exampleAr": "اعبر من ممر المشاة"
+      },
+      {
+       "id": "en_bus_stop",
+       "target": "Bus stop",
+       "translationAr": "موقف باص",
+       "phonetic": "باس ستوپ",
+       "emoji": "🚏",
+       "exampleTarget": "Where is the bus stop?",
+       "exampleAr": "أين موقف الباص؟"
+      },
+      {
+       "id": "en_roundabout",
+       "target": "Roundabout",
+       "translationAr": "دوار",
+       "phonetic": "راوند-آباوت",
+       "emoji": "🔄"
+      },
+      {
+       "id": "en_highway",
+       "target": "Highway",
+       "translationAr": "طريق سريع",
+       "phonetic": "هاي-واي",
+       "emoji": "🛣️"
+      },
+      {
+       "id": "en_tunnel",
+       "target": "Tunnel",
+       "translationAr": "نفق",
+       "phonetic": "تانل",
+       "emoji": "🕳️"
+      },
+      {
+       "id": "en_parking",
+       "target": "Parking",
+       "translationAr": "موقف سيارات",
+       "phonetic": "پاركينغ",
+       "emoji": "🅿️"
+      },
+      {
+       "id": "en_ferry",
+       "target": "Ferry",
+       "translationAr": "عبّارة",
+       "phonetic": "فري",
+       "emoji": "⛴️"
+      },
+      {
+       "id": "en_helicopter",
+       "target": "Helicopter",
+       "translationAr": "طائرة هليكوبتر",
+       "phonetic": "هلي-کوپتر",
+       "emoji": "🚁"
+      }
+     ]
+    },
+    {
+     "id": "en_u20_l3",
+     "titleAr": "التسوق والمال",
+     "titleEn": "Shopping & Money",
+     "vocab": [
+      {
+       "id": "en_wallet",
+       "target": "Wallet",
+       "translationAr": "محفظة",
+       "phonetic": "والِت",
+       "emoji": "👛"
+      },
+      {
+       "id": "en_coin",
+       "target": "Coin",
+       "translationAr": "عملة معدنية",
+       "phonetic": "كوين",
+       "emoji": "🪙"
+      },
+      {
+       "id": "en_cash_machine",
+       "target": "Cash machine",
+       "translationAr": "جهاز صراف آلي",
+       "phonetic": "كاش ما-شين",
+       "emoji": "🏧"
+      },
+      {
+       "id": "en_bargain",
+       "target": "Bargain",
+       "translationAr": "مساومة",
+       "phonetic": "بارگن",
+       "emoji": "🤲"
+      },
+      {
+       "id": "en_refund",
+       "target": "Refund",
+       "translationAr": "استرجاع المال",
+       "phonetic": "ريفاند",
+       "emoji": "🔙"
+      },
+      {
+       "id": "en_guarantee",
+       "target": "Guarantee",
+       "translationAr": "ضمان",
+       "phonetic": "گاران-تي",
+       "emoji": "🛡️"
+      },
+      {
+       "id": "en_cart",
+       "target": "Cart",
+       "translationAr": "عربة تسوق",
+       "phonetic": "كارت",
+       "emoji": "🛒",
+       "exampleTarget": "I put it in the cart",
+       "exampleAr": "وضعتها في العربة"
+      },
+      {
+       "id": "en_cashier",
+       "target": "Cashier",
+       "translationAr": "أمين الصندوق",
+       "phonetic": "كاشير",
+       "emoji": "🧑‍💼"
+      },
+      {
+       "id": "en_queue",
+       "target": "Queue",
+       "translationAr": "صف",
+       "phonetic": "كيو",
+       "emoji": "🧍"
+      },
+      {
+       "id": "en_package",
+       "target": "Package",
+       "translationAr": "طرد",
+       "phonetic": "پا-كج",
+       "emoji": "📦"
+      },
+      {
+       "id": "en_delivery",
+       "target": "Delivery",
+       "translationAr": "توصيل",
+       "phonetic": "دي-ليفري",
+       "emoji": "🛵",
+       "exampleTarget": "The delivery is fast",
+       "exampleAr": "التوصيل سريع"
+      },
+      {
+       "id": "en_online",
+       "target": "Online",
+       "translationAr": "عبر الإنترنت",
+       "phonetic": "أون-لاين",
+       "emoji": "💻"
+      }
+     ]
+    },
+    {
+     "id": "en_u20_l4",
+     "titleAr": "حوار في المدينة",
+     "titleEn": "City Talk",
+     "vocab": [
+      {
+       "id": "en_how_do_i_get_to_the_museum",
+       "target": "How do I get to the museum?",
+       "translationAr": "كيف أصل إلى المتحف؟",
+       "phonetic": "هاو دو آي گِت تو ذا ميوزيم؟",
+       "emoji": "🗺️"
+      },
+      {
+       "id": "en_is_there_a_bank_near_here",
+       "target": "Is there a bank near here?",
+       "translationAr": "هل يوجد بنك قريب؟",
+       "phonetic": "إز ذِر آ بانك نير هير؟",
+       "emoji": "🏦"
+      },
+      {
+       "id": "en_im_new_in_this_city",
+       "target": "I'm new in this city",
+       "translationAr": "أنا جديد في هذه المدينة",
+       "phonetic": "آم نو إن ذس سيتي",
+       "emoji": "🧭"
+      },
+      {
+       "id": "en_which_bus_goes_downtown",
+       "target": "Which bus goes downtown?",
+       "translationAr": "أي باص يذهب للوسط؟",
+       "phonetic": "ويچ باس گوز داون-تاون؟",
+       "emoji": "🚌"
+      },
+      {
+       "id": "en_one_ticket_please",
+       "target": "One ticket, please",
+       "translationAr": "تذكرة واحدة من فضلك",
+       "phonetic": "ون تيکت، پليز",
+       "emoji": "🎫"
+      },
+      {
+       "id": "en_where_can_i_park",
+       "target": "Where can I park?",
+       "translationAr": "أين أركن السيارة؟",
+       "phonetic": "وير كان آي پارک؟",
+       "emoji": "🅿️"
+      },
+      {
+       "id": "en_its_across_the_street",
+       "target": "It's across the street",
+       "translationAr": "عبر الشارع",
+       "phonetic": "إتز أكروس ذا ستريت",
+       "emoji": "↔️"
+      },
+      {
+       "id": "en_walk_two_blocks",
+       "target": "Walk two blocks",
+       "translationAr": "امشِ حيّين",
+       "phonetic": "واک تو بلاکس",
+       "emoji": "🚶"
+      },
+      {
+       "id": "en_excuse_me_officer",
+       "target": "Excuse me, officer",
+       "translationAr": "عفواً يا شرطي",
+       "phonetic": "إسكيوز مي، أوفيسر",
+       "emoji": "👮"
+      },
+      {
+       "id": "en_lets_take_a_taxi",
+       "target": "Let's take a taxi",
+       "translationAr": "لنأخذ تاكسي",
+       "phonetic": "لتس تيك آ تاکسي",
+       "emoji": "🚕"
+      },
+      {
+       "id": "en_i_love_this_city",
+       "target": "I love this city",
+       "translationAr": "أحب هذه المدينة",
+       "phonetic": "آي لاف ذس سيتي",
+       "emoji": "❤️"
+      },
+      {
+       "id": "en_the_view_is_amazing",
+       "target": "The view is amazing",
+       "translationAr": "المنظر رائع",
+       "phonetic": "ذا ڤيو إز أميزينغ",
+       "emoji": "😍"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u21",
+   "color": "#2B70C9",
+   "titleAr": "المدرسة والتعليم",
+   "titleEn": "School & Education",
+   "lessons": [
+    {
+     "id": "en_u21_l1",
+     "titleAr": "أدوات الصف",
+     "titleEn": "Classroom Tools",
+     "vocab": [
+      {
+       "id": "en_ruler",
+       "target": "Ruler",
+       "translationAr": "مسطرة",
+       "phonetic": "رولر",
+       "emoji": "📏",
+       "exampleTarget": "Draw with the ruler",
+       "exampleAr": "ارسم بالمسطرة"
+      },
+      {
+       "id": "en_eraser",
+       "target": "Eraser",
+       "translationAr": "ممحاة",
+       "phonetic": "إريزر",
+       "emoji": "🧽"
+      },
+      {
+       "id": "en_pencil",
+       "target": "Pencil",
+       "translationAr": "قلم رصاص",
+       "phonetic": "پنسل",
+       "emoji": "✏️"
+      },
+      {
+       "id": "en_notebook",
+       "target": "Notebook",
+       "translationAr": "دفتر",
+       "phonetic": "نوت-بوک",
+       "emoji": "📓"
+      },
+      {
+       "id": "en_backpack",
+       "target": "Backpack",
+       "translationAr": "حقيبة مدرسية",
+       "phonetic": "باك-پاک",
+       "emoji": "🎒",
+       "exampleTarget": "My backpack is heavy",
+       "exampleAr": "حقيبتي ثقيلة"
+      },
+      {
+       "id": "en_chalk",
+       "target": "Chalk",
+       "translationAr": "طباشير",
+       "phonetic": "چوك",
+       "emoji": "🖍️"
+      },
+      {
+       "id": "en_scissors",
+       "target": "Scissors",
+       "translationAr": "مقص",
+       "phonetic": "سيزرز",
+       "emoji": "✂️"
+      },
+      {
+       "id": "en_glue",
+       "target": "Glue",
+       "translationAr": "صمغ",
+       "phonetic": "غلو",
+       "emoji": "🧴"
+      },
+      {
+       "id": "en_marker",
+       "target": "Marker",
+       "translationAr": "قلم ماركر",
+       "phonetic": "مارکر",
+       "emoji": "🖊️"
+      },
+      {
+       "id": "en_globe",
+       "target": "Globe",
+       "translationAr": "كرة أرضية",
+       "phonetic": "گلوب",
+       "emoji": "🌐"
+      },
+      {
+       "id": "en_calculator",
+       "target": "Calculator",
+       "translationAr": "آلة حاسبة",
+       "phonetic": "کالكيولا-تر",
+       "emoji": "🧮"
+      },
+      {
+       "id": "en_locker",
+       "target": "Locker",
+       "translationAr": "خزانة مدرسية",
+       "phonetic": "لوکر",
+       "emoji": "🔐"
+      }
+     ]
+    },
+    {
+     "id": "en_u21_l2",
+     "titleAr": "المواد الدراسية",
+     "titleEn": "School Subjects",
+     "vocab": [
+      {
+       "id": "en_mathematics",
+       "target": "Mathematics",
+       "translationAr": "الرياضيات",
+       "phonetic": "ماث-ما-تيکس",
+       "emoji": "➗",
+       "exampleTarget": "I love mathematics",
+       "exampleAr": "أحب الرياضيات"
+      },
+      {
+       "id": "en_science",
+       "target": "Science",
+       "translationAr": "العلوم",
+       "phonetic": "ساي-انس",
+       "emoji": "🔬"
+      },
+      {
+       "id": "en_history",
+       "target": "History",
+       "translationAr": "التاريخ",
+       "phonetic": "هس-تري",
+       "emoji": "🏛️"
+      },
+      {
+       "id": "en_geography",
+       "target": "Geography",
+       "translationAr": "الجغرافيا",
+       "phonetic": "جي-اگرافي",
+       "emoji": "🌍"
+      },
+      {
+       "id": "en_art",
+       "target": "Art",
+       "translationAr": "الفنون",
+       "phonetic": "آرت",
+       "emoji": "🎨"
+      },
+      {
+       "id": "en_music",
+       "target": "Music",
+       "translationAr": "الموسيقى",
+       "phonetic": "ميوزک",
+       "emoji": "🎵"
+      },
+      {
+       "id": "en_sport",
+       "target": "Sport",
+       "translationAr": "الرياضة",
+       "phonetic": "سپورت",
+       "emoji": "🏅"
+      },
+      {
+       "id": "en_physics",
+       "target": "Physics",
+       "translationAr": "الفيزياء",
+       "phonetic": "فيزيکس",
+       "emoji": "⚛️"
+      },
+      {
+       "id": "en_chemistry",
+       "target": "Chemistry",
+       "translationAr": "الكيمياء",
+       "phonetic": "کمِس-تري",
+       "emoji": "🧪",
+       "exampleTarget": "Chemistry is difficult",
+       "exampleAr": "الكيمياء صعبة"
+      },
+      {
+       "id": "en_biology",
+       "target": "Biology",
+       "translationAr": "الأحياء",
+       "phonetic": "با-أولوجي",
+       "emoji": "🧬"
+      },
+      {
+       "id": "en_religion",
+       "target": "Religion",
+       "translationAr": "التربية الدينية",
+       "phonetic": "ري-ليجن",
+       "emoji": "🕌"
+      },
+      {
+       "id": "en_arabic",
+       "target": "Arabic",
+       "translationAr": "اللغة العربية",
+       "phonetic": "آرابک",
+       "emoji": "📖"
+      }
+     ]
+    },
+    {
+     "id": "en_u21_l3",
+     "titleAr": "أفعال التعلم",
+     "titleEn": "Learning Verbs",
+     "vocab": [
+      {
+       "id": "en_study",
+       "target": "Study",
+       "translationAr": "يذاكر",
+       "phonetic": "ستادي",
+       "emoji": "📚"
+      },
+      {
+       "id": "en_memorize",
+       "target": "Memorize",
+       "translationAr": "يحفظ",
+       "phonetic": "مِم-رايز",
+       "emoji": "🧠"
+      },
+      {
+       "id": "en_explain",
+       "target": "Explain",
+       "translationAr": "يشرح",
+       "phonetic": "إکس-پلين",
+       "emoji": "🗣️"
+      },
+      {
+       "id": "en_translate",
+       "target": "Translate",
+       "translationAr": "يترجم",
+       "phonetic": "ترانز-ليت",
+       "emoji": "🌐",
+       "exampleTarget": "Translate this sentence",
+       "exampleAr": "ترجم هذه الجملة"
+      },
+      {
+       "id": "en_spell",
+       "target": "Spell",
+       "translationAr": "يتهجى",
+       "phonetic": "سپيل",
+       "emoji": "🔤"
+      },
+      {
+       "id": "en_count",
+       "target": "Count",
+       "translationAr": "يعد",
+       "phonetic": "كاونت",
+       "emoji": "🔢"
+      },
+      {
+       "id": "en_copy",
+       "target": "Copy",
+       "translationAr": "ينسخ",
+       "phonetic": "کوپي",
+       "emoji": "📋"
+      },
+      {
+       "id": "en_revise",
+       "target": "Revise",
+       "translationAr": "يراجع",
+       "phonetic": "ري-ڤايز",
+       "emoji": "🔁"
+      },
+      {
+       "id": "en_solve",
+       "target": "Solve",
+       "translationAr": "يحل",
+       "phonetic": "سولڤ",
+       "emoji": "🧩",
+       "exampleTarget": "Solve the problem",
+       "exampleAr": "حل المسألة"
+      },
+      {
+       "id": "en_answer",
+       "target": "Answer",
+       "translationAr": "يجيب",
+       "phonetic": "آن-سر",
+       "emoji": "💬"
+      },
+      {
+       "id": "en_skip",
+       "target": "Skip",
+       "translationAr": "يتغيب",
+       "phonetic": "سکيپ",
+       "emoji": "⏭️"
+      },
+      {
+       "id": "en_graduate",
+       "target": "Graduate",
+       "translationAr": "يتخرج",
+       "phonetic": "گراد-يو-ايت",
+       "emoji": "🎓"
+      }
+     ]
+    },
+    {
+     "id": "en_u21_l4",
+     "titleAr": "حوار مدرسي",
+     "titleEn": "School Talk",
+     "vocab": [
+      {
+       "id": "en_may_i_come_in",
+       "target": "May I come in?",
+       "translationAr": "هل يمكنني الدخول؟",
+       "phonetic": "ماي آي كَم إن؟",
+       "emoji": "🚪"
+      },
+      {
+       "id": "en_sit_down_please",
+       "target": "Sit down, please",
+       "translationAr": "اجلس من فضلك",
+       "phonetic": "ست داون، پليز",
+       "emoji": "🪑"
+      },
+      {
+       "id": "en_open_your_books",
+       "target": "Open your books",
+       "translationAr": "افتحوا كتبكم",
+       "phonetic": "أوپن يور بوکس",
+       "emoji": "📖"
+      },
+      {
+       "id": "en_do_your_homework",
+       "target": "Do your homework",
+       "translationAr": "اعمل واجبك",
+       "phonetic": "دو يور هوم-وورک",
+       "emoji": "📝"
+      },
+      {
+       "id": "en_be_quiet",
+       "target": "Be quiet",
+       "translationAr": "اهدأ",
+       "phonetic": "بي كواي-إت",
+       "emoji": "🤫"
+      },
+      {
+       "id": "en_raise_your_hand",
+       "target": "Raise your hand",
+       "translationAr": "ارفع يدك",
+       "phonetic": "ريز يور هاند",
+       "emoji": "✋"
+      },
+      {
+       "id": "en_well_done",
+       "target": "Well done!",
+       "translationAr": "أحسنت!",
+       "phonetic": "ويل دَن!",
+       "emoji": "👏"
+      },
+      {
+       "id": "en_repeat_after_me",
+       "target": "Repeat after me",
+       "translationAr": "كرر بعدي",
+       "phonetic": "ري-پيت آف-تر مي",
+       "emoji": "🔁"
+      },
+      {
+       "id": "en_can_you_explain_again",
+       "target": "Can you explain again?",
+       "translationAr": "هل تشرح مرة أخرى؟",
+       "phonetic": "کان يو إکس-پلين أ-گين؟",
+       "emoji": "🙋"
+      },
+      {
+       "id": "en_there_is_a_test_tomorrow",
+       "target": "There is a test tomorrow",
+       "translationAr": "لدينا اختبار غداً",
+       "phonetic": "ذِر إز آ تست تُ-مورو",
+       "emoji": "📅"
+      },
+      {
+       "id": "en_the_bell_rang",
+       "target": "The bell rang",
+       "translationAr": "رن الجرس",
+       "phonetic": "ذا بِل رانغ",
+       "emoji": "🔔"
+      },
+      {
+       "id": "en_see_you_tomorrow",
+       "target": "See you tomorrow",
+       "translationAr": "أراك غداً",
+       "phonetic": "سي يو تُ-مورو",
+       "emoji": "👋"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u22",
+   "color": "#00CD9C",
+   "titleAr": "الرياضة والهوايات",
+   "titleEn": "Sports & Hobbies",
+   "lessons": [
+    {
+     "id": "en_u22_l1",
+     "titleAr": "الرياضات",
+     "titleEn": "Sports",
+     "vocab": [
+      {
+       "id": "en_basketball",
+       "target": "Basketball",
+       "translationAr": "كرة السلة",
+       "phonetic": "باس-کت-بول",
+       "emoji": "🏀",
+       "exampleTarget": "I watch basketball",
+       "exampleAr": "أشاهد كرة السلة"
+      },
+      {
+       "id": "en_volleyball",
+       "target": "Volleyball",
+       "translationAr": "الكرة الطائرة",
+       "phonetic": "ڤو-لي-بول",
+       "emoji": "🏐"
+      },
+      {
+       "id": "en_tennis",
+       "target": "Tennis",
+       "translationAr": "التنس",
+       "phonetic": "تِنيس",
+       "emoji": "🎾"
+      },
+      {
+       "id": "en_baseball",
+       "target": "Baseball",
+       "translationAr": "البيسبول",
+       "phonetic": "بيس-بول",
+       "emoji": "⚾"
+      },
+      {
+       "id": "en_golf",
+       "target": "Golf",
+       "translationAr": "الغولف",
+       "phonetic": "غولف",
+       "emoji": "⛳"
+      },
+      {
+       "id": "en_boxing",
+       "target": "Boxing",
+       "translationAr": "الملاكمة",
+       "phonetic": "بوکسينغ",
+       "emoji": "🥊",
+       "exampleTarget": "Boxing is a strong sport",
+       "exampleAr": "الملاكمة رياضة قوية"
+      },
+      {
+       "id": "en_karate",
+       "target": "Karate",
+       "translationAr": "الكاراتيه",
+       "phonetic": "کا-را-تي",
+       "emoji": "🥋"
+      },
+      {
+       "id": "en_wrestling",
+       "target": "Wrestling",
+       "translationAr": "المصارعة",
+       "phonetic": "ريسلينغ",
+       "emoji": "🤼"
+      },
+      {
+       "id": "en_skiing",
+       "target": "Skiing",
+       "translationAr": "التزلج",
+       "phonetic": "سکيينغ",
+       "emoji": "⛷️"
+      },
+      {
+       "id": "en_surfing",
+       "target": "Surfing",
+       "translationAr": "ركوب الأمواج",
+       "phonetic": "سرفينغ",
+       "emoji": "🏄"
+      },
+      {
+       "id": "en_skating",
+       "target": "Skating",
+       "translationAr": "التزلج على الجليد",
+       "phonetic": "سکيتينغ",
+       "emoji": "⛸️"
+      },
+      {
+       "id": "en_marathon",
+       "target": "Marathon",
+       "translationAr": "ماراثون",
+       "phonetic": "مارا-ثون",
+       "emoji": "🏅"
+      }
+     ]
+    },
+    {
+     "id": "en_u22_l2",
+     "titleAr": "الهوايات",
+     "titleEn": "Hobbies",
+     "vocab": [
+      {
+       "id": "en_sewing",
+       "target": "Sewing",
+       "translationAr": "خياطة",
+       "phonetic": "سوينغ",
+       "emoji": "🪡"
+      },
+      {
+       "id": "en_knitting",
+       "target": "Knitting",
+       "translationAr": "حياكة",
+       "phonetic": "نِتينغ",
+       "emoji": "🧶",
+       "exampleTarget": "My grandmother loves knitting",
+       "exampleAr": "جدتي تحب الحياكة"
+      },
+      {
+       "id": "en_woodwork",
+       "target": "Woodwork",
+       "translationAr": "نجارة",
+       "phonetic": "وود-وورک",
+       "emoji": "🪵"
+      },
+      {
+       "id": "en_calligraphy",
+       "target": "Calligraphy",
+       "translationAr": "فن الخط",
+       "phonetic": "کا-لي-گرافي",
+       "emoji": "🖋️"
+      },
+      {
+       "id": "en_collecting_stamps",
+       "target": "Collecting stamps",
+       "translationAr": "جمع الطوابع",
+       "phonetic": "کو-لکتينغ ستامپس",
+       "emoji": "📮"
+      },
+      {
+       "id": "en_bird_watching",
+       "target": "Bird watching",
+       "translationAr": "مراقبة الطيور",
+       "phonetic": "بيرد وات-چينغ",
+       "emoji": "🦅"
+      },
+      {
+       "id": "en_baking",
+       "target": "Baking",
+       "translationAr": "خبز الحلويات",
+       "phonetic": "بيكينغ",
+       "emoji": "🧁",
+       "exampleTarget": "I bake cakes every Friday",
+       "exampleAr": "أخبز الكعك كل جمعة"
+      },
+      {
+       "id": "en_pottery",
+       "target": "Pottery",
+       "translationAr": "فخار",
+       "phonetic": "پوتري",
+       "emoji": "🏺"
+      },
+      {
+       "id": "en_origami",
+       "target": "Origami",
+       "translationAr": "أوريغامي",
+       "phonetic": "أوري-گامي",
+       "emoji": "🦢"
+      },
+      {
+       "id": "en_blogging",
+       "target": "Blogging",
+       "translationAr": "التدوين",
+       "phonetic": "بلوگينغ",
+       "emoji": "✍️"
+      },
+      {
+       "id": "en_planting",
+       "target": "Planting",
+       "translationAr": "زراعة",
+       "phonetic": "پلانتينغ",
+       "emoji": "🌱"
+      },
+      {
+       "id": "en_board_games",
+       "target": "Board games",
+       "translationAr": "ألعاب لوحية",
+       "phonetic": "بورد گيمز",
+       "emoji": "🎲"
+      }
+     ]
+    },
+    {
+     "id": "en_u22_l3",
+     "titleAr": "الألعاب والفوز",
+     "titleEn": "Games & Winning",
+     "vocab": [
+      {
+       "id": "en_win",
+       "target": "Win",
+       "translationAr": "يفوز",
+       "phonetic": "وين",
+       "emoji": "🥇"
+      },
+      {
+       "id": "en_lose",
+       "target": "Lose",
+       "translationAr": "يخسر",
+       "phonetic": "لوز",
+       "emoji": "😤"
+      },
+      {
+       "id": "en_score",
+       "target": "Score",
+       "translationAr": "يسجل",
+       "phonetic": "سکور",
+       "emoji": "🎯"
+      },
+      {
+       "id": "en_team",
+       "target": "Team",
+       "translationAr": "فريق",
+       "phonetic": "تيم",
+       "emoji": "👥"
+      },
+      {
+       "id": "en_coach",
+       "target": "Coach",
+       "translationAr": "مدرب",
+       "phonetic": "کوچ",
+       "emoji": "🧢"
+      },
+      {
+       "id": "en_referee",
+       "target": "Referee",
+       "translationAr": "حكم",
+       "phonetic": "ريف-ري",
+       "emoji": "🦓"
+      },
+      {
+       "id": "en_match",
+       "target": "Match",
+       "translationAr": "مباراة",
+       "phonetic": "ماچ",
+       "emoji": "🏟️"
+      },
+      {
+       "id": "en_champion",
+       "target": "Champion",
+       "translationAr": "بطل",
+       "phonetic": "چام-پيون",
+       "emoji": "🏅"
+      },
+      {
+       "id": "en_trophy",
+       "target": "Trophy",
+       "translationAr": "كأس",
+       "phonetic": "ترو-في",
+       "emoji": "🏆"
+      },
+      {
+       "id": "en_prize",
+       "target": "Prize",
+       "translationAr": "جائزة",
+       "phonetic": "پرايز",
+       "emoji": "🎁"
+      },
+      {
+       "id": "en_chess",
+       "target": "Chess",
+       "translationAr": "شطرنج",
+       "phonetic": "چيس",
+       "emoji": "♟️"
+      },
+      {
+       "id": "en_puzzle",
+       "target": "Puzzle",
+       "translationAr": "لغز",
+       "phonetic": "پازل",
+       "emoji": "🧩"
+      }
+     ]
+    },
+    {
+     "id": "en_u22_l4",
+     "titleAr": "حوار وقت الفراغ",
+     "titleEn": "Free Time Talk",
+     "vocab": [
+      {
+       "id": "en_what_do_you_do_in_your_free_time",
+       "target": "What do you do in your free time?",
+       "translationAr": "ماذا تفعل في وقت فراغك؟",
+       "phonetic": "وات دو يو دو إن يور فرِي تايم؟",
+       "emoji": "🤔"
+      },
+      {
+       "id": "en_i_go_to_the_gym",
+       "target": "I go to the gym",
+       "translationAr": "أذهب للنادي",
+       "phonetic": "آي گو تو ذا جيم",
+       "emoji": "🏋️"
+      },
+      {
+       "id": "en_lets_play_football",
+       "target": "Let's play football",
+       "translationAr": "هيا نلعب كرة القدم",
+       "phonetic": "لتس پلي فوتبول",
+       "emoji": "⚽"
+      },
+      {
+       "id": "en_do_you_like_tennis",
+       "target": "Do you like tennis?",
+       "translationAr": "هل تحب التنس؟",
+       "phonetic": "دو يو لايك تِنيس؟",
+       "emoji": "🎾"
+      },
+      {
+       "id": "en_im_a_fan_of_the_team",
+       "target": "I'm a fan of the team",
+       "translationAr": "أنا مشجع للفريق",
+       "phonetic": "آم آ فان أوف ذا تيم",
+       "emoji": "📣"
+      },
+      {
+       "id": "en_i_practice_every_day",
+       "target": "I practice every day",
+       "translationAr": "أتدرب كل يوم",
+       "phonetic": "آي پراکتيس إفري دي",
+       "emoji": "📅"
+      },
+      {
+       "id": "en_its_my_favorite_hobby",
+       "target": "It's my favorite hobby",
+       "translationAr": "إنها هوايتي المفضلة",
+       "phonetic": "إتس ماي فيڤ-ريت هوبي",
+       "emoji": "❤️"
+      },
+      {
+       "id": "en_come_with_us",
+       "target": "Come with us",
+       "translationAr": "تعال معنا",
+       "phonetic": "کَم ويث أس",
+       "emoji": "🤝"
+      },
+      {
+       "id": "en_that_sounds_fun",
+       "target": "That sounds fun",
+       "translationAr": "يبدو ممتعاً",
+       "phonetic": "ذات ساوندز فن",
+       "emoji": "🎉"
+      },
+      {
+       "id": "en_im_tired_today",
+       "target": "I'm tired today",
+       "translationAr": "أنا متعب اليوم",
+       "phonetic": "آم تايرد تُ-دي",
+       "emoji": "🥱"
+      },
+      {
+       "id": "en_lets_meet_on_saturday",
+       "target": "Let's meet on Saturday",
+       "translationAr": "لنلتقي السبت",
+       "phonetic": "لتس ميت أون ساتر-دي",
+       "emoji": "🗓️"
+      },
+      {
+       "id": "en_good_game",
+       "target": "Good game!",
+       "translationAr": "مباراة جيدة!",
+       "phonetic": "گوگ گيم!",
+       "emoji": "👍"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u23",
+   "color": "#CE82FF",
+   "titleAr": "التقنية والتواصل",
+   "titleEn": "Technology & Communication",
+   "lessons": [
+    {
+     "id": "en_u23_l1",
+     "titleAr": "الأجهزة",
+     "titleEn": "Devices",
+     "vocab": [
+      {
+       "id": "en_laptop",
+       "target": "Laptop",
+       "translationAr": "حاسوب محمول",
+       "phonetic": "لاپ-تاپ",
+       "emoji": "💻",
+       "exampleTarget": "My laptop is new",
+       "exampleAr": "حاسوبي المحمول جديد"
+      },
+      {
+       "id": "en_headphones",
+       "target": "Headphones",
+       "translationAr": "سماعات",
+       "phonetic": "هِد-فونز",
+       "emoji": "🎧"
+      },
+      {
+       "id": "en_charger",
+       "target": "Charger",
+       "translationAr": "شاحن",
+       "phonetic": "چارجر",
+       "emoji": "🔌",
+       "exampleTarget": "The charger is broken",
+       "exampleAr": "الشاحن معطل"
+      },
+      {
+       "id": "en_keyboard",
+       "target": "Keyboard",
+       "translationAr": "لوحة مفاتيح",
+       "phonetic": "کي-بورد",
+       "emoji": "⌨️"
+      },
+      {
+       "id": "en_television",
+       "target": "Television",
+       "translationAr": "تلفاز",
+       "phonetic": "تِلي-ڤيژن",
+       "emoji": "📺"
+      },
+      {
+       "id": "en_speaker",
+       "target": "Speaker",
+       "translationAr": "مكبر صوت",
+       "phonetic": "سپي-کر",
+       "emoji": "🔊"
+      },
+      {
+       "id": "en_microphone",
+       "target": "Microphone",
+       "translationAr": "ميكروفون",
+       "phonetic": "ماي-کروفون",
+       "emoji": "🎤"
+      },
+      {
+       "id": "en_drone",
+       "target": "Drone",
+       "translationAr": "طائرة مسيّرة",
+       "phonetic": "درون",
+       "emoji": "🚁"
+      },
+      {
+       "id": "en_robot",
+       "target": "Robot",
+       "translationAr": "روبوت",
+       "phonetic": "رو-بوت",
+       "emoji": "🤖"
+      },
+      {
+       "id": "en_smart_watch",
+       "target": "Smart watch",
+       "translationAr": "ساعة ذكية",
+       "phonetic": "سمارت واچ",
+       "emoji": "⌚"
+      },
+      {
+       "id": "en_tablet",
+       "target": "Tablet",
+       "translationAr": "جهاز لوحي",
+       "phonetic": "تا-بلِت",
+       "emoji": "📱"
+      },
+      {
+       "id": "en_console",
+       "target": "Console",
+       "translationAr": "وحدة ألعاب",
+       "phonetic": "کون-سول",
+       "emoji": "🕹️"
+      }
+     ]
+    },
+    {
+     "id": "en_u23_l2",
+     "titleAr": "الإنترنت والتطبيقات",
+     "titleEn": "Internet & Apps",
+     "vocab": [
+      {
+       "id": "en_social_media",
+       "target": "Social media",
+       "translationAr": "وسائل التواصل",
+       "phonetic": "سو-شال مي-ديا",
+       "emoji": "📲",
+       "exampleTarget": "Follow me on social media",
+       "exampleAr": "تابعني على وسائل التواصل"
+      },
+      {
+       "id": "en_account",
+       "target": "Account",
+       "translationAr": "حساب",
+       "phonetic": "أکاونت",
+       "emoji": "👤"
+      },
+      {
+       "id": "en_followers",
+       "target": "Followers",
+       "translationAr": "متابعون",
+       "phonetic": "فولا-وِرز",
+       "emoji": "👥"
+      },
+      {
+       "id": "en_post",
+       "target": "Post",
+       "translationAr": "منشور",
+       "phonetic": "پوست",
+       "emoji": "📝"
+      },
+      {
+       "id": "en_comment",
+       "target": "Comment",
+       "translationAr": "تعليق",
+       "phonetic": "کومِنت",
+       "emoji": "💬"
+      },
+      {
+       "id": "en_like",
+       "target": "Like",
+       "translationAr": "إعجاب",
+       "phonetic": "لايك",
+       "emoji": "👍"
+      },
+      {
+       "id": "en_share",
+       "target": "Share",
+       "translationAr": "مشاركة",
+       "phonetic": "شير",
+       "emoji": "🔁"
+      },
+      {
+       "id": "en_download",
+       "target": "Download",
+       "translationAr": "تحميل",
+       "phonetic": "داون-لوڈ",
+       "emoji": "⬇️"
+      },
+      {
+       "id": "en_upload",
+       "target": "Upload",
+       "translationAr": "رفع",
+       "phonetic": "أپ-لوڈ",
+       "emoji": "⬆️"
+      },
+      {
+       "id": "en_notification",
+       "target": "Notification",
+       "translationAr": "إشعار",
+       "phonetic": "نوتي-فیکيشن",
+       "emoji": "🔔",
+       "exampleTarget": "I got a notification",
+       "exampleAr": "وصلني إشعار"
+      },
+      {
+       "id": "en_link",
+       "target": "Link",
+       "translationAr": "رابط",
+       "phonetic": "لينک",
+       "emoji": "🔗"
+      },
+      {
+       "id": "en_update",
+       "target": "Update",
+       "translationAr": "تحديث",
+       "phonetic": "أپ-ديت",
+       "emoji": "🔄"
+      }
+     ]
+    },
+    {
+     "id": "en_u23_l3",
+     "titleAr": "على الهاتف",
+     "titleEn": "On the Phone",
+     "vocab": [
+      {
+       "id": "en_whos_speaking",
+       "target": "Who's speaking?",
+       "translationAr": "من المتحدث؟",
+       "phonetic": "هوز سپي-کينغ؟",
+       "emoji": "🙋"
+      },
+      {
+       "id": "en_can_you_hear_me",
+       "target": "Can you hear me?",
+       "translationAr": "هل تسمعني؟",
+       "phonetic": "کان يو هير مي؟",
+       "emoji": "👂"
+      },
+      {
+       "id": "en_the_sound_is_cutting",
+       "target": "The sound is cutting",
+       "translationAr": "الصوت متقطع",
+       "phonetic": "ذا ساوند إز کَتينغ",
+       "emoji": "📶"
+      },
+      {
+       "id": "en_ill_call_you_back",
+       "target": "I'll call you back",
+       "translationAr": "سأعيد الاتصال بك",
+       "phonetic": "آيل کول يو باک",
+       "emoji": "☎️"
+      },
+      {
+       "id": "en_send_me_a_message",
+       "target": "Send me a message",
+       "translationAr": "أرسل لي رسالة",
+       "phonetic": "سِند مي آ مس-يدج",
+       "emoji": "✉️"
+      },
+      {
+       "id": "en_my_battery_died",
+       "target": "My battery died",
+       "translationAr": "انتهت بطاريتي",
+       "phonetic": "ماي باتري دايد",
+       "emoji": "🪫"
+      },
+      {
+       "id": "en_call_me_later",
+       "target": "Call me later",
+       "translationAr": "اتصل بي لاحقاً",
+       "phonetic": "کول مي لي-تر",
+       "emoji": "📞"
+      },
+      {
+       "id": "en_i_missed_your_call",
+       "target": "I missed your call",
+       "translationAr": "فاتتني مكالمتك",
+       "phonetic": "آي مست يور کول",
+       "emoji": "😅"
+      },
+      {
+       "id": "en_turn_on_the_speaker",
+       "target": "Turn on the speaker",
+       "translationAr": "شغّل مكبر الصوت",
+       "phonetic": "ترن أون ذا سپيکر",
+       "emoji": "🔊"
+      },
+      {
+       "id": "en_hang_up_please",
+       "target": "Hang up, please",
+       "translationAr": "أغلق الخط من فضلك",
+       "phonetic": "هانغ أب، پليز",
+       "emoji": "✋"
+      },
+      {
+       "id": "en_add_my_number",
+       "target": "Add my number",
+       "translationAr": "أضف رقمي",
+       "phonetic": "آد ماي نام-بر",
+       "emoji": "➕"
+      },
+      {
+       "id": "en_text_me_when_you_arrive",
+       "target": "Text me when you arrive",
+       "translationAr": "راسلني عند وصولك",
+       "phonetic": "تِکست مي وين يو أ-رايف",
+       "emoji": "🚗"
+      }
+     ]
+    },
+    {
+     "id": "en_u23_l4",
+     "titleAr": "حوار تقني",
+     "titleEn": "Technology Talk",
+     "vocab": [
+      {
+       "id": "en_my_internet_is_slow",
+       "target": "My internet is slow",
+       "translationAr": "الإنترنت بطيء",
+       "phonetic": "ماي إن-تر-نِت إز سلُو",
+       "emoji": "🐌"
+      },
+      {
+       "id": "en_i_need_a_charger",
+       "target": "I need a charger",
+       "translationAr": "أحتاج شاحناً",
+       "phonetic": "آي نيد آ چارجر",
+       "emoji": "🔌"
+      },
+      {
+       "id": "en_take_a_photo",
+       "target": "Take a photo",
+       "translationAr": "التقط صورة",
+       "phonetic": "تيک آ فو-تو",
+       "emoji": "📸"
+      },
+      {
+       "id": "en_record_a_video",
+       "target": "Record a video",
+       "translationAr": "سجل فيديو",
+       "phonetic": "ري-کورد آ ڤي-دي-و",
+       "emoji": "🎥"
+      },
+      {
+       "id": "en_turn_it_off_and_on",
+       "target": "Turn it off and on",
+       "translationAr": "أطفئه وشغّله من جديد",
+       "phonetic": "ترن إت أوف آند أون",
+       "emoji": "🔄"
+      },
+      {
+       "id": "en_its_not_working",
+       "target": "It's not working",
+       "translationAr": "لا يعمل",
+       "phonetic": "إتس نو وورکينغ",
+       "emoji": "🚫"
+      },
+      {
+       "id": "en_ill_fix_it",
+       "target": "I'll fix it",
+       "translationAr": "سأصلحه",
+       "phonetic": "آل فيکس إت",
+       "emoji": "🔧"
+      },
+      {
+       "id": "en_new_software_update",
+       "target": "New software update",
+       "translationAr": "تحديث نظام جديد",
+       "phonetic": "نو سوفت-وير أپ-ديت",
+       "emoji": "📀"
+      },
+      {
+       "id": "en_back_up_your_files",
+       "target": "Back up your files",
+       "translationAr": "انسخ ملفاتك احتياطياً",
+       "phonetic": "باك أب يور فايلز",
+       "emoji": "💾"
+      },
+      {
+       "id": "en_delete_the_app",
+       "target": "Delete the app",
+       "translationAr": "احذف التطبيق",
+       "phonetic": "دي-ليت ذي آپ",
+       "emoji": "🗑️"
+      },
+      {
+       "id": "en_scroll_down",
+       "target": "Scroll down",
+       "translationAr": "مرر للأسفل",
+       "phonetic": "سکرول داون",
+       "emoji": "👇"
+      },
+      {
+       "id": "en_tap_here",
+       "target": "Tap here",
+       "translationAr": "انقر هنا",
+       "phonetic": "تاپ هير",
+       "emoji": "👆"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u24",
+   "color": "#FF4B4B",
+   "titleAr": "الأفعال والمحادثة المتقدمة",
+   "titleEn": "Verbs & Conversation",
+   "lessons": [
+    {
+     "id": "en_u24_l1",
+     "titleAr": "أفعال العقل",
+     "titleEn": "Mind Verbs",
+     "vocab": [
+      {
+       "id": "en_think",
+       "target": "Think",
+       "translationAr": "يفكر",
+       "phonetic": "ثينک",
+       "emoji": "🤔",
+       "exampleTarget": "I think you're right",
+       "exampleAr": "أعتقد أنك محق"
+      },
+      {
+       "id": "en_decide",
+       "target": "Decide",
+       "translationAr": "يقرر",
+       "phonetic": "دي-سايد",
+       "emoji": "✅"
+      },
+      {
+       "id": "en_choose",
+       "target": "Choose",
+       "translationAr": "يختار",
+       "phonetic": "چوز",
+       "emoji": "👉"
+      },
+      {
+       "id": "en_hope",
+       "target": "Hope",
+       "translationAr": "يأمل",
+       "phonetic": "هوپ",
+       "emoji": "🌟"
+      },
+      {
+       "id": "en_wish",
+       "target": "Wish",
+       "translationAr": "يتمنى",
+       "phonetic": "ويش",
+       "emoji": "🌠"
+      },
+      {
+       "id": "en_forget",
+       "target": "Forget",
+       "translationAr": "ينسى",
+       "phonetic": "فرگِت",
+       "emoji": "🤷"
+      },
+      {
+       "id": "en_remember",
+       "target": "Remember",
+       "translationAr": "يتذكر",
+       "phonetic": "ري-ممبر",
+       "emoji": "💡"
+      },
+      {
+       "id": "en_imagine",
+       "target": "Imagine",
+       "translationAr": "يتخيل",
+       "phonetic": "إ-ما-جين",
+       "emoji": "🦄"
+      },
+      {
+       "id": "en_believe",
+       "target": "Believe",
+       "translationAr": "يؤمن",
+       "phonetic": "بي-ليف",
+       "emoji": "🙏"
+      },
+      {
+       "id": "en_doubt",
+       "target": "Doubt",
+       "translationAr": "يشك",
+       "phonetic": "داوت",
+       "emoji": "🤨"
+      },
+      {
+       "id": "en_learn",
+       "target": "Learn",
+       "translationAr": "يتعلم",
+       "phonetic": "ليرن",
+       "emoji": "📖"
+      },
+      {
+       "id": "en_teach",
+       "target": "Teach",
+       "translationAr": "يعلّم",
+       "phonetic": "تيتش",
+       "emoji": "👨‍🏫",
+       "exampleTarget": "Teach me English",
+       "exampleAr": "علمني الإنجليزية"
+      }
+     ]
+    },
+    {
+     "id": "en_u24_l2",
+     "titleAr": "أفعال الحركة",
+     "titleEn": "Action Verbs",
+     "vocab": [
+      {
+       "id": "en_arrive",
+       "target": "Arrive",
+       "translationAr": "يصل",
+       "phonetic": "أ-رايف",
+       "emoji": "🛬"
+      },
+      {
+       "id": "en_leave",
+       "target": "Leave",
+       "translationAr": "يغادر",
+       "phonetic": "ليف",
+       "emoji": "🚪"
+      },
+      {
+       "id": "en_wait",
+       "target": "Wait",
+       "translationAr": "ينتظر",
+       "phonetic": "وايت",
+       "emoji": "⏳",
+       "exampleTarget": "Wait for me here",
+       "exampleAr": "انتظرني هنا"
+      },
+      {
+       "id": "en_find",
+       "target": "Find",
+       "translationAr": "يجد",
+       "phonetic": "فاينڈ",
+       "emoji": "🔎"
+      },
+      {
+       "id": "en_hide",
+       "target": "Hide",
+       "translationAr": "يختبئ",
+       "phonetic": "هايد",
+       "emoji": "🙈"
+      },
+      {
+       "id": "en_show",
+       "target": "Show",
+       "translationAr": "يعرض",
+       "phonetic": "شو",
+       "emoji": "👀"
+      },
+      {
+       "id": "en_give",
+       "target": "Give",
+       "translationAr": "يعطي",
+       "phonetic": "گيف",
+       "emoji": "🎁",
+       "exampleTarget": "Give me the pen",
+       "exampleAr": "أعطني القلم"
+      },
+      {
+       "id": "en_take",
+       "target": "Take",
+       "translationAr": "يأخذ",
+       "phonetic": "تيک",
+       "emoji": "✋"
+      },
+      {
+       "id": "en_send",
+       "target": "Send",
+       "translationAr": "يرسل",
+       "phonetic": "سِند",
+       "emoji": "📤"
+      },
+      {
+       "id": "en_bring",
+       "target": "Bring",
+       "translationAr": "يحضر",
+       "phonetic": "برينغ",
+       "emoji": "🎒"
+      },
+      {
+       "id": "en_carry",
+       "target": "Carry",
+       "translationAr": "يحمل",
+       "phonetic": "کا-ري",
+       "emoji": "🧳"
+      },
+      {
+       "id": "en_throw",
+       "target": "Throw",
+       "translationAr": "يرمي",
+       "phonetic": "ثرو",
+       "emoji": "🥎"
+      }
+     ]
+    },
+    {
+     "id": "en_u24_l3",
+     "titleAr": "التعبير عن الرأي",
+     "titleEn": "Opinions",
+     "vocab": [
+      {
+       "id": "en_in_my_opinion",
+       "target": "In my opinion",
+       "translationAr": "في رأيي",
+       "phonetic": "إن ماي أ-پينيون",
+       "emoji": "💭"
+      },
+      {
+       "id": "en_i_think_so",
+       "target": "I think so",
+       "translationAr": "أعتقد ذلك",
+       "phonetic": "آي ثينک سو",
+       "emoji": "🤔"
+      },
+      {
+       "id": "en_thats_right",
+       "target": "That's right",
+       "translationAr": "هذا صحيح",
+       "phonetic": "ذاتس رايت",
+       "emoji": "👌"
+      },
+      {
+       "id": "en_exactly",
+       "target": "Exactly!",
+       "translationAr": "تماماً!",
+       "phonetic": "إگ-زاک-تلي!",
+       "emoji": "🎯"
+      },
+      {
+       "id": "en_im_not_sure",
+       "target": "I'm not sure",
+       "translationAr": "لست متأكداً",
+       "phonetic": "آم نو شور",
+       "emoji": "😐"
+      },
+      {
+       "id": "en_what_do_you_think",
+       "target": "What do you think?",
+       "translationAr": "ما رأيك؟",
+       "phonetic": "وات دو يو ثينک؟",
+       "emoji": "🤷"
+      },
+      {
+       "id": "en_tell_me_more",
+       "target": "Tell me more",
+       "translationAr": "أخبرني المزيد",
+       "phonetic": "تِل مي مور",
+       "emoji": "🗣️"
+      },
+      {
+       "id": "en_sounds_good",
+       "target": "Sounds good!",
+       "translationAr": "يبدو جيداً!",
+       "phonetic": "ساوندز گود!",
+       "emoji": "👍"
+      },
+      {
+       "id": "en_me_too",
+       "target": "Me too",
+       "translationAr": "وأنا كذلك",
+       "phonetic": "مي تو",
+       "emoji": "🙋"
+      },
+      {
+       "id": "en_no_way",
+       "target": "No way!",
+       "translationAr": "مستحيل!",
+       "phonetic": "نو وا!",
+       "emoji": "😱"
+      },
+      {
+       "id": "en_of_course_not",
+       "target": "Of course not",
+       "translationAr": "بالطبع لا",
+       "phonetic": "أو کورس نو",
+       "emoji": "🙅"
+      },
+      {
+       "id": "en_it_depends",
+       "target": "It depends",
+       "translationAr": "يعتمد الأمر",
+       "phonetic": "إت دي-پندز",
+       "emoji": "🎲"
+      }
+     ]
+    },
+    {
+     "id": "en_u24_l4",
+     "titleAr": "عبارات متقدمة",
+     "titleEn": "Advanced Phrases",
+     "vocab": [
+      {
+       "id": "en_as_soon_as_possible",
+       "target": "As soon as possible",
+       "translationAr": "في أقرب وقت",
+       "phonetic": "آز سون آز پو-سي-بل",
+       "emoji": "⚡"
+      },
+      {
+       "id": "en_by_the_way",
+       "target": "By the way",
+       "translationAr": "بالمناسبة",
+       "phonetic": "باي ذا وا",
+       "emoji": "💬"
+      },
+      {
+       "id": "en_for_example",
+       "target": "For example",
+       "translationAr": "على سبيل المثال",
+       "phonetic": "فر إگ-زام-پل",
+       "emoji": "📌"
+      },
+      {
+       "id": "en_in_fact",
+       "target": "In fact",
+       "translationAr": "في الحقيقة",
+       "phonetic": "إن فاکٹ",
+       "emoji": "🎯"
+      },
+      {
+       "id": "en_at_least",
+       "target": "At least",
+       "translationAr": "على الأقل",
+       "phonetic": "آت ليست",
+       "emoji": "✌️"
+      },
+      {
+       "id": "en_long_time_no_see",
+       "target": "Long time no see!",
+       "translationAr": "لم أرك منذ زمن!",
+       "phonetic": "لونگ تايم نو سي!",
+       "emoji": "🤗"
+      },
+      {
+       "id": "en_whats_new",
+       "target": "What's new?",
+       "translationAr": "ما الجديد؟",
+       "phonetic": "واتس نو؟",
+       "emoji": "🆕"
+      },
+      {
+       "id": "en_guess_what",
+       "target": "Guess what!",
+       "translationAr": "خمن ماذا!",
+       "phonetic": "گِس وات!",
+       "emoji": "❓"
+      },
+      {
+       "id": "en_its_up_to_you",
+       "target": "It's up to you",
+       "translationAr": "الأمر يعود إليك",
+       "phonetic": "إتز أب تو يو",
+       "emoji": "🙆"
+      },
+      {
+       "id": "en_im_on_my_way",
+       "target": "I'm on my way",
+       "translationAr": "أنا في الطريق",
+       "phonetic": "آم أون ماي وا",
+       "emoji": "🚶"
+      },
+      {
+       "id": "en_keep_in_touch",
+       "target": "Keep in touch",
+       "translationAr": "ابقَ على تواصل",
+       "phonetic": "کيپ إن تَچ",
+       "emoji": "📱"
+      },
+      {
+       "id": "en_have_a_nice_day",
+       "target": "Have a nice day!",
+       "translationAr": "نهارك سعيد!",
+       "phonetic": "هاف آ نايس دي!",
+       "emoji": "🌞"
+      }
+     ]
+    }
+   ]
   }
  ]
 }
