@@ -37,9 +37,7 @@ class _HomeShellState extends State<HomeShell> {
       body: pages[tab],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: context.line, width: 2),
-          ),
+          border: Border(top: BorderSide(color: context.line, width: 2)),
         ),
         child: SafeArea(
           top: false,
@@ -48,12 +46,27 @@ class _HomeShellState extends State<HomeShell> {
             child: Row(
               children: [
                 _navItem(
-                    context, 0, Icons.school, tr('learn'), AppColors.green),
+                  context,
+                  0,
+                  Icons.school,
+                  tr('learn'),
+                  AppColors.green,
+                ),
                 _navItem(context, 1, Icons.style, tr('cards'), AppColors.blue),
-                _navItem(context, 2, Icons.menu_book, tr('dictionary'),
-                    AppColors.purple),
                 _navItem(
-                    context, 3, Icons.person, tr('profile'), AppColors.orange),
+                  context,
+                  2,
+                  Icons.menu_book,
+                  tr('dictionary'),
+                  AppColors.purple,
+                ),
+                _navItem(
+                  context,
+                  3,
+                  Icons.person,
+                  tr('profile'),
+                  AppColors.orange,
+                ),
               ],
             ),
           ),
@@ -62,8 +75,13 @@ class _HomeShellState extends State<HomeShell> {
     );
   }
 
-  Widget _navItem(BuildContext context, int index, IconData icon, String label,
-      Color activeColor) {
+  Widget _navItem(
+    BuildContext context,
+    int index,
+    IconData icon,
+    String label,
+    Color activeColor,
+  ) {
     final selected = tab == index;
     return Expanded(
       child: InkWell(
@@ -79,16 +97,16 @@ class _HomeShellState extends State<HomeShell> {
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(12),
                 border: selected
-                    ? Border(
-                        top: BorderSide(color: activeColor, width: 3),
-                      )
+                    ? Border(top: BorderSide(color: activeColor, width: 3))
                     : null,
               ),
               child: Column(
                 children: [
-                  Icon(icon,
-                      color: selected ? activeColor : context.lockedText,
-                      size: 26),
+                  Icon(
+                    icon,
+                    color: selected ? activeColor : context.lockedText,
+                    size: 26,
+                  ),
                   Text(
                     label,
                     style: TextStyle(
@@ -126,8 +144,10 @@ class TopStatsBar extends StatelessWidget implements PreferredSizeWidget {
             GestureDetector(
               onTap: () => _showCourseSwitcher(context, st),
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: context.card,
                   borderRadius: BorderRadius.circular(999),
@@ -136,20 +156,23 @@ class TopStatsBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   children: [
                     Text(st.course.flag, style: const TextStyle(fontSize: 18)),
-                    Icon(Icons.expand_more,
-                        size: 18, color: context.mutedText),
+                    Icon(Icons.expand_more, size: 18, color: context.mutedText),
                   ],
                 ),
               ),
             ),
             const Spacer(),
             StatChip(
-                icon: Icons.local_fire_department,
-                color: AppColors.orange,
-                value: '${st.streak}'),
+              icon: Icons.local_fire_department,
+              color: AppColors.orange,
+              value: '${st.streak}',
+            ),
             const SizedBox(width: 8),
             StatChip(
-                icon: Icons.bolt, color: AppColors.yellow, value: '${st.xp}'),
+              icon: Icons.bolt,
+              color: AppColors.yellow,
+              value: '${st.xp}',
+            ),
           ],
         ),
       ),
@@ -175,7 +198,9 @@ class TopStatsBar extends StatelessWidget implements PreferredSizeWidget {
                   ctx.tr('selectLanguage'),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.w900, fontSize: 18),
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 ...st.courses.values.map((c) {
@@ -209,11 +234,12 @@ class TopStatsBar extends StatelessWidget implements PreferredSizeWidget {
                                   Text(
                                     st.uiLocale == 'ar' ? c.nameAr : c.nameEn,
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 16,
-                                        color: selected
-                                            ? AppColors.greenDark
-                                            : ctx.bodyText),
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 16,
+                                      color: selected
+                                          ? AppColors.greenDark
+                                          : ctx.bodyText,
+                                    ),
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
@@ -228,8 +254,10 @@ class TopStatsBar extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ),
                             if (selected)
-                              const Icon(Icons.check_circle,
-                                  color: AppColors.green),
+                              const Icon(
+                                Icons.check_circle,
+                                color: AppColors.green,
+                              ),
                           ],
                         ),
                       ),

@@ -106,7 +106,9 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                         Text(
                           tr('tapToFlip'),
                           style: TextStyle(
-                              color: context.mutedText, fontSize: 13),
+                            color: context.mutedText,
+                            fontSize: 13,
+                          ),
                         ),
                         const SizedBox(height: 10),
                         Expanded(child: _card(context, tr)),
@@ -141,11 +143,17 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(value,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w900, fontSize: 17)),
-              Text(label,
-                  style: TextStyle(color: context.mutedText, fontSize: 11)),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                label,
+                style: TextStyle(color: context.mutedText, fontSize: 11),
+              ),
             ],
           ),
         ],
@@ -166,8 +174,10 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
             style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
           ),
           const SizedBox(height: 6),
-          Text(tr('comeBackTomorrow'),
-              style: TextStyle(color: context.mutedText, fontSize: 14)),
+          Text(
+            tr('comeBackTomorrow'),
+            style: TextStyle(color: context.mutedText, fontSize: 14),
+          ),
         ],
       ),
     );
@@ -212,7 +222,10 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
             ),
             boxShadow: const [
               BoxShadow(
-                  color: AppColors.border, offset: Offset(0, 5), blurRadius: 0),
+                color: AppColors.border,
+                offset: Offset(0, 5),
+                blurRadius: 0,
+              ),
             ],
           ),
           child: flipped ? _back(v, c) : _front(v),
@@ -246,9 +259,10 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
               borderRadius: BorderRadius.circular(999),
               boxShadow: const [
                 BoxShadow(
-                    color: AppColors.blueDark,
-                    offset: Offset(0, 3),
-                    blurRadius: 0),
+                  color: AppColors.blueDark,
+                  offset: Offset(0, 3),
+                  blurRadius: 0,
+                ),
               ],
             ),
             child: const Icon(Icons.volume_up, color: Colors.white, size: 26),
@@ -277,14 +291,20 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
             ),
             child: Column(
               children: [
-                Text(v.exampleTarget!,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w700, fontSize: 15)),
+                Text(
+                  v.exampleTarget!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
+                ),
                 const SizedBox(height: 4),
-                Text(v.exampleAr ?? '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: context.mutedText, fontSize: 13)),
+                Text(
+                  v.exampleAr ?? '',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: context.mutedText, fontSize: 13),
+                ),
               ],
             ),
           ),
@@ -336,24 +356,29 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                          color: dark,
-                          offset: const Offset(0, 4),
-                          blurRadius: 0),
+                        color: dark,
+                        offset: const Offset(0, 4),
+                        blurRadius: 0,
+                      ),
                     ],
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(label,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 13)),
+                      Text(
+                        label,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 13,
+                        ),
+                      ),
                       Text(
                         Srs.hintFor(c, q),
                         style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.85),
-                            fontSize: 10),
+                          color: Colors.white.withValues(alpha: 0.85),
+                          fontSize: 10,
+                        ),
                       ),
                     ],
                   ),
