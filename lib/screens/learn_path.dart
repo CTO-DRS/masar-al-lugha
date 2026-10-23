@@ -1,7 +1,6 @@
 // Learn path: Duolingo-style winding lesson path with units.
 import 'package:flutter/material.dart';
 
-import '../app_state.dart';
 import '../models.dart';
 import '../scope.dart';
 import '../theme.dart';

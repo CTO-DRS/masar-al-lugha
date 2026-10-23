@@ -1,4 +1,5 @@
-// Lesson runner: MCQ / reverse / listen / build / match exercises.
+// Lesson runner: MCQ / reverse / listen / build / match + v2.0 picture,
+// fill-blank and true-false exercises.
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
@@ -7,6 +8,7 @@ import '../models.dart';
 import '../scope.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
+import '../widgets/confetti.dart';
 import '../widgets/mascot.dart';
 
 class LessonScreen extends StatefulWidget {
@@ -48,10 +50,23 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _speakIfNeeded() {
-    if (ex.type == ExerciseType.listen || ex.type == ExerciseType.mcq) {
-      AppScope.ttsOf(context)
-          .setLanguage(AppScope.of(context).course.ttsLang)
-          .then((_) => AppScope.ttsOf(context).speak(ex.audioText));
+    switch (ex.type) {
+      case ExerciseType.listen:
+      case ExerciseType.mcq:
+      case ExerciseType.wordToPic:
+      case ExerciseType.picToWord:
+      case ExerciseType.truefalse:
+        AppScope.ttsOf(context)
+            .setLanguage(AppScope.of(context).course.ttsLang)
+            .then((_) => AppScope.ttsOf(context).speak(ex.audioText));
+        break;
+      case ExerciseType.fillblank:
+        AppScope.ttsOf(context)
+            .setLanguage(AppScope.of(context).course.ttsLang)
+            .then((_) => AppScope.ttsOf(context).speak(ex.audioText));
+        break;
+      default:
+        break;
     }
   }
 
@@ -116,12 +131,19 @@ class _LessonScreenState extends State<LessonScreen> {
         return _buildBody(tr);
       case ExerciseType.match:
         return _matchBody(tr);
+      case ExerciseType.wordToPic:
+        return _picBody(tr, pickPicture: true);
+      case ExerciseType.picToWord:
+        return _picBody(tr, pickPicture: false);
+      case ExerciseType.fillblank:
+        return _fillBody(tr);
+      case ExerciseType.truefalse:
+        return _tfBody(tr);
     }
   }
 
   Widget _promptCard(String Function(String) tr,
       {required bool isListen}) {
-    final st = AppScope.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
@@ -325,6 +347,312 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
+  // ---- v2.0 interactive picture exercises ----
+  Widget _picBody(String Function(String) tr, {required bool pickPicture}) {
+    final badgeLetters =
+        AppScope.of(context).uiLocale == 'ar' ? ['أ', 'ب', 'ج', 'د'] : ['A', 'B', 'C', 'D'];
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Mascot(size: 56, mood: MascotMood.happy),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      pickPicture
+                          ? tr('whichPicture')
+                          : tr('whichWordForPic'),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w900),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              if (pickPicture) ...[
+                // word prompt -> pick emoji picture
+                Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      border:
+                          Border.all(color: AppColors.border, width: 2),
+                    ),
+                    child: Text(
+                      ex.prompt,
+                      style: const TextStyle(
+                          fontSize: 26, fontWeight: FontWeight.w900),
+                    ),
+                  ),
+                ),
+                if (ex.vocab.phonetic != null) ...[
+                  const SizedBox(height: 6),
+                  Text(ex.vocab.phonetic!,
+                      style: const TextStyle(
+                          color: AppColors.inkLight, fontSize: 14)),
+                ],
+              ] else ...[
+                // emoji prompt -> pick word
+                GestureDetector(
+                  onTap: () => AppScope.ttsOf(context).speak(ex.audioText),
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: AppColors.yellow.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(26),
+                      border: Border.all(color: AppColors.yellow, width: 2),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: AppColors.yellowDark,
+                            offset: Offset(0, 5),
+                            blurRadius: 0),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(ex.prompt,
+                          style:
+                              const TextStyle(fontSize: 64, height: 1.1)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '${tr('correctAnswerIs')} ${ex.hint ?? ''}',
+                  style: const TextStyle(
+                      color: AppColors.inkLight, fontSize: 14),
+                ),
+              ],
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+        Expanded(
+          child: GridView.builder(
+            shrinkWrap: true,
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1.5,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+            ),
+            itemCount: ex.options.length,
+            itemBuilder: (context, i) {
+              if (pickPicture) {
+                return PictureCard(
+                  emoji: ex.options[i],
+                  selected: selected == i,
+                  correct: answered && ex.options[i] == ex.answer,
+                  wrong: answered && selected == i && !wasCorrect,
+                  onTap: answered
+                      ? null
+                      : () => setState(() => selected = i),
+                );
+              }
+              return OptionCard(
+                text: ex.options[i],
+                badge: i < badgeLetters.length ? badgeLetters[i] : null,
+                selected: selected == i,
+                correct: answered && ex.options[i] == ex.answer,
+                wrong: answered && selected == i && !wasCorrect,
+                onTap: answered
+                    ? null
+                    : () => setState(() => selected = i),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ---- v2.0 fill-in-the-blank ----
+  Widget _fillBody(String Function(String) tr) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Mascot(size: 56, mood: MascotMood.happy),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(tr('fillBlank'),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w900)),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+                decoration: BoxDecoration(
+                  color: AppColors.bgSoft,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: AppColors.border, width: 2),
+                ),
+                child: Text(
+                  ex.prompt,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.w800),
+                ),
+              ),
+              if (ex.hint != null) ...[
+                const SizedBox(height: 8),
+                Text(ex.hint!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        color: AppColors.inkLight, fontSize: 14)),
+              ],
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+        Expanded(
+          child: GridView.builder(
+            shrinkWrap: true,
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 2.4,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            itemCount: ex.options.length,
+            itemBuilder: (context, i) {
+              return OptionCard(
+                text: ex.options[i],
+                selected: selected == i,
+                correct: answered && ex.options[i] == ex.answer,
+                wrong: answered && selected == i && !wasCorrect,
+                onTap: answered
+                    ? null
+                    : () => setState(() => selected = i),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ---- v2.0 true / false ----
+  Widget _tfBody(String Function(String) tr) {
+    final shownMeaning = ex.hint ?? '';
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Mascot(size: 56, mood: MascotMood.happy),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(tr('trueOrFalse'),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w900)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(22),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.border, width: 2),
+              boxShadow: const [
+                BoxShadow(
+                    color: AppColors.border,
+                    offset: Offset(0, 4),
+                    blurRadius: 0),
+              ],
+            ),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () =>
+                      AppScope.ttsOf(context).speak(ex.audioText),
+                  child: Text(
+                    ex.prompt,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.w900),
+                  ),
+                ),
+                if (ex.vocab.phonetic != null) ...[
+                  const SizedBox(height: 4),
+                  Text(ex.vocab.phonetic!,
+                      style: const TextStyle(
+                          color: AppColors.inkLight, fontSize: 14)),
+                ],
+                const SizedBox(height: 14),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 18, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.bgSoft,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    shownMeaning,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 19, fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 22),
+          Row(
+            children: [
+              Expanded(
+                child: OptionCard(
+                  text: '✅ ${tr('trueWord')}',
+                  selected: selected == 0,
+                  correct: answered && ex.answer == 'true',
+                  wrong: answered && selected == 0 && !wasCorrect,
+                  onTap: answered
+                      ? null
+                      : () => setState(() => selected = 0),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: OptionCard(
+                  text: '❌ ${tr('falseWord')}',
+                  selected: selected == 1,
+                  correct: answered && ex.answer == 'false',
+                  wrong: answered && selected == 1 && !wasCorrect,
+                  onTap: answered
+                      ? null
+                      : () => setState(() => selected = 1),
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+        ],
+      ),
+    );
+  }
+
   Widget _matchBody(String Function(String) tr) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -374,7 +702,6 @@ class _LessonScreenState extends State<LessonScreen> {
 
   Widget _matchChip(String text, bool speakable, String Function(String) tr) {
     final isLeft = ex.matchLeft.contains(text);
-    final pairedKey = isLeft ? text : null;
     final matched = matchedPairs.contains('L:$text') ||
         matchedPairs.contains('R:$text');
     final selectedNow =
@@ -498,6 +825,10 @@ class _LessonScreenState extends State<LessonScreen> {
       case ExerciseType.mcq:
       case ExerciseType.reverse:
       case ExerciseType.listen:
+      case ExerciseType.picToWord:
+      case ExerciseType.wordToPic:
+      case ExerciseType.fillblank:
+      case ExerciseType.truefalse:
         return selected != null;
       case ExerciseType.build:
         return placed.length == ex.tiles.length;
@@ -513,6 +844,11 @@ class _LessonScreenState extends State<LessonScreen> {
       userAnswer = placed.map((i) => ex.tiles[i]).join(
           ex.tiles.join(' ').contains(' ') ? ' ' : '');
       // Compare case-insensitively without spaces for letter builds.
+      final norm = (String s) =>
+          s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
+      wasCorrect = norm(userAnswer) == norm(ex.answer);
+    } else if (ex.type == ExerciseType.fillblank) {
+      userAnswer = selected != null ? ex.options[selected!] : '';
       final norm = (String s) =>
           s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
       wasCorrect = norm(userAnswer) == norm(ex.answer);
@@ -724,64 +1060,72 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              const Spacer(),
-              const Mascot(size: 150, mood: MascotMood.celebrate),
-              const SizedBox(height: 24),
-              Text(
-                tr('lessonComplete'),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 24, fontWeight: FontWeight.w900),
-              ),
-              if (widget.perfect) ...[
-                const SizedBox(height: 8),
-                Text(
-                  '🎉 ${tr('perfectLesson')}',
-                  style: const TextStyle(
-                      color: AppColors.yellowDark,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 16),
-                ),
-              ],
-              const SizedBox(height: 30),
-              Row(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: _resultCard(
-                      icon: Icons.bolt,
-                      color: AppColors.yellow,
-                      value: '+${widget.xpEarned}',
-                      label: tr('xpEarned'),
-                    ),
+                  const Spacer(),
+                  const Mascot(size: 150, mood: MascotMood.celebrate),
+                  const SizedBox(height: 24),
+                  Text(
+                    tr('lessonComplete'),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.w900),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _resultCard(
-                      icon: Icons.gps_fixed,
-                      color: AppColors.blue,
-                      value: '${widget.accuracy}%',
-                      label: tr('accuracy'),
+                  if (widget.perfect) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      '🎉 ${tr('perfectLesson')}',
+                      style: const TextStyle(
+                          color: AppColors.yellowDark,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16),
                     ),
+                  ],
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _resultCard(
+                          icon: Icons.bolt,
+                          color: AppColors.yellow,
+                          value: '+${widget.xpEarned}',
+                          label: tr('xpEarned'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _resultCard(
+                          icon: Icons.gps_fixed,
+                          color: AppColors.blue,
+                          value: '${widget.accuracy}%',
+                          label: tr('accuracy'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (badgeShown != null) ...[
+                    const SizedBox(height: 20),
+                    _badgeCard(badgeShown!, tr),
+                  ],
+                  const Spacer(),
+                  ChunkyButton(
+                    label: tr('backHome'),
+                    onPressed: () {
+                      Navigator.of(context).popUntil((r) => r.isFirst);
+                    },
                   ),
                 ],
               ),
-              if (badgeShown != null) ...[
-                const SizedBox(height: 20),
-                _badgeCard(badgeShown!, tr),
-              ],
-              const Spacer(),
-              ChunkyButton(
-                label: tr('backHome'),
-                onPressed: () {
-                  Navigator.of(context).popUntil((r) => r.isFirst);
-                },
-              ),
-            ],
-          ),
+            ),
+            // Celebratory confetti burst (v2.0).
+            const Positioned.fill(
+              child: IgnorePointer(child: ConfettiBurst()),
+            ),
+          ],
         ),
       ),
     );

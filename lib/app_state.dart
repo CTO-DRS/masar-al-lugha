@@ -35,6 +35,7 @@ class AppState extends ChangeNotifier {
   int dailyGoal = 20;
   int dailyXp = 0;
   String dailyXpDay = '';
+  Map<String, int> xpLog = {}; // yyyy-MM-dd -> xp earned (last 30 days)
   int cardsReviewed = 0;
   int totalAnswers = 0;
   int correctAnswers = 0;
@@ -45,18 +46,26 @@ class AppState extends ChangeNotifier {
   bool onboardingDone = false;
   bool loaded = false;
 
-  // ---- badges registry ----
+  // ---- badges registry (v2.0: 15 badges) ----
   static const List<BadgeDef> badgeDefs = [
     BadgeDef('first_lesson', icon: Icons.emoji_events, color: AppColors.blue),
     BadgeDef('five_lessons', icon: Icons.local_fire_department, color: AppColors.orange),
+    BadgeDef('lessons_20', icon: Icons.school, color: AppColors.green),
     BadgeDef('xp_100', icon: Icons.star, color: AppColors.yellow),
     BadgeDef('xp_500', icon: Icons.stars, color: AppColors.yellow),
+    BadgeDef('xp_1000', icon: Icons.diamond, color: AppColors.blue),
     BadgeDef('streak_3', icon: Icons.whatshot, color: AppColors.red),
     BadgeDef('streak_7', icon: Icons.bolt, color: AppColors.red),
+    BadgeDef('streak_14', icon: Icons.local_fire_department, color: AppColors.red),
     BadgeDef('perfect', icon: Icons.military_tech, color: AppColors.green),
+    BadgeDef('perfect_5', icon: Icons.workspace_premium, color: AppColors.yellow),
     BadgeDef('cards_50', icon: Icons.style, color: AppColors.purple),
+    BadgeDef('cards_200', icon: Icons.auto_stories, color: AppColors.purple),
     BadgeDef('all_en_units', icon: Icons.flag, color: AppColors.green),
     BadgeDef('all_ur_units', icon: Icons.flag, color: AppColors.green),
+    BadgeDef('all_fr_units', icon: Icons.flag, color: AppColors.yellow),
+    BadgeDef('both_courses', icon: Icons.verified, color: AppColors.blue),
+    BadgeDef('polyglot', icon: Icons.translate, color: AppColors.purple),
   ];
 
   // Newly earned badges waiting to be celebrated in UI.
@@ -73,6 +82,31 @@ class AppState extends ChangeNotifier {
       cards.values.where((c) => c.state == 'review').length;
 
   int get lessonsCompleted => lessonStars.length;
+
+  int get perfectLessons =>
+      lessonStars.values.where((s) => s == 3).length;
+
+  // Level system: 100 XP per level (v2.0).
+  int get level => (xp / 100).floor() + 1;
+
+  double get levelProgress => (xp % 100) / 100;
+
+  int get xpToNextLevel => 100 - (xp % 100);
+
+  /// XP earned on each of the last 7 days (oldest first).
+  List<(String, int)> get last7Days {
+    final now = DateTime.now();
+    final out = <(String, int)>[];
+    for (var i = 6; i >= 0; i--) {
+      final d = now.subtract(Duration(days: i));
+      final key =
+          '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+      var v = xpLog[key] ?? 0;
+      if (i == 0 && dailyXpDay == key) v = dailyXp; // today is live
+      out.add((key, v));
+    }
+    return out;
+  }
 
   bool isGoalDone(String day) => dailyXpDay == day && dailyXp >= dailyGoal;
 
@@ -98,6 +132,8 @@ class AppState extends ChangeNotifier {
         totalAnswers = (j['totalAnswers'] as num?)?.toInt() ?? 0;
         correctAnswers = (j['correctAnswers'] as num?)?.toInt() ?? 0;
         lessonStars = ((j['lessonStars'] as Map?) ?? {})
+            .map((k, v) => MapEntry(k as String, (v as num).toInt()));
+        xpLog = ((j['xpLog'] as Map?) ?? {})
             .map((k, v) => MapEntry(k as String, (v as num).toInt()));
         cards = ((j['cards'] as Map?) ?? {}).map((k, v) =>
             MapEntry(k as String, CardData.fromJson(v as Map<String, dynamic>)));
@@ -129,6 +165,7 @@ class AppState extends ChangeNotifier {
       'totalAnswers': totalAnswers,
       'correctAnswers': correctAnswers,
       'lessonStars': lessonStars,
+      'xpLog': xpLog,
       'cards': cards.map((k, v) => MapEntry(k, v.toJson())),
       'badges': badges,
     };
@@ -191,6 +228,14 @@ class AppState extends ChangeNotifier {
     xp += amount;
     dailyXp += amount;
     lastActiveDay = todayKey();
+    xpLog[dailyXpDay] = (xpLog[dailyXpDay] ?? 0) + amount;
+    if (xpLog.length > 30) {
+      // Keep only the latest 30 days.
+      final keys = xpLog.keys.toList()..sort();
+      while (xpLog.length > 30) {
+        xpLog.remove(keys.removeAt(0));
+      }
+    }
     if (streak == 0) streak = 1;
     _checkBadges();
     save();
@@ -258,22 +303,32 @@ class AppState extends ChangeNotifier {
 
     award('first_lesson', lessonsCompleted >= 1);
     award('five_lessons', lessonsCompleted >= 5);
+    award('lessons_20', lessonsCompleted >= 20);
     award('xp_100', xp >= 100);
     award('xp_500', xp >= 500);
+    award('xp_1000', xp >= 1000);
     award('streak_3', streak >= 3);
     award('streak_7', streak >= 7);
+    award('streak_14', streak >= 14);
+    award('perfect', perfectLessons >= 1);
+    award('perfect_5', perfectLessons >= 5);
     award('cards_50', cardsReviewed >= 50);
+    award('cards_200', cardsReviewed >= 200);
 
-    final en = courses['en'];
-    if (en != null) {
-      final all = en.allLessons.every((l) => lessonStars.containsKey(l.id));
-      award('all_en_units', all);
+    // Course-completion badges (one per course + polyglot for all three).
+    for (final id in ['en', 'ur', 'fr']) {
+      final c = courses[id];
+      if (c == null) continue;
+      final all = c.allLessons.every((l) => lessonStars.containsKey(l.id));
+      award('all_${id}_units', all);
     }
-    final ur = courses['ur'];
-    if (ur != null) {
-      final all = ur.allLessons.every((l) => lessonStars.containsKey(l.id));
-      award('all_ur_units', all);
-    }
+    final allDone =
+        courses.isNotEmpty &&
+        courses.values.every(
+            (c) => c.allLessons.every((l) => lessonStars.containsKey(l.id)));
+    award('both_courses',
+        courses['en'] != null && courses['ur'] != null && allDone && courses.length == 2);
+    award('polyglot', courses.length == 3 && allDone);
   }
 
   String consumePendingBadge() {
@@ -287,6 +342,7 @@ class AppState extends ChangeNotifier {
     lastActiveDay = null;
     dailyXp = 0;
     dailyXpDay = todayKey();
+    xpLog = {};
     cardsReviewed = 0;
     totalAnswers = 0;
     correctAnswers = 0;

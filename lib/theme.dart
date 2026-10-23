@@ -228,6 +228,65 @@ class OptionCard extends StatelessWidget {
   }
 }
 
+// Big tappable emoji picture card for interactive picture exercises.
+class PictureCard extends StatelessWidget {
+  final String emoji;
+  final bool selected;
+  final bool correct;
+  final bool wrong;
+  final VoidCallback? onTap;
+
+  const PictureCard({
+    super.key,
+    required this.emoji,
+    this.selected = false,
+    this.correct = false,
+    this.wrong = false,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Color border = AppColors.border;
+    Color bg = Colors.white;
+    if (selected) {
+      border = AppColors.blue;
+      bg = AppColors.blueLight;
+    }
+    if (correct) {
+      border = AppColors.green;
+      bg = AppColors.greenLight;
+    }
+    if (wrong) {
+      border = AppColors.red;
+      bg = AppColors.redLight;
+    }
+    return InkWell(
+      borderRadius: BorderRadius.circular(18),
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: bg,
+          border: Border.all(color: border, width: 2),
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: const [
+            BoxShadow(
+                color: AppColors.border,
+                offset: Offset(0, 4),
+                blurRadius: 0),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            emoji,
+            style: const TextStyle(fontSize: 52, height: 1.1),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 // Small tile used in build (arrange) exercises.
 class WordTile extends StatelessWidget {
   final String text;

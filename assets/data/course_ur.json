@@ -1,184 +1,1881 @@
 {
-  "id": "ur",
-  "flag": "🇵🇰",
-  "nameAr": "الأردية",
-  "nameEn": "Urdu",
-  "ttsLang": "ur-PK",
-  "units": [
+ "id": "ur",
+ "flag": "🇵🇰",
+ "nameAr": "الأردية",
+ "nameEn": "Urdu",
+ "ttsLang": "ur-PK",
+ "units": [
+  {
+   "id": "ur_u1",
+   "color": "#58CC02",
+   "titleAr": "الأساسيات",
+   "titleEn": "Basics",
+   "lessons": [
     {
-      "id": "ur_u1",
-      "color": "#58CC02",
-      "titleAr": "الأساسيات",
-      "titleEn": "Basics",
-      "lessons": [
-        {
-          "id": "ur_u1_l1",
-          "titleAr": "التحيات",
-          "titleEn": "Greetings",
-          "vocab": [
-            {"id": "ur_salam", "target": "السلام علیکم", "translationAr": "السلام عليكم", "phonetic": "السلام عليكم"},
-            {"id": "ur_shukriya", "target": "شکریہ", "translationAr": "شكراً", "phonetic": "شكريا", "exampleTarget": "بہت شکریہ!", "exampleAr": "شكراً جزيلاً!"},
-            {"id": "ur_meherbani", "target": "مہربانی", "translationAr": "من فضلك", "phonetic": "مِهرباني"},
-            {"id": "ur_jihaan", "target": "جی ہاں", "translationAr": "نعم", "phonetic": "جي هان"},
-            {"id": "ur_nahin", "target": "نہیں", "translationAr": "لا", "phonetic": "نهين"},
-            {"id": "ur_khudahafiz", "target": "خدا حافظ", "translationAr": "مع السلامة", "phonetic": "خدا حافظ"}
-          ]
-        },
-        {
-          "id": "ur_u1_l2",
-          "titleAr": "تعارف",
-          "titleEn": "Introducing yourself",
-          "vocab": [
-            {"id": "ur_aapkaise", "target": "آپ کیسے ہیں؟", "translationAr": "كيف حالك؟", "phonetic": "آپ كيسے هين؟"},
-            {"id": "ur_maintheek", "target": "میں ٹھیک ہوں", "translationAr": "أنا بخير", "phonetic": "مين ٹهيك هون"},
-            {"id": "ur_aapkanam", "target": "آپ کا نام کیا ہے؟", "translationAr": "ما اسمك؟", "phonetic": "آپ كا نام كيا هے؟"},
-            {"id": "ur_meranam", "target": "میرا نام احمد ہے", "translationAr": "اسمي أحمد", "phonetic": "ميرا نام أحمد هے"},
-            {"id": "ur_barakirm", "target": "براہِ کرم", "translationAr": "أرجوك", "phonetic": "براهِ كرم"}
-          ]
-        },
-        {
-          "id": "ur_u1_l3",
-          "titleAr": "الضمائر",
-          "titleEn": "Pronouns",
-          "vocab": [
-            {"id": "ur_main", "target": "میں", "translationAr": "أنا", "phonetic": "مين"},
-            {"id": "ur_aap", "target": "آپ", "translationAr": "أنت", "phonetic": "آپ"},
-            {"id": "ur_woh", "target": "وہ", "translationAr": "هو / هي", "phonetic": "وه"},
-            {"id": "ur_hum", "target": "ہم", "translationAr": "نحن", "phonetic": "هم"},
-            {"id": "ur_yeh", "target": "یہ", "translationAr": "هذا / هذه", "phonetic": "يه"}
-          ]
-        }
-      ]
+     "id": "ur_u1_l1",
+     "titleAr": "التحيات",
+     "titleEn": "Greetings",
+     "vocab": [
+      {
+       "id": "ur_salam",
+       "target": "السلام علیکم",
+       "translationAr": "السلام عليكم",
+       "phonetic": "السلام عليكم",
+       "emoji": "🕌"
+      },
+      {
+       "id": "ur_shukriya",
+       "target": "شکریہ",
+       "translationAr": "شكراً",
+       "phonetic": "شكريا",
+       "emoji": "🙏",
+       "exampleTarget": "بہت شکریہ!",
+       "exampleAr": "شكراً جزيلاً!"
+      },
+      {
+       "id": "ur_meherbani",
+       "target": "مہربانی",
+       "translationAr": "من فضلك",
+       "phonetic": "مِهرباني",
+       "emoji": "🤲"
+      },
+      {
+       "id": "ur_jihaan",
+       "target": "جی ہاں",
+       "translationAr": "نعم",
+       "phonetic": "جي هان",
+       "emoji": "✅"
+      },
+      {
+       "id": "ur_nahin",
+       "target": "نہیں",
+       "translationAr": "لا",
+       "phonetic": "نهين",
+       "emoji": "❌"
+      },
+      {
+       "id": "ur_khudahafiz",
+       "target": "خدا حافظ",
+       "translationAr": "مع السلامة",
+       "phonetic": "خدا حافظ",
+       "emoji": "👋"
+      }
+     ]
     },
     {
-      "id": "ur_u2",
-      "color": "#1CB0F6",
-      "titleAr": "الأرقام والوقت",
-      "titleEn": "Numbers & Time",
-      "lessons": [
-        {
-          "id": "ur_u2_l1",
-          "titleAr": "من واحد إلى خمسة",
-          "titleEn": "One to five",
-          "vocab": [
-            {"id": "ur_ek", "target": "ایک", "translationAr": "واحد", "phonetic": "إيك"},
-            {"id": "ur_do", "target": "دو", "translationAr": "اثنان", "phonetic": "دو"},
-            {"id": "ur_teen", "target": "تین", "translationAr": "ثلاثة", "phonetic": "تين"},
-            {"id": "ur_chaar", "target": "چار", "translationAr": "أربعة", "phonetic": "چار"},
-            {"id": "ur_paanch", "target": "پانچ", "translationAr": "خمسة", "phonetic": "پانچ"}
-          ]
-        },
-        {
-          "id": "ur_u2_l2",
-          "titleAr": "من ستة إلى عشرة",
-          "titleEn": "Six to ten",
-          "vocab": [
-            {"id": "ur_chhe", "target": "چھ", "translationAr": "ستة", "phonetic": "چھ"},
-            {"id": "ur_saat", "target": "سات", "translationAr": "سبعة", "phonetic": "سات"},
-            {"id": "ur_aath", "target": "آٹھ", "translationAr": "ثمانية", "phonetic": "آٹھ"},
-            {"id": "ur_nau", "target": "نو", "translationAr": "تسعة", "phonetic": "نو"},
-            {"id": "ur_das", "target": "دس", "translationAr": "عشرة", "phonetic": "دس"}
-          ]
-        },
-        {
-          "id": "ur_u2_l3",
-          "titleAr": "الوقت",
-          "titleEn": "Time words",
-          "vocab": [
-            {"id": "ur_aaj", "target": "آج", "translationAr": "اليوم", "phonetic": "آج"},
-            {"id": "ur_kal", "target": "کل", "translationAr": "غداً", "phonetic": "كل"},
-            {"id": "ur_ab", "target": "اب", "translationAr": "الآن", "phonetic": "اب"},
-            {"id": "ur_subah", "target": "صبح", "translationAr": "صباح", "phonetic": "صبح"},
-            {"id": "ur_shaam", "target": "شام", "translationAr": "مساء", "phonetic": "شام"}
-          ]
-        }
-      ]
+     "id": "ur_u1_l2",
+     "titleAr": "تعارف",
+     "titleEn": "Introducing yourself",
+     "vocab": [
+      {
+       "id": "ur_aapkaise",
+       "target": "آپ کیسے ہیں؟",
+       "translationAr": "كيف حالك؟",
+       "phonetic": "آپ كيسے هين؟",
+       "emoji": "🤝"
+      },
+      {
+       "id": "ur_maintheek",
+       "target": "میں ٹھیک ہوں",
+       "translationAr": "أنا بخير",
+       "phonetic": "مين ٹهيك هون",
+       "emoji": "🙂"
+      },
+      {
+       "id": "ur_aapkanam",
+       "target": "آپ کا نام کیا ہے؟",
+       "translationAr": "ما اسمك؟",
+       "phonetic": "آپ كا نام كيا هے؟",
+       "emoji": "❓"
+      },
+      {
+       "id": "ur_meranam",
+       "target": "میرا نام احمد ہے",
+       "translationAr": "اسمي أحمد",
+       "phonetic": "ميرا نام أحمد هے",
+       "emoji": "🏷️"
+      },
+      {
+       "id": "ur_barakirm",
+       "target": "براہِ کرم",
+       "translationAr": "أرجوك",
+       "phonetic": "براهِ كرم",
+       "emoji": "🤲"
+      }
+     ]
     },
     {
-      "id": "ur_u3",
-      "color": "#CE82FF",
-      "titleAr": "العائلة",
-      "titleEn": "Family",
-      "lessons": [
-        {
-          "id": "ur_u3_l1",
-          "titleAr": "أفراد العائلة",
-          "titleEn": "Family members",
-          "vocab": [
-            {"id": "ur_maan", "target": "ماں", "translationAr": "أم", "phonetic": "مان"},
-            {"id": "ur_baap", "target": "باپ", "translationAr": "أب", "phonetic": "باپ"},
-            {"id": "ur_bhai", "target": "بھائی", "translationAr": "أخ", "phonetic": "بهای"},
-            {"id": "ur_behan", "target": "بہن", "translationAr": "أخت", "phonetic": "بهن"},
-            {"id": "ur_khandaan", "target": "خاندان", "translationAr": "عائلة", "phonetic": "خاندان"}
-          ]
-        },
-        {
-          "id": "ur_u3_l2",
-          "titleAr": "المزيد من العائلة",
-          "titleEn": "More family",
-          "vocab": [
-            {"id": "ur_beta", "target": "بیٹا", "translationAr": "ابن", "phonetic": "بيٹا"},
-            {"id": "ur_beti", "target": "بیٹی", "translationAr": "ابنة", "phonetic": "بيٹي"},
-            {"id": "ur_dada", "target": "دادا", "translationAr": "جد", "phonetic": "دادا"},
-            {"id": "ur_dadi", "target": "دادی", "translationAr": "جدة", "phonetic": "دادي"},
-            {"id": "ur_dost", "target": "دوست", "translationAr": "صديق", "phonetic": "دوست"}
-          ]
-        },
-        {
-          "id": "ur_u3_l3",
-          "titleAr": "جمل عن العائلة",
-          "titleEn": "Family sentences",
-          "vocab": [
-            {"id": "ur_yehmerabhai", "target": "یہ میرا بھائی ہے", "translationAr": "هذا أخي", "phonetic": "يه ميرا بهای هے"},
-            {"id": "ur_muhabbat", "target": "میں اپنے خاندان سے محبت کرتا ہوں", "translationAr": "أحب عائلتي", "phonetic": "مين أپنے خاندان سے محبت كرتا هون"},
-            {"id": "ur_meribehan", "target": "میری بہن گھر پر ہے", "translationAr": "أختي في البيت", "phonetic": "ميري بهن غر پر هے"},
-            {"id": "ur_hamarakhandaan", "target": "ہمارا خاندان بڑا ہے", "translationAr": "عائلتي كبيرة", "phonetic": "همارا خاندان بڑا هے"}
-          ]
-        }
-      ]
+     "id": "ur_u1_l3",
+     "titleAr": "الضمائر",
+     "titleEn": "Pronouns",
+     "vocab": [
+      {
+       "id": "ur_main",
+       "target": "میں",
+       "translationAr": "أنا",
+       "phonetic": "مين",
+       "emoji": "👤"
+      },
+      {
+       "id": "ur_aap",
+       "target": "آپ",
+       "translationAr": "أنت",
+       "phonetic": "آپ",
+       "emoji": "👉"
+      },
+      {
+       "id": "ur_woh",
+       "target": "وہ",
+       "translationAr": "هو / هي",
+       "phonetic": "وه",
+       "emoji": "🧍"
+      },
+      {
+       "id": "ur_hum",
+       "target": "ہم",
+       "translationAr": "نحن",
+       "phonetic": "هم",
+       "emoji": "👥"
+      },
+      {
+       "id": "ur_yeh",
+       "target": "یہ",
+       "translationAr": "هذا / هذه",
+       "phonetic": "يه",
+       "emoji": "👇"
+      }
+     ]
     },
     {
-      "id": "ur_u4",
-      "color": "#FF9600",
-      "titleAr": "الطعام والشراب",
-      "titleEn": "Food & Drink",
-      "lessons": [
-        {
-          "id": "ur_u4_l1",
-          "titleAr": "المشروبات والخبز",
-          "titleEn": "Drinks & bread",
-          "vocab": [
-            {"id": "ur_paani", "target": "پانی", "translationAr": "ماء", "phonetic": "پاني", "exampleTarget": "مجھے پانی چاہیے۔", "exampleAr": "أريد ماءً."},
-            {"id": "ur_roti", "target": "روٹی", "translationAr": "خبز", "phonetic": "روٹي"},
-            {"id": "ur_doodh", "target": "دودھ", "translationAr": "حليب", "phonetic": "دوڈھ"},
-            {"id": "ur_chai", "target": "چائے", "translationAr": "شاي", "phonetic": "چائے"},
-            {"id": "ur_khaana", "target": "کھانا", "translationAr": "طعام", "phonetic": "خانا"}
-          ]
-        },
-        {
-          "id": "ur_u4_l2",
-          "titleAr": "أطعمة",
-          "titleEn": "Foods",
-          "vocab": [
-            {"id": "ur_seb", "target": "سیب", "translationAr": "تفاح", "phonetic": "سيب"},
-            {"id": "ur_chawal", "target": "چاول", "translationAr": "أرز", "phonetic": "چاول"},
-            {"id": "ur_gosht", "target": "گوشت", "translationAr": "لحم", "phonetic": "گوشت"},
-            {"id": "ur_anda", "target": "انڈا", "translationAr": "بيض", "phonetic": "انڈا"},
-            {"id": "ur_namak", "target": "نمک", "translationAr": "ملح", "phonetic": "نمك"}
-          ]
-        },
-        {
-          "id": "ur_u4_l3",
-          "titleAr": "جمل الطعام",
-          "titleEn": "Food sentences",
-          "vocab": [
-            {"id": "ur_mujhepaani", "target": "مجھے پانی چاہیے", "translationAr": "أريد ماءً", "phonetic": "مجهے پاني چاهيے"},
-            {"id": "ur_khaananazeem", "target": "کھانا لذیذ ہے", "translationAr": "الطعام لذيذ", "phonetic": "خانا لذيذ هے"},
-            {"id": "ur_mainbhooka", "target": "میں بھوکا ہوں", "translationAr": "أنا جائع", "phonetic": "مين بھوكا هون"},
-            {"id": "ur_bohatshukriya", "target": "بہت شکریہ", "translationAr": "شكراً جزيلاً", "phonetic": "بہت شكريا"}
-          ]
-        }
-      ]
+     "id": "ur_u1_l4",
+     "titleAr": "عبارات يومية",
+     "titleEn": "Everyday phrases",
+     "vocab": [
+      {
+       "id": "ur_verygood",
+       "target": "بہت اچھا",
+       "translationAr": "جيد جداً",
+       "phonetic": "بہت اچھا",
+       "emoji": "👍"
+      },
+      {
+       "id": "ur_maafkijiye",
+       "target": "معاف کیجیے",
+       "translationAr": "عفواً / آسف",
+       "phonetic": "معاف كيجيے",
+       "emoji": "😔"
+      },
+      {
+       "id": "ur_kyahalhai",
+       "target": "کیا حال ہے؟",
+       "translationAr": "كيف الحال؟",
+       "phonetic": "كيا حال هے؟",
+       "emoji": "🤗"
+      },
+      {
+       "id": "ur_phirmilenge",
+       "target": "پھر ملیں گے",
+       "translationAr": "إلى اللقاء مرة أخرى",
+       "phonetic": "پهر مليں گے",
+       "emoji": "🔁"
+      },
+      {
+       "id": "ur_inshallah",
+       "target": "ان شاء اللہ",
+       "translationAr": "إن شاء الله",
+       "phonetic": "إن شاء اللہ",
+       "emoji": "🤲"
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "ur_u2",
+   "color": "#1CB0F6",
+   "titleAr": "الأرقام والوقت",
+   "titleEn": "Numbers & Time",
+   "lessons": [
+    {
+     "id": "ur_u2_l1",
+     "titleAr": "من واحد إلى خمسة",
+     "titleEn": "One to five",
+     "vocab": [
+      {
+       "id": "ur_ek",
+       "target": "ایک",
+       "translationAr": "واحد",
+       "phonetic": "إيك",
+       "emoji": "1️⃣"
+      },
+      {
+       "id": "ur_do",
+       "target": "دو",
+       "translationAr": "اثنان",
+       "phonetic": "دو",
+       "emoji": "2️⃣"
+      },
+      {
+       "id": "ur_teen",
+       "target": "تین",
+       "translationAr": "ثلاثة",
+       "phonetic": "تين",
+       "emoji": "3️⃣"
+      },
+      {
+       "id": "ur_chaar",
+       "target": "چار",
+       "translationAr": "أربعة",
+       "phonetic": "چار",
+       "emoji": "4️⃣"
+      },
+      {
+       "id": "ur_paanch",
+       "target": "پانچ",
+       "translationAr": "خمسة",
+       "phonetic": "پانچ",
+       "emoji": "5️⃣"
+      }
+     ]
+    },
+    {
+     "id": "ur_u2_l2",
+     "titleAr": "من ستة إلى عشرة",
+     "titleEn": "Six to ten",
+     "vocab": [
+      {
+       "id": "ur_chhe",
+       "target": "چھ",
+       "translationAr": "ستة",
+       "phonetic": "چھ",
+       "emoji": "6️⃣"
+      },
+      {
+       "id": "ur_saat",
+       "target": "سات",
+       "translationAr": "سبعة",
+       "phonetic": "سات",
+       "emoji": "7️⃣"
+      },
+      {
+       "id": "ur_aath",
+       "target": "آٹھ",
+       "translationAr": "ثمانية",
+       "phonetic": "آٹھ",
+       "emoji": "8️⃣"
+      },
+      {
+       "id": "ur_nau",
+       "target": "نو",
+       "translationAr": "تسعة",
+       "phonetic": "نو",
+       "emoji": "9️⃣"
+      },
+      {
+       "id": "ur_das",
+       "target": "دس",
+       "translationAr": "عشرة",
+       "phonetic": "دس",
+       "emoji": "🔟"
+      }
+     ]
+    },
+    {
+     "id": "ur_u2_l3",
+     "titleAr": "الوقت",
+     "titleEn": "Time words",
+     "vocab": [
+      {
+       "id": "ur_aaj",
+       "target": "آج",
+       "translationAr": "اليوم",
+       "phonetic": "آج",
+       "emoji": "📅"
+      },
+      {
+       "id": "ur_kal",
+       "target": "کل",
+       "translationAr": "غداً",
+       "phonetic": "كل",
+       "emoji": "📆"
+      },
+      {
+       "id": "ur_ab",
+       "target": "اب",
+       "translationAr": "الآن",
+       "phonetic": "اب",
+       "emoji": "⏰"
+      },
+      {
+       "id": "ur_subah",
+       "target": "صبح",
+       "translationAr": "صباح",
+       "phonetic": "صبح",
+       "emoji": "🌅"
+      },
+      {
+       "id": "ur_shaam",
+       "target": "شام",
+       "translationAr": "مساء",
+       "phonetic": "شام",
+       "emoji": "🌇"
+      },
+      {
+       "id": "ur_raat",
+       "target": "رات",
+       "translationAr": "ليل",
+       "phonetic": "رات",
+       "emoji": "🌙"
+      }
+     ]
+    },
+    {
+     "id": "ur_u2_l4",
+     "titleAr": "من أحد عشر إلى عشرين",
+     "titleEn": "Eleven to twenty",
+     "vocab": [
+      {
+       "id": "ur_gyarah",
+       "target": "گیارہ",
+       "translationAr": "أحد عشر",
+       "phonetic": "گيارہ"
+      },
+      {
+       "id": "ur_barah",
+       "target": "بارہ",
+       "translationAr": "اثنا عشر",
+       "phonetic": "بارہ"
+      },
+      {
+       "id": "ur_terah",
+       "target": "تیرہ",
+       "translationAr": "ثلاثة عشر",
+       "phonetic": "تیرہ"
+      },
+      {
+       "id": "ur_chaudah",
+       "target": "چودہ",
+       "translationAr": "أربعة عشر",
+       "phonetic": "چودہ"
+      },
+      {
+       "id": "ur_pandrah",
+       "target": "پندرہ",
+       "translationAr": "خمسة عشر",
+       "phonetic": "پندرہ"
+      },
+      {
+       "id": "ur_solah",
+       "target": "سولہ",
+       "translationAr": "ستة عشر",
+       "phonetic": "سولہ"
+      },
+      {
+       "id": "ur_sattrah",
+       "target": "سترہ",
+       "translationAr": "سبعة عشر",
+       "phonetic": "سترہ"
+      },
+      {
+       "id": "ur_atharah",
+       "target": "اٹھارہ",
+       "translationAr": "ثمانية عشر",
+       "phonetic": "اٹھارہ"
+      },
+      {
+       "id": "ur_unnees",
+       "target": "انیس",
+       "translationAr": "تسعة عشر",
+       "phonetic": "انیس"
+      },
+      {
+       "id": "ur_bees",
+       "target": "بیس",
+       "translationAr": "عشرون",
+       "phonetic": "بیس"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u3",
+   "color": "#CE82FF",
+   "titleAr": "العائلة",
+   "titleEn": "Family",
+   "lessons": [
+    {
+     "id": "ur_u3_l1",
+     "titleAr": "أفراد العائلة",
+     "titleEn": "Family members",
+     "vocab": [
+      {
+       "id": "ur_maan",
+       "target": "ماں",
+       "translationAr": "أم",
+       "phonetic": "مان",
+       "emoji": "👩"
+      },
+      {
+       "id": "ur_baap",
+       "target": "باپ",
+       "translationAr": "أب",
+       "phonetic": "باپ",
+       "emoji": "👨"
+      },
+      {
+       "id": "ur_bhai",
+       "target": "بھائی",
+       "translationAr": "أخ",
+       "phonetic": "بهای",
+       "emoji": "👦"
+      },
+      {
+       "id": "ur_behan",
+       "target": "بہن",
+       "translationAr": "أخت",
+       "phonetic": "بهن",
+       "emoji": "👧"
+      },
+      {
+       "id": "ur_khandaan",
+       "target": "خاندان",
+       "translationAr": "عائلة",
+       "phonetic": "خاندان",
+       "emoji": "👨‍👩‍👧‍👦"
+      }
+     ]
+    },
+    {
+     "id": "ur_u3_l2",
+     "titleAr": "المزيد من العائلة",
+     "titleEn": "More family",
+     "vocab": [
+      {
+       "id": "ur_beta",
+       "target": "بیٹا",
+       "translationAr": "ابن",
+       "phonetic": "بيٹا",
+       "emoji": "👶"
+      },
+      {
+       "id": "ur_beti",
+       "target": "بیٹی",
+       "translationAr": "ابنة",
+       "phonetic": "بيٹي",
+       "emoji": "👱‍♀️"
+      },
+      {
+       "id": "ur_dada",
+       "target": "دادا",
+       "translationAr": "جد",
+       "phonetic": "دادا",
+       "emoji": "👴"
+      },
+      {
+       "id": "ur_dadi",
+       "target": "دادی",
+       "translationAr": "جدة",
+       "phonetic": "دادي",
+       "emoji": "👵"
+      },
+      {
+       "id": "ur_dost",
+       "target": "دوست",
+       "translationAr": "صديق",
+       "phonetic": "دوست",
+       "emoji": "🧑‍🤝‍🧑"
+      }
+     ]
+    },
+    {
+     "id": "ur_u3_l3",
+     "titleAr": "جمل عن العائلة",
+     "titleEn": "Family sentences",
+     "vocab": [
+      {
+       "id": "ur_yehmerabhai",
+       "target": "یہ میرا بھائی ہے",
+       "translationAr": "هذا أخي",
+       "phonetic": "يه ميرا بهای هے",
+       "emoji": "👦"
+      },
+      {
+       "id": "ur_muhabbat",
+       "target": "میں اپنے خاندان سے محبت کرتا ہوں",
+       "translationAr": "أحب عائلتي",
+       "phonetic": "مين أپنے خاندان سے محبت كرتا هون",
+       "emoji": "❤️"
+      },
+      {
+       "id": "ur_meribehan",
+       "target": "میری بہن گھر پر ہے",
+       "translationAr": "أختي في البيت",
+       "phonetic": "ميري بهن غر پر ہے",
+       "emoji": "🏠"
+      },
+      {
+       "id": "ur_hamarakhandaan",
+       "target": "ہمارا خاندان بڑا ہے",
+       "translationAr": "عائلتي كبيرة",
+       "phonetic": "همارا خاندان بڑا هے",
+       "emoji": "👨‍👩‍👧‍👦"
+      }
+     ]
+    },
+    {
+     "id": "ur_u3_l4",
+     "titleAr": "صفات",
+     "titleEn": "Adjectives",
+     "vocab": [
+      {
+       "id": "ur_bara",
+       "target": "بڑا",
+       "translationAr": "كبير",
+       "phonetic": "بڑا",
+       "emoji": "🐘"
+      },
+      {
+       "id": "ur_chhota",
+       "target": "چھوٹا",
+       "translationAr": "صغير",
+       "phonetic": "چھوٹا",
+       "emoji": "🐜"
+      },
+      {
+       "id": "ur_acha",
+       "target": "اچھا",
+       "translationAr": "جيد",
+       "phonetic": "اچھا",
+       "emoji": "👍"
+      },
+      {
+       "id": "ur_khoobsurat",
+       "target": "خوبصورت",
+       "translationAr": "جميل",
+       "phonetic": "خوبصورت",
+       "emoji": "🌹"
+      },
+      {
+       "id": "ur_naya",
+       "target": "نیا",
+       "translationAr": "جديد",
+       "phonetic": "نیا",
+       "emoji": "🆕"
+      },
+      {
+       "id": "ur_purana",
+       "target": "پرانا",
+       "translationAr": "قديم",
+       "phonetic": "پرانا",
+       "emoji": "🏺"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u4",
+   "color": "#FF9600",
+   "titleAr": "الطعام والشراب",
+   "titleEn": "Food & Drink",
+   "lessons": [
+    {
+     "id": "ur_u4_l1",
+     "titleAr": "المشروبات والخبز",
+     "titleEn": "Drinks & bread",
+     "vocab": [
+      {
+       "id": "ur_paani",
+       "target": "پانی",
+       "translationAr": "ماء",
+       "phonetic": "پاني",
+       "emoji": "💧",
+       "exampleTarget": "مجھے پانی چاہیے۔",
+       "exampleAr": "أريد ماءً."
+      },
+      {
+       "id": "ur_roti",
+       "target": "روٹی",
+       "translationAr": "خبز",
+       "phonetic": "روٹي",
+       "emoji": "🍞"
+      },
+      {
+       "id": "ur_doodh",
+       "target": "دودھ",
+       "translationAr": "حليب",
+       "phonetic": "دوڈھ",
+       "emoji": "🥛"
+      },
+      {
+       "id": "ur_chai",
+       "target": "چائے",
+       "translationAr": "شاي",
+       "phonetic": "چائے",
+       "emoji": "🍵"
+      },
+      {
+       "id": "ur_khaana",
+       "target": "کھانا",
+       "translationAr": "طعام",
+       "phonetic": "خانا",
+       "emoji": "🍽️"
+      }
+     ]
+    },
+    {
+     "id": "ur_u4_l2",
+     "titleAr": "أطعمة",
+     "titleEn": "Foods",
+     "vocab": [
+      {
+       "id": "ur_seb",
+       "target": "سیب",
+       "translationAr": "تفاح",
+       "phonetic": "سيب",
+       "emoji": "🍎"
+      },
+      {
+       "id": "ur_chawal",
+       "target": "چاول",
+       "translationAr": "أرز",
+       "phonetic": "چاول",
+       "emoji": "🍚"
+      },
+      {
+       "id": "ur_gosht",
+       "target": "گوشت",
+       "translationAr": "لحم",
+       "phonetic": "گوشت",
+       "emoji": "🥩"
+      },
+      {
+       "id": "ur_anda",
+       "target": "انڈا",
+       "translationAr": "بيض",
+       "phonetic": "انڈا",
+       "emoji": "🥚"
+      },
+      {
+       "id": "ur_namak",
+       "target": "نمک",
+       "translationAr": "ملح",
+       "phonetic": "نمك",
+       "emoji": "🧂"
+      }
+     ]
+    },
+    {
+     "id": "ur_u4_l3",
+     "titleAr": "جمل الطعام",
+     "titleEn": "Food sentences",
+     "vocab": [
+      {
+       "id": "ur_mujhepaani",
+       "target": "مجھے پانی چاہیے",
+       "translationAr": "أريد ماءً",
+       "phonetic": "مجهے پاني چاهيے",
+       "emoji": "💧"
+      },
+      {
+       "id": "ur_khaananazeem",
+       "target": "کھانا لذیذ ہے",
+       "translationAr": "الطعام لذيذ",
+       "phonetic": "خانا لذيذ هے",
+       "emoji": "😋"
+      },
+      {
+       "id": "ur_mainbhooka",
+       "target": "میں بھوکا ہوں",
+       "translationAr": "أنا جائع",
+       "phonetic": "مين بھوكا هون",
+       "emoji": "🍽️"
+      },
+      {
+       "id": "ur_bohatshukriya",
+       "target": "بہت شکریہ",
+       "translationAr": "شكراً جزيلاً",
+       "phonetic": "بہت شكريا",
+       "emoji": "🙏"
+      }
+     ]
+    },
+    {
+     "id": "ur_u4_l4",
+     "titleAr": "فواكه",
+     "titleEn": "Fruits",
+     "vocab": [
+      {
+       "id": "ur_kela",
+       "target": "کیلا",
+       "translationAr": "موز",
+       "phonetic": "کیلا",
+       "emoji": "🍌"
+      },
+      {
+       "id": "ur_aam",
+       "target": "آم",
+       "translationAr": "مانجو",
+       "phonetic": "آم",
+       "emoji": "🥭"
+      },
+      {
+       "id": "ur_anar",
+       "target": "انار",
+       "translationAr": "رُمّان",
+       "phonetic": "انار",
+       "emoji": "🍒"
+      },
+      {
+       "id": "ur_angoor",
+       "target": "انگور",
+       "translationAr": "عنب",
+       "phonetic": "انگور",
+       "emoji": "🍇"
+      },
+      {
+       "id": "ur_malta",
+       "target": "مالٹا",
+       "translationAr": "برتقال",
+       "phonetic": "مالٹا",
+       "emoji": "🍊"
+      },
+      {
+       "id": "ur_sabzi",
+       "target": "سبزی",
+       "translationAr": "خضروات",
+       "phonetic": "سبزی",
+       "emoji": "🥕"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u5",
+   "color": "#FFC800",
+   "titleAr": "الألوان والأيام",
+   "titleEn": "Colors & Days",
+   "lessons": [
+    {
+     "id": "ur_u5_l1",
+     "titleAr": "الألوان",
+     "titleEn": "Colors",
+     "vocab": [
+      {
+       "id": "ur_surkh",
+       "target": "سرخ",
+       "translationAr": "أحمر",
+       "phonetic": "سرخ",
+       "emoji": "🔴"
+      },
+      {
+       "id": "ur_neela",
+       "target": "نیلا",
+       "translationAr": "أزرق",
+       "phonetic": "نیلا",
+       "emoji": "🔵"
+      },
+      {
+       "id": "ur_sabz",
+       "target": "سبز",
+       "translationAr": "أخضر",
+       "phonetic": "سبز",
+       "emoji": "🟢"
+      },
+      {
+       "id": "ur_peela",
+       "target": "پیلا",
+       "translationAr": "أصفر",
+       "phonetic": "پیلا",
+       "emoji": "🟡"
+      },
+      {
+       "id": "ur_kaala",
+       "target": "کالا",
+       "translationAr": "أسود",
+       "phonetic": "کالا",
+       "emoji": "⬛"
+      },
+      {
+       "id": "ur_safaid",
+       "target": "سفید",
+       "translationAr": "أبيض",
+       "phonetic": "سفید",
+       "emoji": "⬜"
+      }
+     ]
+    },
+    {
+     "id": "ur_u5_l2",
+     "titleAr": "أيام الأسبوع",
+     "titleEn": "Days of the week",
+     "vocab": [
+      {
+       "id": "ur_itwaar",
+       "target": "اتوار",
+       "translationAr": "الأحد",
+       "phonetic": "اتوار"
+      },
+      {
+       "id": "ur_pir",
+       "target": "پیر",
+       "translationAr": "الاثنين",
+       "phonetic": "پیر"
+      },
+      {
+       "id": "ur_mangal",
+       "target": "منگل",
+       "translationAr": "الثلاثاء",
+       "phonetic": "منگل"
+      },
+      {
+       "id": "ur_budh",
+       "target": "بدھ",
+       "translationAr": "الأربعاء",
+       "phonetic": "بدھ"
+      },
+      {
+       "id": "ur_jumeraat",
+       "target": "جمعرات",
+       "translationAr": "الخميس",
+       "phonetic": "جمعرات"
+      },
+      {
+       "id": "ur_jumaa",
+       "target": "جمعہ",
+       "translationAr": "الجمعة",
+       "phonetic": "جمعہ"
+      },
+      {
+       "id": "ur_hafta",
+       "target": "ہفتہ",
+       "translationAr": "السبت",
+       "phonetic": "ہفتہ"
+      }
+     ]
+    },
+    {
+     "id": "ur_u5_l3",
+     "titleAr": "جمل الألوان",
+     "titleEn": "Color sentences",
+     "vocab": [
+      {
+       "id": "ur_aasman",
+       "target": "آسمان نیلا ہے",
+       "translationAr": "السماء زرقاء",
+       "phonetic": "آسمان نیلا ہے",
+       "emoji": "🌌"
+      },
+      {
+       "id": "ur_yehsurkh",
+       "target": "یہ سرخ ہے",
+       "translationAr": "هذا أحمر",
+       "phonetic": "یہ سرخ ہے",
+       "emoji": "🔴"
+      },
+      {
+       "id": "ur_barfel",
+       "target": "سردیوں میں برف باری ہوتی ہے",
+       "translationAr": "يتثلج في الشتاء",
+       "phonetic": "سردیوں میں برف باری ہوتی ہے",
+       "emoji": "❄️"
+      },
+      {
+       "id": "ur_moasam",
+       "target": "آج موسم خوشگوار ہے",
+       "translationAr": "الجو جميل اليوم",
+       "phonetic": "آج موسم خوشگوار ہے",
+       "emoji": "🌤️"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u6",
+   "color": "#A0522D",
+   "titleAr": "الحيوانات",
+   "titleEn": "Animals",
+   "lessons": [
+    {
+     "id": "ur_u6_l1",
+     "titleAr": "الأليف والمزرعة",
+     "titleEn": "Pets & farm",
+     "vocab": [
+      {
+       "id": "ur_billi",
+       "target": "بلی",
+       "translationAr": "قط",
+       "phonetic": "بلی",
+       "emoji": "🐱"
+      },
+      {
+       "id": "ur_kutta",
+       "target": "کتا",
+       "translationAr": "كلب",
+       "phonetic": "کتا",
+       "emoji": "🐶"
+      },
+      {
+       "id": "ur_ghora",
+       "target": "گھوڑا",
+       "translationAr": "حصان",
+       "phonetic": "گھوڑا",
+       "emoji": "🐴"
+      },
+      {
+       "id": "ur_gaaye",
+       "target": "گائے",
+       "translationAr": "بقرة",
+       "phonetic": "گائے",
+       "emoji": "🐄"
+      },
+      {
+       "id": "ur_bhair",
+       "target": "بھیڑ",
+       "translationAr": "خروف",
+       "phonetic": "بھیڑ",
+       "emoji": "🐑"
+      },
+      {
+       "id": "ur_murgi",
+       "target": "مرغی",
+       "translationAr": "دجاجة",
+       "phonetic": "مرغی",
+       "emoji": "🐔"
+      }
+     ]
+    },
+    {
+     "id": "ur_u6_l2",
+     "titleAr": "حيوانات الغابة والبحر",
+     "titleEn": "Wild & sea",
+     "vocab": [
+      {
+       "id": "ur_shair",
+       "target": "شیر",
+       "translationAr": "أسد",
+       "phonetic": "شیر",
+       "emoji": "🦁"
+      },
+      {
+       "id": "ur_haathi",
+       "target": "ہاتھی",
+       "translationAr": "فيل",
+       "phonetic": "ہاتھی",
+       "emoji": "🐘"
+      },
+      {
+       "id": "ur_bandar",
+       "target": "بندر",
+       "translationAr": "قرد",
+       "phonetic": "بندر",
+       "emoji": "🐵"
+      },
+      {
+       "id": "ur_chooha",
+       "target": "چوہا",
+       "translationAr": "فأر",
+       "phonetic": "چوہا",
+       "emoji": "🐭"
+      },
+      {
+       "id": "ur_saap",
+       "target": "سانپ",
+       "translationAr": "ثعبان",
+       "phonetic": "سانپ",
+       "emoji": "🐍"
+      },
+      {
+       "id": "ur_machhli",
+       "target": "مچھلی",
+       "translationAr": "سمكة",
+       "phonetic": "مچھلی",
+       "emoji": "🐟"
+      }
+     ]
+    },
+    {
+     "id": "ur_u6_l3",
+     "titleAr": "جمل الحيوانات",
+     "titleEn": "Animal sentences",
+     "vocab": [
+      {
+       "id": "ur_meribilli",
+       "target": "یہ میری بلی ہے",
+       "translationAr": "هذه قطتي",
+       "phonetic": "یہ میری بلی ہے",
+       "emoji": "🐱"
+      },
+      {
+       "id": "ur_gaayedoodh",
+       "target": "گائے دودھ دیتی ہے",
+       "translationAr": "البقرة تعطي حليباً",
+       "phonetic": "گائے دودھ دیتی ہے",
+       "emoji": "🥛"
+      },
+      {
+       "id": "ur_shairbadshah",
+       "target": "شیر جنگل کا بادشاہ ہے",
+       "translationAr": "الأسد سيد الغابة",
+       "phonetic": "شیر جنگل کا بادشاہ ہے",
+       "emoji": "🦁"
+      },
+      {
+       "id": "ur_parinde",
+       "target": "پرندے اڑتے ہیں",
+       "translationAr": "الطيور تطير",
+       "phonetic": "پرندے اڑتے ہیں",
+       "emoji": "🕊️"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u7",
+   "color": "#FF4B4B",
+   "titleAr": "الحياة اليومية",
+   "titleEn": "Daily Life",
+   "lessons": [
+    {
+     "id": "ur_u7_l1",
+     "titleAr": "أماكن",
+     "titleEn": "Places",
+     "vocab": [
+      {
+       "id": "ur_ghar",
+       "target": "گھر",
+       "translationAr": "بيت",
+       "phonetic": "گھر",
+       "emoji": "🏠"
+      },
+      {
+       "id": "ur_school",
+       "target": "اسکول",
+       "translationAr": "مدرسة",
+       "phonetic": "اسکول",
+       "emoji": "🏫"
+      },
+      {
+       "id": "ur_bazaar",
+       "target": "بازار",
+       "translationAr": "سوق",
+       "phonetic": "بازار",
+       "emoji": "🛒"
+      },
+      {
+       "id": "ur_masjid",
+       "target": "مسجد",
+       "translationAr": "مسجد",
+       "phonetic": "مسجد",
+       "emoji": "🕌"
+      },
+      {
+       "id": "ur_shehar",
+       "target": "شہر",
+       "translationAr": "مدينة",
+       "phonetic": "شہر",
+       "emoji": "🏙️"
+      }
+     ]
+    },
+    {
+     "id": "ur_u7_l2",
+     "titleAr": "أشياء يومية",
+     "titleEn": "Everyday things",
+     "vocab": [
+      {
+       "id": "ur_kitab",
+       "target": "کتاب",
+       "translationAr": "كتاب",
+       "phonetic": "کتاب",
+       "emoji": "📕"
+      },
+      {
+       "id": "ur_qalam",
+       "target": "قلم",
+       "translationAr": "قلم",
+       "phonetic": "قلم",
+       "emoji": "🖊️"
+      },
+      {
+       "id": "ur_mobile",
+       "target": "موبائل",
+       "translationAr": "هاتف",
+       "phonetic": "موبائل",
+       "emoji": "📱"
+      },
+      {
+       "id": "ur_kursi",
+       "target": "کرسی",
+       "translationAr": "كرسي",
+       "phonetic": "کرسی",
+       "emoji": "🪑"
+      },
+      {
+       "id": "ur_darwaza",
+       "target": "دروازہ",
+       "translationAr": "باب",
+       "phonetic": "دروازہ",
+       "emoji": "🚪"
+      }
+     ]
+    },
+    {
+     "id": "ur_u7_l3",
+     "titleAr": "جمل يومية",
+     "titleEn": "Daily sentences",
+     "vocab": [
+      {
+       "id": "ur_mainschooljata",
+       "target": "میں اسکول جاتا ہوں",
+       "translationAr": "أذهب إلى المدرسة",
+       "phonetic": "مين اسکول جاتا هون",
+       "emoji": "🏫"
+      },
+      {
+       "id": "ur_merikitab",
+       "target": "یہ میری کتاب ہے",
+       "translationAr": "هذا كتابي",
+       "phonetic": "یہ میری کتاب ہے",
+       "emoji": "📕"
+      },
+      {
+       "id": "ur_bazaardoor",
+       "target": "بازار دور ہے",
+       "translationAr": "السوق بعيد",
+       "phonetic": "بازار دور ہے",
+       "emoji": "🛒"
+      },
+      {
+       "id": "ur_darwazakholo",
+       "target": "دروازہ کھولو",
+       "translationAr": "افتح الباب",
+       "phonetic": "دروازہ کھولو",
+       "emoji": "🚪"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u8",
+   "color": "#1CB0F6",
+   "titleAr": "الطعام والشراب",
+   "titleEn": "Food & Drink",
+   "lessons": [
+    {
+     "id": "ur_u8_l1",
+     "titleAr": "فواكه وخضروات",
+     "titleEn": "Fruits & Vegetables",
+     "vocab": [
+      {
+       "id": "ur_آڑو",
+       "target": "آڑو",
+       "translationAr": "خوخ",
+       "phonetic": "آڑو",
+       "emoji": "🍑"
+      },
+      {
+       "id": "ur_ناشپاتی",
+       "target": "ناشپاتی",
+       "translationAr": "كمثرى",
+       "phonetic": "ناشپاتی",
+       "emoji": "🍐"
+      },
+      {
+       "id": "ur_تربوز",
+       "target": "تربوز",
+       "translationAr": "بطيخ",
+       "phonetic": "تربوز",
+       "emoji": "🍉"
+      },
+      {
+       "id": "ur_ليموں",
+       "target": "ليموں",
+       "translationAr": "ليمون",
+       "phonetic": "ليموں",
+       "emoji": "🍋",
+       "exampleTarget": "ليموں کھٹا ہے",
+       "exampleAr": "الليمون حامض"
+      },
+      {
+       "id": "ur_گاجر",
+       "target": "گاجر",
+       "translationAr": "جزر",
+       "phonetic": "گاجر",
+       "emoji": "🥕"
+      },
+      {
+       "id": "ur_پیاز",
+       "target": "پیاز",
+       "translationAr": "بصل",
+       "phonetic": "پیاز",
+       "emoji": "🧅"
+      },
+      {
+       "id": "ur_ٹماٹر",
+       "target": "ٹماٹر",
+       "translationAr": "طماطم",
+       "phonetic": "ٹماٹر",
+       "emoji": "🍅"
+      },
+      {
+       "id": "ur_آلو",
+       "target": "آلو",
+       "translationAr": "بطاطس",
+       "phonetic": "آلو",
+       "emoji": "🥔"
+      },
+      {
+       "id": "ur_مکھن",
+       "target": "مکھن",
+       "translationAr": "زبدة",
+       "phonetic": "مکھن",
+       "emoji": "🧈"
+      },
+      {
+       "id": "ur_شہد",
+       "target": "شہد",
+       "translationAr": "عسل",
+       "phonetic": "شہد",
+       "emoji": "🍯",
+       "exampleTarget": "شہد میٹھا ہے",
+       "exampleAr": "العسل حلو"
+      }
+     ]
+    },
+    {
+     "id": "ur_u8_l2",
+     "titleAr": "على المائدة",
+     "titleEn": "At the Table",
+     "vocab": [
+      {
+       "id": "ur_چینی",
+       "target": "چینی",
+       "translationAr": "سكر",
+       "phonetic": "چینی",
+       "emoji": "🍬"
+      },
+      {
+       "id": "ur_دہی",
+       "target": "دہی",
+       "translationAr": "لبن زبادي",
+       "phonetic": "دہی",
+       "emoji": "🥛"
+      },
+      {
+       "id": "ur_سوپ",
+       "target": "سوپ",
+       "translationAr": "حساء",
+       "phonetic": "سوپ",
+       "emoji": "🍲"
+      },
+      {
+       "id": "ur_کافی",
+       "target": "کافی",
+       "translationAr": "قهوة",
+       "phonetic": "کافی",
+       "emoji": "☕",
+       "exampleTarget": "میں کافی پسند کرتا ہوں",
+       "exampleAr": "أحب القهوة"
+      },
+      {
+       "id": "ur_لسی",
+       "target": "لسی",
+       "translationAr": "لبن مخفوق",
+       "phonetic": "لسی",
+       "emoji": "🥛"
+      },
+      {
+       "id": "ur_چمچہ",
+       "target": "چمچہ",
+       "translationAr": "ملعقة",
+       "phonetic": "چمچہ",
+       "emoji": "🥄"
+      },
+      {
+       "id": "ur_چاقو",
+       "target": "چاقو",
+       "translationAr": "سكين",
+       "phonetic": "چاقو",
+       "emoji": "🔪"
+      },
+      {
+       "id": "ur_کانٹا",
+       "target": "کانٹا",
+       "translationAr": "شوكة",
+       "phonetic": "کانٹا",
+       "emoji": "🍴"
+      },
+      {
+       "id": "ur_پلیٹ",
+       "target": "پلیٹ",
+       "translationAr": "طبق",
+       "phonetic": "پلیٹ",
+       "emoji": "🍽️"
+      },
+      {
+       "id": "ur_برتن",
+       "target": "برتن",
+       "translationAr": "وعاء",
+       "phonetic": "برتن",
+       "emoji": "🏺"
+      }
+     ]
+    },
+    {
+     "id": "ur_u8_l3",
+     "titleAr": "عبارات الطعام",
+     "titleEn": "Food Phrases",
+     "vocab": [
+      {
+       "id": "ur_مجھے_بھوک_لگی_ہے",
+       "target": "مجھے بھوک لگی ہے",
+       "translationAr": "جائع أنا",
+       "phonetic": "مجھے بھوک لگی ہے",
+       "emoji": "😋"
+      },
+      {
+       "id": "ur_میں_پیاسا_ہوں",
+       "target": "میں پیاسا ہوں",
+       "translationAr": "أنا عطشان",
+       "phonetic": "میں پیاسا ہوں",
+       "emoji": "🥵"
+      },
+      {
+       "id": "ur_کھانا_تیار_ہے",
+       "target": "کھانا تیار ہے",
+       "translationAr": "الطعام جاهز",
+       "phonetic": "کھانا تیار ہے",
+       "emoji": "🍽️"
+      },
+      {
+       "id": "ur_کھانا_گرم_ہے",
+       "target": "کھانا گرم ہے",
+       "translationAr": "الطعام ساخن",
+       "phonetic": "کھانا گرم ہے",
+       "emoji": "🔥"
+      },
+      {
+       "id": "ur_مزیدار",
+       "target": "مزیدار",
+       "translationAr": "لذيذ",
+       "phonetic": "مزیدار",
+       "emoji": "🤤"
+      },
+      {
+       "id": "ur_میٹھا",
+       "target": "میٹھا",
+       "translationAr": "حلو",
+       "phonetic": "میٹھا",
+       "emoji": "🍰"
+      },
+      {
+       "id": "ur_مٹھائی",
+       "target": "مٹھائی",
+       "translationAr": "حلويات",
+       "phonetic": "مٹھائی",
+       "emoji": "🍮"
+      },
+      {
+       "id": "ur_پانی_دو",
+       "target": "پانی دو",
+       "translationAr": "أعطني ماءً",
+       "phonetic": "پانی دو",
+       "emoji": "💧"
+      },
+      {
+       "id": "ur_مزہ_آیا",
+       "target": "مزہ آیا",
+       "translationAr": "كان لذيذاً",
+       "phonetic": "مزہ آیا",
+       "emoji": "👍"
+      },
+      {
+       "id": "ur_نمکین",
+       "target": "نمکین",
+       "translationAr": "مملح",
+       "phonetic": "نمکین",
+       "emoji": "🧂"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u9",
+   "color": "#CE82FF",
+   "titleAr": "العمل والمهن",
+   "titleEn": "Jobs & Work",
+   "lessons": [
+    {
+     "id": "ur_u9_l1",
+     "titleAr": "المهن",
+     "titleEn": "Professions",
+     "vocab": [
+      {
+       "id": "ur_ڈاکٹر",
+       "target": "ڈاکٹر",
+       "translationAr": "طبيب",
+       "phonetic": "ڈاکٹر",
+       "emoji": "👨‍⚕️"
+      },
+      {
+       "id": "ur_انجینئر",
+       "target": "انجینئر",
+       "translationAr": "مهندس",
+       "phonetic": "انجینئر",
+       "emoji": "👨‍🔧"
+      },
+      {
+       "id": "ur_پولیس_افسر",
+       "target": "پولیس افسر",
+       "translationAr": "شرطي",
+       "phonetic": "پولیس افسر",
+       "emoji": "👮"
+      },
+      {
+       "id": "ur_کسان",
+       "target": "کسان",
+       "translationAr": "مزارع",
+       "phonetic": "کسان",
+       "emoji": "🧑‍🌾"
+      },
+      {
+       "id": "ur_درزی",
+       "target": "درزی",
+       "translationAr": "خيّاط",
+       "phonetic": "درزی",
+       "emoji": "🧵"
+      },
+      {
+       "id": "ur_دکاندار",
+       "target": "دکاندار",
+       "translationAr": "بائع",
+       "phonetic": "دکاندار",
+       "emoji": "🏪"
+      },
+      {
+       "id": "ur_استاد",
+       "target": "استاد",
+       "translationAr": "مدرّس",
+       "phonetic": "استاد",
+       "emoji": "👨‍🏫"
+      },
+      {
+       "id": "ur_وکیل",
+       "target": "وکیل",
+       "translationAr": "محامٍ",
+       "phonetic": "وکیل",
+       "emoji": "⚖️"
+      },
+      {
+       "id": "ur_ملازم",
+       "target": "ملازم",
+       "translationAr": "موظف",
+       "phonetic": "ملازم",
+       "emoji": "💼"
+      },
+      {
+       "id": "ur_پائلٹ",
+       "target": "پائلٹ",
+       "translationAr": "طيّار",
+       "phonetic": "پائلٹ",
+       "emoji": "👨‍✈️"
+      }
+     ]
+    },
+    {
+     "id": "ur_u9_l2",
+     "titleAr": "في العمل",
+     "titleEn": "At Work",
+     "vocab": [
+      {
+       "id": "ur_کام",
+       "target": "کام",
+       "translationAr": "عمل",
+       "phonetic": "کام",
+       "emoji": "💼"
+      },
+      {
+       "id": "ur_دفتر",
+       "target": "دفتر",
+       "translationAr": "مكتب",
+       "phonetic": "دفتر",
+       "emoji": "🏢"
+      },
+      {
+       "id": "ur_کمپیوٹر",
+       "target": "کمپیوٹر",
+       "translationAr": "حاسوب",
+       "phonetic": "کمپیوٹر",
+       "emoji": "💻"
+      },
+      {
+       "id": "ur_کاغذ",
+       "target": "کاغذ",
+       "translationAr": "ورقة",
+       "phonetic": "کاغذ",
+       "emoji": "📄"
+      },
+      {
+       "id": "ur_میز",
+       "target": "میز",
+       "translationAr": "طاولة",
+       "phonetic": "میز",
+       "emoji": "🪑"
+      },
+      {
+       "id": "ur_فائل",
+       "target": "فائل",
+       "translationAr": "ملف",
+       "phonetic": "فائل",
+       "emoji": "📁"
+      },
+      {
+       "id": "ur_تنخواہ",
+       "target": "تنخواہ",
+       "translationAr": "راتب",
+       "phonetic": "تنخواہ",
+       "emoji": "💰"
+      },
+      {
+       "id": "ur_مالک",
+       "target": "مالک",
+       "translationAr": "صاحب العمل",
+       "phonetic": "مالک",
+       "emoji": "👔"
+      },
+      {
+       "id": "ur_ساتھی",
+       "target": "ساتھی",
+       "translationAr": "زميل",
+       "phonetic": "ساتھی",
+       "emoji": "👥"
+      },
+      {
+       "id": "ur_اجلاس",
+       "target": "اجلاس",
+       "translationAr": "اجتماع",
+       "phonetic": "اجلاس",
+       "emoji": "🕘"
+      }
+     ]
+    },
+    {
+     "id": "ur_u9_l3",
+     "titleAr": "عبارات العمل",
+     "titleEn": "Work Phrases",
+     "vocab": [
+      {
+       "id": "ur_میں_کام_کرتا_ہوں",
+       "target": "میں کام کرتا ہوں",
+       "translationAr": "أعمل",
+       "phonetic": "میں کام کرتا ہوں",
+       "emoji": "💼"
+      },
+      {
+       "id": "ur_آپ_کیا_کام_کرتے_ہیں؟",
+       "target": "آپ کیا کام کرتے ہیں؟",
+       "translationAr": "ما عملك؟",
+       "phonetic": "آپ کیا کام کرتے ہیں؟",
+       "emoji": "❓"
+      },
+      {
+       "id": "ur_میرا_دفتر_دور_ہے",
+       "target": "میرا دفتر دور ہے",
+       "translationAr": "مكتبي بعيد",
+       "phonetic": "میرا دفتر دور ہے",
+       "emoji": "🏢"
+      },
+      {
+       "id": "ur_آج_چھٹی_ہے",
+       "target": "آج چھٹی ہے",
+       "translationAr": "اليوم عطلة",
+       "phonetic": "آج چھٹی ہے",
+       "emoji": "🎉"
+      },
+      {
+       "id": "ur_مجھے_نوکری_چاہیے",
+       "target": "مجھے نوکری چاہیے",
+       "translationAr": "أريد عملاً",
+       "phonetic": "مجھے نوکری چاہیے",
+       "emoji": "🔍"
+      },
+      {
+       "id": "ur_وہ_میرا_ساتھی_ہے",
+       "target": "وہ میرا ساتھی ہے",
+       "translationAr": "هو زميلي",
+       "phonetic": "وہ میرا ساتھی ہے",
+       "emoji": "👥"
+      },
+      {
+       "id": "ur_میں_محنتی_ہوں",
+       "target": "میں محنتی ہوں",
+       "translationAr": "أنا مجتهد",
+       "phonetic": "میں محنتی ہوں",
+       "emoji": "💪"
+      },
+      {
+       "id": "ur_وقت_اہم_ہے",
+       "target": "وقت اہم ہے",
+       "translationAr": "الوقت مهم",
+       "phonetic": "وقت اہم ہے",
+       "emoji": "⏰"
+      },
+      {
+       "id": "ur_شاباش",
+       "target": "شاباش",
+       "translationAr": "أحسنت",
+       "phonetic": "شاباش",
+       "emoji": "👏"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u10",
+   "color": "#FF9600",
+   "titleAr": "السفر والحياة اليومية",
+   "titleEn": "Travel & Daily Life",
+   "lessons": [
+    {
+     "id": "ur_u10_l1",
+     "titleAr": "السفر والمواصلات",
+     "titleEn": "Travel & Transport",
+     "vocab": [
+      {
+       "id": "ur_بس",
+       "target": "بس",
+       "translationAr": "حافلة",
+       "phonetic": "بس",
+       "emoji": "🚌"
+      },
+      {
+       "id": "ur_ریل_گاڑی",
+       "target": "ریل گاڑی",
+       "translationAr": "قطار",
+       "phonetic": "ریل گاڑی",
+       "emoji": "🚆"
+      },
+      {
+       "id": "ur_ہوائی_جہاز",
+       "target": "ہوائی جہاز",
+       "translationAr": "طائرة",
+       "phonetic": "ہوائی جہاز",
+       "emoji": "✈️"
+      },
+      {
+       "id": "ur_سائکل",
+       "target": "سائکل",
+       "translationAr": "دراجة",
+       "phonetic": "سائکل",
+       "emoji": "🚲"
+      },
+      {
+       "id": "ur_ٹیکسی",
+       "target": "ٹیکسی",
+       "translationAr": "تاكسي",
+       "phonetic": "ٹیکسی",
+       "emoji": "🚕"
+      },
+      {
+       "id": "ur_سفر",
+       "target": "سفر",
+       "translationAr": "رحلة",
+       "phonetic": "سفر",
+       "emoji": "🧳"
+      },
+      {
+       "id": "ur_اسٹیشن",
+       "target": "اسٹیشن",
+       "translationAr": "محطة",
+       "phonetic": "اسٹیشن",
+       "emoji": "🚉"
+      },
+      {
+       "id": "ur_ٹکٹ",
+       "target": "ٹکٹ",
+       "translationAr": "تذكرة",
+       "phonetic": "ٹکٹ",
+       "emoji": "🎫"
+      },
+      {
+       "id": "ur_سڑک",
+       "target": "سڑک",
+       "translationAr": "طريق",
+       "phonetic": "سڑک",
+       "emoji": "🛣️"
+      },
+      {
+       "id": "ur_کشتی",
+       "target": "کشتی",
+       "translationAr": "قارب",
+       "phonetic": "کشتی",
+       "emoji": "🛶"
+      },
+      {
+       "id": "ur_پہاڑ",
+       "target": "پہاڑ",
+       "translationAr": "جبل",
+       "phonetic": "پہاڑ",
+       "emoji": "⛰️"
+      },
+      {
+       "id": "ur_دریا",
+       "target": "دریا",
+       "translationAr": "نهر",
+       "phonetic": "دریا",
+       "emoji": "🏞️"
+      }
+     ]
+    },
+    {
+     "id": "ur_u10_l2",
+     "titleAr": "الوقت والطقس",
+     "titleEn": "Time & Weather",
+     "vocab": [
+      {
+       "id": "ur_گھنٹہ",
+       "target": "گھنٹہ",
+       "translationAr": "ساعة",
+       "phonetic": "گھنٹہ",
+       "emoji": "🕐"
+      },
+      {
+       "id": "ur_منٹ",
+       "target": "منٹ",
+       "translationAr": "دقيقة",
+       "phonetic": "منٹ",
+       "emoji": "⏱️"
+      },
+      {
+       "id": "ur_دوپہر",
+       "target": "دوپہر",
+       "translationAr": "ظهراً",
+       "phonetic": "دوپہر",
+       "emoji": "☀️"
+      },
+      {
+       "id": "ur_ہر_روز",
+       "target": "ہر روز",
+       "translationAr": "كل يوم",
+       "phonetic": "ہر روز",
+       "emoji": "📅"
+      },
+      {
+       "id": "ur_آج_رات",
+       "target": "آج رات",
+       "translationAr": "الليلة",
+       "phonetic": "آج رات",
+       "emoji": "🌙"
+      },
+      {
+       "id": "ur_موسم_گرما",
+       "target": "موسم گرما",
+       "translationAr": "الصيف",
+       "phonetic": "موسم گرما",
+       "emoji": "🌞"
+      },
+      {
+       "id": "ur_موسم_سرما",
+       "target": "موسم سرما",
+       "translationAr": "الشتاء",
+       "phonetic": "موسم سرما",
+       "emoji": "❄️"
+      },
+      {
+       "id": "ur_بارش",
+       "target": "بارش",
+       "translationAr": "مطر",
+       "phonetic": "بارش",
+       "emoji": "🌧️"
+      },
+      {
+       "id": "ur_برف",
+       "target": "برف",
+       "translationAr": "ثلج",
+       "phonetic": "برف",
+       "emoji": "⛄"
+      },
+      {
+       "id": "ur_ہوا",
+       "target": "ہوا",
+       "translationAr": "ريح",
+       "phonetic": "ہوا",
+       "emoji": "🌬️"
+      }
+     ]
+    },
+    {
+     "id": "ur_u10_l3",
+     "titleAr": "عبارات يومية",
+     "titleEn": "Daily Phrases",
+     "vocab": [
+      {
+       "id": "ur_میں_گھر_جا_رہا_ہوں",
+       "target": "میں گھر جا رہا ہوں",
+       "translationAr": "أنا ذاهب إلى البيت",
+       "phonetic": "میں گھر جا رہا ہوں",
+       "emoji": "🏠"
+      },
+      {
+       "id": "ur_دیر_ہو_گئی",
+       "target": "دیر ہو گئی",
+       "translationAr": "تأخر الوقت",
+       "phonetic": "دیر ہو گئی",
+       "emoji": "⏰"
+      },
+      {
+       "id": "ur_جلدی_کرو",
+       "target": "جلدی کرو",
+       "translationAr": "أسرعوا",
+       "phonetic": "جلدی کرو",
+       "emoji": "🏃"
+      },
+      {
+       "id": "ur_میں_تھک_گیا_ہوں",
+       "target": "میں تھک گیا ہوں",
+       "translationAr": "لقد تعبت",
+       "phonetic": "میں تھک گیا ہوں",
+       "emoji": "🥱"
+      },
+      {
+       "id": "ur_مجھے_مدد_چاہیے",
+       "target": "مجھے مدد چاہیے",
+       "translationAr": "أحتاج مساعدة",
+       "phonetic": "مجھے مدد چاہیے",
+       "emoji": "🆘"
+      },
+      {
+       "id": "ur_خیال_رکھنا",
+       "target": "خیال رکھنا",
+       "translationAr": "اعتنِ بنفسك",
+       "phonetic": "خیال رکھنا",
+       "emoji": "🤗"
+      },
+      {
+       "id": "ur_میں_سمجھ_گیا",
+       "target": "میں سمجھ گیا",
+       "translationAr": "فهمت",
+       "phonetic": "میں سمجھ گیا",
+       "emoji": "💡"
+      },
+      {
+       "id": "ur_اللہ_حفاظت_کرے",
+       "target": "اللہ حفاظت کرے",
+       "translationAr": "حفظك الله",
+       "phonetic": "اللہ حفاظت کرے",
+       "emoji": "🤲"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }

@@ -24,7 +24,7 @@ Future<void> main() async {
   final state = AppState();
 
   // Load courses from assets.
-  for (final id in ['en', 'ur']) {
+  for (final id in ['en', 'ur', 'fr']) {
     final raw = await rootBundle.loadString('assets/data/course_$id.json');
     state.courses[id] = Course.fromJson(jsonDecode(raw));
   }

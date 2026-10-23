@@ -5,7 +5,6 @@ import '../models.dart';
 import '../scope.dart';
 import '../srs.dart';
 import '../theme.dart';
-import '../widgets/common.dart';
 import '../widgets/mascot.dart';
 import 'home_shell.dart';
 

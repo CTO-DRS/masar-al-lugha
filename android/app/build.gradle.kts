@@ -7,6 +7,9 @@ plugins {
 android {
     namespace = "com.example.masar_al_lugha"
     compileSdk = flutter.compileSdkVersion
+    // Pure Dart app: declares the NDK version only so the Flutter plugin's
+    // NDK-provisioning check sees it as installed (see gradle.properties
+    // flutter.installedNdkVersions) — no native code is compiled.
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

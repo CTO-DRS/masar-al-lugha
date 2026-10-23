@@ -1,7 +1,7 @@
 name: masar_al_lugha
 description: "Masar Al-Lugha (مسار اللغة) - A fun language learning path app. Learn English & Urdu with smart flashcards, leveled lessons and gamification."
 publish_to: "none"
-version: 1.0.0+1
+version: 3.0.0+3
 
 environment:
   sdk: ">=3.5.0 <4.0.0"
@@ -23,3 +23,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/data/
+
+dependency_overrides:
+  shared_preferences_android: 2.4.10

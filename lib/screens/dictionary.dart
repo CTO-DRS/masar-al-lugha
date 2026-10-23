@@ -1,0 +1,332 @@
+// Dictionary: searchable word bank of the current course (v2.0).
+import 'package:flutter/material.dart';
+
+import '../models.dart';
+import '../scope.dart';
+import '../theme.dart';
+import '../widgets/mascot.dart';
+import 'home_shell.dart';
+
+class DictionaryScreen extends StatefulWidget {
+  const DictionaryScreen({super.key});
+
+  @override
+  State<DictionaryScreen> createState() => _DictionaryScreenState();
+}
+
+class _DictionaryScreenState extends State<DictionaryScreen> {
+  String query = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final st = AppScope.of(context);
+    final tr = (String k) => context.tr(k);
+    final course = st.course;
+
+    // Build rows grouped by unit.
+    final rows = <_Row>[];
+    for (final unit in course.units) {
+      for (final lesson in unit.lessons) {
+        for (final v in lesson.vocab) {
+          if (query.isNotEmpty && !_matches(v, query)) continue;
+          rows.add(_Row(unit: unit, lesson: lesson, vocab: v));
+        }
+      }
+    }
+
+    return Scaffold(
+      body: Column(
+        children: [
+          const TopStatsBar(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
+            child: TextField(
+              onChanged: (v) => setState(() => query = v.trim()),
+              decoration: InputDecoration(
+                hintText: tr('searchWords'),
+                prefixIcon: const Icon(Icons.search,
+                    color: AppColors.inkLight),
+                filled: true,
+                fillColor: AppColors.bgSoft,
+                contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      const BorderSide(color: AppColors.border, width: 2),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      const BorderSide(color: AppColors.border, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      const BorderSide(color: AppColors.green, width: 2),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 6),
+            child: Row(
+              children: [
+                Text(
+                  '${rows.length} ${tr('words')}',
+                  style: const TextStyle(
+                      color: AppColors.inkLight,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 13),
+                ),
+                const Spacer(),
+                Text(
+                  tr('tapToListen'),
+                  style: const TextStyle(
+                      color: AppColors.inkLight, fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: rows.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Mascot(
+                            size: 90, mood: MascotMood.neutral),
+                        const SizedBox(height: 12),
+                        Text(tr('noResults'),
+                            style: const TextStyle(
+                                color: AppColors.inkLight,
+                                fontWeight: FontWeight.w700)),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    itemCount: rows.length,
+                    itemBuilder: (context, i) {
+                      final r = rows[i];
+                      final showUnitHeader = i == 0 ||
+                          rows[i - 1].unit.id != r.unit.id;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (showUnitHeader)
+                            _unitHeader(context, r),
+                          _WordTile(row: r),
+                        ],
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool _matches(Vocab v, String q) {
+    final lq = q.toLowerCase();
+    return v.target.toLowerCase().contains(lq) ||
+        v.translationAr.contains(q) ||
+        (v.phonetic ?? '').contains(q);
+  }
+
+  Widget _unitHeader(BuildContext context, _Row r) {
+    final st = AppScope.of(context);
+    final color = _hexToColor(r.unit.colorHex);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 14, 20, 6),
+      child: Text(
+        '${st.uiLocale == 'ar' ? r.unit.titleAr : r.unit.titleEn} · '
+        '${st.uiLocale == 'ar' ? r.lesson.titleAr : r.lesson.titleEn}',
+        style: TextStyle(
+          color: color,
+          fontWeight: FontWeight.w900,
+          fontSize: 13,
+        ),
+      ),
+    );
+  }
+}
+
+class _Row {
+  final Unit unit;
+  final Lesson lesson;
+  final Vocab vocab;
+  _Row({required this.unit, required this.lesson, required this.vocab});
+}
+
+class _WordTile extends StatefulWidget {
+  final _Row row;
+  const _WordTile({required this.row});
+
+  @override
+  State<_WordTile> createState() => _WordTileState();
+}
+
+class _WordTileState extends State<_WordTile> {
+  bool expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final st = AppScope.of(context);
+    final v = widget.row.vocab;
+    final color = _hexToColor(widget.row.unit.colorHex);
+    final card = st.cardFor(v.id);
+    final state = card?.state ?? 'new';
+    final stateColor = state == 'review'
+        ? AppColors.green
+        : state == 'learning'
+            ? AppColors.orange
+            : AppColors.lockedDark;
+    final stateLabel = state == 'review'
+        ? context.tr('reviewCards')
+        : state == 'learning'
+            ? context.tr('learningCards')
+            : context.tr('newCards');
+
+    return GestureDetector(
+      onTap: () => setState(() => expanded = !expanded),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: expanded ? AppColors.bgSoft : Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: expanded ? color : AppColors.border,
+            width: 2,
+          ),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                // emoji avatar
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: Text(
+                      (v.emoji ?? '').isEmpty ? '🎓' : v.emoji!,
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        v.target,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 16),
+                      ),
+                      Text(
+                        v.translationAr,
+                        style: const TextStyle(
+                            color: AppColors.inkLight, fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // speak button
+                    GestureDetector(
+                      onTap: () {
+                        AppScope.ttsOf(context)
+                            .setLanguage(st.course.ttsLang)
+                            .then((_) =>
+                                AppScope.ttsOf(context).speak(v.target));
+                      },
+                      child: Container(
+                        width: 38,
+                        height: 38,
+                        decoration: BoxDecoration(
+                          color: AppColors.blueLight,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Icon(Icons.volume_up,
+                            color: AppColors.blue, size: 22),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: stateColor.withOpacity(0.12),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        stateLabel,
+                        style: TextStyle(
+                            color: stateColor,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            if (expanded) ...[
+              const SizedBox(height: 10),
+              if (v.phonetic != null)
+                Row(
+                  children: [
+                    const Icon(Icons.record_voice_over,
+                        size: 16, color: AppColors.inkLight),
+                    const SizedBox(width: 6),
+                    Text(v.phonetic!,
+                        style: const TextStyle(
+                            color: AppColors.inkLight, fontSize: 13)),
+                  ],
+                ),
+              if (v.exampleTarget != null) ...[
+                const SizedBox(height: 8),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: AppColors.border, width: 1.5),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(v.exampleTarget!,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 14)),
+                      const SizedBox(height: 2),
+                      Text(v.exampleAr ?? '',
+                          style: const TextStyle(
+                              color: AppColors.inkLight, fontSize: 13)),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Color _hexToColor(String hex) {
+  hex = hex.replaceAll('#', '');
+  if (hex.length == 6) hex = 'FF$hex';
+  return Color(int.parse(hex, radix: 16));
+}

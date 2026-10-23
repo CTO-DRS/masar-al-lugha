@@ -6,6 +6,7 @@ class Vocab {
   final String target; // word in the target language
   final String translationAr; // Arabic translation
   final String? phonetic; // Arabic transliteration (optional)
+  final String? emoji; // illustration for interactive picture exercises
   final String? exampleTarget;
   final String? exampleAr;
 
@@ -14,15 +15,19 @@ class Vocab {
     required this.target,
     required this.translationAr,
     this.phonetic,
+    this.emoji,
     this.exampleTarget,
     this.exampleAr,
   });
+
+  bool get isSentence => target.trim().contains(' ');
 
   factory Vocab.fromJson(Map<String, dynamic> j) => Vocab(
         id: j['id'] as String,
         target: j['target'] as String,
         translationAr: j['translationAr'] as String,
         phonetic: j['phonetic'] as String?,
+        emoji: j['emoji'] as String?,
         exampleTarget: j['exampleTarget'] as String?,
         exampleAr: j['exampleAr'] as String?,
       );
@@ -108,18 +113,29 @@ class Course {
 
 // ---------------- Exercises ----------------
 
-enum ExerciseType { mcq, reverse, listen, build, match }
+enum ExerciseType {
+  mcq,
+  reverse,
+  listen,
+  build,
+  match,
+  picToWord, // emoji shown -> pick the word
+  wordToPic, // word shown  -> pick the emoji picture
+  fillblank, // sentence with ___ -> pick the missing word
+  truefalse, // word + shown meaning -> true or false?
+}
 
 class Exercise {
   final ExerciseType type;
   final String prompt; // main text shown to learner
   final String answer; // correct answer text
-  final List<String> options; // for mcq / reverse / listen
+  final List<String> options; // for mcq / reverse / listen / pic / tf
   final List<String> tiles; // for build
   final List<String> matchLeft; // for match
   final List<String> matchRight; // for match
   final Vocab vocab; // related vocab (for TTS / feedback)
   final String audioText; // what TTS should say
+  final String? hint; // extra context (sentence translation, etc.)
 
   const Exercise({
     required this.type,
@@ -131,6 +147,7 @@ class Exercise {
     this.matchRight = const [],
     required this.vocab,
     required this.audioText,
+    this.hint,
   });
 }
 
