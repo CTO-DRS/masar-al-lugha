@@ -122,4 +122,54 @@ void main() {
     await st2.load();
     expect(st2.xp, 42);
   });
+
+  test('streak extends on consecutive days (v4.0.1 fix)', () async {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final st = AppState();
+    await st.load();
+
+    // Simulate: the learner was active yesterday with streak = 1.
+    st.lastActiveDay = AppState.yesterdayKey();
+    st.streak = 1;
+
+    st.addXp(10);
+    expect(st.streak, 2); // consecutive day extends the streak
+
+    // Same-day activity must NOT double-increment.
+    st.addXp(5);
+    expect(st.streak, 2);
+
+    await st.flush(); // addXp now uses the debounced save (v4.0.1 M4)
+  });
+
+  test('streak restarts at 1 after a missed day (v4.0.1 HIGH fix)', () async {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final st = AppState();
+    await st.load();
+
+    // Simulate a stale profile: last active long ago, daily state also stale,
+    // so _ensureDaily() takes the gap branch at the next activity.
+    st.lastActiveDay = '2020-01-01';
+    st.dailyXpDay = '2020-01-01';
+    st.streak = 9;
+
+    st.addXp(10);
+    expect(st.streak, 1); // gap breaks the streak, new streak starts
+
+    await st.flush();
+  });
+
+  test('streak earns the streak_3 badge once it reaches 3 days', () async {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final st = AppState();
+    await st.load();
+
+    st.lastActiveDay = AppState.yesterdayKey();
+    st.streak = 2;
+    st.addXp(1);
+    expect(st.streak, 3);
+    expect(st.badges, contains('streak_3'));
+
+    await st.flush();
+  });
 }

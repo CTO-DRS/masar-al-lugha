@@ -383,6 +383,7 @@ class AppState extends ChangeNotifier {
     _ensureDaily();
     xp += amount;
     dailyXp += amount;
+    _bumpStreak();
     lastActiveDay = todayKey();
     xpLog[dailyXpDay] = (xpLog[dailyXpDay] ?? 0) + amount;
     if (xpLog.length > 30) {
@@ -392,10 +393,26 @@ class AppState extends ChangeNotifier {
         xpLog.remove(keys.removeAt(0));
       }
     }
-    if (streak == 0) streak = 1;
     _checkBadges();
-    save();
+    // v4.0.1 fix (M4): addXp fires on every flashcard rating — a full save()
+    // here defeated the debounced-write design. scheduleSave + flush-on-pause
+    // covers persistence instead.
+    scheduleSave();
     notifyListeners();
+  }
+
+  /// v4.0.1 fix (HIGH): the streak was pinned at 1 forever — the only code
+  /// touching it was `if (streak == 0) streak = 1;` with no increment path,
+  /// so the streak_3/7/14 badges were unearnable. A consecutive active day
+  /// now extends the streak exactly once per calendar day.
+  /// Must run BEFORE [lastActiveDay] is overwritten with today.
+  void _bumpStreak() {
+    if (lastActiveDay == todayKey()) return; // already counted today
+    if (lastActiveDay == yesterdayKey()) {
+      streak += 1; // consecutive day
+    } else {
+      streak = 1; // first activity ever, or after a gap reset
+    }
   }
 
   void recordAnswer(bool correct) {
@@ -415,8 +432,8 @@ class AppState extends ChangeNotifier {
             : 1;
     final prev = lessonStars[lessonId] ?? 0;
     if (stars > prev) lessonStars[lessonId] = stars;
+    _bumpStreak();
     lastActiveDay = todayKey();
-    if (streak == 0) streak = 1;
     _checkBadges();
     save();
     notifyListeners();

@@ -101,7 +101,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Text(
                 L.t(st.uiLocale, 'tagline'),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15, color: AppColors.inkLight),
+                style: TextStyle(fontSize: 15, color: context.mutedText),
               ),
               const SizedBox(height: 28),
               if (step == 0) _buildUiLangChoices(st),

@@ -136,8 +136,8 @@ class TopStatsBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   children: [
                     Text(st.course.flag, style: const TextStyle(fontSize: 18)),
-                    const Icon(Icons.expand_more,
-                        size: 18, color: AppColors.inkLight),
+                    Icon(Icons.expand_more,
+                        size: 18, color: context.mutedText),
                   ],
                 ),
               ),

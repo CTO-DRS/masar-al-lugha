@@ -44,7 +44,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               onChanged: (v) => setState(() => query = v.trim()),
               decoration: InputDecoration(
                 hintText: tr('searchWords'),
-                prefixIcon: const Icon(Icons.search, color: AppColors.inkLight),
+                prefixIcon: Icon(Icons.search, color: context.mutedText),
                 filled: true,
                 fillColor: context.softBg,
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
@@ -277,8 +277,8 @@ class _WordTileState extends State<_WordTile> {
               if (v.phonetic != null)
                 Row(
                   children: [
-                    const Icon(Icons.record_voice_over,
-                        size: 16, color: AppColors.inkLight),
+                    Icon(Icons.record_voice_over,
+                        size: 16, color: context.mutedText),
                     const SizedBox(width: 6),
                     Text(v.phonetic!,
                         style:

@@ -305,8 +305,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           TextButton(
             onPressed: () => Navigator.pop(ctx),
             child: Text(tr('cancel'),
-                style: const TextStyle(
-                    color: AppColors.inkLight, fontWeight: FontWeight.w800)),
+                style: TextStyle(
+                    color: context.mutedText, fontWeight: FontWeight.w800)),
           ),
           TextButton(
             onPressed: () async {

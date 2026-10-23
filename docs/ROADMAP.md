@@ -1,7 +1,7 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.0.0+7** (2026-10-24) — see docs/PROJECT_AUDIT.md §5 for
-what the v4.0 upgrade actually changed, with file/line evidence.
+**Current release: v4.0.1+8** — see docs/PROJECT_AUDIT.md §5 for what the
+v4.0 upgrade actually changed, with file/line evidence.
 
 ## Where we are
 
@@ -14,6 +14,7 @@ what the v4.0 upgrade actually changed, with file/line evidence.
 | v3.2 | +10 units (EN 25-28, UR 15-17, FR 13-15) |
 | v3.3 | Full English expansion: EN 48 units / 188 lessons / 2016 words — 2986 total |
 | **v4.0** | **Audit-driven upgrade: 4 HIGH + 10 MEDIUM defects fixed, schema v2 storage, placement test, dark mode, export/import, honest SRS docs, CI quality gates, 27 tests** |
+| v4.0.1 | External review fixes: streak progression (was pinned at 1 — HIGH, test-backed), match-exercise duplicate TTS speak, dead `\|\| true` condition, dark-mode surfaces on flashcards/lesson match/dictionary/settings, debounced saves for XP |
 
 ## v4.1 — architecture & engine polish (next)
 

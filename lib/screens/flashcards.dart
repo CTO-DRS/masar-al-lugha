@@ -105,8 +105,8 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                       children: [
                         Text(
                           tr('tapToFlip'),
-                          style: const TextStyle(
-                              color: AppColors.inkLight, fontSize: 13),
+                          style: TextStyle(
+                              color: context.mutedText, fontSize: 13),
                         ),
                         const SizedBox(height: 10),
                         Expanded(child: _card(context, tr)),
@@ -130,7 +130,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.card,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppColors.border, width: 2),
       ),
@@ -145,8 +145,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                   style: const TextStyle(
                       fontWeight: FontWeight.w900, fontSize: 17)),
               Text(label,
-                  style:
-                      const TextStyle(color: AppColors.inkLight, fontSize: 11)),
+                  style: TextStyle(color: context.mutedText, fontSize: 11)),
             ],
           ),
         ],
@@ -168,7 +167,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
           ),
           const SizedBox(height: 6),
           Text(tr('comeBackTomorrow'),
-              style: const TextStyle(color: AppColors.inkLight, fontSize: 14)),
+              style: TextStyle(color: context.mutedText, fontSize: 14)),
         ],
       ),
     );
@@ -201,10 +200,14 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
           width: double.infinity,
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: flipped ? AppColors.blueLight : Colors.white,
+            // v4.0.1: dark-aware card surfaces — the front used a hardcoded
+            // white and the back a hardcoded light blue.
+            color: flipped
+                ? (context.isDark ? AppColors.darkSoft : AppColors.blueLight)
+                : context.card,
             borderRadius: BorderRadius.circular(22),
             border: Border.all(
-              color: flipped ? AppColors.blue : AppColors.border,
+              color: flipped ? AppColors.blue : context.line,
               width: 2,
             ),
             boxShadow: const [
@@ -231,7 +234,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
         if (v.phonetic != null)
           Text(
             v.phonetic!,
-            style: const TextStyle(color: AppColors.inkLight, fontSize: 17),
+            style: TextStyle(color: context.mutedText, fontSize: 17),
           ),
         const SizedBox(height: 18),
         GestureDetector(
@@ -269,7 +272,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.7),
+              color: context.softBg,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -281,8 +284,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                 const SizedBox(height: 4),
                 Text(v.exampleAr ?? '',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        color: AppColors.inkLight, fontSize: 13)),
+                    style: TextStyle(color: context.mutedText, fontSize: 13)),
               ],
             ),
           ),
@@ -294,7 +296,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
               : c.state == 'learning'
                   ? context.tr('learningCards')
                   : context.tr('reviewCards'),
-          style: const TextStyle(color: AppColors.inkLight, fontSize: 12),
+          style: TextStyle(color: context.mutedText, fontSize: 12),
         ),
       ],
     );

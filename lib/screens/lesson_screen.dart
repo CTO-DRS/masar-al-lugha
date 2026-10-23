@@ -659,11 +659,10 @@ class _LessonScreenState extends State<LessonScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      for (final w in ex.matchLeft)
-                        _matchChip(
-                            w,
-                            AppScope.of(context).course.ttsLang == 'ur' || true,
-                            tr),
+                      // v4.0.1 fix: was `ttsLang == 'ur' || true` — a dead
+                      // condition that always evaluated to true. Intent is
+                      // tap-to-hear on every target word, so pass true.
+                      for (final w in ex.matchLeft) _matchChip(w, true, tr),
                     ],
                   ),
                 ),
@@ -692,7 +691,7 @@ class _LessonScreenState extends State<LessonScreen> {
     final flashRed = matchError && selectedNow;
 
     Color border = AppColors.border;
-    Color bg = Colors.white;
+    Color bg = context.card;
     if (matched) {
       border = AppColors.green;
       bg = AppColors.greenLight;
@@ -723,7 +722,7 @@ class _LessonScreenState extends State<LessonScreen> {
           style: TextStyle(
             fontWeight: FontWeight.w800,
             fontSize: 16,
-            color: matched ? AppColors.greenDark : AppColors.ink,
+            color: matched ? AppColors.greenDark : context.bodyText,
             decoration: matched ? TextDecoration.none : null,
           ),
         ),
@@ -753,7 +752,8 @@ class _LessonScreenState extends State<LessonScreen> {
           if (leftWordId != null) wordResults[leftWordId] = true;
           st.recordAnswer(true);
           correctCount++;
-          AppScope.ttsOf(context).speak(matchSelLeft!);
+          // v4.0.1 fix: removed the second speak() here — the word was just
+          // spoken on tap (async setLanguage race made them overlap).
         } else {
           if (leftWordId != null) {
             wordResults[leftWordId] = false;
