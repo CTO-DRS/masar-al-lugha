@@ -1,0 +1,279 @@
+{
+  "id": "en",
+  "flag": "🇬🇧",
+  "nameAr": "الإنجليزية",
+  "nameEn": "English",
+  "ttsLang": "en-US",
+  "units": [
+    {
+      "id": "en_u1",
+      "color": "#58CC02",
+      "titleAr": "الأساسيات",
+      "titleEn": "Basics",
+      "lessons": [
+        {
+          "id": "en_u1_l1",
+          "titleAr": "التحيات",
+          "titleEn": "Greetings",
+          "vocab": [
+            {"id": "en_hello", "target": "Hello", "translationAr": "مرحباً", "phonetic": "هيلو", "exampleTarget": "Hello, my friend!", "exampleAr": "مرحباً يا صديقي!"},
+            {"id": "en_hi", "target": "Hi", "translationAr": "أهلاً", "phonetic": "هاي"},
+            {"id": "en_goodmorning", "target": "Good morning", "translationAr": "صباح الخير", "phonetic": "غود مورنينغ"},
+            {"id": "en_goodevening", "target": "Good evening", "translationAr": "مساء الخير", "phonetic": "غود إيفنينغ"},
+            {"id": "en_welcome", "target": "Welcome", "translationAr": "أهلاً وسهلاً", "phonetic": "ويلكوم"},
+            {"id": "en_goodbye", "target": "Goodbye", "translationAr": "إلى اللقاء", "phonetic": "غودباي"},
+            {"id": "en_thanks", "target": "Thank you", "translationAr": "شكراً", "phonetic": "ثانك يو", "exampleTarget": "Thank you very much!", "exampleAr": "شكراً جزيلاً!"},
+            {"id": "en_please", "target": "Please", "translationAr": "من فضلك", "phonetic": "بليز"}
+          ]
+        },
+        {
+          "id": "en_u1_l2",
+          "titleAr": "تعريف بالنفس",
+          "titleEn": "Introducing yourself",
+          "vocab": [
+            {"id": "en_iam", "target": "I am", "translationAr": "أنا أكون", "phonetic": "آي أم"},
+            {"id": "en_myname", "target": "My name", "translationAr": "اسمي", "phonetic": "ماي نيم"},
+            {"id": "en_yes", "target": "Yes", "translationAr": "نعم", "phonetic": "يس"},
+            {"id": "en_no", "target": "No", "translationAr": "لا", "phonetic": "نو"},
+            {"id": "en_ok", "target": "OK", "translationAr": "حسناً", "phonetic": "أوكي"},
+            {"id": "en_sorry", "target": "Sorry", "translationAr": "آسف", "phonetic": "سوري"},
+            {"id": "en_nicetomeet", "target": "Nice to meet you", "translationAr": "سعيد بلقائك", "phonetic": "نايس تو ميت يو"}
+          ]
+        },
+        {
+          "id": "en_u1_l3",
+          "titleAr": "الضمائر",
+          "titleEn": "Pronouns",
+          "vocab": [
+            {"id": "en_i", "target": "I", "translationAr": "أنا", "phonetic": "آي"},
+            {"id": "en_you", "target": "You", "translationAr": "أنت", "phonetic": "يو"},
+            {"id": "en_he", "target": "He", "translationAr": "هو", "phonetic": "هي"},
+            {"id": "en_she", "target": "She", "translationAr": "هي", "phonetic": "شي"},
+            {"id": "en_we", "target": "We", "translationAr": "نحن", "phonetic": "وي"},
+            {"id": "en_they", "target": "They", "translationAr": "هم", "phonetic": "ذاي"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en_u2",
+      "color": "#1CB0F6",
+      "titleAr": "الأرقام والوقت",
+      "titleEn": "Numbers & Time",
+      "lessons": [
+        {
+          "id": "en_u2_l1",
+          "titleAr": "من واحد إلى خمسة",
+          "titleEn": "One to five",
+          "vocab": [
+            {"id": "en_one", "target": "One", "translationAr": "واحد", "phonetic": "وان"},
+            {"id": "en_two", "target": "Two", "translationAr": "اثنان", "phonetic": "تتو"},
+            {"id": "en_three", "target": "Three", "translationAr": "ثلاثة", "phonetic": "ثري"},
+            {"id": "en_four", "target": "Four", "translationAr": "أربعة", "phonetic": "فور"},
+            {"id": "en_five", "target": "Five", "translationAr": "خمسة", "phonetic": "فايڤ"}
+          ]
+        },
+        {
+          "id": "en_u2_l2",
+          "titleAr": "من ستة إلى عشرة",
+          "titleEn": "Six to ten",
+          "vocab": [
+            {"id": "en_six", "target": "Six", "translationAr": "ستة", "phonetic": "سيكس"},
+            {"id": "en_seven", "target": "Seven", "translationAr": "سبعة", "phonetic": "سيفن"},
+            {"id": "en_eight", "target": "Eight", "translationAr": "ثمانية", "phonetic": "إيت"},
+            {"id": "en_nine", "target": "Nine", "translationAr": "تسعة", "phonetic": "ناين"},
+            {"id": "en_ten", "target": "Ten", "translationAr": "عشرة", "phonetic": "تن"}
+          ]
+        },
+        {
+          "id": "en_u2_l3",
+          "titleAr": "الوقت",
+          "titleEn": "Time words",
+          "vocab": [
+            {"id": "en_today", "target": "Today", "translationAr": "اليوم", "phonetic": "توداي"},
+            {"id": "en_tomorrow", "target": "Tomorrow", "translationAr": "غداً", "phonetic": "تومورو"},
+            {"id": "en_now", "target": "Now", "translationAr": "الآن", "phonetic": "ناو"},
+            {"id": "en_day", "target": "Day", "translationAr": "يوم", "phonetic": "داي"},
+            {"id": "en_week", "target": "Week", "translationAr": "أسبوع", "phonetic": "ويك"},
+            {"id": "en_night", "target": "Night", "translationAr": "ليل", "phonetic": "نايت"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en_u3",
+      "color": "#CE82FF",
+      "titleAr": "العائلة",
+      "titleEn": "Family",
+      "lessons": [
+        {
+          "id": "en_u3_l1",
+          "titleAr": "أفراد العائلة",
+          "titleEn": "Family members",
+          "vocab": [
+            {"id": "en_father", "target": "Father", "translationAr": "والد", "phonetic": "فاذر"},
+            {"id": "en_mother", "target": "Mother", "translationAr": "والدة", "phonetic": "ماذر"},
+            {"id": "en_brother", "target": "Brother", "translationAr": "أخ", "phonetic": "براذر"},
+            {"id": "en_sister", "target": "Sister", "translationAr": "أخت", "phonetic": "سيستر"},
+            {"id": "en_family", "target": "Family", "translationAr": "عائلة", "phonetic": "فاملي"}
+          ]
+        },
+        {
+          "id": "en_u3_l2",
+          "titleAr": "المزيد من العائلة",
+          "titleEn": "More family",
+          "vocab": [
+            {"id": "en_son", "target": "Son", "translationAr": "ابن", "phonetic": "سان"},
+            {"id": "en_daughter", "target": "Daughter", "translationAr": "ابنة", "phonetic": "دوتر"},
+            {"id": "en_grandfather", "target": "Grandfather", "translationAr": "جد", "phonetic": "غراندفاذر"},
+            {"id": "en_grandmother", "target": "Grandmother", "translationAr": "جدة", "phonetic": "غراندماذر"},
+            {"id": "en_friend", "target": "Friend", "translationAr": "صديق", "phonetic": "فريند"}
+          ]
+        },
+        {
+          "id": "en_u3_l3",
+          "titleAr": "جمل عن العائلة",
+          "titleEn": "Family sentences",
+          "vocab": [
+            {"id": "en_myfamily", "target": "My family is big", "translationAr": "عائلتي كبيرة", "phonetic": "ماي فاملي إز بيغ"},
+            {"id": "en_thisismyfather", "target": "This is my father", "translationAr": "هذا والدي", "phonetic": "ذس إز ماي فاذر"},
+            {"id": "en_ilovemymother", "target": "I love my mother", "translationAr": "أحب والدتي", "phonetic": "آي لاف ماي ماذر"},
+            {"id": "en_myfriendishere", "target": "My friend is here", "translationAr": "صديقي هنا", "phonetic": "ماي فرند إز هير"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en_u4",
+      "color": "#FF9600",
+      "titleAr": "الطعام والشراب",
+      "titleEn": "Food & Drink",
+      "lessons": [
+        {
+          "id": "en_u4_l1",
+          "titleAr": "المشروبات والخبز",
+          "titleEn": "Drinks & bread",
+          "vocab": [
+            {"id": "en_water", "target": "Water", "translationAr": "ماء", "phonetic": "ووتر", "exampleTarget": "I want water, please.", "exampleAr": "أريد ماءً من فضلك."},
+            {"id": "en_bread", "target": "Bread", "translationAr": "خبز", "phonetic": "بريد"},
+            {"id": "en_milk", "target": "Milk", "translationAr": "حليب", "phonetic": "ميلك"},
+            {"id": "en_tea", "target": "Tea", "translationAr": "شاي", "phonetic": "تي"},
+            {"id": "en_coffee", "target": "Coffee", "translationAr": "قهوة", "phonetic": "كوفي"}
+          ]
+        },
+        {
+          "id": "en_u4_l2",
+          "titleAr": "أطعمة",
+          "titleEn": "Foods",
+          "vocab": [
+            {"id": "en_apple", "target": "Apple", "translationAr": "تفاح", "phonetic": "آبل"},
+            {"id": "en_rice", "target": "Rice", "translationAr": "أرز", "phonetic": "رايس"},
+            {"id": "en_meat", "target": "Meat", "translationAr": "لحم", "phonetic": "ميت"},
+            {"id": "en_egg", "target": "Egg", "translationAr": "بيض", "phonetic": "إيغ"},
+            {"id": "en_cheese", "target": "Cheese", "translationAr": "جبن", "phonetic": "تشيز"}
+          ]
+        },
+        {
+          "id": "en_u4_l3",
+          "titleAr": "جمل الطعام",
+          "titleEn": "Food sentences",
+          "vocab": [
+            {"id": "en_iwantwater", "target": "I want water", "translationAr": "أريد ماءً", "phonetic": "آي وانت ووتر"},
+            {"id": "en_foodisgood", "target": "The food is good", "translationAr": "الطعام جيد", "phonetic": "ذا فود إز غود"},
+            {"id": "en_iamhungry", "target": "I am hungry", "translationAr": "أنا جائع", "phonetic": "آي أم هانغري"},
+            {"id": "en_iamthirsty", "target": "I am thirsty", "translationAr": "أنا عطشان", "phonetic": "آي أم ثيرستي"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en_u5",
+      "color": "#FFC800",
+      "titleAr": "الألوان والأيام",
+      "titleEn": "Colors & Days",
+      "lessons": [
+        {
+          "id": "en_u5_l1",
+          "titleAr": "الألوان",
+          "titleEn": "Colors",
+          "vocab": [
+            {"id": "en_red", "target": "Red", "translationAr": "أحمر", "phonetic": "ريد"},
+            {"id": "en_blue", "target": "Blue", "translationAr": "أزرق", "phonetic": "بلو"},
+            {"id": "en_green", "target": "Green", "translationAr": "أخضر", "phonetic": "غرين"},
+            {"id": "en_yellow", "target": "Yellow", "translationAr": "أصفر", "phonetic": "يلو"},
+            {"id": "en_black", "target": "Black", "translationAr": "أسود", "phonetic": "بلاك"},
+            {"id": "en_white", "target": "White", "translationAr": "أبيض", "phonetic": "وايت"}
+          ]
+        },
+        {
+          "id": "en_u5_l2",
+          "titleAr": "أيام الأسبوع",
+          "titleEn": "Days of the week",
+          "vocab": [
+            {"id": "en_saturday", "target": "Saturday", "translationAr": "السبت", "phonetic": "ساترداي"},
+            {"id": "en_sunday", "target": "Sunday", "translationAr": "الأحد", "phonetic": "سانداي"},
+            {"id": "en_monday", "target": "Monday", "translationAr": "الاثنين", "phonetic": "مانداي"},
+            {"id": "en_tuesday", "target": "Tuesday", "translationAr": "الثلاثاء", "phonetic": "تيوزداي"},
+            {"id": "en_wednesday", "target": "Wednesday", "translationAr": "الأربعاء", "phonetic": "ويزداي"},
+            {"id": "en_thursday", "target": "Thursday", "translationAr": "الخميس", "phonetic": "ثيرزداي"},
+            {"id": "en_friday", "target": "Friday", "translationAr": "الجمعة", "phonetic": "فرايداي"}
+          ]
+        },
+        {
+          "id": "en_u5_l3",
+          "titleAr": "جمل الألوان",
+          "titleEn": "Color sentences",
+          "vocab": [
+            {"id": "en_skyblue", "target": "The sky is blue", "translationAr": "السماء زرقاء", "phonetic": "ذا سكاي إز بلو"},
+            {"id": "en_ilikegreen", "target": "I like green", "translationAr": "أحب اللون الأخضر", "phonetic": "آي لايك غرين"},
+            {"id": "en_sunyellow", "target": "The sun is yellow", "translationAr": "الشمس صفراء", "phonetic": "ذا سان إز يلو"},
+            {"id": "en_nightblack", "target": "The night is black", "translationAr": "الليل أسود", "phonetic": "ذا نايت إز بلاك"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "en_u6",
+      "color": "#FF4B4B",
+      "titleAr": "الحياة اليومية",
+      "titleEn": "Daily Life",
+      "lessons": [
+        {
+          "id": "en_u6_l1",
+          "titleAr": "أماكن",
+          "titleEn": "Places",
+          "vocab": [
+            {"id": "en_house", "target": "House", "translationAr": "بيت", "phonetic": "هاوس"},
+            {"id": "en_school", "target": "School", "translationAr": "مدرسة", "phonetic": "سكول"},
+            {"id": "en_work", "target": "Work", "translationAr": "عمل", "phonetic": "ويرك"},
+            {"id": "en_market", "target": "Market", "translationAr": "سوق", "phonetic": "ماركت"},
+            {"id": "en_mosque", "target": "Mosque", "translationAr": "مسجد", "phonetic": "ماسك"}
+          ]
+        },
+        {
+          "id": "en_u6_l2",
+          "titleAr": "أشياء يومية",
+          "titleEn": "Everyday things",
+          "vocab": [
+            {"id": "en_book", "target": "Book", "translationAr": "كتاب", "phonetic": "بوك"},
+            {"id": "en_pen", "target": "Pen", "translationAr": "قلم", "phonetic": "بن"},
+            {"id": "en_phone", "target": "Phone", "translationAr": "هاتف", "phonetic": "فون"},
+            {"id": "en_car", "target": "Car", "translationAr": "سيارة", "phonetic": "كار"},
+            {"id": "en_door", "target": "Door", "translationAr": "باب", "phonetic": "دور"}
+          ]
+        },
+        {
+          "id": "en_u6_l3",
+          "titleAr": "جمل مفيدة",
+          "titleEn": "Useful sentences",
+          "vocab": [
+            {"id": "en_whereisschool", "target": "Where is the school?", "translationAr": "أين المدرسة؟", "phonetic": "وير إز ذا سكول؟"},
+            {"id": "en_igotowork", "target": "I go to work", "translationAr": "أذهب إلى العمل", "phonetic": "آي غو تو ويرك"},
+            {"id": "en_openthedoor", "target": "Open the door", "translationAr": "افتح الباب", "phonetic": "أوبن ذا دور"},
+            {"id": "en_ireadabook", "target": "I read a book", "translationAr": "أقرأ كتاباً", "phonetic": "آي ريد أ بوك"}
+          ]
+        }
+      ]
+    }
+  ]
+}
