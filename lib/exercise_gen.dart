@@ -34,8 +34,18 @@ class ExerciseGen {
     }
 
     // --- Interactive picture rounds (up to 2) ---
-    final emojiWords =
-        pool.where((v) => (v.emoji ?? '').isNotEmpty).toList()..shuffle(_rng);
+    // v4.0 audit (M10): skip words whose emoji is shared by another word in
+    // the same lesson — a shared picture would make the round ambiguous
+    // (two visually-identical correct answers).
+    final emojiCounts = <String, int>{};
+    for (final v in pool) {
+      final e = v.emoji ?? '';
+      if (e.isNotEmpty) emojiCounts[e] = (emojiCounts[e] ?? 0) + 1;
+    }
+    final emojiWords = pool
+        .where((v) => (v.emoji ?? '').isNotEmpty && emojiCounts[v.emoji!] == 1)
+        .toList()
+      ..shuffle(_rng);
     var picAdded = 0;
     for (final v in emojiWords) {
       if (picAdded >= 2) break;
@@ -58,8 +68,7 @@ class ExerciseGen {
           prompt: v.emoji!,
           answer: v.target,
           options: _distractors(
-              correct: v.target,
-              pool: pool.map((e) => e.target).toList()),
+              correct: v.target, pool: pool.map((e) => e.target).toList()),
           vocab: v,
           audioText: '',
           hint: v.translationAr,
@@ -120,9 +129,9 @@ class ExerciseGen {
     // Cap length so lessons stay snappy (keep the match boss at the end).
     const maxLen = 14;
     if (exercises.length > maxLen) {
-      final matchEx =
-          exercises.firstWhere((e) => e.type == ExerciseType.match);
-      final trimmed = exercises.where((e) => e != matchEx).take(maxLen - 1).toList();
+      final matchEx = exercises.firstWhere((e) => e.type == ExerciseType.match);
+      final trimmed =
+          exercises.where((e) => e != matchEx).take(maxLen - 1).toList();
       trimmed.add(matchEx);
       return trimmed;
     }
@@ -172,11 +181,10 @@ class ExerciseGen {
     return ex.toLowerCase().contains(v.target.toLowerCase());
   }
 
-  static List<String> _blankableTokens(String sentence) =>
-      sentence
-          .split(RegExp(r'\s+'))
-          .where((t) => t.replaceAll(RegExp(r'[^\w\u0600-\u06FF]'), '').length >= 3)
-          .toList();
+  static List<String> _blankableTokens(String sentence) => sentence
+      .split(RegExp(r'\s+'))
+      .where((t) => t.replaceAll(RegExp(r'[^\w\u0600-\u06FF]'), '').length >= 3)
+      .toList();
 
   static Exercise? _makeBlank(Vocab v, List<Vocab> pool) {
     String sentence;
@@ -221,18 +229,17 @@ class ExerciseGen {
       answer: answer,
       options: opts,
       vocab: v,
-      audioText: v.isSentence
-          ? v.target
-          : (v.exampleTarget ?? v.target),
+      audioText: v.isSentence ? v.target : (v.exampleTarget ?? v.target),
       hint: v.isSentence ? v.translationAr : (v.exampleAr ?? v.translationAr),
     );
   }
 
   /// Returns (shownMeaning, isTrue).
   static (String, bool)? _tfShown(Vocab v, List<Vocab> pool) {
-    final others =
-        pool.where((p) => p != v && p.translationAr != v.translationAr).toList();
-    if (others.isEmpty) return ('${v.translationAr}', true);
+    final others = pool
+        .where((p) => p != v && p.translationAr != v.translationAr)
+        .toList();
+    if (others.isEmpty) return (v.translationAr, true);
     final makeTrue = _rng.nextBool();
     if (makeTrue) return (v.translationAr, true);
     final wrong = others[_rng.nextInt(others.length)];
@@ -274,9 +281,8 @@ class ExerciseGen {
         );
       case ExerciseType.build:
         final t = v.target.trim();
-        final tiles = t.contains(' ')
-            ? t.split(' ')
-            : t.toUpperCase().split('');
+        final tiles =
+            t.contains(' ') ? t.split(' ') : t.toUpperCase().split('');
         return Exercise(
           type: type,
           prompt: v.translationAr,
@@ -297,8 +303,8 @@ class ExerciseGen {
           hint: v.translationAr,
         );
       case ExerciseType.wordToPic:
-        final opts = _emojiOptions(v.emoji ?? '🎓', pool) ??
-            ['🎓', '🎨', '🎵', '⚽'];
+        final opts =
+            _emojiOptions(v.emoji ?? '🎓', pool) ?? ['🎓', '🎨', '🎵', '⚽'];
         return Exercise(
           type: type,
           prompt: v.target,
@@ -344,20 +350,41 @@ class ExerciseGen {
 
   static List<String> _distractors(
       {required String correct, required List<String> pool}) {
-    final candidates =
-        pool.where((e) => e != correct).toSet().toList()..shuffle(_rng);
+    final candidates = pool.where((e) => e != correct).toSet().toList()
+      ..shuffle(_rng);
     final opts = <String>[correct];
     for (final c in candidates) {
       if (opts.length >= 4) break;
       opts.add(c);
     }
-    // Pad with generic fallbacks if pool too small.
-    final fallback = ['___', '____', '_____'];
-    var fi = 0;
-    while (opts.length < 4 && fi < fallback.length) {
-      opts.add(fallback[fi++]);
+    // v4.0 audit (L4): pad with real words — never literal "___" placeholders
+    // that looked broken. Reserve covers both Latin and Arabic-script words.
+    for (final f in realWordReserve) {
+      if (opts.length >= 4) break;
+      if (!opts.contains(f)) opts.add(f);
     }
     opts.shuffle(_rng);
     return opts;
   }
+
+  /// Real words used only as a last-resort option padding for very small
+  /// lessons. Covers common meanings in both interface languages.
+  static const realWordReserve = [
+    'book',
+    'house',
+    'water',
+    'friend',
+    'morning',
+    'city',
+    'work',
+    'school',
+    'كتاب',
+    'بيت',
+    'ماء',
+    'صديق',
+    'صباح',
+    'مدينة',
+    'عمل',
+    'مدرسة',
+  ];
 }

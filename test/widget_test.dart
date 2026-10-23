@@ -19,8 +19,7 @@ Lesson _lesson() {
     Vocab(id: 'w5', target: 'Bread', translationAr: 'خبز', emoji: '🍞'),
     Vocab(id: 'w6', target: 'I love my cat', translationAr: 'أحب قطتي'),
   ];
-  return const Lesson(
-      id: 'l1', titleAr: 'ح', titleEn: 'L', vocab: vocab);
+  return const Lesson(id: 'l1', titleAr: 'ح', titleEn: 'L', vocab: vocab);
 }
 
 void main() {
@@ -98,8 +97,7 @@ void main() {
 
   test('fillblank blanks the keyword correctly', () {
     final ex = ExerciseGen.forLesson(_lesson());
-    final blanks =
-        ex.where((e) => e.type == ExerciseType.fillblank).toList();
+    final blanks = ex.where((e) => e.type == ExerciseType.fillblank).toList();
     expect(blanks, isNotEmpty);
     for (final b in blanks) {
       expect(b.prompt.contains('______'), isTrue);

@@ -1,4 +1,5 @@
 // Common small widgets: stat chip, hearts row, progress ring, top bar.
+// v4.0: dark-mode-aware surfaces; min 48dp touch targets (a11y).
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -22,9 +23,9 @@ class StatChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.card,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: AppColors.border, width: 2),
+        border: Border.all(color: context.line, width: 2),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -32,10 +33,10 @@ class StatChip extends StatelessWidget {
           Icon(icon, color: color, size: 20),
           const SizedBox(width: 5),
           Text(value,
-              style: const TextStyle(
+              style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 15,
-                  color: AppColors.ink)),
+                  color: context.bodyText)),
         ],
       ),
     );
@@ -52,10 +53,14 @@ class HeartsRow extends StatelessWidget {
       children: List.generate(5, (i) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 1.5),
-          child: Icon(
-            i < hearts ? Icons.favorite : Icons.favorite_border,
-            color: i < hearts ? AppColors.red : AppColors.lockedDark,
-            size: 22,
+          child: Semantics(
+            label: '${i < hearts ? hearts : 0} hearts left',
+            excludeSemantics: true,
+            child: Icon(
+              i < hearts ? Icons.favorite : Icons.favorite_border,
+              color: i < hearts ? AppColors.red : context.lockedText,
+              size: 22,
+            ),
           ),
         );
       }),
@@ -67,8 +72,8 @@ class ProgressRing extends StatelessWidget {
   final double progress; // 0..1
   final double size;
   final double stroke;
-  final Color color;
-  final Color track;
+  final Color? color;
+  final Color? track;
   final Widget? center;
 
   const ProgressRing({
@@ -76,8 +81,8 @@ class ProgressRing extends StatelessWidget {
     required this.progress,
     this.size = 120,
     this.stroke = 12,
-    this.color = AppColors.green,
-    this.track = AppColors.border,
+    this.color,
+    this.track,
     this.center,
   });
 
@@ -93,8 +98,8 @@ class ProgressRing extends StatelessWidget {
             size: Size(size, size),
             painter: _RingPainter(
               progress: progress.clamp(0.0, 1.0),
-              color: color,
-              track: track,
+              color: color ?? AppColors.green,
+              track: track ?? context.line,
               stroke: stroke,
             ),
           ),

@@ -94,7 +94,7 @@ class _ConfettiPainter extends CustomPainter {
       final x = (p.startX + p.drift * t) * size.width;
       // Fade out in the last 25%.
       final opacity = t < 0.75 ? 1.0 : (1 - (t - 0.75) / 0.25);
-      paint.color = p.color.withOpacity(opacity.clamp(0.0, 1.0));
+      paint.color = p.color.withValues(alpha: opacity.clamp(0.0, 1.0));
       canvas.save();
       canvas.translate(x, y);
       canvas.rotate(p.spin * t * 2 * pi);
@@ -104,9 +104,7 @@ class _ConfettiPainter extends CustomPainter {
         canvas.drawRRect(
           RRect.fromRectAndRadius(
             Rect.fromCenter(
-                center: Offset.zero,
-                width: p.size,
-                height: p.size * 0.55),
+                center: Offset.zero, width: p.size, height: p.size * 0.55),
             const Radius.circular(2),
           ),
           paint,

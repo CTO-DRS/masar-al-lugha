@@ -20,6 +20,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
   bool flipped = false;
   Vocab? current;
   bool showingAll = false;
+  bool newCapped = false; // daily new-card budget exhausted (v4.0 H3)
 
   @override
   void initState() {
@@ -32,20 +33,30 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
     final course = st.course;
     final now = DateTime.now().millisecondsSinceEpoch;
 
-    final all = course.allVocab;
+    // v4.0 (audit H3): new SRS cards come ONLY from lessons the learner
+    // already completed, in course order, capped by the daily budget —
+    // a first-run user no longer faces every word in the course at once.
     final due = <Vocab>[];
-    for (final v in all) {
-      final c = st.cardFor(v.id);
-      if (c == null) {
-        due.add(v); // new cards are always due
-      } else if (c.dueEpochMs <= now) {
-        due.add(v);
+    final newQueue = <Vocab>[];
+    for (final l in course.allLessons) {
+      if (!st.lessonStars.containsKey(l.id)) continue;
+      for (final v in l.vocab) {
+        final c = st.cardFor(v.id);
+        if (c == null) {
+          newQueue.add(v); // unseen but earned
+        } else if (c.dueEpochMs <= now) {
+          due.add(v);
+        }
       }
     }
+    final remaining = st.newCardsRemainingToday;
+    newCapped = newQueue.length > remaining;
+    final limitedNew = newQueue.take(remaining).toList();
+
     due.shuffle();
     setState(() {
-      dueQueue = due;
-      current = due.isNotEmpty ? due.first : null;
+      dueQueue = [...due, ...limitedNew];
+      current = dueQueue.isNotEmpty ? dueQueue.first : null;
       flipped = false;
     });
   }
@@ -53,7 +64,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
   @override
   Widget build(BuildContext context) {
     final st = AppScope.of(context);
-    final tr = (String k) => context.tr(k);
+    String tr(String k) => context.tr(k);
     final allCount = st.course.allVocab.length;
     final dueCount = dueQueue.length;
 
@@ -134,8 +145,8 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                   style: const TextStyle(
                       fontWeight: FontWeight.w900, fontSize: 17)),
               Text(label,
-                  style: const TextStyle(
-                      color: AppColors.inkLight, fontSize: 11)),
+                  style:
+                      const TextStyle(color: AppColors.inkLight, fontSize: 11)),
             ],
           ),
         ],
@@ -150,13 +161,14 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
         children: [
           const Mascot(size: 120, mood: MascotMood.celebrate),
           const SizedBox(height: 20),
-          Text(tr('noCardsDue'),
-              style: const TextStyle(
-                  fontWeight: FontWeight.w900, fontSize: 18)),
+          Text(
+            newCapped ? tr('newCardsTomorrow') : tr('noCardsDue'),
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
+          ),
           const SizedBox(height: 6),
           Text(tr('comeBackTomorrow'),
-              style:
-                  const TextStyle(color: AppColors.inkLight, fontSize: 14)),
+              style: const TextStyle(color: AppColors.inkLight, fontSize: 14)),
         ],
       ),
     );
@@ -197,9 +209,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
             ),
             boxShadow: const [
               BoxShadow(
-                  color: AppColors.border,
-                  offset: Offset(0, 5),
-                  blurRadius: 0),
+                  color: AppColors.border, offset: Offset(0, 5), blurRadius: 0),
             ],
           ),
           child: flipped ? _back(v, c) : _front(v),
@@ -221,8 +231,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
         if (v.phonetic != null)
           Text(
             v.phonetic!,
-            style: const TextStyle(
-                color: AppColors.inkLight, fontSize: 17),
+            style: const TextStyle(color: AppColors.inkLight, fontSize: 17),
           ),
         const SizedBox(height: 18),
         GestureDetector(
@@ -239,8 +248,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                     blurRadius: 0),
               ],
             ),
-            child: const Icon(Icons.volume_up,
-                color: Colors.white, size: 26),
+            child: const Icon(Icons.volume_up, color: Colors.white, size: 26),
           ),
         ),
       ],
@@ -261,7 +269,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -294,8 +302,9 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
 
   Future<void> _speak(String text) async {
     final st = AppScope.of(context);
-    await AppScope.ttsOf(context).setLanguage(st.course.ttsLang);
-    await AppScope.ttsOf(context).speak(text);
+    final tts = AppScope.ttsOf(context);
+    await tts.setLanguage(st.course.ttsLang);
+    await tts.speak(text);
   }
 
   Widget _ratingRow(String Function(String) tr) {
@@ -341,7 +350,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                       Text(
                         Srs.hintFor(c, q),
                         style: TextStyle(
-                            color: Colors.white.withOpacity(0.85),
+                            color: Colors.white.withValues(alpha: 0.85),
                             fontSize: 10),
                       ),
                     ],
@@ -361,6 +370,8 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
     st.addXp(1);
     setState(() {
       dueQueue.removeAt(0);
+      // "Again" = learning step: re-show this card later in the session.
+      if (q == Srs.again) dueQueue.add(v);
       current = dueQueue.isNotEmpty ? dueQueue.first : null;
       flipped = false;
     });

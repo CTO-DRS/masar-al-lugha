@@ -107,8 +107,7 @@ class Course {
   List<Vocab> get allVocab =>
       units.expand((u) => u.lessons).expand((l) => l.vocab).toList();
 
-  List<Lesson> get allLessons =>
-      units.expand((u) => u.lessons).toList();
+  List<Lesson> get allLessons => units.expand((u) => u.lessons).toList();
 }
 
 // ---------------- Exercises ----------------
@@ -170,8 +169,7 @@ class CardData {
     this.state = 'new',
   }) : dueEpochMs = dueEpochMs ?? DateTime.now().millisecondsSinceEpoch;
 
-  bool get isDue =>
-      dueEpochMs <= DateTime.now().millisecondsSinceEpoch;
+  bool get isDue => dueEpochMs <= DateTime.now().millisecondsSinceEpoch;
 
   Map<String, dynamic> toJson() => {
         'ease': ease,

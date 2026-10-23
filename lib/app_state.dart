@@ -1,4 +1,5 @@
 // App state: courses, progress, gamification, storage, badges.
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -19,7 +20,12 @@ class AppState extends ChangeNotifier {
   static const _kLocale = 'ui_locale';
   static const _kCourse = 'course_id';
   static const _kProgress = 'progress_json_v1';
+  static const _kBackup = 'progress_backup_v1'; // corrupt-state snapshot (v4.0)
   static const _kOnboard = 'onboarding_done';
+
+  /// Current progress schema version. Bump when shape changes and handle
+  /// old shapes in [_migrateSchema].
+  static const int progressSchema = 2;
 
   // ---- content ----
   final Map<String, Course> courses = {};
@@ -46,19 +52,40 @@ class AppState extends ChangeNotifier {
   bool onboardingDone = false;
   bool loaded = false;
 
+  // ---- v4.0 settings & engine ----
+  bool darkMode = false; // null-aware tri-state handled by settings UI
+  bool reduceMotion = false;
+  bool ttsEnabled = true;
+  double ttsRate = 0.9;
+  Map<String, bool> placementDone = {}; // courseId -> placed
+  Map<String, int> wordMistakes = {}; // vocabId -> lifetime mistake count
+  Map<String, int> placementSkip =
+      {}; // courseId -> flat lesson index unlocked by placement
+  int newCardsToday = 0; // new SRS cards introduced today
+  String newCardsDay = '';
+
+  /// Unsaved-dirty flag for debounced persistence (v4.0).
+  bool _dirty = false;
+
+  /// True when there are unsaved changes (debug/diagnostics, tests).
+  bool get dirty => _dirty;
+
   // ---- badges registry (v2.0: 15 badges) ----
   static const List<BadgeDef> badgeDefs = [
     BadgeDef('first_lesson', icon: Icons.emoji_events, color: AppColors.blue),
-    BadgeDef('five_lessons', icon: Icons.local_fire_department, color: AppColors.orange),
+    BadgeDef('five_lessons',
+        icon: Icons.local_fire_department, color: AppColors.orange),
     BadgeDef('lessons_20', icon: Icons.school, color: AppColors.green),
     BadgeDef('xp_100', icon: Icons.star, color: AppColors.yellow),
     BadgeDef('xp_500', icon: Icons.stars, color: AppColors.yellow),
     BadgeDef('xp_1000', icon: Icons.diamond, color: AppColors.blue),
     BadgeDef('streak_3', icon: Icons.whatshot, color: AppColors.red),
     BadgeDef('streak_7', icon: Icons.bolt, color: AppColors.red),
-    BadgeDef('streak_14', icon: Icons.local_fire_department, color: AppColors.red),
+    BadgeDef('streak_14',
+        icon: Icons.local_fire_department, color: AppColors.red),
     BadgeDef('perfect', icon: Icons.military_tech, color: AppColors.green),
-    BadgeDef('perfect_5', icon: Icons.workspace_premium, color: AppColors.yellow),
+    BadgeDef('perfect_5',
+        icon: Icons.workspace_premium, color: AppColors.yellow),
     BadgeDef('cards_50', icon: Icons.style, color: AppColors.purple),
     BadgeDef('cards_200', icon: Icons.auto_stories, color: AppColors.purple),
     BadgeDef('all_en_units', icon: Icons.flag, color: AppColors.green),
@@ -78,13 +105,11 @@ class AppState extends ChangeNotifier {
     return ((correctAnswers / totalAnswers) * 100).round();
   }
 
-  int get wordsLearned =>
-      cards.values.where((c) => c.state == 'review').length;
+  int get wordsLearned => cards.values.where((c) => c.state == 'review').length;
 
   int get lessonsCompleted => lessonStars.length;
 
-  int get perfectLessons =>
-      lessonStars.values.where((s) => s == 3).length;
+  int get perfectLessons => lessonStars.values.where((s) => s == 3).length;
 
   // Level system: 100 XP per level (v2.0).
   int get level => (xp / 100).floor() + 1;
@@ -122,6 +147,7 @@ class AppState extends ChangeNotifier {
     if (raw != null) {
       try {
         final j = jsonDecode(raw) as Map<String, dynamic>;
+        _migrateSchema(j);
         xp = (j['xp'] as num?)?.toInt() ?? 0;
         streak = (j['streak'] as num?)?.toInt() ?? 0;
         lastActiveDay = j['lastActiveDay'] as String?;
@@ -135,13 +161,32 @@ class AppState extends ChangeNotifier {
             .map((k, v) => MapEntry(k as String, (v as num).toInt()));
         xpLog = ((j['xpLog'] as Map?) ?? {})
             .map((k, v) => MapEntry(k as String, (v as num).toInt()));
-        cards = ((j['cards'] as Map?) ?? {}).map((k, v) =>
-            MapEntry(k as String, CardData.fromJson(v as Map<String, dynamic>)));
-        badges = ((j['badges'] as List?) ?? [])
-            .map((e) => e as String)
-            .toList();
+        cards = ((j['cards'] as Map?) ?? {}).map((k, v) => MapEntry(
+            k as String, CardData.fromJson(v as Map<String, dynamic>)));
+        badges =
+            ((j['badges'] as List?) ?? []).map((e) => e as String).toList();
+        wordMistakes = ((j['wordMistakes'] as Map?) ?? {})
+            .map((k, v) => MapEntry(k as String, (v as num).toInt()));
+        placementDone = ((j['placement'] as Map?) ?? {})
+            .map((k, v) => MapEntry(k as String, v as bool));
+        placementSkip = ((j['placementSkip'] as Map?) ?? {})
+            .map((k, v) => MapEntry(k as String, (v as num).toInt()));
+        newCardsToday = (j['newCardsToday'] as num?)?.toInt() ?? 0;
+        newCardsDay = (j['newCardsDay'] as String?) ?? '';
+        final s = j['settings'];
+        if (s is Map) {
+          darkMode = (s['darkMode'] as bool?) ?? darkMode;
+          reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;
+          ttsEnabled = (s['ttsEnabled'] as bool?) ?? ttsEnabled;
+          ttsRate = (s['ttsRate'] as num?)?.toDouble() ?? ttsRate;
+        }
+        if (newCardsDay != todayKey()) {
+          newCardsToday = 0;
+          newCardsDay = todayKey();
+        }
       } catch (_) {
-        // Corrupt data — start fresh.
+        // Corrupt data — keep a recoverable copy before starting fresh (v4.0).
+        prefs.setString(_kBackup, raw);
       }
     }
     _ensureDaily();
@@ -155,6 +200,7 @@ class AppState extends ChangeNotifier {
     await prefs.setString(_kCourse, courseId);
     await prefs.setBool(_kOnboard, onboardingDone);
     final j = {
+      'schema': progressSchema,
       'xp': xp,
       'streak': streak,
       'lastActiveDay': lastActiveDay,
@@ -168,8 +214,60 @@ class AppState extends ChangeNotifier {
       'xpLog': xpLog,
       'cards': cards.map((k, v) => MapEntry(k, v.toJson())),
       'badges': badges,
+      'wordMistakes': wordMistakes,
+      'placement': placementDone,
+      'placementSkip': placementSkip,
+      'newCardsToday': newCardsToday,
+      'newCardsDay': newCardsDay,
+      'settings': {
+        'darkMode': darkMode,
+        'reduceMotion': reduceMotion,
+        'ttsEnabled': ttsEnabled,
+        'ttsRate': ttsRate,
+      },
     };
     await prefs.setString(_kProgress, jsonEncode(j));
+    _dirty = false;
+  }
+
+  /// Marks state dirty and schedules a debounced save. Heavy callers
+  /// (every answer tap) should use this instead of awaiting [save].
+  void scheduleSave() {
+    _dirty = true;
+    _saveTimer?.cancel();
+    _saveTimer = Timer(_saveDelay, () {
+      if (_dirty) save();
+    });
+  }
+
+  static const _saveDelay = Duration(seconds: 2);
+  Timer? _saveTimer;
+
+  /// v4.0: new SRS cards introduced per day (audit H3).
+  static const int dailyNewCardLimit = 10;
+
+  int get newCardsRemainingToday {
+    if (newCardsDay != todayKey()) return dailyNewCardLimit;
+    return (dailyNewCardLimit - newCardsToday).clamp(0, dailyNewCardLimit);
+  }
+
+  /// Force-write now if dirty (call on app pause / critical moments).
+  Future<void> flush() async {
+    _saveTimer?.cancel();
+    if (_dirty) await save();
+  }
+
+  /// Migrates older progress payloads to the current schema in place.
+  void _migrateSchema(Map<String, dynamic> j) {
+    final v = (j['schema'] as num?)?.toInt() ?? 1; // v1 = pre-4.0 payloads
+    if (v < 2) {
+      // v1 -> v2: settings previously lived outside the progress blob;
+      // cards map keys unchanged. Nothing structural to transform yet,
+      // but we normalize optional containers defensively.
+      j['lessonStars'] ??= <String, dynamic>{};
+      j['cards'] ??= <String, dynamic>{};
+    }
+    j['schema'] = progressSchema;
   }
 
   // ================= helpers =================
@@ -202,6 +300,64 @@ class AppState extends ChangeNotifier {
     uiLocale = l;
     save();
     notifyListeners();
+  }
+
+  void setDarkMode(bool on) {
+    darkMode = on;
+    save();
+    notifyListeners();
+  }
+
+  void setReduceMotion(bool on) {
+    reduceMotion = on;
+    save();
+    notifyListeners();
+  }
+
+  void setTtsEnabled(bool on) {
+    ttsEnabled = on;
+    save();
+    notifyListeners();
+  }
+
+  void setTtsRate(double r) {
+    ttsRate = r;
+    save();
+    notifyListeners();
+  }
+
+  void recordWordMistake(String vocabId) {
+    wordMistakes[vocabId] = (wordMistakes[vocabId] ?? 0) + 1;
+    scheduleSave();
+  }
+
+  /// Words the learner struggles with most (for the practice mode).
+  List<String> get weakestWordIds {
+    final entries = wordMistakes.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    return entries.take(30).map((e) => e.key).toList();
+  }
+
+  void markPlacement(String courseId) {
+    placementDone[courseId] = true;
+    save();
+  }
+
+  void setPlacementSkip(String courseId, int flatIndex) {
+    placementSkip[courseId] = flatIndex;
+    markPlacement(courseId);
+  }
+
+  /// Vocab ids that belong to lessons the learner already completed.
+  /// New SRS cards are only drawn from this set (audit H3).
+  Set<String> unlockedVocabIds() {
+    final out = <String>{};
+    for (final l in course.allLessons) {
+      if (lessonStars.containsKey(l.id)) {
+        out.addAll(l.vocab.map((v) => v.id));
+      }
+    }
+    return out;
   }
 
   void setDailyGoal(int goal) {
@@ -245,11 +401,12 @@ class AppState extends ChangeNotifier {
   void recordAnswer(bool correct) {
     totalAnswers += 1;
     if (correct) correctAnswers += 1;
-    notifyListeners();
+    scheduleSave();
   }
 
   /// Called when a lesson finishes successfully.
-  void completeLesson(String lessonId, {required int mistakes, required int vocabCount}) {
+  void completeLesson(String lessonId,
+      {required int mistakes, required int vocabCount}) {
     _ensureDaily();
     final stars = mistakes == 0
         ? 3
@@ -265,27 +422,45 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Feed SRS: lesson vocab enters the review cycle.
-  void touchCardsForLesson(List<Vocab> vocab) {
+  /// Feed SRS after a lesson using **real per-word results** (audit H4).
+  /// [results] maps vocabId -> was the learner's answer correct at least once
+  /// during this lesson. Only actually-practiced words enter the review
+  /// cycle, seeded by real performance:
+  ///  - first encounter, answered right  -> scheduled like a "good" rating
+  ///  - first encounter, answered wrong  -> "hard", kept in learning state
+  ///  - seen before, answered wrong     -> lapsed ("again") so it comes back soon
+  /// Untested words of the lesson stay untouched (they will enter SRS when
+  /// genuinely practiced later).
+  void applyLessonResults(Map<String, bool> results) {
     final now = DateTime.now();
-    for (final v in vocab) {
-      final c = cards[v.id] ?? CardData();
+    results.forEach((vocabId, correct) {
+      final c = cards[vocabId] ?? CardData();
       if (c.reps == 0) {
-        Srs.rate(c, Srs.good, now: now);
+        Srs.rate(c, correct ? Srs.good : Srs.hard, now: now);
+        if (!correct) c.state = 'learning';
+      } else if (!correct) {
+        Srs.rate(c, Srs.again, now: now);
       }
-      cards[v.id] = c;
-    }
+      cards[vocabId] = c;
+    });
     save();
   }
 
   void rateCard(String vocabId, int q) {
     _ensureDaily();
-    final c = cards[vocabId] ?? CardData();
-    Srs.rate(c, q);
-    cards[vocabId] = c;
+    final c = cards[vocabId];
+    final isNew = c == null || c.reps == 0;
+    if (newCardsDay != todayKey()) {
+      newCardsToday = 0;
+      newCardsDay = todayKey();
+    }
+    final card = c ?? CardData();
+    Srs.rate(card, q);
+    cards[vocabId] = card;
     cardsReviewed += 1;
+    if (isNew) newCardsToday += 1;
     _checkBadges();
-    save();
+    scheduleSave();
     notifyListeners();
   }
 
@@ -322,13 +497,18 @@ class AppState extends ChangeNotifier {
       final all = c.allLessons.every((l) => lessonStars.containsKey(l.id));
       award('all_${id}_units', all);
     }
-    final allDone =
-        courses.isNotEmpty &&
-        courses.values.every(
-            (c) => c.allLessons.every((l) => lessonStars.containsKey(l.id)));
-    award('both_courses',
-        courses['en'] != null && courses['ur'] != null && allDone && courses.length == 2);
-    award('polyglot', courses.length == 3 && allDone);
+    // v4.0 fix (audit H1): the old check required courses.length == 2, which
+    // became permanently false once the French course shipped. "Bilingual"
+    // now means: both the EN and UR courses are fully completed.
+    bool courseDone(String id) {
+      final c = courses[id];
+      return c != null &&
+          c.allLessons.isNotEmpty &&
+          c.allLessons.every((l) => lessonStars.containsKey(l.id));
+    }
+
+    award('both_courses', courseDone('en') && courseDone('ur'));
+    award('polyglot', courseDone('en') && courseDone('ur') && courseDone('fr'));
   }
 
   String consumePendingBadge() {
@@ -349,13 +529,144 @@ class AppState extends ChangeNotifier {
     lessonStars = {};
     cards = {};
     badges = [];
+    wordMistakes = {};
+    placementDone = {};
+    placementSkip = {};
+    newCardsToday = 0;
+    newCardsDay = todayKey();
     pendingBadges.clear();
     await save();
     notifyListeners();
   }
 
-  // Lesson unlock logic: first lesson unlocked; next unlocks when previous done.
+  // ================= v4.0: export / import (MASTER PROMPT M8) ==========
+
+  /// Serializes the full profile for backup / transfer between devices.
+  /// Includes a content fingerprint so imports can be validated.
+  String exportProfileJson() {
+    final payload = {
+      'app': 'masar-al-lugha',
+      'exportVersion': 1,
+      'exportedAt': DateTime.now().toIso8601String(),
+      'progress': {
+        'schema': progressSchema,
+        'xp': xp,
+        'streak': streak,
+        'lastActiveDay': lastActiveDay,
+        'dailyGoal': dailyGoal,
+        'dailyXp': dailyXp,
+        'dailyXpDay': dailyXpDay,
+        'cardsReviewed': cardsReviewed,
+        'totalAnswers': totalAnswers,
+        'correctAnswers': correctAnswers,
+        'lessonStars': lessonStars,
+        'xpLog': xpLog,
+        'cards': cards.map((k, v) => MapEntry(k, v.toJson())),
+        'badges': badges,
+        'wordMistakes': wordMistakes,
+        'placement': placementDone,
+        'settings': {
+          'darkMode': darkMode,
+          'reduceMotion': reduceMotion,
+          'ttsEnabled': ttsEnabled,
+          'ttsRate': ttsRate,
+          'uiLocale': uiLocale,
+          'courseId': courseId,
+          'onboardingDone': onboardingDone,
+        },
+      },
+    };
+    return const JsonEncoder.withIndent(' ').convert(payload);
+  }
+
+  /// Restores a profile produced by [exportProfileJson].
+  /// Returns an error key (l10n) on failure, or null on success.
+  /// Unknown vocab/lesson ids are dropped so foreign profiles cannot
+  /// poison state.
+  Future<String?> importProfileJson(String raw) async {
+    Map<String, dynamic> payload;
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! Map<String, dynamic>) return 'importInvalid';
+      payload = decoded;
+    } catch (_) {
+      return 'importInvalid';
+    }
+    if (payload['app'] != 'masar-al-lugha') return 'importInvalid';
+    final p = payload['progress'];
+    if (p is! Map<String, dynamic>) return 'importInvalid';
+
+    // Validate against known ids before touching state.
+    final validLessonIds = <String>{
+      for (final c in courses.values)
+        for (final l in c.allLessons) l.id,
+    };
+    final validVocabIds = <String>{
+      for (final c in courses.values) ...c.allVocab.map((v) => v.id),
+    };
+
+    try {
+      final stars = <String, int>{};
+      (p['lessonStars'] as Map? ?? {}).forEach((k, v) {
+        if (validLessonIds.contains(k)) stars[k as String] = (v as num).toInt();
+      });
+      final newCards = <String, CardData>{};
+      (p['cards'] as Map? ?? {}).forEach((k, v) {
+        if (validVocabIds.contains(k) && v is Map) {
+          newCards[k as String] =
+              CardData.fromJson(Map<String, dynamic>.from(v));
+        }
+      });
+
+      final s = p['settings'];
+      xp = (p['xp'] as num?)?.toInt() ?? 0;
+      streak = (p['streak'] as num?)?.toInt() ?? 0;
+      lastActiveDay = p['lastActiveDay'] as String?;
+      dailyGoal = (p['dailyGoal'] as num?)?.toInt() ?? 20;
+      dailyXp = (p['dailyXp'] as num?)?.toInt() ?? 0;
+      dailyXpDay = (p['dailyXpDay'] as String?) ?? '';
+      cardsReviewed = (p['cardsReviewed'] as num?)?.toInt() ?? 0;
+      totalAnswers = (p['totalAnswers'] as num?)?.toInt() ?? 0;
+      correctAnswers = (p['correctAnswers'] as num?)?.toInt() ?? 0;
+      lessonStars = stars;
+      xpLog = (p['xpLog'] as Map? ?? {})
+          .map((k, v) => MapEntry(k as String, (v as num).toInt()));
+      cards = newCards;
+      badges = ((p['badges'] as List?) ?? [])
+          .map((e) => e as String)
+          .where((b) => badgeDefs.any((d) => d.id == b))
+          .toList();
+      wordMistakes = ((p['wordMistakes'] as Map?) ?? {}).map((k, v) =>
+          validVocabIds.contains(k)
+              ? MapEntry(k as String, (v as num).toInt())
+              : MapEntry('', 0))
+        ..remove('');
+      placementDone = ((p['placement'] as Map?) ?? {})
+          .map((k, v) => MapEntry(k as String, v as bool));
+      if (s is Map) {
+        darkMode = (s['darkMode'] as bool?) ?? darkMode;
+        reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;
+        ttsEnabled = (s['ttsEnabled'] as bool?) ?? ttsEnabled;
+        ttsRate = (s['ttsRate'] as num?)?.toDouble() ?? ttsRate;
+        uiLocale = (s['uiLocale'] as String?) ?? uiLocale;
+        final cid = s['courseId'] as String?;
+        if (cid != null && courses.containsKey(cid)) courseId = cid;
+        onboardingDone = (s['onboardingDone'] as bool?) ?? onboardingDone;
+      }
+    } catch (_) {
+      return 'importInvalid';
+    }
+    _ensureDaily();
+    await save();
+    notifyListeners();
+    return null;
+  }
+
+  // Lesson unlock logic: first lesson unlocked; next unlocks when previous
+  // done. A placement result can pre-unlock lessons up to a flat index
+  // (v4.0, audit M9).
   bool isLessonUnlocked(int flatIndex) {
+    if (flatIndex <= (placementSkip[courseId] ?? 0)) return true;
     if (flatIndex <= 0) return true;
     final lessons = course.allLessons;
     if (flatIndex >= lessons.length) return false;

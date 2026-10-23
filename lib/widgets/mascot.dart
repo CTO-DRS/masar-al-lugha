@@ -102,8 +102,7 @@ class Mascot extends StatelessWidget {
             Positioned(
               top: -size * 0.02,
               right: size * 0.02,
-              child: Text('⭐',
-                  style: TextStyle(fontSize: size * 0.22)),
+              child: Text('⭐', style: TextStyle(fontSize: size * 0.22)),
             ),
         ],
       ),

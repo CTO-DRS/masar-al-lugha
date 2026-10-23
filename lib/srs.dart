@@ -1,4 +1,13 @@
-// FSRS-lite spaced repetition engine (simplified Anki-inspired SM-2/FSRS hybrid).
+// Spaced-repetition scheduler for Masar Al-Lugha.
+//
+// HONEST DESCRIPTION (v4.0 audit): this is an **SM-2-inspired lite scheduler**
+// in the Anki family — an ease factor, interval multipliers, learning steps
+// (10-minute re-shows) and lapses. It is **NOT a full FSRS implementation**:
+// it has no per-card difficulty/stability memory states, no power-law
+// forgetting curve and no optimizer. UI copy and docs therefore say
+// "FSRS-inspired spaced repetition", never "FSRS".
+//
+// The engine is Flutter-free and unit-tested (see test/srs_test.dart).
 import 'models.dart';
 
 class Srs {
@@ -30,8 +39,7 @@ class Srs {
           c.state = 'learning';
           c.dueEpochMs = n.millisecondsSinceEpoch + tenMinMs;
         } else {
-          c.intervalDays =
-              (c.intervalDays * 1.2).round().clamp(1, 365);
+          c.intervalDays = (c.intervalDays * 1.2).round().clamp(1, 365);
           c.state = 'review';
           c.dueEpochMs = n.millisecondsSinceEpoch + c.intervalDays * dayMs;
         }
@@ -40,8 +48,7 @@ class Srs {
         if (c.intervalDays <= 0) {
           c.intervalDays = 1;
         } else {
-          c.intervalDays =
-              (c.intervalDays * c.ease).round().clamp(1, 365);
+          c.intervalDays = (c.intervalDays * c.ease).round().clamp(1, 365);
         }
         c.state = 'review';
         c.dueEpochMs = n.millisecondsSinceEpoch + c.intervalDays * dayMs;

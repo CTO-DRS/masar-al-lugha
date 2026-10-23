@@ -1,7 +1,10 @@
 // Theme & shared visual language: Duolingo-inspired fun design.
+// v4.0: full light + dark palettes; widgets resolve surfaces/borders/text
+// from the ambient ColorScheme instead of hardcoded whites.
 import 'package:flutter/material.dart';
 
 class AppColors {
+  // Brand palette (works on both light & dark surfaces).
   static const green = Color(0xFF58CC02);
   static const greenDark = Color(0xFF46A302);
   static const greenLight = Color(0xFFD7FFB8);
@@ -15,6 +18,7 @@ class AppColors {
   static const yellowDark = Color(0xFFE6A100);
   static const orange = Color(0xFFFF9600);
   static const purple = Color(0xFFCE82FF);
+  // Light-only constants kept for the few places that predate v4.0.
   static const ink = Color(0xFF3C3C3C);
   static const inkLight = Color(0xFF777777);
   static const border = Color(0xFFE5E5E5);
@@ -22,40 +26,106 @@ class AppColors {
   static const bgSoft = Color(0xFFF7F7F7);
   static const locked = Color(0xFFE5E5E5);
   static const lockedDark = Color(0xFFCFCFCF);
+
+  // Dark surface colors.
+  static const darkBg = Color(0xFF131F24);
+  static const darkCard = Color(0xFF1B2A32);
+  static const darkSoft = Color(0xFF22333C);
+  static const darkBorder = Color(0xFF37464F);
+  static const darkInk = Color(0xFFF1F7FB);
+  static const darkInkLight = Color(0xFF9DB2BC);
+  static const darkLocked = Color(0xFF3C5260);
 }
 
-ThemeData buildTheme(Locale locale) {
+/// Light/dark-aware semantic colors. Usage: `context.card`, `context.line`,
+/// `context.bodyText`, `context.mutedText`, `context.softBg`, `context.pageBg`.
+extension MasarThemeX on BuildContext {
+  bool get isDark => Theme.of(this).brightness == Brightness.dark;
+  Color get pageBg => Theme.of(this).scaffoldBackgroundColor;
+  Color get card => Theme.of(this).colorScheme.surface;
+  Color get softBg => Theme.of(this).colorScheme.surfaceContainerHighest;
+  Color get line => Theme.of(this).colorScheme.outlineVariant;
+  Color get bodyText => Theme.of(this).colorScheme.onSurface;
+  Color get mutedText => Theme.of(this).colorScheme.onSurfaceVariant;
+  Color get lockedFill => isDark ? AppColors.darkLocked : AppColors.locked;
+  Color get lockedText =>
+      isDark ? AppColors.darkInkLight : AppColors.lockedDark;
+}
+
+ThemeData buildMasarTheme({required bool dark}) {
+  final scheme = dark
+      ? ColorScheme(
+          brightness: Brightness.dark,
+          primary: AppColors.green,
+          onPrimary: Colors.white,
+          secondary: AppColors.blue,
+          onSecondary: Colors.white,
+          surface: AppColors.darkCard,
+          onSurface: AppColors.darkInk,
+          surfaceContainerHighest: AppColors.darkSoft,
+          onSurfaceVariant: AppColors.darkInkLight,
+          outlineVariant: AppColors.darkBorder,
+          error: AppColors.red,
+          onError: Colors.white,
+        )
+      : ColorScheme(
+          brightness: Brightness.light,
+          primary: AppColors.green,
+          onPrimary: Colors.white,
+          secondary: AppColors.blue,
+          onSecondary: Colors.white,
+          surface: Colors.white,
+          onSurface: AppColors.ink,
+          surfaceContainerHighest: AppColors.bgSoft,
+          onSurfaceVariant: AppColors.inkLight,
+          outlineVariant: AppColors.border,
+          error: AppColors.red,
+          onError: Colors.white,
+        );
+
   final base = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.green,
-      primary: AppColors.green,
-      secondary: AppColors.blue,
-    ),
-    scaffoldBackgroundColor: AppColors.bg,
+    colorScheme: scheme,
+    scaffoldBackgroundColor: dark ? AppColors.darkBg : Colors.white,
   );
   return base.copyWith(
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.bg,
+    appBarTheme: AppBarTheme(
+      backgroundColor: dark ? AppColors.darkBg : Colors.white,
       elevation: 0,
       centerTitle: true,
-      iconTheme: IconThemeData(color: AppColors.ink),
+      iconTheme: IconThemeData(color: dark ? AppColors.darkInk : AppColors.ink),
       titleTextStyle: TextStyle(
-        color: AppColors.ink,
+        color: dark ? AppColors.darkInk : AppColors.ink,
         fontSize: 18,
         fontWeight: FontWeight.w800,
       ),
     ),
     textTheme: base.textTheme.apply(
-      bodyColor: AppColors.ink,
-      displayColor: AppColors.ink,
+      bodyColor: scheme.onSurface,
+      displayColor: scheme.onSurface,
     ),
-    snackBarTheme: const SnackBarThemeData(
+    snackBarTheme: SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
-      backgroundColor: AppColors.ink,
+      backgroundColor: dark ? AppColors.darkSoft : AppColors.ink,
+    ),
+    dialogTheme: DialogThemeData(
+      backgroundColor: scheme.surface,
+      titleTextStyle: TextStyle(
+        color: scheme.onSurface,
+        fontWeight: FontWeight.w900,
+        fontSize: 18,
+      ),
+      contentTextStyle: TextStyle(
+        color: scheme.onSurfaceVariant,
+        fontSize: 14.5,
+        height: 1.4,
+      ),
     ),
   );
 }
+
+/// Back-compat shim: v3.x call sites used `buildTheme(locale)`.
+ThemeData buildTheme(Locale locale) => buildMasarTheme(dark: false);
 
 // Chunky 3D button — signature Duolingo look.
 class ChunkyButton extends StatelessWidget {
@@ -84,9 +154,11 @@ class ChunkyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = disabled ? AppColors.locked : color;
-    final cd = disabled ? AppColors.lockedDark : colorDark;
-    final tc = disabled ? AppColors.inkLight : textColor;
+    final c = disabled ? context.lockedFill : color;
+    final cd = disabled
+        ? (context.isDark ? AppColors.darkBorder : AppColors.lockedDark)
+        : colorDark;
+    final tc = disabled ? context.mutedText : textColor;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: c,
@@ -150,10 +222,10 @@ class OptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color border = AppColors.border;
-    Color bg = Colors.white;
-    Color badgeBg = AppColors.border;
-    Color badgeFg = AppColors.inkLight;
+    Color border = context.line;
+    Color bg = context.card;
+    Color badgeBg = context.line;
+    Color badgeFg = context.mutedText;
     if (selected) {
       border = AppColors.blue;
       bg = AppColors.blueLight;
@@ -181,11 +253,9 @@ class OptionCard extends StatelessWidget {
           color: bg,
           border: Border.all(color: border, width: 2),
           borderRadius: BorderRadius.circular(14),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-                color: AppColors.border,
-                offset: Offset(0, 3),
-                blurRadius: 0),
+                color: context.line, offset: const Offset(0, 3), blurRadius: 0),
           ],
         ),
         child: Row(
@@ -202,7 +272,7 @@ class OptionCard extends StatelessWidget {
                     bottom: BorderSide(
                         color: badgeFg == Colors.white
                             ? Colors.black26
-                            : AppColors.border,
+                            : context.line,
                         width: 2),
                   ),
                 ),
@@ -217,8 +287,12 @@ class OptionCard extends StatelessWidget {
             Expanded(
               child: Text(
                 text,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w700, fontSize: 16),
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    color: selected || correct || wrong
+                        ? AppColors.ink
+                        : context.bodyText),
               ),
             ),
           ],
@@ -247,8 +321,8 @@ class PictureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color border = AppColors.border;
-    Color bg = Colors.white;
+    Color border = context.line;
+    Color bg = context.card;
     if (selected) {
       border = AppColors.blue;
       bg = AppColors.blueLight;
@@ -269,11 +343,9 @@ class PictureCard extends StatelessWidget {
           color: bg,
           border: Border.all(color: border, width: 2),
           borderRadius: BorderRadius.circular(18),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-                color: AppColors.border,
-                offset: Offset(0, 4),
-                blurRadius: 0),
+                color: context.line, offset: const Offset(0, 4), blurRadius: 0),
           ],
         ),
         child: Center(
@@ -293,7 +365,8 @@ class WordTile extends StatelessWidget {
   final VoidCallback? onTap;
   final bool ghost;
 
-  const WordTile({super.key, required this.text, this.onTap, this.ghost = false});
+  const WordTile(
+      {super.key, required this.text, this.onTap, this.ghost = false});
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +376,7 @@ class WordTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.border, width: 2),
+          border: Border.all(color: context.line, width: 2),
         ),
         child: Text(text,
             style: const TextStyle(
@@ -318,19 +391,20 @@ class WordTile extends StatelessWidget {
         margin: const EdgeInsets.all(4),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.card,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.border, width: 2),
-          boxShadow: const [
+          border: Border.all(color: context.line, width: 2),
+          boxShadow: [
             BoxShadow(
-                color: AppColors.border,
-                offset: Offset(0, 3),
-                blurRadius: 0),
+                color: context.line, offset: const Offset(0, 3), blurRadius: 0),
           ],
         ),
         child: Text(
           text,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: context.bodyText),
         ),
       ),
     );

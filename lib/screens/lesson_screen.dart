@@ -26,6 +26,13 @@ class _LessonScreenState extends State<LessonScreen> {
   int mistakes = 0;
   int correctCount = 0;
 
+  // v4.0 (audit H4): per-word correctness gathered during the lesson and
+  // fed into the SRS on completion — replaces the old "everyone gets good".
+  final Map<String, bool> wordResults = {};
+  late final Map<String, String> _idByTarget = {
+    for (final v in widget.lesson.vocab) v.target: v.id,
+  };
+
   // per-exercise interaction state
   int? selected;
   bool answered = false;
@@ -56,14 +63,16 @@ class _LessonScreenState extends State<LessonScreen> {
       case ExerciseType.wordToPic:
       case ExerciseType.picToWord:
       case ExerciseType.truefalse:
-        AppScope.ttsOf(context)
+        final tts = AppScope.ttsOf(context);
+        tts
             .setLanguage(AppScope.of(context).course.ttsLang)
-            .then((_) => AppScope.ttsOf(context).speak(ex.audioText));
+            .then((_) => tts.speak(ex.audioText));
         break;
       case ExerciseType.fillblank:
-        AppScope.ttsOf(context)
+        final tts = AppScope.ttsOf(context);
+        tts
             .setLanguage(AppScope.of(context).course.ttsLang)
-            .then((_) => AppScope.ttsOf(context).speak(ex.audioText));
+            .then((_) => tts.speak(ex.audioText));
         break;
       default:
         break;
@@ -72,11 +81,11 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tr = (String k) => context.tr(k);
+    String tr(String k) => context.tr(k);
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: AppColors.bg,
+        backgroundColor: context.pageBg,
         body: SafeArea(
           child: Column(
             children: [
@@ -97,8 +106,7 @@ class _LessonScreenState extends State<LessonScreen> {
         children: [
           GestureDetector(
             onTap: () => _confirmQuit(tr),
-            child: const Icon(Icons.close,
-                color: AppColors.lockedDark, size: 28),
+            child: Icon(Icons.close, color: context.lockedText, size: 28),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -108,8 +116,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 value: (index + (answered ? 1 : 0)) / exercises.length,
                 minHeight: 14,
                 backgroundColor: AppColors.border,
-                valueColor:
-                    const AlwaysStoppedAnimation(AppColors.green),
+                valueColor: const AlwaysStoppedAnimation(AppColors.green),
               ),
             ),
           ),
@@ -142,8 +149,7 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
-  Widget _promptCard(String Function(String) tr,
-      {required bool isListen}) {
+  Widget _promptCard(String Function(String) tr, {required bool isListen}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
@@ -159,8 +165,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       : ex.type == ExerciseType.reverse
                           ? tr('chooseWord')
                           : tr('chooseTranslation'),
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w900),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                 ),
               ),
             ],
@@ -171,17 +176,19 @@ class _LessonScreenState extends State<LessonScreen> {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () => AppScope.ttsOf(context)
-                        .speak(ex.audioText)
-                        .then((_) => AppScope.ttsOf(context)
-                            .speak(ex.audioText)),
+                    onTap: () {
+                      final tts = AppScope.ttsOf(context);
+                      tts
+                          .speak(ex.audioText)
+                          .then((_) => tts.speak(ex.audioText));
+                    },
                     child: Container(
                       width: 110,
                       height: 110,
                       decoration: BoxDecoration(
                         color: AppColors.blue,
                         borderRadius: BorderRadius.circular(24),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
                               color: AppColors.blueDark,
                               offset: Offset(0, 5),
@@ -195,8 +202,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   const SizedBox(height: 10),
                   Text(
                     ex.vocab.phonetic ?? '',
-                    style: const TextStyle(
-                        color: AppColors.inkLight, fontSize: 15),
+                    style: TextStyle(color: context.mutedText, fontSize: 15),
                   ),
                 ],
               ),
@@ -205,17 +211,16 @@ class _LessonScreenState extends State<LessonScreen> {
             Center(
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 8),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24, vertical: 18),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: context.card,
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: AppColors.border, width: 2),
+                  border: Border.all(color: context.line, width: 2),
                 ),
                 child: Text(
                   ex.prompt,
-                  style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.w900),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
                 ),
               ),
             ),
@@ -223,8 +228,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ex.type == ExerciseType.mcq &&
               ex.vocab.phonetic != null)
             Text(ex.vocab.phonetic!,
-                style: const TextStyle(
-                    color: AppColors.inkLight, fontSize: 14)),
+                style: TextStyle(color: context.mutedText, fontSize: 14)),
           const SizedBox(height: 20),
         ],
       ),
@@ -232,8 +236,9 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   Widget _mcqBody(String Function(String) tr, {required bool isListen}) {
-    final badgeLetters =
-        AppScope.of(context).uiLocale == 'ar' ? ['أ', 'ب', 'ج', 'د'] : ['A', 'B', 'C', 'D'];
+    final badgeLetters = AppScope.of(context).uiLocale == 'ar'
+        ? ['أ', 'ب', 'ج', 'د']
+        : ['A', 'B', 'C', 'D'];
     return Column(
       children: [
         _promptCard(tr, isListen: isListen),
@@ -288,8 +293,8 @@ class _LessonScreenState extends State<LessonScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(prompt,
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w900)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
               ),
             ],
           ),
@@ -297,17 +302,17 @@ class _LessonScreenState extends State<LessonScreen> {
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: AppColors.bgSoft,
+              color: context.softBg,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.border, width: 2),
+              border: Border.all(color: context.line, width: 2),
             ),
             child: Column(
               children: [
                 // target meaning
                 Text(ex.prompt,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w800)),
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
                 const SizedBox(height: 14),
                 // answer line
                 Wrap(
@@ -322,7 +327,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       ),
                   ],
                 ),
-                const Divider(color: AppColors.border, height: 24),
+                Divider(color: context.line, height: 24),
                 // source tiles
                 Wrap(
                   alignment: WrapAlignment.center,
@@ -335,8 +340,7 @@ class _LessonScreenState extends State<LessonScreen> {
                             : () => setState(() => placed.add(i)),
                       ),
                     if (remaining.isEmpty && placed.isEmpty)
-                      const Text('',
-                          style: TextStyle(fontSize: 8)),
+                      const Text('', style: TextStyle(fontSize: 8)),
                   ],
                 ),
               ],
@@ -349,8 +353,9 @@ class _LessonScreenState extends State<LessonScreen> {
 
   // ---- v2.0 interactive picture exercises ----
   Widget _picBody(String Function(String) tr, {required bool pickPicture}) {
-    final badgeLetters =
-        AppScope.of(context).uiLocale == 'ar' ? ['أ', 'ب', 'ج', 'د'] : ['A', 'B', 'C', 'D'];
+    final badgeLetters = AppScope.of(context).uiLocale == 'ar'
+        ? ['أ', 'ب', 'ج', 'د']
+        : ['A', 'B', 'C', 'D'];
     return Column(
       children: [
         Padding(
@@ -363,11 +368,9 @@ class _LessonScreenState extends State<LessonScreen> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      pickPicture
-                          ? tr('whichPicture')
-                          : tr('whichWordForPic'),
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w900),
+                      pickPicture ? tr('whichPicture') : tr('whichWordForPic'),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                     ),
                   ),
                 ],
@@ -380,23 +383,21 @@ class _LessonScreenState extends State<LessonScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 14),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.card,
                       borderRadius: BorderRadius.circular(18),
-                      border:
-                          Border.all(color: AppColors.border, width: 2),
+                      border: Border.all(color: context.line, width: 2),
                     ),
                     child: Text(
                       ex.prompt,
-                      style: const TextStyle(
-                          fontSize: 26, fontWeight: FontWeight.w900),
+                      style:
+                          TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
                     ),
                   ),
                 ),
                 if (ex.vocab.phonetic != null) ...[
                   const SizedBox(height: 6),
                   Text(ex.vocab.phonetic!,
-                      style: const TextStyle(
-                          color: AppColors.inkLight, fontSize: 14)),
+                      style: TextStyle(color: context.mutedText, fontSize: 14)),
                 ],
               ] else ...[
                 // emoji prompt -> pick word
@@ -406,10 +407,10 @@ class _LessonScreenState extends State<LessonScreen> {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: AppColors.yellow.withOpacity(0.15),
+                      color: AppColors.yellow.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(26),
                       border: Border.all(color: AppColors.yellow, width: 2),
-                      boxShadow: const [
+                      boxShadow: [
                         BoxShadow(
                             color: AppColors.yellowDark,
                             offset: Offset(0, 5),
@@ -418,16 +419,14 @@ class _LessonScreenState extends State<LessonScreen> {
                     ),
                     child: Center(
                       child: Text(ex.prompt,
-                          style:
-                              const TextStyle(fontSize: 64, height: 1.1)),
+                          style: TextStyle(fontSize: 64, height: 1.1)),
                     ),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   '${tr('correctAnswerIs')} ${ex.hint ?? ''}',
-                  style: const TextStyle(
-                      color: AppColors.inkLight, fontSize: 14),
+                  style: TextStyle(color: context.mutedText, fontSize: 14),
                 ),
               ],
               const SizedBox(height: 16),
@@ -452,9 +451,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   selected: selected == i,
                   correct: answered && ex.options[i] == ex.answer,
                   wrong: answered && selected == i && !wasCorrect,
-                  onTap: answered
-                      ? null
-                      : () => setState(() => selected = i),
+                  onTap: answered ? null : () => setState(() => selected = i),
                 );
               }
               return OptionCard(
@@ -463,9 +460,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 selected: selected == i,
                 correct: answered && ex.options[i] == ex.answer,
                 wrong: answered && selected == i && !wasCorrect,
-                onTap: answered
-                    ? null
-                    : () => setState(() => selected = i),
+                onTap: answered ? null : () => setState(() => selected = i),
               );
             },
           ),
@@ -488,7 +483,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(tr('fillBlank'),
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w900)),
                   ),
                 ],
@@ -499,23 +494,21 @@ class _LessonScreenState extends State<LessonScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
                 decoration: BoxDecoration(
-                  color: AppColors.bgSoft,
+                  color: context.softBg,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.border, width: 2),
+                  border: Border.all(color: context.line, width: 2),
                 ),
                 child: Text(
                   ex.prompt,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.w800),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
                 ),
               ),
               if (ex.hint != null) ...[
                 const SizedBox(height: 8),
                 Text(ex.hint!,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        color: AppColors.inkLight, fontSize: 14)),
+                    style: TextStyle(color: context.mutedText, fontSize: 14)),
               ],
               const SizedBox(height: 16),
             ],
@@ -538,9 +531,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 selected: selected == i,
                 correct: answered && ex.options[i] == ex.answer,
                 wrong: answered && selected == i && !wasCorrect,
-                onTap: answered
-                    ? null
-                    : () => setState(() => selected = i),
+                onTap: answered ? null : () => setState(() => selected = i),
               );
             },
           ),
@@ -563,8 +554,8 @@ class _LessonScreenState extends State<LessonScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(tr('trueOrFalse'),
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w900)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
               ),
             ],
           ),
@@ -573,47 +564,41 @@ class _LessonScreenState extends State<LessonScreen> {
             width: double.infinity,
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: context.card,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.border, width: 2),
-              boxShadow: const [
+              border: Border.all(color: context.line, width: 2),
+              boxShadow: [
                 BoxShadow(
-                    color: AppColors.border,
-                    offset: Offset(0, 4),
-                    blurRadius: 0),
+                    color: context.line, offset: Offset(0, 4), blurRadius: 0),
               ],
             ),
             child: Column(
               children: [
                 GestureDetector(
-                  onTap: () =>
-                      AppScope.ttsOf(context).speak(ex.audioText),
+                  onTap: () => AppScope.ttsOf(context).speak(ex.audioText),
                   child: Text(
                     ex.prompt,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.w900),
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
                   ),
                 ),
                 if (ex.vocab.phonetic != null) ...[
                   const SizedBox(height: 4),
                   Text(ex.vocab.phonetic!,
-                      style: const TextStyle(
-                          color: AppColors.inkLight, fontSize: 14)),
+                      style: TextStyle(color: context.mutedText, fontSize: 14)),
                 ],
                 const SizedBox(height: 14),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 18, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                   decoration: BoxDecoration(
-                    color: AppColors.bgSoft,
+                    color: context.softBg,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     shownMeaning,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 19, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
                   ),
                 ),
               ],
@@ -628,9 +613,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   selected: selected == 0,
                   correct: answered && ex.answer == 'true',
                   wrong: answered && selected == 0 && !wasCorrect,
-                  onTap: answered
-                      ? null
-                      : () => setState(() => selected = 0),
+                  onTap: answered ? null : () => setState(() => selected = 0),
                 ),
               ),
               const SizedBox(width: 12),
@@ -640,9 +623,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   selected: selected == 1,
                   correct: answered && ex.answer == 'false',
                   wrong: answered && selected == 1 && !wasCorrect,
-                  onTap: answered
-                      ? null
-                      : () => setState(() => selected = 1),
+                  onTap: answered ? null : () => setState(() => selected = 1),
                 ),
               ),
             ],
@@ -665,8 +646,8 @@ class _LessonScreenState extends State<LessonScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(tr('matchPairs'),
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w900)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
               ),
             ],
           ),
@@ -679,7 +660,10 @@ class _LessonScreenState extends State<LessonScreen> {
                   child: Column(
                     children: [
                       for (final w in ex.matchLeft)
-                        _matchChip(w, AppScope.of(context).course.ttsLang == 'ur' || true, tr),
+                        _matchChip(
+                            w,
+                            AppScope.of(context).course.ttsLang == 'ur' || true,
+                            tr),
                     ],
                   ),
                 ),
@@ -687,8 +671,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      for (final m in ex.matchRight)
-                        _matchChip(m, false, tr),
+                      for (final m in ex.matchRight) _matchChip(m, false, tr),
                     ],
                   ),
                 ),
@@ -702,8 +685,8 @@ class _LessonScreenState extends State<LessonScreen> {
 
   Widget _matchChip(String text, bool speakable, String Function(String) tr) {
     final isLeft = ex.matchLeft.contains(text);
-    final matched = matchedPairs.contains('L:$text') ||
-        matchedPairs.contains('R:$text');
+    final matched =
+        matchedPairs.contains('L:$text') || matchedPairs.contains('R:$text');
     final selectedNow =
         (isLeft && matchSelLeft == text) || (!isLeft && matchSelRight == text);
     final flashRed = matchError && selectedNow;
@@ -730,9 +713,8 @@ class _LessonScreenState extends State<LessonScreen> {
           color: bg,
           border: Border.all(color: border, width: 2),
           borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
-            BoxShadow(
-                color: AppColors.border, offset: Offset(0, 3), blurRadius: 0),
+          boxShadow: [
+            BoxShadow(color: context.line, offset: Offset(0, 3), blurRadius: 0),
           ],
         ),
         child: Text(
@@ -755,9 +737,8 @@ class _LessonScreenState extends State<LessonScreen> {
       if (isLeft) {
         matchSelLeft = text;
         if (speakable) {
-          AppScope.ttsOf(context)
-              .setLanguage(st.course.ttsLang)
-              .then((_) => AppScope.ttsOf(context).speak(text));
+          final tts = AppScope.ttsOf(context);
+          tts.setLanguage(st.course.ttsLang).then((_) => tts.speak(text));
         }
       } else {
         matchSelRight = text;
@@ -765,13 +746,19 @@ class _LessonScreenState extends State<LessonScreen> {
       if (matchSelLeft != null && matchSelRight != null) {
         final li = ex.matchLeft.indexOf(matchSelLeft!);
         final correct = ex.matchRight[li] == matchSelRight;
+        final leftWordId = _idByTarget[matchSelLeft!];
         if (correct) {
           matchedPairs.add('L:${matchSelLeft!}');
           matchedPairs.add('R:${matchSelRight!}');
+          if (leftWordId != null) wordResults[leftWordId] = true;
           st.recordAnswer(true);
           correctCount++;
           AppScope.ttsOf(context).speak(matchSelLeft!);
         } else {
+          if (leftWordId != null) {
+            wordResults[leftWordId] = false;
+            st.recordWordMistake(leftWordId);
+          }
           st.recordAnswer(false);
           mistakes++;
           hearts--;
@@ -786,16 +773,14 @@ class _LessonScreenState extends State<LessonScreen> {
             matchError = false;
           });
           if (matchedPairs.length >= ex.matchLeft.length * 2) {
-            _finishExercise(correct: true);
+            _finishExercise();
           } else if (hearts <= 0) {
-            _showFailed(tr2: null);
+            _showFailed();
           }
         });
       }
     });
   }
-
-  String? tr2; // helper holder
 
   Widget _bottomAction(String Function(String) tr) {
     final canCheck = _canCheck();
@@ -841,22 +826,29 @@ class _LessonScreenState extends State<LessonScreen> {
     final st = AppScope.of(context);
     String userAnswer = '';
     if (ex.type == ExerciseType.build) {
-      userAnswer = placed.map((i) => ex.tiles[i]).join(
-          ex.tiles.join(' ').contains(' ') ? ' ' : '');
+      userAnswer = placed
+          .map((i) => ex.tiles[i])
+          .join(ex.tiles.join(' ').contains(' ') ? ' ' : '');
       // Compare case-insensitively without spaces for letter builds.
-      final norm = (String s) =>
-          s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
+      String norm(String s) => s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
       wasCorrect = norm(userAnswer) == norm(ex.answer);
     } else if (ex.type == ExerciseType.fillblank) {
       userAnswer = selected != null ? ex.options[selected!] : '';
-      final norm = (String s) =>
-          s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
+      String norm(String s) => s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
       wasCorrect = norm(userAnswer) == norm(ex.answer);
     } else {
       userAnswer = selected != null ? ex.options[selected!] : '';
       wasCorrect = userAnswer == ex.answer;
     }
     st.recordAnswer(wasCorrect);
+    // v4.0 (H4): remember how this specific word went. A word that was ever
+    // answered wrong in this lesson stays flagged as shaky.
+    if (!wasCorrect || wordResults[ex.vocab.id] == false) {
+      wordResults[ex.vocab.id] = false;
+      if (!wasCorrect) st.recordWordMistake(ex.vocab.id);
+    } else {
+      wordResults[ex.vocab.id] = true;
+    }
     if (wasCorrect) {
       correctCount++;
       if (ex.audioText.isNotEmpty) {
@@ -902,9 +894,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     Text(
                       wasCorrect ? tr('correct') : tr('wrong'),
                       style: TextStyle(
-                          color: fg,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 17),
+                          color: fg, fontWeight: FontWeight.w900, fontSize: 17),
                     ),
                     if (!wasCorrect)
                       Text(
@@ -930,7 +920,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
   void _next(String Function(String) tr) {
     if (hearts <= 0) {
-      _showFailed(tr2: null);
+      _showFailed();
       return;
     }
     if (isLast) {
@@ -951,7 +941,7 @@ class _LessonScreenState extends State<LessonScreen> {
     _speakIfNeeded();
   }
 
-  void _finishExercise({required bool correct}) {
+  void _finishExercise() {
     if (isLast) {
       _showComplete((k) => context.tr(k));
     } else {
@@ -968,7 +958,9 @@ class _LessonScreenState extends State<LessonScreen> {
       mistakes: mistakes,
       vocabCount: widget.lesson.vocab.length,
     );
-    st.touchCardsForLesson(widget.lesson.vocab);
+    // v4.0 (H4): seed the SRS from REAL per-word performance instead of
+    // marking every word as "good".
+    st.applyLessonResults(wordResults);
     AppScope.ttsOf(context).stop();
 
     Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -983,7 +975,7 @@ class _LessonScreenState extends State<LessonScreen> {
     ));
   }
 
-  void _showFailed({String? tr2}) {
+  void _showFailed() {
     AppScope.ttsOf(context).stop();
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (_) => LessonFailedScreen(lesson: widget.lesson),
@@ -995,15 +987,14 @@ class _LessonScreenState extends State<LessonScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(tr('quitLesson'),
-            style: const TextStyle(fontWeight: FontWeight.w900)),
+            style: TextStyle(fontWeight: FontWeight.w900)),
         content: Text(tr('quitLessonBody')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
             child: Text(tr('stay'),
-                style: const TextStyle(
-                    color: AppColors.green,
-                    fontWeight: FontWeight.w800)),
+                style: TextStyle(
+                    color: AppColors.green, fontWeight: FontWeight.w800)),
           ),
           TextButton(
             onPressed: () {
@@ -1011,7 +1002,7 @@ class _LessonScreenState extends State<LessonScreen> {
               Navigator.of(context).pop();
             },
             child: Text(tr('exit'),
-                style: const TextStyle(
+                style: TextStyle(
                     color: AppColors.red, fontWeight: FontWeight.w800)),
           ),
         ],
@@ -1056,9 +1047,9 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tr = (String k) => context.tr(k);
+    String tr(String k) => context.tr(k);
     return Scaffold(
-      backgroundColor: AppColors.bg,
+      backgroundColor: context.pageBg,
       body: SafeArea(
         child: Stack(
           children: [
@@ -1072,14 +1063,13 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
                   Text(
                     tr('lessonComplete'),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.w900),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
                   ),
                   if (widget.perfect) ...[
                     const SizedBox(height: 8),
                     Text(
                       '🎉 ${tr('perfectLesson')}',
-                      style: const TextStyle(
+                      style: TextStyle(
                           color: AppColors.yellowDark,
                           fontWeight: FontWeight.w800,
                           fontSize: 16),
@@ -1140,12 +1130,11 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border, width: 2),
-        boxShadow: const [
-          BoxShadow(
-              color: AppColors.border, offset: Offset(0, 4), blurRadius: 0),
+        border: Border.all(color: context.line, width: 2),
+        boxShadow: [
+          BoxShadow(color: context.line, offset: Offset(0, 4), blurRadius: 0),
         ],
       ),
       child: Column(
@@ -1153,11 +1142,8 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
           Icon(icon, color: color, size: 34),
           const SizedBox(height: 6),
           Text(value,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w900, fontSize: 20)),
-          Text(label,
-              style: const TextStyle(
-                  color: AppColors.inkLight, fontSize: 13)),
+              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
+          Text(label, style: TextStyle(color: context.mutedText, fontSize: 13)),
         ],
       ),
     );
@@ -1166,12 +1152,13 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
   Widget _badgeCard(String badgeId, String Function(String) tr) {
     final def = AppState.badgeDefs.firstWhere(
       (b) => b.id == badgeId,
-      orElse: () => const BadgeDef('?', icon: Icons.star, color: AppColors.yellow),
+      orElse: () =>
+          const BadgeDef('?', icon: Icons.star, color: AppColors.yellow),
     );
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.yellow.withOpacity(0.12),
+        color: AppColors.yellow.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.yellow, width: 2),
       ),
@@ -1181,7 +1168,7 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
             width: 46,
             height: 46,
             decoration: BoxDecoration(
-              color: def.color.withOpacity(0.2),
+              color: def.color.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: Icon(def.icon, color: def.color),
@@ -1197,8 +1184,8 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
                         fontWeight: FontWeight.w900,
                         fontSize: 13)),
                 Text(tr('badge_$badgeId'),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w800, fontSize: 15)),
+                    style:
+                        TextStyle(fontWeight: FontWeight.w800, fontSize: 15)),
               ],
             ),
           ),
@@ -1214,9 +1201,9 @@ class LessonFailedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tr = (String k) => context.tr(k);
+    String tr(String k) => context.tr(k);
     return Scaffold(
-      backgroundColor: AppColors.bg,
+      backgroundColor: context.pageBg,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -1228,15 +1215,13 @@ class LessonFailedScreen extends StatelessWidget {
               Text(
                 tr('lessonFailed'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 24, fontWeight: FontWeight.w900),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
               ),
               const SizedBox(height: 10),
               Text(
                 tr('heartsEmpty'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: AppColors.inkLight, fontSize: 15),
+                style: TextStyle(color: context.mutedText, fontSize: 15),
               ),
               const Spacer(),
               ChunkyButton(
@@ -1251,7 +1236,7 @@ class LessonFailedScreen extends StatelessWidget {
               const SizedBox(height: 12),
               ChunkyButton(
                 label: tr('backHome'),
-                color: AppColors.inkLight,
+                color: context.mutedText,
                 colorDark: AppColors.inkLight,
                 onPressed: () =>
                     Navigator.of(context).popUntil((r) => r.isFirst),

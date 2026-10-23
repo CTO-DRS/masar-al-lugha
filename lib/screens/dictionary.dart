@@ -20,7 +20,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   @override
   Widget build(BuildContext context) {
     final st = AppScope.of(context);
-    final tr = (String k) => context.tr(k);
+    String tr(String k) => context.tr(k);
     final course = st.course;
 
     // Build rows grouped by unit.
@@ -44,25 +44,21 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               onChanged: (v) => setState(() => query = v.trim()),
               decoration: InputDecoration(
                 hintText: tr('searchWords'),
-                prefixIcon: const Icon(Icons.search,
-                    color: AppColors.inkLight),
+                prefixIcon: const Icon(Icons.search, color: AppColors.inkLight),
                 filled: true,
-                fillColor: AppColors.bgSoft,
+                fillColor: context.softBg,
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
-                  borderSide:
-                      const BorderSide(color: AppColors.border, width: 2),
+                  borderSide: BorderSide(color: context.line, width: 2),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
-                  borderSide:
-                      const BorderSide(color: AppColors.border, width: 2),
+                  borderSide: BorderSide(color: context.line, width: 2),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
-                  borderSide:
-                      const BorderSide(color: AppColors.green, width: 2),
+                  borderSide: BorderSide(color: AppColors.green, width: 2),
                 ),
               ),
             ),
@@ -73,16 +69,15 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               children: [
                 Text(
                   '${rows.length} ${tr('words')}',
-                  style: const TextStyle(
-                      color: AppColors.inkLight,
+                  style: TextStyle(
+                      color: context.mutedText,
                       fontWeight: FontWeight.w800,
                       fontSize: 13),
                 ),
                 const Spacer(),
                 Text(
                   tr('tapToListen'),
-                  style: const TextStyle(
-                      color: AppColors.inkLight, fontSize: 12),
+                  style: TextStyle(color: context.mutedText, fontSize: 12),
                 ),
               ],
             ),
@@ -93,12 +88,11 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Mascot(
-                            size: 90, mood: MascotMood.neutral),
+                        const Mascot(size: 90, mood: MascotMood.neutral),
                         const SizedBox(height: 12),
                         Text(tr('noResults'),
-                            style: const TextStyle(
-                                color: AppColors.inkLight,
+                            style: TextStyle(
+                                color: context.mutedText,
                                 fontWeight: FontWeight.w700)),
                       ],
                     ),
@@ -108,13 +102,12 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                     itemCount: rows.length,
                     itemBuilder: (context, i) {
                       final r = rows[i];
-                      final showUnitHeader = i == 0 ||
-                          rows[i - 1].unit.id != r.unit.id;
+                      final showUnitHeader =
+                          i == 0 || rows[i - 1].unit.id != r.unit.id;
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          if (showUnitHeader)
-                            _unitHeader(context, r),
+                          if (showUnitHeader) _unitHeader(context, r),
                           _WordTile(row: r),
                         ],
                       );
@@ -193,7 +186,7 @@ class _WordTileState extends State<_WordTile> {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: expanded ? AppColors.bgSoft : Colors.white,
+          color: expanded ? context.softBg : context.card,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: expanded ? color : AppColors.border,
@@ -209,13 +202,13 @@ class _WordTileState extends State<_WordTile> {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.12),
+                    color: color.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
                     child: Text(
                       (v.emoji ?? '').isEmpty ? '🎓' : v.emoji!,
-                      style: const TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 24),
                     ),
                   ),
                 ),
@@ -226,13 +219,13 @@ class _WordTileState extends State<_WordTile> {
                     children: [
                       Text(
                         v.target,
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontWeight: FontWeight.w900, fontSize: 16),
                       ),
                       Text(
                         v.translationAr,
-                        style: const TextStyle(
-                            color: AppColors.inkLight, fontSize: 14),
+                        style:
+                            TextStyle(color: context.mutedText, fontSize: 14),
                       ),
                     ],
                   ),
@@ -243,10 +236,10 @@ class _WordTileState extends State<_WordTile> {
                     // speak button
                     GestureDetector(
                       onTap: () {
-                        AppScope.ttsOf(context)
+                        final tts = AppScope.ttsOf(context);
+                        tts
                             .setLanguage(st.course.ttsLang)
-                            .then((_) =>
-                                AppScope.ttsOf(context).speak(v.target));
+                            .then((_) => tts.speak(v.target));
                       },
                       child: Container(
                         width: 38,
@@ -264,7 +257,7 @@ class _WordTileState extends State<_WordTile> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: stateColor.withOpacity(0.12),
+                        color: stateColor.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
@@ -288,8 +281,8 @@ class _WordTileState extends State<_WordTile> {
                         size: 16, color: AppColors.inkLight),
                     const SizedBox(width: 6),
                     Text(v.phonetic!,
-                        style: const TextStyle(
-                            color: AppColors.inkLight, fontSize: 13)),
+                        style:
+                            TextStyle(color: context.mutedText, fontSize: 13)),
                   ],
                 ),
               if (v.exampleTarget != null) ...[
@@ -298,21 +291,20 @@ class _WordTileState extends State<_WordTile> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.card,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                        color: AppColors.border, width: 1.5),
+                    border: Border.all(color: context.line, width: 1.5),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(v.exampleTarget!,
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 14)),
                       const SizedBox(height: 2),
                       Text(v.exampleAr ?? '',
-                          style: const TextStyle(
-                              color: AppColors.inkLight, fontSize: 13)),
+                          style: TextStyle(
+                              color: context.mutedText, fontSize: 13)),
                     ],
                   ),
                 ),

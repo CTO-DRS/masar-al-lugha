@@ -1,0 +1,125 @@
+// AppState persistence tests (v4.0, MASTER PROMPT Wave 3):
+// - schema v1 -> v2 migration through the real load() path
+// - corrupt-JSON recovery keeps a restorable backup (audit H2)
+// - save/load round-trip preserves settings and progress
+// - debounced scheduleSave + flush actually persists (audit M3)
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:masar_al_lugha/app_state.dart';
+
+const _kProgress = 'progress_json_v1';
+const _kBackup = 'progress_backup_v1';
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  test('v1 payload (no schema field) loads and is upgraded on save', () async {
+    final v1 = jsonEncode({
+      // NOTE: intentionally missing 'schema' — pre-4.0 payload shape.
+      'xp': 120,
+      'streak': 4,
+      'dailyGoal': 30,
+      'lessonStars': {'en_l1': 3},
+      'cards': {
+        'en_w1': {
+          'ease': 2.6,
+          'ivl': 3,
+          'due': 1700000000000,
+          'reps': 2,
+          'lapses': 0,
+          'state': 'review'
+        },
+      },
+      'badges': ['first_lesson'],
+    });
+    SharedPreferences.setMockInitialValues(<String, Object>{
+      _kProgress: v1,
+      'onboarding_done': true,
+    });
+
+    final st = AppState();
+    await st.load();
+
+    expect(st.xp, 120);
+    expect(st.streak, 4);
+    expect(st.dailyGoal, 30);
+    expect(st.lessonStars['en_l1'], 3);
+    expect(st.cards['en_w1']!.ease, 2.6);
+    expect(st.cards['en_w1']!.intervalDays, 3);
+    expect(st.badges, contains('first_lesson'));
+
+    await st.save();
+    final prefs = await SharedPreferences.getInstance();
+    final saved =
+        jsonDecode(prefs.getString(_kProgress)!) as Map<String, dynamic>;
+    expect(saved['schema'], AppState.progressSchema); // upgraded marker
+  });
+
+  test('v2 payload round-trips settings and engine state', () async {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final st = AppState();
+    await st.load();
+
+    st.darkMode = true;
+    st.reduceMotion = true;
+    st.ttsEnabled = false;
+    st.ttsRate = 1.3;
+    st.dailyGoal = 50;
+    st.wordMistakes['en_w9'] = 3;
+    st.placementDone['fr'] = true;
+    st.placementSkip['fr'] = 12;
+    st.newCardsToday = 7;
+    st.newCardsDay = AppState.todayKey();
+    await st.save();
+
+    final st2 = AppState();
+    await st2.load();
+    expect(st2.darkMode, isTrue);
+    expect(st2.reduceMotion, isTrue);
+    expect(st2.ttsEnabled, isFalse);
+    expect(st2.ttsRate, 1.3);
+    expect(st2.dailyGoal, 50);
+    expect(st2.wordMistakes['en_w9'], 3);
+    expect(st2.placementDone['fr'], isTrue);
+    expect(st2.placementSkip['fr'], 12);
+    expect(st2.newCardsToday, 7);
+  });
+
+  test('corrupt JSON does not crash and is backed up before reset (H2)',
+      () async {
+    const corrupt = '{"xp": 55, "cards": { NOT VALID JSON';
+    SharedPreferences.setMockInitialValues(
+        <String, Object>{_kProgress: corrupt});
+
+    final st = AppState();
+    await st.load(); // must not throw
+
+    expect(st.loaded, isTrue);
+    expect(st.xp, 0); // fresh start, no partial state
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString(_kBackup), corrupt); // recoverable copy kept
+  });
+
+  test('scheduleSave marks dirty; flush persists and clears dirty (M3)',
+      () async {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final st = AppState();
+    await st.load();
+
+    st.xp = 42;
+    st.scheduleSave();
+    expect(st.dirty, isTrue);
+
+    // Nothing persisted before flush (timer has not fired inside test time).
+    await st.flush();
+    expect(st.dirty, isFalse);
+
+    final st2 = AppState();
+    await st2.load();
+    expect(st2.xp, 42);
+  });
+}

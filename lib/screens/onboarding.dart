@@ -23,9 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!mounted) return;
       final st = AppScope.of(context);
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (_) => st.onboardingDone
-            ? const HomeShell()
-            : const OnboardingScreen(),
+        builder: (_) =>
+            st.onboardingDone ? const HomeShell() : const OnboardingScreen(),
       ));
     });
   }
@@ -52,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Text(
               'Language Path',
               style: TextStyle(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha: 0.9),
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2,
@@ -81,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final st = AppScope.of(context);
     return Scaffold(
-      backgroundColor: AppColors.bg,
+      backgroundColor: context.pageBg,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -96,15 +95,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ? L.t(st.uiLocale, 'chooseUiLang')
                     : L.t(st.uiLocale, 'chooseCourse'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 22, fontWeight: FontWeight.w900),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
               ),
               const SizedBox(height: 6),
               Text(
                 L.t(st.uiLocale, 'tagline'),
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 15, color: AppColors.inkLight),
+                style: TextStyle(fontSize: 15, color: AppColors.inkLight),
               ),
               const SizedBox(height: 28),
               if (step == 0) _buildUiLangChoices(st),
@@ -153,33 +150,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: Container(
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: selected ? AppColors.blueLight : Colors.white,
+            color: selected ? AppColors.blueLight : context.card,
             border: Border.all(
               color: selected ? AppColors.blue : AppColors.border,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(16),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
-                  color: AppColors.border,
-                  offset: Offset(0, 4),
-                  blurRadius: 0),
+                  color: context.line, offset: Offset(0, 4), blurRadius: 0),
             ],
           ),
           child: Row(
             children: [
-              Text(subtitle, style: const TextStyle(fontSize: 30)),
+              Text(subtitle, style: TextStyle(fontSize: 30)),
               const SizedBox(width: 14),
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w800),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                 ),
               ),
               if (selected)
-                const Icon(Icons.check_circle,
-                    color: AppColors.blue, size: 26),
+                const Icon(Icons.check_circle, color: AppColors.blue, size: 26),
             ],
           ),
         ),

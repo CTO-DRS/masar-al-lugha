@@ -1,4 +1,5 @@
 // Masar Al-Lugha (مسار اللغة) — main entry point.
+// v4.0: light+dark themes, persisted TTS prefs, lifecycle-safe save flush.
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -31,6 +32,9 @@ Future<void> main() async {
 
   await state.load();
   await AppTtsConfig.applyCourseLang(tts, state);
+  // v4.0: TTS preferences persist across launches (audit M2).
+  tts.enabled = state.ttsEnabled;
+  tts.rate = state.ttsRate;
 
   runApp(MasarApp(state: state, tts: tts));
 }
@@ -52,6 +56,25 @@ class MasarApp extends StatefulWidget {
 }
 
 class _MasarAppState extends State<MasarApp> {
+  late final AppLifecycleListener _lifecycle;
+
+  @override
+  void initState() {
+    super.initState();
+    // v4.0 (audit M3/L5): pending debounced saves are flushed when the app
+    // goes to background so nothing is lost between 2-second save windows.
+    _lifecycle = AppLifecycleListener(
+      onPause: () => widget.state.flush(),
+      onInactive: () => widget.state.flush(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _lifecycle.dispose();
+    super.dispose();
+  }
+
   Locale get _appLocale =>
       widget.state.uiLocale == 'ar' ? const Locale('ar') : const Locale('en');
 
@@ -66,7 +89,9 @@ class _MasarAppState extends State<MasarApp> {
           child: MaterialApp(
             title: 'مسار اللغة',
             debugShowCheckedModeBanner: false,
-            theme: buildTheme(_appLocale),
+            theme: buildMasarTheme(dark: false),
+            darkTheme: buildMasarTheme(dark: true),
+            themeMode: widget.state.darkMode ? ThemeMode.dark : ThemeMode.light,
             locale: _appLocale,
             supportedLocales: const [Locale('ar'), Locale('en')],
             localizationsDelegates: const [
