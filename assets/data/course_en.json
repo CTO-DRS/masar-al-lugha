@@ -10,6 +10,7 @@
    "color": "#58CC02",
    "titleAr": "الأساسيات",
    "titleEn": "Basics",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u1_l1",
@@ -248,6 +249,7 @@
    "color": "#1CB0F6",
    "titleAr": "الأرقام والوقت",
    "titleEn": "Numbers & Time",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u2_l1",
@@ -456,6 +458,7 @@
    "color": "#CE82FF",
    "titleAr": "العائلة",
    "titleEn": "Family",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u3_l1",
@@ -639,6 +642,7 @@
    "color": "#FF9600",
    "titleAr": "الطعام والشراب",
    "titleEn": "Food & Drink",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u4_l1",
@@ -831,6 +835,7 @@
    "color": "#FFC800",
    "titleAr": "الألوان والأيام",
    "titleEn": "Colors & Days",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u5_l1",
@@ -1028,6 +1033,7 @@
    "color": "#FF4B4B",
    "titleAr": "الحياة اليومية",
    "titleEn": "Daily Life",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u6_l1",
@@ -1218,6 +1224,7 @@
    "color": "#00CD9C",
    "titleAr": "الجسم والصحة",
    "titleEn": "Body & Health",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u7_l1",
@@ -1429,6 +1436,7 @@
    "color": "#A0522D",
    "titleAr": "الحيوانات",
    "titleEn": "Animals",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u8_l1",
@@ -1633,6 +1641,7 @@
    "color": "#FF6FB5",
    "titleAr": "الملابس والطقس",
    "titleEn": "Clothing & Weather",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u9_l1",
@@ -1837,6 +1846,7 @@
    "color": "#2B70C9",
    "titleAr": "السفر والعمل",
    "titleEn": "Travel & Work",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u10_l1",
@@ -2041,6 +2051,7 @@
    "color": "#1CB0F6",
    "titleAr": "الطعام والشراب",
    "titleEn": "Food & Drink",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u11_l1",
@@ -2427,6 +2438,7 @@
    "color": "#FF9600",
    "titleAr": "السفر والمواصلات",
    "titleEn": "Travel & Transport",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u12_l1",
@@ -2813,6 +2825,7 @@
    "color": "#CE82FF",
    "titleAr": "العمل والمهن",
    "titleEn": "Jobs & Work",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u13_l1",
@@ -3102,6 +3115,7 @@
    "color": "#FF4B4B",
    "titleAr": "الملابس والتسوق",
    "titleEn": "Clothes & Shopping",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "en_u14_l1",
@@ -3393,6 +3407,7 @@
    "color": "#FFC800",
    "titleAr": "الجسم والصحة",
    "titleEn": "Body & Health",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u15_l1",
@@ -3684,6 +3699,7 @@
    "color": "#00CD9C",
    "titleAr": "الطبيعة والطقس",
    "titleEn": "Nature & Weather",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u16_l1",
@@ -3977,6 +3993,7 @@
    "color": "#A0522D",
    "titleAr": "الحياة اليومية",
    "titleEn": "Daily Life",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u17_l1",
@@ -4369,6 +4386,7 @@
    "color": "#FF6FB5",
    "titleAr": "المشاعر والمحادثة",
    "titleEn": "Feelings & Conversation",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u18_l1",
@@ -4753,6 +4771,7 @@
    "color": "#FF9600",
    "titleAr": "المنزل والأثاث",
    "titleEn": "Home & Furniture",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u19_l1",
@@ -5149,6 +5168,7 @@
    "color": "#1CB0F6",
    "titleAr": "المدينة والأماكن",
    "titleEn": "City & Places",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u20_l1",
@@ -5535,6 +5555,7 @@
    "color": "#2B70C9",
    "titleAr": "المدرسة والتعليم",
    "titleEn": "School & Education",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u21_l1",
@@ -5919,6 +5940,7 @@
    "color": "#00CD9C",
    "titleAr": "الرياضة والهوايات",
    "titleEn": "Sports & Hobbies",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u22_l1",
@@ -6299,6 +6321,7 @@
    "color": "#CE82FF",
    "titleAr": "التقنية والتواصل",
    "titleEn": "Technology & Communication",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u23_l1",
@@ -6679,6 +6702,7 @@
    "color": "#FF4B4B",
    "titleAr": "الأفعال والمحادثة المتقدمة",
    "titleEn": "Verbs & Conversation",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u24_l1",
@@ -7059,6 +7083,7 @@
    "color": "#FF6FB5",
    "titleAr": "المطعم والطلب",
    "titleEn": "Restaurant & Ordering",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u25_l1",
@@ -7437,6 +7462,7 @@
    "color": "#A0522D",
    "titleAr": "الموسيقى والأفلام",
    "titleEn": "Music & Movies",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u26_l1",
@@ -7811,6 +7837,7 @@
    "color": "#58CC02",
    "titleAr": "الشخصية والصفات",
    "titleEn": "Personality & Character",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u27_l1",
@@ -8187,6 +8214,7 @@
    "color": "#2B70C9",
    "titleAr": "المناسبات والتقاليد",
    "titleEn": "Celebrations & Traditions",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "en_u28_l1",
@@ -8565,6 +8593,7 @@
    "color": "#CE82FF",
    "titleAr": "المشاعر والحالات الداخلية",
    "titleEn": "Emotions & Inner States",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u29_l1",
@@ -8955,6 +8984,7 @@
    "color": "#FF9600",
    "titleAr": "المطبخ وأدواته",
    "titleEn": "Kitchen & Cookware",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u30_l1",
@@ -9341,6 +9371,7 @@
    "color": "#1CB0F6",
    "titleAr": "المطار والطيران",
    "titleEn": "Airport & Flying",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u31_l1",
@@ -9721,6 +9752,7 @@
    "color": "#2B70C9",
    "titleAr": "الفندق والإقامة",
    "titleEn": "Hotel & Stay",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u32_l1",
@@ -10101,6 +10133,7 @@
    "color": "#00CD9C",
    "titleAr": "المال والبنك",
    "titleEn": "Money & Banking",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u33_l1",
@@ -10477,6 +10510,7 @@
    "color": "#FF4B4B",
    "titleAr": "المرض والعلاج",
    "titleEn": "Illness & Medicine",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u34_l1",
@@ -10857,6 +10891,7 @@
    "color": "#58CC02",
    "titleAr": "الفصول والمناخ",
    "titleEn": "Seasons & Climate",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u35_l1",
@@ -11237,6 +11272,7 @@
    "color": "#FFC800",
    "titleAr": "الفضاء والفلك",
    "titleEn": "Space & Astronomy",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u36_l1",
@@ -11619,6 +11655,7 @@
    "color": "#FF6FB5",
    "titleAr": "جغرافيا العالم",
    "titleEn": "World Geography",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u37_l1",
@@ -11999,6 +12036,7 @@
    "color": "#A0522D",
    "titleAr": "الشاطئ والبحر",
    "titleEn": "Beach & Sea",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u38_l1",
@@ -12375,6 +12413,7 @@
    "color": "#CE82FF",
    "titleAr": "المزرعة والريف",
    "titleEn": "Farm & Countryside",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u39_l1",
@@ -12755,6 +12794,7 @@
    "color": "#FF9600",
    "titleAr": "الطيور والحشرات",
    "titleEn": "Birds & Insects",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u40_l1",
@@ -13137,6 +13177,7 @@
    "color": "#1CB0F6",
    "titleAr": "الأشكال والقياسات",
    "titleEn": "Shapes & Measurements",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u41_l1",
@@ -13517,6 +13558,7 @@
    "color": "#2B70C9",
    "titleAr": "المواد والملامس",
    "titleEn": "Materials & Textures",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u42_l1",
@@ -13897,6 +13939,7 @@
    "color": "#00CD9C",
    "titleAr": "المواقع والاتجاهات",
    "titleEn": "Positions & Directions",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u43_l1",
@@ -14275,6 +14318,7 @@
    "color": "#FF4B4B",
    "titleAr": "التقويم والوقت",
    "titleEn": "Calendar & Time",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u44_l1",
@@ -14655,6 +14699,7 @@
    "color": "#58CC02",
    "titleAr": "المكتب والأعمال",
    "titleEn": "Office & Business",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u45_l1",
@@ -15031,6 +15076,7 @@
    "color": "#FFC800",
    "titleAr": "القانون والحكومة",
    "titleEn": "Law & Government",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "en_u46_l1",
@@ -15407,6 +15453,7 @@
    "color": "#FF6FB5",
    "titleAr": "العلوم والمختبر",
    "titleEn": "Science & Laboratory",
+   "cefr": "B2",
    "lessons": [
     {
      "id": "en_u47_l1",
@@ -15785,6 +15832,7 @@
    "color": "#A0522D",
    "titleAr": "الطوارئ والسلامة",
    "titleEn": "Emergency & Safety",
+   "cefr": "B2",
    "lessons": [
     {
      "id": "en_u48_l1",
@@ -16151,6 +16199,1882 @@
        "translationAr": "خطر في الطريق",
        "phonetic": "داين-جَر أ-هِد",
        "emoji": "🛑"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u49",
+   "color": "#2B70C9",
+   "titleAr": "الأفعال المركّبة",
+   "titleEn": "Phrasal Verbs",
+   "cefr": "B2",
+   "lessons": [
+    {
+     "id": "en_u49_l1",
+     "titleAr": "الأفعال المركّبة اليومية",
+     "titleEn": "Daily Phrasal Verbs",
+     "vocab": [
+      {
+       "id": "en_get_up",
+       "target": "Get up",
+       "translationAr": "يستيقظ",
+       "phonetic": "غيت أب",
+       "emoji": "🛏️",
+       "exampleTarget": "I get up at six every day.",
+       "exampleAr": "أستيقظ في السادسة كل يوم."
+      },
+      {
+       "id": "en_sit_down",
+       "target": "Sit down",
+       "translationAr": "يجلس",
+       "phonetic": "سِت داون",
+       "emoji": "🪑",
+       "exampleTarget": "Please sit down and relax.",
+       "exampleAr": "اجلس واسترح من فضلك."
+      },
+      {
+       "id": "en_stand_up",
+       "target": "Stand up",
+       "translationAr": "يقف",
+       "phonetic": "ستاند أب",
+       "emoji": "🧍",
+       "exampleTarget": "Everyone stood up when she entered.",
+       "exampleAr": "وقف الجميع عندما دخلت."
+      },
+      {
+       "id": "en_come_back",
+       "target": "Come back",
+       "translationAr": "يعود",
+       "phonetic": "كَم باك",
+       "emoji": "🔙",
+       "exampleTarget": "Come back soon!",
+       "exampleAr": "عُد قريباً!"
+      },
+      {
+       "id": "en_go_out",
+       "target": "Go out",
+       "translationAr": "يخرج",
+       "phonetic": "غو آوت",
+       "emoji": "🚪",
+       "exampleTarget": "We go out on Fridays.",
+       "exampleAr": "نخرج في أيام الجمعة."
+      },
+      {
+       "id": "en_come_in",
+       "target": "Come in",
+       "translationAr": "يدخل",
+       "phonetic": "كَم إن",
+       "emoji": "👋",
+       "exampleTarget": "Come in, the door is open.",
+       "exampleAr": "ادخل، الباب مفتوح."
+      },
+      {
+       "id": "en_look_for",
+       "target": "Look for",
+       "translationAr": "يبحث عن",
+       "phonetic": "لوك فور",
+       "emoji": "🔍",
+       "exampleTarget": "I am looking for my keys.",
+       "exampleAr": "أبحث عن مفاتيحي."
+      },
+      {
+       "id": "en_put_on",
+       "target": "Put on",
+       "translationAr": "يلبس",
+       "phonetic": "بوت أون",
+       "emoji": "👕",
+       "exampleTarget": "Put on your jacket.",
+       "exampleAr": "البس سترتك."
+      },
+      {
+       "id": "en_hurry_up",
+       "target": "Hurry up",
+       "translationAr": "أسرع",
+       "phonetic": "هَري أب",
+       "emoji": "⏰",
+       "exampleTarget": "Hurry up, we are late!",
+       "exampleAr": "أسرع، لقد تأخرنا!"
+      },
+      {
+       "id": "en_turn_on",
+       "target": "Turn on",
+       "translationAr": "يشغّل",
+       "phonetic": "ترن أون",
+       "emoji": "💡",
+       "exampleTarget": "Turn on the lights, please.",
+       "exampleAr": "شغّل الأضواء من فضلك."
+      },
+      {
+       "id": "en_turn_off",
+       "target": "Turn off",
+       "translationAr": "يطفئ",
+       "phonetic": "ترن أوف",
+       "emoji": "🔌",
+       "exampleTarget": "Turn off the TV before bed.",
+       "exampleAr": "أطفئ التلفاز قبل النوم."
+      },
+      {
+       "id": "en_hang_out",
+       "target": "Hang out",
+       "translationAr": "يقضي وقتاً",
+       "phonetic": "هانغ آوت",
+       "emoji": "🤝",
+       "exampleTarget": "We hang out at the mall.",
+       "exampleAr": "نقضي وقتنا في المركز التجاري."
+      }
+     ]
+    },
+    {
+     "id": "en_u49_l2",
+     "titleAr": "أفعال الجهد والنجاح",
+     "titleEn": "Actions & Effort",
+     "vocab": [
+      {
+       "id": "en_give_up",
+       "target": "Give up",
+       "translationAr": "يستسلم",
+       "phonetic": "غِف أب",
+       "emoji": "🏳️",
+       "exampleTarget": "Never give up on your dreams.",
+       "exampleAr": "لا تستسلم أبداً لأحلامك."
+      },
+      {
+       "id": "en_find_out",
+       "target": "Find out",
+       "translationAr": "يكتشف",
+       "phonetic": "فايند آوت",
+       "emoji": "🕵️",
+       "exampleTarget": "She found out the truth.",
+       "exampleAr": "اكتشفت الحقيقة."
+      },
+      {
+       "id": "en_pick_up",
+       "target": "Pick up",
+       "translationAr": "يلتقط",
+       "phonetic": "بِك أب",
+       "emoji": "📥",
+       "exampleTarget": "Pick up your toys, please.",
+       "exampleAr": "التقط ألعابك من فضلك."
+      },
+      {
+       "id": "en_drop_off",
+       "target": "Drop off",
+       "translationAr": "يوصِل",
+       "phonetic": "دروب أوف",
+       "emoji": "🚗",
+       "exampleTarget": "I will drop you off at school.",
+       "exampleAr": "سأوصلك إلى المدرسة."
+      },
+      {
+       "id": "en_look_after",
+       "target": "Look after",
+       "translationAr": "يعتني بـ",
+       "phonetic": "لوك آفتر",
+       "emoji": "👶",
+       "exampleTarget": "She looks after her sister.",
+       "exampleAr": "تعتني بأختها."
+      },
+      {
+       "id": "en_look_forward_to",
+       "target": "Look forward to",
+       "translationAr": "ينتظر بشوق",
+       "phonetic": "لوك فورورد تو",
+       "emoji": "🎁",
+       "exampleTarget": "I look forward to the trip.",
+       "exampleAr": "أنتظر الرحلة بشوق."
+      },
+      {
+       "id": "en_run_out_of",
+       "target": "Run out of",
+       "translationAr": "ينفد منه",
+       "phonetic": "رَن آوت أوف",
+       "emoji": "⛽",
+       "exampleTarget": "We ran out of milk.",
+       "exampleAr": "نفد الحليب لدينا."
+      },
+      {
+       "id": "en_get_along",
+       "target": "Get along",
+       "translationAr": "يتفاهم مع",
+       "phonetic": "غِت ألونغ",
+       "emoji": "😊",
+       "exampleTarget": "The brothers get along well.",
+       "exampleAr": "يتفاهم الإخوة جيداً."
+      },
+      {
+       "id": "en_come_up_with",
+       "target": "Come up with",
+       "translationAr": "يبتكر",
+       "phonetic": "كَم أب وِث",
+       "emoji": "💭",
+       "exampleTarget": "He came up with a great idea.",
+       "exampleAr": "ابتكر فكرة رائعة."
+      },
+      {
+       "id": "en_work_out",
+       "target": "Work out",
+       "translationAr": "يتمرن",
+       "phonetic": "ورك آوت",
+       "emoji": "💪",
+       "exampleTarget": "I work out three times a week.",
+       "exampleAr": "أتمرن ثلاث مرات أسبوعياً."
+      },
+      {
+       "id": "en_sort_out",
+       "target": "Sort out",
+       "translationAr": "يحلّ",
+       "phonetic": "سورت آوت",
+       "emoji": "🧩",
+       "exampleTarget": "We sorted out the problem.",
+       "exampleAr": "حللنا المشكلة."
+      },
+      {
+       "id": "en_throw_away",
+       "target": "Throw away",
+       "translationAr": "يرمي",
+       "phonetic": "ثرو أَواي",
+       "emoji": "🗑️",
+       "exampleTarget": "Don't throw away old photos.",
+       "exampleAr": "لا ترمِ الصور القديمة."
+      }
+     ]
+    },
+    {
+     "id": "en_u49_l3",
+     "titleAr": "أفعال التواصل",
+     "titleEn": "Communication",
+     "vocab": [
+      {
+       "id": "en_speak_up",
+       "target": "Speak up",
+       "translationAr": "يصوّت أعلى",
+       "phonetic": "سبيك أب",
+       "emoji": "🗣️",
+       "exampleTarget": "Speak up, I can't hear you.",
+       "exampleAr": "تحدث بصوت أعلى، لا أسمعك."
+      },
+      {
+       "id": "en_hang_up",
+       "target": "Hang up",
+       "translationAr": "يغلق الهاتف",
+       "phonetic": "هانغ أب",
+       "emoji": "📵",
+       "exampleTarget": "Don't hang up, wait!",
+       "exampleAr": "لا تغلق الهاتف، انتظر!"
+      },
+      {
+       "id": "en_call_back",
+       "target": "Call back",
+       "translationAr": "يعيد الاتصال",
+       "phonetic": "كول باك",
+       "emoji": "📞",
+       "exampleTarget": "I will call you back later.",
+       "exampleAr": "سأعيد الاتصال بك لاحقاً."
+      },
+      {
+       "id": "en_break_up",
+       "target": "Break up",
+       "translationAr": "ينفصل",
+       "phonetic": "بريك أب",
+       "emoji": "💔",
+       "exampleTarget": "They broke up last month.",
+       "exampleAr": "انفصلا الشهر الماضي."
+      },
+      {
+       "id": "en_bring_up",
+       "target": "Bring up",
+       "translationAr": "يطرح موضوعاً",
+       "phonetic": "برينغ أب",
+       "emoji": "⬆️",
+       "exampleTarget": "She brought up an important point.",
+       "exampleAr": "طرحت نقطة مهمة."
+      },
+      {
+       "id": "en_point_out",
+       "target": "Point out",
+       "translationAr": "يشير إلى",
+       "phonetic": "بوينت آوت",
+       "emoji": "👉",
+       "exampleTarget": "He pointed out the mistake.",
+       "exampleAr": "أشار إلى الخطأ."
+      },
+      {
+       "id": "en_catch_up",
+       "target": "Catch up",
+       "translationAr": "يلحق بالمستجدات",
+       "phonetic": "كاتش أب",
+       "emoji": "🏃",
+       "exampleTarget": "Let's catch up over coffee.",
+       "exampleAr": "لنتحدث على القهوة لالتقاط الأخبار."
+      },
+      {
+       "id": "en_fill_in",
+       "target": "Fill in",
+       "translationAr": "يملأ",
+       "phonetic": "فِل إن",
+       "emoji": "📝",
+       "exampleTarget": "Fill in this form, please.",
+       "exampleAr": "املأ هذا النموذج من فضلك."
+      },
+      {
+       "id": "en_write_down",
+       "target": "Write down",
+       "translationAr": "يدوّن",
+       "phonetic": "رايت داون",
+       "emoji": "✍️",
+       "exampleTarget": "Write down your password.",
+       "exampleAr": "دوّن كلمة السر."
+      },
+      {
+       "id": "en_cross_out",
+       "target": "Cross out",
+       "translationAr": "يشطب",
+       "phonetic": "كروس آوت",
+       "emoji": "❌",
+       "exampleTarget": "Cross out the wrong answer.",
+       "exampleAr": "اشطب الإجابة الخاطئة."
+      },
+      {
+       "id": "en_go_over",
+       "target": "Go over",
+       "translationAr": "يراجع",
+       "phonetic": "غو أوفر",
+       "emoji": "📖",
+       "exampleTarget": "Let's go over the plan again.",
+       "exampleAr": "لنراجع الخطة مرة أخرى."
+      },
+      {
+       "id": "en_sum_up",
+       "target": "Sum up",
+       "translationAr": "يلخّص",
+       "phonetic": "سَم أب",
+       "emoji": "🧾",
+       "exampleTarget": "To sum up, we agree.",
+       "exampleAr": "خلاصة القول، نحن موافقون."
+      }
+     ]
+    },
+    {
+     "id": "en_u49_l4",
+     "titleAr": "أفعال مركّبة متقدمة",
+     "titleEn": "Advanced Phrasals",
+     "vocab": [
+      {
+       "id": "en_carry_out",
+       "target": "Carry out",
+       "translationAr": "ينفّذ",
+       "phonetic": "كَري آوت",
+       "emoji": "🛠️",
+       "exampleTarget": "The team carried out the plan.",
+       "exampleAr": "نفّذ الفريق الخطة."
+      },
+      {
+       "id": "en_set_up",
+       "target": "Set up",
+       "translationAr": "يؤسس",
+       "phonetic": "سِت أب",
+       "emoji": "🏗️",
+       "exampleTarget": "They set up a new company.",
+       "exampleAr": "أسسوا شركة جديدة."
+      },
+      {
+       "id": "en_take_over",
+       "target": "Take over",
+       "translationAr": "يتولى",
+       "phonetic": "تيك أوفَر",
+       "emoji": "🤝",
+       "exampleTarget": "She took over the project.",
+       "exampleAr": "تولّت المشروع."
+      },
+      {
+       "id": "en_break_down",
+       "target": "Break down",
+       "translationAr": "يتعطل",
+       "phonetic": "بريك داون",
+       "emoji": "🔧",
+       "exampleTarget": "The car broke down on the road.",
+       "exampleAr": "تعطلت السيارة على الطريق."
+      },
+      {
+       "id": "en_come_across",
+       "target": "Come across",
+       "translationAr": "يصادف",
+       "phonetic": "كَم أكروس",
+       "emoji": "🍀",
+       "exampleTarget": "I came across an old friend.",
+       "exampleAr": "صادفت صديقاً قديماً."
+      },
+      {
+       "id": "en_get_over",
+       "target": "Get over",
+       "translationAr": "يتجاوز",
+       "phonetic": "غِت أوفَر",
+       "emoji": "🌈",
+       "exampleTarget": "He got over his illness.",
+       "exampleAr": "تجاوز مرضه."
+      },
+      {
+       "id": "en_look_into",
+       "target": "Look into",
+       "translationAr": "يحقق في",
+       "phonetic": "لوك إنتو",
+       "emoji": "🔬",
+       "exampleTarget": "The police looked into the case.",
+       "exampleAr": "حققت الشرطة في القضية."
+      },
+      {
+       "id": "en_turn_down",
+       "target": "Turn down",
+       "translationAr": "يرفض",
+       "phonetic": "ترن داون",
+       "emoji": "🙅",
+       "exampleTarget": "She turned down the offer.",
+       "exampleAr": "رفضت العرض."
+      },
+      {
+       "id": "en_put_off",
+       "target": "Put off",
+       "translationAr": "يؤجّل",
+       "phonetic": "بوت أوف",
+       "emoji": "⏳",
+       "exampleTarget": "They put off the meeting.",
+       "exampleAr": "أجّلوا الاجتماع."
+      },
+      {
+       "id": "en_pull_through",
+       "target": "Pull through",
+       "translationAr": "ينجو",
+       "phonetic": "پول ثرو",
+       "emoji": "🏥",
+       "exampleTarget": "The patient pulled through.",
+       "exampleAr": "نجا المريض من الخطر."
+      },
+      {
+       "id": "en_back_up",
+       "target": "Back up",
+       "translationAr": "يدعم وينسخ",
+       "phonetic": "باك أب",
+       "emoji": "☁️",
+       "exampleTarget": "Back up your files.",
+       "exampleAr": "انسخ ملفاتك احتياطياً."
+      },
+      {
+       "id": "en_wind_up",
+       "target": "Wind up",
+       "translationAr": "يُنهي",
+       "phonetic": "وايند أب",
+       "emoji": "🏁",
+       "exampleTarget": "The meeting wound up early.",
+       "exampleAr": "انتهى الاجتماع مبكراً."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u50",
+   "color": "#58CC02",
+   "titleAr": "التعبيرات الاصطلاحية",
+   "titleEn": "Idioms & Sayings",
+   "cefr": "B2",
+   "lessons": [
+    {
+     "id": "en_u50_l1",
+     "titleAr": "اصطلاحات يومية",
+     "titleEn": "Everyday Idioms",
+     "vocab": [
+      {
+       "id": "en_piece_of_cake",
+       "target": "Piece of cake",
+       "translationAr": "سهل جداً",
+       "phonetic": "بيِس أوف كيك",
+       "emoji": "🍰",
+       "exampleTarget": "The test was a piece of cake.",
+       "exampleAr": "كان الاختبار سهلاً جداً."
+      },
+      {
+       "id": "en_break_the_ice",
+       "target": "Break the ice",
+       "translationAr": "يكسر الجليد",
+       "phonetic": "بريك ذي آيس",
+       "emoji": "🧊",
+       "exampleTarget": "He told a joke to break the ice.",
+       "exampleAr": "روى نكتة لكسر الجليد."
+      },
+      {
+       "id": "en_hit_the_books",
+       "target": "Hit the books",
+       "translationAr": "يذاكر بجد",
+       "phonetic": "هِت ذي بوكس",
+       "emoji": "📚",
+       "exampleTarget": "I need to hit the books tonight.",
+       "exampleAr": "عليّ المذاكرة الجادة الليلة."
+      },
+      {
+       "id": "en_under_the_weather",
+       "target": "Under the weather",
+       "translationAr": "متوعّك",
+       "phonetic": "أندر ذي ويثر",
+       "emoji": "🤒",
+       "exampleTarget": "She is under the weather today.",
+       "exampleAr": "هي متوعّكة اليوم."
+      },
+      {
+       "id": "en_once_in_a_while",
+       "target": "Once in a while",
+       "translationAr": "من حين لآخر",
+       "phonetic": "وَنس إن أ وايل",
+       "emoji": "🌗",
+       "exampleTarget": "We eat out once in a while.",
+       "exampleAr": "نأكل خارجاً من حين لآخر."
+      },
+      {
+       "id": "en_no_big_deal",
+       "target": "No big deal",
+       "translationAr": "ليس مهماً",
+       "phonetic": "نو بِغ دِيل",
+       "emoji": "🤷",
+       "exampleTarget": "It's no big deal, don't worry.",
+       "exampleAr": "الأمر ليس مهماً، لا تقلق."
+      },
+      {
+       "id": "en_on_cloud_nine",
+       "target": "On cloud nine",
+       "translationAr": "سعيد جداً",
+       "phonetic": "أون كلاود ناين",
+       "emoji": "☁️",
+       "exampleTarget": "She was on cloud nine after winning.",
+       "exampleAr": "كانت سعيدة جداً بعد الفوز."
+      },
+      {
+       "id": "en_spill_the_beans",
+       "target": "Spill the beans",
+       "translationAr": "يفشي السر",
+       "phonetic": "سْبِل ذي بِنز",
+       "emoji": "🫘",
+       "exampleTarget": "Who spilled the beans about the party?",
+       "exampleAr": "من فشى سر الحفلة؟"
+      },
+      {
+       "id": "en_cost_an_arm_and_a_leg",
+       "target": "Cost an arm and a leg",
+       "translationAr": "غالٍ جداً",
+       "phonetic": "كوست أن آرم آند أ ليغ",
+       "emoji": "💸",
+       "exampleTarget": "That car cost an arm and a leg.",
+       "exampleAr": "تلك السيارة غالية جداً."
+      },
+      {
+       "id": "en_pull_someones_leg",
+       "target": "Pull someone's leg",
+       "translationAr": "يمزح",
+       "phonetic": "بُول سَموانز ليغ",
+       "emoji": "🤣",
+       "exampleTarget": "Relax, I'm pulling your leg.",
+       "exampleAr": "اهدأ، أنا أمزح معك."
+      },
+      {
+       "id": "en_feel_blue",
+       "target": "Feel blue",
+       "translationAr": "يشعر بالحزن",
+       "phonetic": "فِيل بلو",
+       "emoji": "💙",
+       "exampleTarget": "He feels blue on rainy days.",
+       "exampleAr": "يشعر بالحزن في الأيام الممطرة."
+      },
+      {
+       "id": "en_call_it_a_day",
+       "target": "Call it a day",
+       "translationAr": "ننهي العمل",
+       "phonetic": "كول إت أ دَي",
+       "emoji": "🌇",
+       "exampleTarget": "Let's call it a day.",
+       "exampleAr": "لننهِ العمل لهذا اليوم."
+      }
+     ]
+    },
+    {
+     "id": "en_u50_l2",
+     "titleAr": "حكم ومواعظ",
+     "titleEn": "Wisdom & Sayings",
+     "vocab": [
+      {
+       "id": "en_practice_makes_perfect",
+       "target": "Practice makes perfect",
+       "translationAr": "التدريب يصنع الإتقان",
+       "phonetic": "براكتِس ميكس بَرفِكت",
+       "emoji": "🎯",
+       "exampleTarget": "Keep practicing; practice makes perfect.",
+       "exampleAr": "واصل التدريب؛ التدريب يصنع الإتقان."
+      },
+      {
+       "id": "en_when_pigs_fly",
+       "target": "When pigs fly",
+       "translationAr": "مستحيل الحدوث",
+       "phonetic": "وين بِگز فلاي",
+       "emoji": "🐷",
+       "exampleTarget": "He will change when pigs fly.",
+       "exampleAr": "لن يتغيّر أبداً."
+      },
+      {
+       "id": "en_easy_come_easy_go",
+       "target": "Easy come, easy go",
+       "translationAr": "ما جاء بسهولة ذهب بسهولة",
+       "phonetic": "إيزي كَم إيزي غو",
+       "emoji": "🍃",
+       "exampleTarget": "Gambling money is easy come, easy go.",
+       "exampleAr": "مال المقامرة يأتي ويذهب بسهولة."
+      },
+      {
+       "id": "en_actions_speak_louder_than_words",
+       "target": "Actions speak louder than words",
+       "translationAr": "الأفعال أبلغ من الأقوال",
+       "phonetic": "أكشنز سبيك لاودَر ذان وردز",
+       "emoji": "🎬",
+       "exampleTarget": "He fixed it quietly; actions speak louder than words.",
+       "exampleAr": "أصلحه بصمت؛ الأفعال أبلغ من الأقوال."
+      },
+      {
+       "id": "en_beat_the_clock",
+       "target": "Beat the clock",
+       "translationAr": "يتغلب على الوقت",
+       "phonetic": "بيت ذي كلوك",
+       "emoji": "⏲️",
+       "exampleTarget": "She beat the clock and finished early.",
+       "exampleAr": "أنهت العمل قبل الموعد."
+      },
+      {
+       "id": "en_money_talks",
+       "target": "Money talks",
+       "translationAr": "المال ناطق",
+       "phonetic": "مَني توكس",
+       "emoji": "💰",
+       "exampleTarget": "Money talks in every market.",
+       "exampleAr": "المال ناطق في كل سوق."
+      },
+      {
+       "id": "en_the_last_straw",
+       "target": "The last straw",
+       "translationAr": "القشة الأخيرة",
+       "phonetic": "ذي لاست سترو",
+       "emoji": "🐪",
+       "exampleTarget": "That excuse was the last straw.",
+       "exampleAr": "كان ذلك العذر القشة التي قصمت الظهر."
+      },
+      {
+       "id": "en_bite_the_bullet",
+       "target": "Bite the bullet",
+       "translationAr": "يتحمّل بشجاعة",
+       "phonetic": "بايت ذي بُولِت",
+       "emoji": "🦷",
+       "exampleTarget": "He bit the bullet and saw the dentist.",
+       "exampleAr": "تحمّل وذهب إلى طبيب الأسنان."
+      },
+      {
+       "id": "en_a_blessing_in_disguise",
+       "target": "A blessing in disguise",
+       "translationAr": "نعمة مقنّعة",
+       "phonetic": "أ بِلِسِنغ إن دِسغايز",
+       "emoji": "🎁",
+       "exampleTarget": "Losing that job was a blessing in disguise.",
+       "exampleAr": "فقدان تلك الوظيفة كان نعمة مقنّعة."
+      },
+      {
+       "id": "en_birds_of_a_feather",
+       "target": "Birds of a feather",
+       "translationAr": "تشابهت الطباع",
+       "phonetic": "بِردز أوف أ فيذر",
+       "emoji": "🐦",
+       "exampleTarget": "They are birds of a feather.",
+       "exampleAr": "هم تشابهت طباعهم."
+      },
+      {
+       "id": "en_keep_an_eye_on",
+       "target": "Keep an eye on",
+       "translationAr": "يراقب",
+       "phonetic": "كِب أن آي أون",
+       "emoji": "👁️",
+       "exampleTarget": "Keep an eye on the soup.",
+       "exampleAr": "راقب الحساء."
+      },
+      {
+       "id": "en_in_the_long_run",
+       "target": "In the long run",
+       "translationAr": "على المدى الطويل",
+       "phonetic": "إن ذي لونغ رَن",
+       "emoji": "🛤️",
+       "exampleTarget": "Reading pays off in the long run.",
+       "exampleAr": "القراءة تثمر على المدى الطويل."
+      }
+     ]
+    },
+    {
+     "id": "en_u50_l3",
+     "titleAr": "مشاعر وتفاعلات",
+     "titleEn": "Feelings & Reactions",
+     "vocab": [
+      {
+       "id": "en_over_the_moon",
+       "target": "Over the moon",
+       "translationAr": "فرِح جداً",
+       "phonetic": "أوفَر ذي مون",
+       "emoji": "🌕",
+       "exampleTarget": "She was over the moon with the gift.",
+       "exampleAr": "كانت فرحة جداً بالهدية."
+      },
+      {
+       "id": "en_down_in_the_dumps",
+       "target": "Down in the dumps",
+       "translationAr": "مكتئب",
+       "phonetic": "داون إن ذي دَمبس",
+       "emoji": "😞",
+       "exampleTarget": "He's been down in the dumps lately.",
+       "exampleAr": "كان مكتئباً في الآخر."
+      },
+      {
+       "id": "en_hold_your_horses",
+       "target": "Hold your horses",
+       "translationAr": "اصبر",
+       "phonetic": "هولد يور هورسِز",
+       "emoji": "🐴",
+       "exampleTarget": "Hold your horses, we just started!",
+       "exampleAr": "اصبر، لقد بدأنا للتو!"
+      },
+      {
+       "id": "en_get_cold_feet",
+       "target": "Get cold feet",
+       "translationAr": "يتردد آخر لحظة",
+       "phonetic": "غِت كولد فِيت",
+       "emoji": "🥶",
+       "exampleTarget": "He got cold feet before the wedding.",
+       "exampleAr": "تردد قبل الزواج مباشرة."
+      },
+      {
+       "id": "en_have_second_thoughts",
+       "target": "Have second thoughts",
+       "translationAr": "يعيد التفكير",
+       "phonetic": "هاف سيكند ثوتس",
+       "emoji": "🤔",
+       "exampleTarget": "I'm having second thoughts about the deal.",
+       "exampleAr": "أعيد التفكير في الصفقة."
+      },
+      {
+       "id": "en_chill_out",
+       "target": "Chill out",
+       "translationAr": "يهدأ ويسترخي",
+       "phonetic": "تشِل آوت",
+       "emoji": "🍹",
+       "exampleTarget": "Chill out, everything is fine.",
+       "exampleAr": "اهدأ، كل شيء بخير."
+      },
+      {
+       "id": "en_make_up_your_mind",
+       "target": "Make up your mind",
+       "translationAr": "احسم قرارك",
+       "phonetic": "ميِك أب يور مايند",
+       "emoji": "⚖️",
+       "exampleTarget": "Make up your mind quickly.",
+       "exampleAr": "احسم قرارك بسرعة."
+      },
+      {
+       "id": "en_keep_your_fingers_crossed",
+       "target": "Keep your fingers crossed",
+       "translationAr": "نتمنى لك التوفيق",
+       "phonetic": "كِب يور فينغرز كروست",
+       "emoji": "🤞",
+       "exampleTarget": "Keep your fingers crossed for me!",
+       "exampleAr": "ترقب لي بخير!"
+      },
+      {
+       "id": "en_jump_for_joy",
+       "target": "Jump for joy",
+       "translationAr": "يقفز فرحاً",
+       "phonetic": "جَمب فور جوي",
+       "emoji": "🤸",
+       "exampleTarget": "The kids jumped for joy.",
+       "exampleAr": "قفز الأطفال فرحاً."
+      },
+      {
+       "id": "en_lose_heart",
+       "target": "Lose heart",
+       "translationAr": "يفقد الأمل",
+       "phonetic": "لوز هارت",
+       "emoji": "🥀",
+       "exampleTarget": "Don't lose heart after one failure.",
+       "exampleAr": "لا تفقد الأمل بعد فشل واحد."
+      },
+      {
+       "id": "en_keep_cool",
+       "target": "Keep cool",
+       "translationAr": "يبقى هادئاً",
+       "phonetic": "كِب كُول",
+       "emoji": "😎",
+       "exampleTarget": "Keep cool during the exam.",
+       "exampleAr": "ابقَ هادئاً أثناء الاختبار."
+      },
+      {
+       "id": "en_so_far_so_good",
+       "target": "So far so good",
+       "translationAr": "حتى الآن كل شيء جيد",
+       "phonetic": "سو فار سو غُد",
+       "emoji": "📈",
+       "exampleTarget": "So far so good, no problems.",
+       "exampleAr": "حتى الآن لا مشاكل."
+      }
+     ]
+    },
+    {
+     "id": "en_u50_l4",
+     "titleAr": "وقت ومواقف",
+     "titleEn": "Time & Situations",
+     "vocab": [
+      {
+       "id": "en_in_the_nick_of_time",
+       "target": "In the nick of time",
+       "translationAr": "في اللحظة الأخيرة",
+       "phonetic": "إن ذي نِك أوف تايم",
+       "emoji": "⌛",
+       "exampleTarget": "Help arrived in the nick of time.",
+       "exampleAr": "وصلت المساعدة في اللحظة الأخيرة."
+      },
+      {
+       "id": "en_better_safe_than_sorry",
+       "target": "Better safe than sorry",
+       "translationAr": "الوقاية خير من الندامة",
+       "phonetic": "بِتَر سِيف ذان سوري",
+       "emoji": "🛡️",
+       "exampleTarget": "Wear a helmet; better safe than sorry.",
+       "exampleAr": "البس خوذة؛ الوقاية خير من الندامة."
+      },
+      {
+       "id": "en_step_by_step",
+       "target": "Step by step",
+       "translationAr": "خطوة بخطوة",
+       "phonetic": "ستِب باي ستِب",
+       "emoji": "👣",
+       "exampleTarget": "Learn step by step.",
+       "exampleAr": "تعلّم خطوة بخطوة."
+      },
+      {
+       "id": "en_little_by_little",
+       "target": "Little by little",
+       "translationAr": "شيئاً فشيئاً",
+       "phonetic": "لِتِل باي لِتِل",
+       "emoji": "🌱",
+       "exampleTarget": "Little by little, she improved.",
+       "exampleAr": "تحسّنت شيئاً فشيئاً."
+      },
+      {
+       "id": "en_all_of_a_sudden",
+       "target": "All of a sudden",
+       "translationAr": "فجأة",
+       "phonetic": "أول أوف أ سَدن",
+       "emoji": "⚡",
+       "exampleTarget": "All of a sudden, it rained.",
+       "exampleAr": "فجأة أمطرت."
+      },
+      {
+       "id": "en_sooner_or_later",
+       "target": "Sooner or later",
+       "translationAr": "عاجلاً أم آجلاً",
+       "phonetic": "سونَر أور لايتَر",
+       "emoji": "⏳",
+       "exampleTarget": "Sooner or later, truth wins.",
+       "exampleAr": "الحقيقة تنتصر عاجلاً أم آجلاً."
+      },
+      {
+       "id": "en_at_the_eleventh_hour",
+       "target": "At the eleventh hour",
+       "translationAr": "في آخر لحظة",
+       "phonetic": "آت ذي إيلِفِنث آور",
+       "emoji": "🕚",
+       "exampleTarget": "They agreed at the eleventh hour.",
+       "exampleAr": "اتفقا في آخر لحظة."
+      },
+      {
+       "id": "en_behind_the_scenes",
+       "target": "Behind the scenes",
+       "translationAr": "خوال الكواليس",
+       "phonetic": "بِهايند ذي سِينز",
+       "emoji": "🎭",
+       "exampleTarget": "Much work happens behind the scenes.",
+       "exampleAr": "يحدث عمل كثير خوال الكواليس."
+      },
+      {
+       "id": "en_on_second_thought",
+       "target": "On second thought",
+       "translationAr": "بعد إعادة التفكير",
+       "phonetic": "أون سيكند ثوت",
+       "emoji": "🔄",
+       "exampleTarget": "On second thought, I'll stay.",
+       "exampleAr": "بعد إعادة التفكير، سأبقى."
+      },
+      {
+       "id": "en_as_far_as_i_know",
+       "target": "As far as I know",
+       "translationAr": "على حد علمي",
+       "phonetic": "آز فار آز آي نو",
+       "emoji": "💭",
+       "exampleTarget": "As far as I know, he's away.",
+       "exampleAr": "على حد علمي، هو مسافر."
+      },
+      {
+       "id": "en_out_of_the_blue",
+       "target": "Out of the blue",
+       "translationAr": "بشكل غير متوقع",
+       "phonetic": "آوت أوف ذي بلو",
+       "emoji": "🫐",
+       "exampleTarget": "She called me out of the blue.",
+       "exampleAr": "اتصلت بي فجأة دون سابق إنذار."
+      },
+      {
+       "id": "en_in_the_end",
+       "target": "In the end",
+       "translationAr": "في النهاية",
+       "phonetic": "إن ذي إند",
+       "emoji": "🎬",
+       "exampleTarget": "In the end, we won.",
+       "exampleAr": "فزنا في النهاية."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u51",
+   "color": "#1CB0F6",
+   "titleAr": "الأعمال والاقتصاد",
+   "titleEn": "Business & Money",
+   "cefr": "B2",
+   "lessons": [
+    {
+     "id": "en_u51_l1",
+     "titleAr": "المسار المهني",
+     "titleEn": "Career Path",
+     "vocab": [
+      {
+       "id": "en_apply",
+       "target": "Apply",
+       "translationAr": "يتقدم بطلب",
+       "phonetic": "أَبلاي",
+       "emoji": "📨",
+       "exampleTarget": "I applied for the job.",
+       "exampleAr": "تقدمت بطلب للوظيفة."
+      },
+      {
+       "id": "en_applicant",
+       "target": "Applicant",
+       "translationAr": "مقدّم طلب",
+       "phonetic": "أَبليكانت",
+       "emoji": "🧑‍💼",
+       "exampleTarget": "We have ten applicants.",
+       "exampleAr": "لدينا عشرة متقدمين."
+      },
+      {
+       "id": "en_resume",
+       "target": "Resume",
+       "translationAr": "سيرة ذاتية",
+       "phonetic": "رِزيومي",
+       "emoji": "📄",
+       "exampleTarget": "Update your resume.",
+       "exampleAr": "حدّث سيرتك الذاتية."
+      },
+      {
+       "id": "en_experience",
+       "target": "Experience",
+       "translationAr": "خبرة",
+       "phonetic": "إكسپيريَنس",
+       "emoji": "🎖️",
+       "exampleTarget": "She has five years of experience.",
+       "exampleAr": "لديها خبرة خمس سنوات."
+      },
+      {
+       "id": "en_qualification",
+       "target": "Qualification",
+       "translationAr": "مؤهل",
+       "phonetic": "كواليفيكيشن",
+       "emoji": "🎓",
+       "exampleTarget": "This job needs a qualification.",
+       "exampleAr": "تتطلب هذه الوظيفة مؤهلاً."
+      },
+      {
+       "id": "en_vacancy",
+       "target": "Vacancy",
+       "translationAr": "وظيفة شاغرة",
+       "phonetic": "فِيكانسي",
+       "emoji": "🪧",
+       "exampleTarget": "There is a vacancy in sales.",
+       "exampleAr": "توجد وظيفة شاغرة في المبيعات."
+      },
+      {
+       "id": "en_career",
+       "target": "Career",
+       "translationAr": "مسار مهني",
+       "phonetic": "كارير",
+       "emoji": "🚀",
+       "exampleTarget": "He built a great career.",
+       "exampleAr": "بنى مساراً مهنياً رائعاً."
+      },
+      {
+       "id": "en_overtime",
+       "target": "Overtime",
+       "translationAr": "عمل إضافي",
+       "phonetic": "أوفَرتايم",
+       "emoji": "🌙",
+       "exampleTarget": "I worked overtime yesterday.",
+       "exampleAr": "عملت ساعات إضافية أمس."
+      },
+      {
+       "id": "en_workload",
+       "target": "Workload",
+       "translationAr": "حجم العمل",
+       "phonetic": "وركلود",
+       "emoji": "📦",
+       "exampleTarget": "My workload is heavy this week.",
+       "exampleAr": "حجم عملي ثقيل هذا الأسبوع."
+      },
+      {
+       "id": "en_freelance",
+       "target": "Freelance",
+       "translationAr": "عمل حر",
+       "phonetic": "فريِلانس",
+       "emoji": "🧑‍💻",
+       "exampleTarget": "She works as a freelance writer.",
+       "exampleAr": "تعمل كاتبة حرة."
+      },
+      {
+       "id": "en_recruit",
+       "target": "Recruit",
+       "translationAr": "يوظّف",
+       "phonetic": "ريكروت",
+       "emoji": "🧲",
+       "exampleTarget": "The company recruited ten engineers.",
+       "exampleAr": "وظفت الشركة عشرة مهندسين."
+      },
+      {
+       "id": "en_promotion",
+       "target": "Promotion",
+       "translationAr": "ترقية",
+       "phonetic": "بروموشن",
+       "emoji": "📈",
+       "exampleTarget": "He got a promotion after a year.",
+       "exampleAr": "حصل على ترقية بعد سنة."
+      }
+     ]
+    },
+    {
+     "id": "en_u51_l2",
+     "titleAr": "الاقتصاد والتجارة",
+     "titleEn": "Economy & Trade",
+     "vocab": [
+      {
+       "id": "en_economy",
+       "target": "Economy",
+       "translationAr": "اقتصاد",
+       "phonetic": "إيكونومي",
+       "emoji": "🏦",
+       "exampleTarget": "The economy is growing fast.",
+       "exampleAr": "الاقتصاد ينمو بسرعة."
+      },
+      {
+       "id": "en_turnover",
+       "target": "Turnover",
+       "translationAr": "حجم المبيعات",
+       "phonetic": "تَرنأوفر",
+       "emoji": "🔁",
+       "exampleTarget": "The shop has a high turnover.",
+       "exampleAr": "للمتجر حجم مبيعات كبير."
+      },
+      {
+       "id": "en_revenue",
+       "target": "Revenue",
+       "translationAr": "إيرادات",
+       "phonetic": "رِفينيو",
+       "emoji": "💵",
+       "exampleTarget": "Revenue rose by ten percent.",
+       "exampleAr": "ارتفعت الإيرادات عشرة بالمئة."
+      },
+      {
+       "id": "en_growth",
+       "target": "Growth",
+       "translationAr": "نمو",
+       "phonetic": "غروث",
+       "emoji": "📊",
+       "exampleTarget": "Economic growth slowed this year.",
+       "exampleAr": "تباطأ النمو الاقتصادي هذا العام."
+      },
+      {
+       "id": "en_investor",
+       "target": "Investor",
+       "translationAr": "مستثمر",
+       "phonetic": "إنفيستَر",
+       "emoji": "🤵",
+       "exampleTarget": "The investor bought shares.",
+       "exampleAr": "اشترى المستثمر أسهماً."
+      },
+      {
+       "id": "en_shareholder",
+       "target": "Shareholder",
+       "translationAr": "مساهم",
+       "phonetic": "شيرهولدَر",
+       "emoji": "🗳️",
+       "exampleTarget": "Shareholders vote every year.",
+       "exampleAr": "يصوّت المساهمون كل عام."
+      },
+      {
+       "id": "en_supply",
+       "target": "Supply",
+       "translationAr": "عرض",
+       "phonetic": "سَبلاي",
+       "emoji": "📦",
+       "exampleTarget": "Supply must meet demand.",
+       "exampleAr": "يجب أن يلبي العرض الطلب."
+      },
+      {
+       "id": "en_demand",
+       "target": "Demand",
+       "translationAr": "طلب",
+       "phonetic": "دِماند",
+       "emoji": "🛒",
+       "exampleTarget": "Demand for housing is rising.",
+       "exampleAr": "الطلب على السكن يرتفع."
+      },
+      {
+       "id": "en_import",
+       "target": "Import",
+       "translationAr": "يستورد",
+       "phonetic": "إمپورت",
+       "emoji": "🚢",
+       "exampleTarget": "We import coffee from Brazil.",
+       "exampleAr": "نستورد القهوة من البرازيل."
+      },
+      {
+       "id": "en_export",
+       "target": "Export",
+       "translationAr": "يصدّر",
+       "phonetic": "إكسبورت",
+       "emoji": "🛳️",
+       "exampleTarget": "They export cars to Asia.",
+       "exampleAr": "يصدرون السيارات إلى آسيا."
+      },
+      {
+       "id": "en_recession",
+       "target": "Recession",
+       "translationAr": "ركود اقتصادي",
+       "phonetic": "رِسيشن",
+       "emoji": "📉",
+       "exampleTarget": "The recession lasted two years.",
+       "exampleAr": "استمر الركود عامين."
+      },
+      {
+       "id": "en_trade",
+       "target": "Trade",
+       "translationAr": "تجارة",
+       "phonetic": "تريد",
+       "emoji": "🌍",
+       "exampleTarget": "Trade between the two countries grew.",
+       "exampleAr": "نمت التجارة بين البلدين."
+      }
+     ]
+    },
+    {
+     "id": "en_u51_l3",
+     "titleAr": "المشاريع الناشئة والتسويق",
+     "titleEn": "Startups & Marketing",
+     "vocab": [
+      {
+       "id": "en_startup",
+       "target": "Startup",
+       "translationAr": "شركة ناشئة",
+       "phonetic": "ستارت أب",
+       "emoji": "🐣",
+       "exampleTarget": "The startup hired five people.",
+       "exampleAr": "وظفت الشركة الناشئة خمسة أشخاص."
+      },
+      {
+       "id": "en_brand",
+       "target": "Brand",
+       "translationAr": "علامة تجارية",
+       "phonetic": "براند",
+       "emoji": "🏷️",
+       "exampleTarget": "That brand is very popular.",
+       "exampleAr": "تلك العلامة التجارية مشهورة جداً."
+      },
+      {
+       "id": "en_advertisement",
+       "target": "Advertisement",
+       "translationAr": "إعلان",
+       "phonetic": "أدڤَرتِسمِنت",
+       "emoji": "📺",
+       "exampleTarget": "I saw your advertisement online.",
+       "exampleAr": "رأيت إعلانك على الإنترنت."
+      },
+      {
+       "id": "en_deal",
+       "target": "Deal",
+       "translationAr": "صفقة",
+       "phonetic": "دِيل",
+       "emoji": "🤝",
+       "exampleTarget": "We closed the deal today.",
+       "exampleAr": "أتممنا الصفقة اليوم."
+      },
+      {
+       "id": "en_rival",
+       "target": "Rival",
+       "translationAr": "منافس",
+       "phonetic": "رايڤل",
+       "emoji": "⚔️",
+       "exampleTarget": "The rival cut its prices.",
+       "exampleAr": "خفّض المنافس أسعاره."
+      },
+      {
+       "id": "en_collaboration",
+       "target": "Collaboration",
+       "translationAr": "تعاون",
+       "phonetic": "كولابورِيشن",
+       "emoji": "🧩",
+       "exampleTarget": "Thanks to our collaboration, we finished early.",
+       "exampleAr": "بفضل تعاوننا انتهينا مبكراً."
+      },
+      {
+       "id": "en_pitch",
+       "target": "Pitch",
+       "translationAr": "عرض تقديمي",
+       "phonetic": "بِتش",
+       "emoji": "🎤",
+       "exampleTarget": "She gave a great pitch to investors.",
+       "exampleAr": "قدمت عرضاً رائعاً للمستثمرين."
+      },
+      {
+       "id": "en_funding",
+       "target": "Funding",
+       "translationAr": "تمويل",
+       "phonetic": "فَندِنگ",
+       "emoji": "💰",
+       "exampleTarget": "The project needs more funding.",
+       "exampleAr": "يحتاج المشروع مزيداً من التمويل."
+      },
+      {
+       "id": "en_milestone",
+       "target": "Milestone",
+       "translationAr": "محطة مهمة",
+       "phonetic": "مايلستون",
+       "emoji": "🏔️",
+       "exampleTarget": "The launch was a big milestone.",
+       "exampleAr": "كان الإطلاق محطة كبيرة."
+      },
+      {
+       "id": "en_prototype",
+       "target": "Prototype",
+       "translationAr": "نموذج أولي",
+       "phonetic": "بروتوتايپ",
+       "emoji": "🧪",
+       "exampleTarget": "They tested the prototype for months.",
+       "exampleAr": "اختبروا النموذج الأولي لشهور."
+      },
+      {
+       "id": "en_outsourcing",
+       "target": "Outsourcing",
+       "translationAr": "إسناد الأعمال",
+       "phonetic": "آوتسورسِنگ",
+       "emoji": "🌐",
+       "exampleTarget": "Outsourcing cut their costs.",
+       "exampleAr": "خفّض الإسناد تكاليفهم."
+      },
+      {
+       "id": "en_networking",
+       "target": "Networking",
+       "translationAr": "بناء العلاقات",
+       "phonetic": "نِتوِركِنگ",
+       "emoji": "👥",
+       "exampleTarget": "Networking helped him find clients.",
+       "exampleAr": "ساعده بناء العلاقات في إيجاد عملاء."
+      }
+     ]
+    },
+    {
+     "id": "en_u51_l4",
+     "titleAr": "البنوك والمدفوعات",
+     "titleEn": "Banking & Payments",
+     "vocab": [
+      {
+       "id": "en_paycheck",
+       "target": "Paycheck",
+       "translationAr": "راتب دوري",
+       "phonetic": "بيِتشِك",
+       "emoji": "🧾",
+       "exampleTarget": "He saves half of his paycheck.",
+       "exampleAr": "يوفر نصف راتبه."
+      },
+      {
+       "id": "en_invoice",
+       "target": "Invoice",
+       "translationAr": "فاتورة",
+       "phonetic": "إنڤويس",
+       "emoji": "📑",
+       "exampleTarget": "Pay the invoice by Friday.",
+       "exampleAr": "ادفع الفاتورة قبل الجمعة."
+      },
+      {
+       "id": "en_coins",
+       "target": "Coins",
+       "translationAr": "قطع نقدية معدنية",
+       "phonetic": "کوينز",
+       "emoji": "🪙",
+       "exampleTarget": "He collected old coins.",
+       "exampleAr": "يجمع عملات قديمة."
+      },
+      {
+       "id": "en_withdrawal",
+       "target": "Withdrawal",
+       "translationAr": "سحب نقدي",
+       "phonetic": "وِثدراوَل",
+       "emoji": "🏧",
+       "exampleTarget": "There is a daily withdrawal limit.",
+       "exampleAr": "يوجد حد يومي للسحب."
+      },
+      {
+       "id": "en_cheque",
+       "target": "Cheque",
+       "translationAr": "شيك",
+       "phonetic": "تشِك",
+       "emoji": "🖊️",
+       "exampleTarget": "She deposited a cheque today.",
+       "exampleAr": "أودعت شيكاً اليوم."
+      },
+      {
+       "id": "en_transaction",
+       "target": "Transaction",
+       "translationAr": "معاملة",
+       "phonetic": "ترانزاكشن",
+       "emoji": "🔁",
+       "exampleTarget": "Each transaction has a fee.",
+       "exampleAr": "لكل معاملة رسم."
+      },
+      {
+       "id": "en_fund",
+       "target": "Fund",
+       "translationAr": "صندوق",
+       "phonetic": "فَند",
+       "emoji": "🏦",
+       "exampleTarget": "The fund invests in startups.",
+       "exampleAr": "يستثمر الصندوق في الشركات الناشئة."
+      },
+      {
+       "id": "en_wealth",
+       "target": "Wealth",
+       "translationAr": "ثروة",
+       "phonetic": "وِلث",
+       "emoji": "💎",
+       "exampleTarget": "Wealth alone doesn't bring happiness.",
+       "exampleAr": "الثروة وحدها لا تجلب السعادة."
+      },
+      {
+       "id": "en_poverty",
+       "target": "Poverty",
+       "translationAr": "فقر",
+       "phonetic": "پوڤَرتي",
+       "emoji": "🕯️",
+       "exampleTarget": "Poverty fell by half.",
+       "exampleAr": "انخفض الفقر إلى النصف."
+      },
+      {
+       "id": "en_expenditure",
+       "target": "Expenditure",
+       "translationAr": "إنفاق",
+       "phonetic": "إكسبِنديتشَر",
+       "emoji": "🧮",
+       "exampleTarget": "Government expenditure rose.",
+       "exampleAr": "ارتفع الإنفاق الحكومي."
+      },
+      {
+       "id": "en_earnings",
+       "target": "Earnings",
+       "translationAr": "أرباح",
+       "phonetic": "إرنِنغز",
+       "emoji": "💰",
+       "exampleTarget": "Company earnings beat forecasts.",
+       "exampleAr": "تجاوزت أرباح الشركة التوقعات."
+      },
+      {
+       "id": "en_bankrupt",
+       "target": "Bankrupt",
+       "translationAr": "مفلس",
+       "phonetic": "بانكروپت",
+       "emoji": "🧯",
+       "exampleTarget": "The factory went bankrupt.",
+       "exampleAr": "أفلس المصنع."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u52",
+   "color": "#CE82FF",
+   "titleAr": "الأكاديمي والامتحانات",
+   "titleEn": "Academic & Exams",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "en_u52_l1",
+     "titleAr": "أفعال أكاديمية",
+     "titleEn": "Academic Verbs",
+     "vocab": [
+      {
+       "id": "en_analyze",
+       "target": "Analyze",
+       "translationAr": "يحلّل",
+       "phonetic": "آنلايز",
+       "emoji": "🔬",
+       "exampleTarget": "Scientists analyzed the samples.",
+       "exampleAr": "حلّل العلماء العينات."
+      },
+      {
+       "id": "en_assess",
+       "target": "Assess",
+       "translationAr": "يقيّم",
+       "phonetic": "أَسِس",
+       "emoji": "📏",
+       "exampleTarget": "Teachers assess progress monthly.",
+       "exampleAr": "يقيّم المعلمون التقدم شهرياً."
+      },
+      {
+       "id": "en_demonstrate",
+       "target": "Demonstrate",
+       "translationAr": "يبرهن",
+       "phonetic": "دِمِنستريت",
+       "emoji": "📐",
+       "exampleTarget": "The experiment demonstrates the theory.",
+       "exampleAr": "يبرهن التجريب على النظرية."
+      },
+      {
+       "id": "en_conclude",
+       "target": "Conclude",
+       "translationAr": "يستنتج",
+       "phonetic": "كُنكلود",
+       "emoji": "📌",
+       "exampleTarget": "We conclude that the method works.",
+       "exampleAr": "نستنتج أن الطريقة تنجح."
+      },
+      {
+       "id": "en_summarize",
+       "target": "Summarize",
+       "translationAr": "يلخّص",
+       "phonetic": "سَمَرايز",
+       "emoji": "🗒️",
+       "exampleTarget": "Summarize the article in five lines.",
+       "exampleAr": "لخّص المقال في خمسة أسطر."
+      },
+      {
+       "id": "en_interpret",
+       "target": "Interpret",
+       "translationAr": "يفسّر",
+       "phonetic": "إنتربرِت",
+       "emoji": "🔎",
+       "exampleTarget": "How do you interpret this data?",
+       "exampleAr": "كيف تفسّر هذه البيانات؟"
+      },
+      {
+       "id": "en_justify",
+       "target": "Justify",
+       "translationAr": "يبرّر",
+       "phonetic": "جَستيفاي",
+       "emoji": "⚖️",
+       "exampleTarget": "Justify your answer with evidence.",
+       "exampleAr": "برّر إجابتك بالدليل."
+      },
+      {
+       "id": "en_estimate",
+       "target": "Estimate",
+       "translationAr": "يقدّر",
+       "phonetic": "إستِمِت",
+       "emoji": "🧮",
+       "exampleTarget": "Engineers estimated the cost.",
+       "exampleAr": "قدّر المهندسون التكلفة."
+      },
+      {
+       "id": "en_formulate",
+       "target": "Formulate",
+       "translationAr": "يصوغ",
+       "phonetic": "فورميولايت",
+       "emoji": "🖋️",
+       "exampleTarget": "She formulated a new hypothesis.",
+       "exampleAr": "صاغت فرضية جديدة."
+      },
+      {
+       "id": "en_distinguish",
+       "target": "Distinguish",
+       "translationAr": "يميّز",
+       "phonetic": "دِستِنغويش",
+       "emoji": "🔀",
+       "exampleTarget": "Can you distinguish the two sounds?",
+       "exampleAr": "هل تميّز بين الصوتين؟"
+      },
+      {
+       "id": "en_investigate",
+       "target": "Investigate",
+       "translationAr": "يتحقق ويبحث",
+       "phonetic": "إنفِستِگِيت",
+       "emoji": "🧑‍🔬",
+       "exampleTarget": "They investigated the cause.",
+       "exampleAr": "بحثوا في السبب."
+      },
+      {
+       "id": "en_illustrate",
+       "target": "Illustrate",
+       "translationAr": "يوضّح بالأمثلة",
+       "phonetic": "إلِستريت",
+       "emoji": "🖼️",
+       "exampleTarget": "The chart illustrates the trend.",
+       "exampleAr": "يوضّح الرسم البياني الاتجاه."
+      }
+     ]
+    },
+    {
+     "id": "en_u52_l2",
+     "titleAr": "أسماء البحث العلمي",
+     "titleEn": "Research Nouns",
+     "vocab": [
+      {
+       "id": "en_framework",
+       "target": "Framework",
+       "translationAr": "إطار عمل",
+       "phonetic": "فريموِرك",
+       "emoji": "🏗️",
+       "exampleTarget": "The study uses a clear framework.",
+       "exampleAr": "تستخدم الدراسة إطاراً واضحاً."
+      },
+      {
+       "id": "en_methodology",
+       "target": "Methodology",
+       "translationAr": "منهجية",
+       "phonetic": "مِثودولُجي",
+       "emoji": "🧭",
+       "exampleTarget": "Her methodology is rigorous.",
+       "exampleAr": "منهجيتها صارمة."
+      },
+      {
+       "id": "en_variable",
+       "target": "Variable",
+       "translationAr": "متغير",
+       "phonetic": "ڤيريَبل",
+       "emoji": "🔢",
+       "exampleTarget": "Control the variables carefully.",
+       "exampleAr": "اضبط المتغيرات بعناية."
+      },
+      {
+       "id": "en_assumption",
+       "target": "Assumption",
+       "translationAr": "افتراض",
+       "phonetic": "أَسَمبشن",
+       "emoji": "🤔",
+       "exampleTarget": "That assumption proved wrong.",
+       "exampleAr": "ثبت خطأ ذلك الافتراض."
+      },
+      {
+       "id": "en_concept",
+       "target": "Concept",
+       "translationAr": "مفهوم",
+       "phonetic": "كونسيپت",
+       "emoji": "💡",
+       "exampleTarget": "The concept is simple but powerful.",
+       "exampleAr": "المفهوم بسيط لكنه قوي."
+      },
+      {
+       "id": "en_criterion",
+       "target": "Criterion",
+       "translationAr": "معيار",
+       "phonetic": "كرِتيرِيَن",
+       "emoji": "📏",
+       "exampleTarget": "Speed is our main criterion.",
+       "exampleAr": "السرعة معيارنا الرئيسي."
+      },
+      {
+       "id": "en_paradigm",
+       "target": "Paradigm",
+       "translationAr": "نموذج فكري",
+       "phonetic": "بَرَدايم",
+       "emoji": "🏛️",
+       "exampleTarget": "The discovery created a new paradigm.",
+       "exampleAr": "أحدث الاكتشاف نموذجاً فكرياً جديداً."
+      },
+      {
+       "id": "en_correlation",
+       "target": "Correlation",
+       "translationAr": "ارتباط",
+       "phonetic": "كوريلايشن",
+       "emoji": "🔗",
+       "exampleTarget": "There is a strong correlation.",
+       "exampleAr": "توجد علاقة ارتباط قوية."
+      },
+      {
+       "id": "en_survey",
+       "target": "Survey",
+       "translationAr": "استبيان",
+       "phonetic": "سَرڤي",
+       "emoji": "📊",
+       "exampleTarget": "We surveyed two hundred students.",
+       "exampleAr": "استطلعنا مئتي طالب."
+      },
+      {
+       "id": "en_statistics",
+       "target": "Statistics",
+       "translationAr": "إحصاء",
+       "phonetic": "ستَتِستِكس",
+       "emoji": "📚",
+       "exampleTarget": "Statistics support the claim.",
+       "exampleAr": "تدعم الإحصاءات الادعاء."
+      },
+      {
+       "id": "en_findings",
+       "target": "Findings",
+       "translationAr": "نتائج",
+       "phonetic": "فايندِنغز",
+       "emoji": "🗂️",
+       "exampleTarget": "The findings surprised everyone.",
+       "exampleAr": "فاجأت النتائج الجميع."
+      },
+      {
+       "id": "en_deduction",
+       "target": "Deduction",
+       "translationAr": "استنتاج",
+       "phonetic": "دِدَكشن",
+       "emoji": "🧠",
+       "exampleTarget": "His deduction was correct.",
+       "exampleAr": "كان استنتاجه صحيحاً."
+      }
+     ]
+    },
+    {
+     "id": "en_u52_l3",
+     "titleAr": "مهارات الاختبار",
+     "titleEn": "Exam Skills",
+     "vocab": [
+      {
+       "id": "en_essay",
+       "target": "Essay",
+       "translationAr": "مقال",
+       "phonetic": "إيسي",
+       "emoji": "📝",
+       "exampleTarget": "Write a short essay.",
+       "exampleAr": "اكتب مقالاً قصيراً."
+      },
+      {
+       "id": "en_thesis",
+       "target": "Thesis",
+       "translationAr": "أطروحة",
+       "phonetic": "ثِسِس",
+       "emoji": "📜",
+       "exampleTarget": "Her thesis took two years.",
+       "exampleAr": "استغرقت أطروحتها عامين."
+      },
+      {
+       "id": "en_citation",
+       "target": "Citation",
+       "translationAr": "اقتباس موثق",
+       "phonetic": "سِتيشن",
+       "emoji": "📎",
+       "exampleTarget": "Check every citation twice.",
+       "exampleAr": "تحقق من كل اقتباس مرتين."
+      },
+      {
+       "id": "en_plagiarism",
+       "target": "Plagiarism",
+       "translationAr": "انتحال",
+       "phonetic": "بلاجيَرِزم",
+       "emoji": "🚫",
+       "exampleTarget": "Plagiarism ends a career.",
+       "exampleAr": "ينهي الانتحال مسيرة طالبٍ ما."
+      },
+      {
+       "id": "en_syllabus",
+       "target": "Syllabus",
+       "translationAr": "منهاج الدراسة",
+       "phonetic": "سِيلَبَس",
+       "emoji": "🗒️",
+       "exampleTarget": "Read the syllabus first.",
+       "exampleAr": "اقرأ المنهاج أولاً."
+      },
+      {
+       "id": "en_lecture",
+       "target": "Lecture",
+       "translationAr": "محاضرة",
+       "phonetic": "ليكتشَر",
+       "emoji": "🎓",
+       "exampleTarget": "The lecture starts at nine.",
+       "exampleAr": "تبدأ المحاضرة في التاسعة."
+      },
+      {
+       "id": "en_seminar",
+       "target": "Seminar",
+       "translationAr": "ندوة",
+       "phonetic": "سِمينار",
+       "emoji": "👥",
+       "exampleTarget": "The seminar is on Tuesday.",
+       "exampleAr": "الندوة يوم الثلاثاء."
+      },
+      {
+       "id": "en_dissertation",
+       "target": "Dissertation",
+       "translationAr": "رسالة دكتوراه",
+       "phonetic": "دِسَتيشن",
+       "emoji": "📕",
+       "exampleTarget": "He defended his dissertation.",
+       "exampleAr": "ناقش رسالته."
+      },
+      {
+       "id": "en_reference",
+       "target": "Reference",
+       "translationAr": "مرجع",
+       "phonetic": "رِفَرَنس",
+       "emoji": "🔖",
+       "exampleTarget": "Add one more reference.",
+       "exampleAr": "أضف مرجعاً آخر."
+      },
+      {
+       "id": "en_abstract",
+       "target": "Abstract",
+       "translationAr": "ملخص",
+       "phonetic": "أَبستراكت",
+       "emoji": "📄",
+       "exampleTarget": "The abstract is 200 words.",
+       "exampleAr": "الملخص مئتا كلمة."
+      },
+      {
+       "id": "en_revision",
+       "target": "Revision",
+       "translationAr": "مراجعة",
+       "phonetic": "رِفيجَن",
+       "emoji": "♻️",
+       "exampleTarget": "Final revision starts tonight.",
+       "exampleAr": "تبدأ المراجعة النهائية الليلة."
+      },
+      {
+       "id": "en_examiner",
+       "target": "Examiner",
+       "translationAr": "ممتحن",
+       "phonetic": "إگزمينَر",
+       "emoji": "🧑‍🏫",
+       "exampleTarget": "The examiner asked three questions.",
+       "exampleAr": "سأل الممتحن ثلاثة أسئلة."
+      }
+     ]
+    },
+    {
+     "id": "en_u52_l4",
+     "titleAr": "أفكار مجردة",
+     "titleEn": "Abstract Ideas",
+     "vocab": [
+      {
+       "id": "en_perspective",
+       "target": "Perspective",
+       "translationAr": "منظور",
+       "phonetic": "بَرسپِكتِف",
+       "emoji": "👓",
+       "exampleTarget": "Try a different perspective.",
+       "exampleAr": "جرّب منظوراً مختلفاً."
+      },
+      {
+       "id": "en_implication",
+       "target": "Implication",
+       "translationAr": "تبِعة",
+       "phonetic": "إمبليكيشن",
+       "emoji": "🪤",
+       "exampleTarget": "Think about the implications.",
+       "exampleAr": "فكّر في التبعات."
+      },
+      {
+       "id": "en_controversial",
+       "target": "Controversial",
+       "translationAr": "مثير للجدل",
+       "phonetic": "كونتروڤَرشَل",
+       "emoji": "🔥",
+       "exampleTarget": "The topic is controversial.",
+       "exampleAr": "الموضوع مثير للجدل."
+      },
+      {
+       "id": "en_significant",
+       "target": "Significant",
+       "translationAr": "جوهري",
+       "phonetic": "سيگنيفيكانت",
+       "emoji": "🌟",
+       "exampleTarget": "A significant change happened.",
+       "exampleAr": "حدث تغيير جوهري."
+      },
+      {
+       "id": "en_substantial",
+       "target": "Substantial",
+       "translationAr": "كبير وملموس",
+       "phonetic": "سَبستانيشَل",
+       "emoji": "🏔️",
+       "exampleTarget": "They made substantial progress.",
+       "exampleAr": "أحرزوا تقدماً كبيراً."
+      },
+      {
+       "id": "en_relevant",
+       "target": "Relevant",
+       "translationAr": "ذو صلة",
+       "phonetic": "ريليڤانت",
+       "emoji": "🎯",
+       "exampleTarget": "Keep your answer relevant.",
+       "exampleAr": "اجعل إجابتك ذات صلة."
+      },
+      {
+       "id": "en_feasible",
+       "target": "Feasible",
+       "translationAr": "قابل للتنفيذ",
+       "phonetic": "فِيزِبل",
+       "emoji": "✅",
+       "exampleTarget": "The plan is feasible.",
+       "exampleAr": "الخطة قابلة للتنفيذ."
+      },
+      {
+       "id": "en_ambiguous",
+       "target": "Ambiguous",
+       "translationAr": "غامض",
+       "phonetic": "أمبيگيوَس",
+       "emoji": "🌫️",
+       "exampleTarget": "The question is ambiguous.",
+       "exampleAr": "السؤال غامض."
+      },
+      {
+       "id": "en_inevitable",
+       "target": "Inevitable",
+       "translationAr": "حتمي",
+       "phonetic": "إنِڤيتَبل",
+       "emoji": "🌊",
+       "exampleTarget": "Change is inevitable.",
+       "exampleAr": "التغيير حتمي."
+      },
+      {
+       "id": "en_comprehensive",
+       "target": "Comprehensive",
+       "translationAr": "شامل",
+       "phonetic": "كومبريهِنسِف",
+       "emoji": "🌍",
+       "exampleTarget": "Buy a comprehensive guide.",
+       "exampleAr": "اشترِ دليلاً شاملاً."
+      },
+      {
+       "id": "en_phenomenon",
+       "target": "Phenomenon",
+       "translationAr": "ظاهرة",
+       "phonetic": "فينومِنَن",
+       "emoji": "🌈",
+       "exampleTarget": "A strange phenomenon appeared.",
+       "exampleAr": "ظهرت ظاهرة غريبة."
+      },
+      {
+       "id": "en_contradiction",
+       "target": "Contradiction",
+       "translationAr": "تناقض",
+       "phonetic": "كونترا دِكشن",
+       "emoji": "🔃",
+       "exampleTarget": "There is a contradiction here.",
+       "exampleAr": "هناك تناقض هنا."
       }
      ]
     }

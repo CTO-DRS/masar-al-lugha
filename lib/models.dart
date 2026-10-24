@@ -61,12 +61,18 @@ class Unit {
   final String colorHex;
   final List<Lesson> lessons;
 
+  /// Self-referenced CEFR level tag (A1..C2). NOT an official certification —
+  /// see docs/CONTENT_AUDIT.md. Defaults to 'A1' so hand-written JSON or
+  /// older assets without the tag still load.
+  final String cefr;
+
   const Unit({
     required this.id,
     required this.titleAr,
     required this.titleEn,
     required this.colorHex,
     required this.lessons,
+    this.cefr = 'A1',
   });
 
   factory Unit.fromJson(Map<String, dynamic> j) => Unit(
@@ -75,6 +81,7 @@ class Unit {
         titleEn: j['titleEn'] as String,
         colorHex: j['color'] as String,
         lessons: (j['lessons'] as List).map((e) => Lesson.fromJson(e)).toList(),
+        cefr: (j['cefr'] as String?) ?? 'A1',
       );
 }
 

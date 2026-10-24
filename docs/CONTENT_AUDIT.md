@@ -1,24 +1,47 @@
-# CONTENT AUDIT — course_en / course_ur / course_fr (v3.3 baseline)
+# CONTENT AUDIT — course_en / course_ur / course_fr (v4.2 baseline)
 
-**Validator:** `scripts/validate_content.py` (runs in CI from v4.0 — exit 1 on any fatal problem)
+**Validator:** `scripts/validate_content.py` (runs in CI from v4.0 — exit 1 on any fatal problem; since v4.2 it also enforces valid + monotonic CEFR tags)
 
 ## Corpus
 
-| Course | Units | Lessons | Words | TTS lang |
-|---|---|---|---|---|
-| English | 48 | 188 | 2016 | en-US |
-| Urdu | 17 | 55 | 475 | ur-PK |
-| French | 15 | 45 | 495 | fr-FR |
-| **Total** | **80** | **288** | **2986** | |
+| Course | Units | Lessons | Words | CEFR ladder | TTS lang |
+|---|---|---|---|---|---|
+| English | 52 | 204 | 2208 | A1→A2→B1→B2→C1 | en-US |
+| Urdu | 21 | 67 | 619 | A1→A2→B1→B2 | ur-PK |
+| French | 21 | 63 | 711 | A1→A2→B1→B2 | fr-FR |
+| **Total** | **94** | **334** | **3538** | | |
+
+## v4.2 expansion (ROADMAP items 1+2)
+
+- **EN u49–u52** (4 lessons × 12 words each, +192): Phrasal Verbs (B2), Idioms &
+  Sayings (B2), Business & Money (B2), Academic & Exams (C1).
+- **FR u16–u21** (3 lessons × 12 words each, +216): Health & Body, Clothes &
+  Shopping, Weather & Seasons, Digital Life, News & Media (B1), French Idioms (B2).
+- **UR u18–u21** (3 lessons × 12 words each, +144): Health & Body, Weather &
+  Seasons, News & Media (B1), Urdu Idioms (B2).
+- **CEFR mapping** — every unit (old and new) now carries a `cefr` field; the
+  ladder is **self-referenced and monotonic** (path order = difficulty order).
+  The validator fails on invalid values or any decrease. The app shows the tag
+  as a pill on the unit banner. **This is NOT an official CEFR certification** —
+  see the classification note below.
+- **New-unit quality bar (enforced by the generator script and tests):** every
+  new vocab entry has `exampleTarget`/`exampleAr` (feeds fill-blank + listening),
+  unique emoji within its lesson, no target/id collisions with shipped content,
+  append-only ids (`en_u49_l1`…, `fr_u16_l1`…, `ur_u18_l1`…).
+- `test/content_test.dart` loads the real assets in `flutter test` and asserts
+  the corpus shape (52/204/2208 · 21/63/711 · 21/67/619 = 3538), CEFR validity
+  and monotonicity, global id uniqueness, and per-lesson emoji uniqueness for
+  the new units — so a content regression fails both the Python gate and tests.
 
 ## Verified clean
 
 - ✅ JSON parses; required course/unit/lesson/vocab fields present and non-empty
+  (**including `cefr` on every unit — v4.2**)
 - ✅ **Zero duplicate vocab IDs** within each course **and across all three courses**
-  (2986 unique IDs) — user SRS progress keys stay valid
+  (3538 unique IDs) — user SRS progress keys stay valid
 - ✅ Unit colors are valid hex; every lesson has ≥ 1 word
-- ✅ Difficulty progression is linear (units unlock in order; earlier units are
-  vocabulary-concrete, later units topical — see roadmap for formal CEFR mapping)
+- ✅ **CEFR tags valid + monotonic on every unit (v4.2)** — enforced by validator
+  and `test/content_test.dart`
 
 ## Known issues
 

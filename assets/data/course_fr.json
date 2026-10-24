@@ -10,6 +10,7 @@
    "color": "#58CC02",
    "titleAr": "Bonjour! التحيات",
    "titleEn": "Greetings",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "fr_u1_l1",
@@ -291,6 +292,7 @@
    "color": "#1CB0F6",
    "titleAr": "العائلة والأشخاص",
    "titleEn": "Family & People",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "fr_u2_l1",
@@ -516,6 +518,7 @@
    "color": "#FFC800",
    "titleAr": "الطعام والشراب",
    "titleEn": "Food & Drink",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "fr_u3_l1",
@@ -755,6 +758,7 @@
    "color": "#FF9600",
    "titleAr": "الوقت والأيام",
    "titleEn": "Time & Days",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "fr_u4_l1",
@@ -994,6 +998,7 @@
    "color": "#CE82FF",
    "titleAr": "المنزل",
    "titleEn": "Home",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "fr_u5_l1",
@@ -1219,6 +1224,7 @@
    "color": "#00CD9C",
    "titleAr": "الحيوانات والطبيعة",
    "titleEn": "Animals & Nature",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "fr_u6_l1",
@@ -1472,6 +1478,7 @@
    "color": "#FF4B4B",
    "titleAr": "المدينة والسفر",
    "titleEn": "City & Travel",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "fr_u7_l1",
@@ -1704,6 +1711,7 @@
    "color": "#FF6FB5",
    "titleAr": "الأفعال والعبارات المفيدة",
    "titleEn": "Verbs & Useful Phrases",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "fr_u8_l1",
@@ -1943,6 +1951,7 @@
    "color": "#FF9600",
    "titleAr": "المنزل",
    "titleEn": "The House",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "fr_u9_l1",
@@ -2232,6 +2241,7 @@
    "color": "#1CB0F6",
    "titleAr": "المدينة والمواصلات",
    "titleEn": "City & Transport",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "fr_u10_l1",
@@ -2515,6 +2525,7 @@
    "color": "#2B70C9",
    "titleAr": "المدرسة والعمل",
    "titleEn": "School & Work",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "fr_u11_l1",
@@ -2800,6 +2811,7 @@
    "color": "#00CD9C",
    "titleAr": "الرياضة والترفيه",
    "titleEn": "Sports & Leisure",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "fr_u12_l1",
@@ -3081,6 +3093,7 @@
    "color": "#FF6FB5",
    "titleAr": "في المطعم",
    "titleEn": "At the Restaurant",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "fr_u13_l1",
@@ -3364,6 +3377,7 @@
    "color": "#A0522D",
    "titleAr": "الموسيقى والسينما",
    "titleEn": "Music & Cinema",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "fr_u14_l1",
@@ -3645,6 +3659,7 @@
    "color": "#2B70C9",
    "titleAr": "المناسبات والأعياد",
    "titleEn": "Celebrations",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "fr_u15_l1",
@@ -3920,6 +3935,2130 @@
        "translationAr": "العطر",
        "phonetic": "لو پار-فان",
        "emoji": "🌸"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u16",
+   "color": "#00CD9C",
+   "titleAr": "الصحة والجسم",
+   "titleEn": "Health & Body",
+   "cefr": "B1",
+   "lessons": [
+    {
+     "id": "fr_u16_l1",
+     "titleAr": "الجسم",
+     "titleEn": "Le corps",
+     "vocab": [
+      {
+       "id": "fr_la_tête",
+       "target": "La tête",
+       "translationAr": "الرأس",
+       "phonetic": "لا تِت",
+       "emoji": "👤",
+       "exampleTarget": "Il hoche la tête.",
+       "exampleAr": "يهزّ رأسه."
+      },
+      {
+       "id": "fr_les_cheveux",
+       "target": "Les cheveux",
+       "translationAr": "الشعر",
+       "phonetic": "لي شڤو",
+       "emoji": "💇",
+       "exampleTarget": "Elle a les cheveux longs.",
+       "exampleAr": "شعرها طويل."
+      },
+      {
+       "id": "fr_le_bras",
+       "target": "Le bras",
+       "translationAr": "الذراع",
+       "phonetic": "لو برا",
+       "emoji": "💪",
+       "exampleTarget": "Il lève le bras.",
+       "exampleAr": "يرفع ذراعه."
+      },
+      {
+       "id": "fr_la_jambe",
+       "target": "La jambe",
+       "translationAr": "الساق",
+       "phonetic": "لا ژامب",
+       "emoji": "🦵",
+       "exampleTarget": "Ma jambe me fait mal.",
+       "exampleAr": "ساقي تؤلمني."
+      },
+      {
+       "id": "fr_le_dos",
+       "target": "Le dos",
+       "translationAr": "الظهر",
+       "phonetic": "لو دو",
+       "emoji": "🧍",
+       "exampleTarget": "Il dort sur le dos.",
+       "exampleAr": "ينام على ظهره."
+      },
+      {
+       "id": "fr_le_cœur",
+       "target": "Le cœur",
+       "translationAr": "القلب",
+       "phonetic": "لو كار",
+       "emoji": "❤️",
+       "exampleTarget": "Son cœur bat vite.",
+       "exampleAr": "قلبه ينبض بسرعة."
+      },
+      {
+       "id": "fr_lestomac",
+       "target": "L'estomac",
+       "translationAr": "المعدة",
+       "phonetic": "لِستوما",
+       "emoji": "🫄",
+       "exampleTarget": "J'ai mal à l'estomac.",
+       "exampleAr": "معدتي تؤلمني."
+      },
+      {
+       "id": "fr_le_médecin",
+       "target": "Le médecin",
+       "translationAr": "الطبيب",
+       "phonetic": "لو مِدسان",
+       "emoji": "🩺",
+       "exampleTarget": "Le médecin écoute le patient.",
+       "exampleAr": "يصغي الطبيب للمريض."
+      },
+      {
+       "id": "fr_lhôpital",
+       "target": "L'hôpital",
+       "translationAr": "المستشفى",
+       "phonetic": "لوبيطال",
+       "emoji": "🏥",
+       "exampleTarget": "Il travaille à l'hôpital.",
+       "exampleAr": "يعمل في المستشفى."
+      },
+      {
+       "id": "fr_la_douleur",
+       "target": "La douleur",
+       "translationAr": "الألم",
+       "phonetic": "لا دولَر",
+       "emoji": "😣",
+       "exampleTarget": "Cette douleur est forte.",
+       "exampleAr": "هذا الألم شديد."
+      },
+      {
+       "id": "fr_le_médicament",
+       "target": "Le médicament",
+       "translationAr": "الدواء",
+       "phonetic": "لو مِدیکامو",
+       "emoji": "💊",
+       "exampleTarget": "Prends ton médicament.",
+       "exampleAr": "تناول دواءك."
+      },
+      {
+       "id": "fr_la_pharmacie",
+       "target": "La pharmacie",
+       "translationAr": "الصيدلية",
+       "phonetic": "لا فارماسي",
+       "emoji": "🧴",
+       "exampleTarget": "La pharmacie ferme à vingt heures.",
+       "exampleAr": "تغلق الصيدلية في الثامنة."
+      }
+     ]
+    },
+    {
+     "id": "fr_u16_l2",
+     "titleAr": "الصحة",
+     "titleEn": "La santé",
+     "vocab": [
+      {
+       "id": "fr_les_dents",
+       "target": "Les dents",
+       "translationAr": "الأسنان",
+       "phonetic": "لي دان",
+       "emoji": "🦷",
+       "exampleTarget": "Brosse-toi les dents.",
+       "exampleAr": "نظّف أسنانك."
+      },
+      {
+       "id": "fr_les_yeux",
+       "target": "Les yeux",
+       "translationAr": "العيون",
+       "phonetic": "لي زي",
+       "emoji": "👀",
+       "exampleTarget": "Ses yeux sont bleus.",
+       "exampleAr": "عيناها زرقاوان."
+      },
+      {
+       "id": "fr_les_oreilles",
+       "target": "Les oreilles",
+       "translationAr": "الأذنان",
+       "phonetic": "لي زوري",
+       "emoji": "👂",
+       "exampleTarget": "Il couvre ses oreilles.",
+       "exampleAr": "يغطي أذنيه."
+      },
+      {
+       "id": "fr_le_sang",
+       "target": "Le sang",
+       "translationAr": "الدم",
+       "phonetic": "لو سان",
+       "emoji": "🩸",
+       "exampleTarget": "Le don de sang sauve des vies.",
+       "exampleAr": "تبرّع الدم ينقذ الأرواح."
+      },
+      {
+       "id": "fr_la_fièvre",
+       "target": "La fièvre",
+       "translationAr": "الحمى",
+       "phonetic": "لا فِيفر",
+       "emoji": "🌡️",
+       "exampleTarget": "Il a de la fièvre.",
+       "exampleAr": "عنده حمى."
+      },
+      {
+       "id": "fr_la_toux",
+       "target": "La toux",
+       "translationAr": "السعال",
+       "phonetic": "لا تو",
+       "emoji": "🤧",
+       "exampleTarget": "Sa toux dure depuis trois jours.",
+       "exampleAr": "سعالها مستمر منذ ثلاثة أيام."
+      },
+      {
+       "id": "fr_le_repos",
+       "target": "Le repos",
+       "translationAr": "الراحة",
+       "phonetic": "لو رُبو",
+       "emoji": "🛌",
+       "exampleTarget": "Le repos est important.",
+       "exampleAr": "الراحة مهمة."
+      },
+      {
+       "id": "fr_linfirmerie",
+       "target": "L'infirmerie",
+       "translationAr": "العيادة",
+       "phonetic": "لِنفرمري",
+       "emoji": "🚑",
+       "exampleTarget": "Va à l'infirmerie.",
+       "exampleAr": "اذهب إلى العيادة."
+      },
+      {
+       "id": "fr_la_vaccination",
+       "target": "La vaccination",
+       "translationAr": "التطعيم",
+       "phonetic": "لا ڤاکسیناسیون",
+       "emoji": "💉",
+       "exampleTarget": "La vaccination protège.",
+       "exampleAr": "التطعيم يحمي."
+      },
+      {
+       "id": "fr_en_bonne_santé",
+       "target": "En bonne santé",
+       "translationAr": "بصحة جيدة",
+       "phonetic": "آن بون سانت",
+       "emoji": "🥗",
+       "exampleTarget": "Il est en bonne santé.",
+       "exampleAr": "هو بصحة جيدة."
+      },
+      {
+       "id": "fr_se_reposer",
+       "target": "Se reposer",
+       "translationAr": "يستريح",
+       "phonetic": "سُ رُپوزي",
+       "emoji": "😴",
+       "exampleTarget": "Tu dois te reposer.",
+       "exampleAr": "عليك أن تستريح."
+      },
+      {
+       "id": "fr_guérir",
+       "target": "Guérir",
+       "translationAr": "يشفى",
+       "phonetic": "گِرير",
+       "emoji": "🌟",
+       "exampleTarget": "La plaie va guérir vite.",
+       "exampleAr": "سيشفى الجرح بسرعة."
+      }
+     ]
+    },
+    {
+     "id": "fr_u16_l3",
+     "titleAr": "عند الطبيب",
+     "titleEn": "Chez le médecin",
+     "vocab": [
+      {
+       "id": "fr_la_consultation",
+       "target": "La consultation",
+       "translationAr": "الفحص الطبي",
+       "phonetic": "لا کونسولتاسیون",
+       "emoji": "📆",
+       "exampleTarget": "La consultation dure vingt minutes.",
+       "exampleAr": "يستغرق الفحص الطبي عشرين دقيقة."
+      },
+      {
+       "id": "fr_lordonnance",
+       "target": "L'ordonnance",
+       "translationAr": "الوصفة الطبية",
+       "phonetic": "لُردونانس",
+       "emoji": "🧾",
+       "exampleTarget": "Le médecin écrit une ordonnance.",
+       "exampleAr": "يكتب الطبيب وصفة."
+      },
+      {
+       "id": "fr_lambulance",
+       "target": "L'ambulance",
+       "translationAr": "الإسعاف",
+       "phonetic": "لامبولانس",
+       "emoji": "🚑",
+       "exampleTarget": "Appelez une ambulance !",
+       "exampleAr": "اتصلوا بالإسعاف!"
+      },
+      {
+       "id": "fr_le_pouls",
+       "target": "Le pouls",
+       "translationAr": "النبض",
+       "phonetic": "لو پول",
+       "emoji": "💓",
+       "exampleTarget": "Le pouls est rapide.",
+       "exampleAr": "النبض سريع."
+      },
+      {
+       "id": "fr_linjection",
+       "target": "L'injection",
+       "translationAr": "الحقنة",
+       "phonetic": "لِنژکسيون",
+       "emoji": "🪡",
+       "exampleTarget": "L'injection ne fait pas mal.",
+       "exampleAr": "الحقنة لا تؤلم."
+      },
+      {
+       "id": "fr_le_pansement",
+       "target": "Le pansement",
+       "translationAr": "الضماد",
+       "phonetic": "لو بانسمو",
+       "emoji": "🩹",
+       "exampleTarget": "Change ton pansement.",
+       "exampleAr": "غيّر ضمادك."
+      },
+      {
+       "id": "fr_la_radiographie",
+       "target": "La radiographie",
+       "translationAr": "الأشعة",
+       "phonetic": "لا رادیوگرافی",
+       "emoji": "🦴",
+       "exampleTarget": "Il passe une radiographie de la jambe.",
+       "exampleAr": "يُجري أشعة على ساقه."
+      },
+      {
+       "id": "fr_le_patient",
+       "target": "Le patient",
+       "translationAr": "المريض",
+       "phonetic": "لو سيان",
+       "emoji": "🛏️",
+       "exampleTarget": "Le patient attend son tour.",
+       "exampleAr": "ينتظر المريض دوره."
+      },
+      {
+       "id": "fr_ressentir",
+       "target": "Ressentir",
+       "translationAr": "يشعر",
+       "phonetic": "برِسانتير",
+       "emoji": "😖",
+       "exampleTarget": "Il ressent une douleur légère.",
+       "exampleAr": "يشعر بألم خفيف."
+      },
+      {
+       "id": "fr_être_malade",
+       "target": "Être malade",
+       "translationAr": "يكون مريضاً",
+       "phonetic": "إِتر مالاد",
+       "emoji": "🤒",
+       "exampleTarget": "Elle est malade aujourd'hui.",
+       "exampleAr": "هي مريضة اليوم."
+      },
+      {
+       "id": "fr_prendre_sa_tension",
+       "target": "Prendre sa tension",
+       "translationAr": "يقيس الضغط",
+       "phonetic": "پراندِر سا تانسيون",
+       "emoji": "📊",
+       "exampleTarget": "L'infirmière prend sa tension.",
+       "exampleAr": "تقيس الممرضة ضغطه."
+      },
+      {
+       "id": "fr_se_sentir_mieux",
+       "target": "Se sentir mieux",
+       "translationAr": "يشعر بتحسن",
+       "phonetic": "سُ سانتير مْييو",
+       "emoji": "🌤️",
+       "exampleTarget": "Tu vas te sentir mieux.",
+       "exampleAr": "ستشعر بالتحسن."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u17",
+   "color": "#A0522D",
+   "titleAr": "الملابس والتسوق",
+   "titleEn": "Clothes & Shopping",
+   "cefr": "B1",
+   "lessons": [
+    {
+     "id": "fr_u17_l1",
+     "titleAr": "الملابس",
+     "titleEn": "Les vêtements",
+     "vocab": [
+      {
+       "id": "fr_la_chemise",
+       "target": "La chemise",
+       "translationAr": "القميص",
+       "phonetic": "لا شَمیز",
+       "emoji": "👔",
+       "exampleTarget": "Il porte une chemise blanche.",
+       "exampleAr": "يلبس قميصاً أبيض."
+      },
+      {
+       "id": "fr_le_pantalon",
+       "target": "Le pantalon",
+       "translationAr": "البنطال",
+       "phonetic": "لو بانتالون",
+       "emoji": "👖",
+       "exampleTarget": "Ce pantalon est trop long.",
+       "exampleAr": "هذا البنطال طويل جداً."
+      },
+      {
+       "id": "fr_la_robe",
+       "target": "La robe",
+       "translationAr": "الفستان",
+       "phonetic": "لا روب",
+       "emoji": "👗",
+       "exampleTarget": "Elle achète une robe rouge.",
+       "exampleAr": "تشتري فستاناً أحمر."
+      },
+      {
+       "id": "fr_les_chaussures",
+       "target": "Les chaussures",
+       "translationAr": "الأحذية",
+       "phonetic": "لي شواسير",
+       "emoji": "👟",
+       "exampleTarget": "Mes chaussures sont neuves.",
+       "exampleAr": "حذائي جديد."
+      },
+      {
+       "id": "fr_le_manteau",
+       "target": "Le manteau",
+       "translationAr": "المعطف",
+       "phonetic": "لو مانتو",
+       "emoji": "🧥",
+       "exampleTarget": "Le manteau protège du froid.",
+       "exampleAr": "يحمي المعطف من البرد."
+      },
+      {
+       "id": "fr_le_chapeau",
+       "target": "Le chapeau",
+       "translationAr": "القبعة",
+       "phonetic": "لو شاپو",
+       "emoji": "🎩",
+       "exampleTarget": "Joli chapeau !",
+       "exampleAr": "قبعة جميلة!"
+      },
+      {
+       "id": "fr_le_t-shirt",
+       "target": "Le t-shirt",
+       "translationAr": "التيشيرت",
+       "phonetic": "لو تي شِرت",
+       "emoji": "👕",
+       "exampleTarget": "Un t-shirt simple est parfait.",
+       "exampleAr": "التيشيرت البسيط مثالي."
+      },
+      {
+       "id": "fr_lécharpe",
+       "target": "L'écharpe",
+       "translationAr": "الوشاح",
+       "phonetic": "لِشارپ",
+       "emoji": "🧣",
+       "exampleTarget": "L'écharpe garde le cou chaud.",
+       "exampleAr": "يبقي الوشاح الرقبة دافئة."
+      },
+      {
+       "id": "fr_les_gants",
+       "target": "Les gants",
+       "translationAr": "القفازات",
+       "phonetic": "لي گان",
+       "emoji": "🧤",
+       "exampleTarget": "Mets tes gants.",
+       "exampleAr": "البس قفازاتك."
+      },
+      {
+       "id": "fr_la_ceinture",
+       "target": "La ceinture",
+       "translationAr": "الحزام",
+       "phonetic": "لا سانتور",
+       "emoji": "🪢",
+       "exampleTarget": "Serre ta ceinture.",
+       "exampleAr": "اربط حزامك."
+      },
+      {
+       "id": "fr_le_sac",
+       "target": "Le sac",
+       "translationAr": "الحقيبة",
+       "phonetic": "لو ساك",
+       "emoji": "👜",
+       "exampleTarget": "Son sac est très lourd.",
+       "exampleAr": "حقيبتها ثقيلة جداً."
+      },
+      {
+       "id": "fr_la_valise",
+       "target": "La valise",
+       "translationAr": "الحقيبة الكبيرة",
+       "phonetic": "لا ڤالیز",
+       "emoji": "🧳",
+       "exampleTarget": "Sa valise est prête.",
+       "exampleAr": "حقيبته جاهزة."
+      }
+     ]
+    },
+    {
+     "id": "fr_u17_l2",
+     "titleAr": "التسوق",
+     "titleEn": "Faire du shopping",
+     "vocab": [
+      {
+       "id": "fr_essayer",
+       "target": "Essayer",
+       "translationAr": "يجرّب",
+       "phonetic": "إساْیِه",
+       "emoji": "🪞",
+       "exampleTarget": "Je voudrais essayer cette robe.",
+       "exampleAr": "أريد تجربة هذا الفستان."
+      },
+      {
+       "id": "fr_le_prix",
+       "target": "Le prix",
+       "translationAr": "السعر",
+       "phonetic": "لو بري",
+       "emoji": "🏷️",
+       "exampleTarget": "Quel est le prix ?",
+       "exampleAr": "كم السعر؟"
+      },
+      {
+       "id": "fr_les_soldes",
+       "target": "Les soldes",
+       "translationAr": "التخفيضات",
+       "phonetic": "لي سولد",
+       "emoji": "💥",
+       "exampleTarget": "Les soldes commencent samedi.",
+       "exampleAr": "تبدأ التخفيضات يوم السبت."
+      },
+      {
+       "id": "fr_la_taille",
+       "target": "La taille",
+       "translationAr": "المقاس",
+       "phonetic": "لا تاي",
+       "emoji": "📏",
+       "exampleTarget": "Quelle taille faites-vous ?",
+       "exampleAr": "ما مقاسك؟"
+      },
+      {
+       "id": "fr_la_caisse",
+       "target": "La caisse",
+       "translationAr": "الكاشير",
+       "phonetic": "لا کِس",
+       "emoji": "🛒",
+       "exampleTarget": "La file de la caisse est longue.",
+       "exampleAr": "طابور الكاشير طويل."
+      },
+      {
+       "id": "fr_la_carte_bancaire",
+       "target": "La carte bancaire",
+       "translationAr": "البطاقة البنكية",
+       "phonetic": "لا کارت بانکِر",
+       "emoji": "💳",
+       "exampleTarget": "Je paie par carte bancaire.",
+       "exampleAr": "أدفع بالبطاقة البنكية."
+      },
+      {
+       "id": "fr_lemballage",
+       "target": "L'emballage",
+       "translationAr": "التغليف",
+       "phonetic": "لَمْبالاج",
+       "emoji": "📦",
+       "exampleTarget": "L'emballage est recyclable.",
+       "exampleAr": "التغليف قابل لإعادة التدوير."
+      },
+      {
+       "id": "fr_le_rayon",
+       "target": "Le rayon",
+       "translationAr": "القسم",
+       "phonetic": "لو رايون",
+       "emoji": "🗄️",
+       "exampleTarget": "Le rayon des chaussures est là-bas.",
+       "exampleAr": "قسم الأحذية هناك."
+      },
+      {
+       "id": "fr_le_vendeur",
+       "target": "Le vendeur",
+       "translationAr": "البائع",
+       "phonetic": "لو ڤاندور",
+       "emoji": "🙋‍♂️",
+       "exampleTarget": "Le vendeur est serviable.",
+       "exampleAr": "البائع متعاون."
+      },
+      {
+       "id": "fr_lessayage",
+       "target": "L'essayage",
+       "translationAr": "التجربة",
+       "phonetic": "لِساْیاج",
+       "emoji": "👚",
+       "exampleTarget": "La cabine d'essayage est libre.",
+       "exampleAr": "غرفة التجربة فارغة."
+      },
+      {
+       "id": "fr_trop_cher",
+       "target": "Trop cher",
+       "translationAr": "غالٍ جداً",
+       "phonetic": "ترو شِر",
+       "emoji": "💸",
+       "exampleTarget": "Ce manteau est trop cher.",
+       "exampleAr": "هذا المعطف غالٍ جداً."
+      },
+      {
+       "id": "fr_la_promotion",
+       "target": "La promotion",
+       "translationAr": "العرض الترويجي",
+       "phonetic": "لا بروموشیون",
+       "emoji": "✂️",
+       "exampleTarget": "Il y a une promotion sur les robes.",
+       "exampleAr": "يوجد عرض على الفساتين."
+      }
+     ]
+    },
+    {
+     "id": "fr_u17_l3",
+     "titleAr": "الألوان والمواد",
+     "titleEn": "Couleurs & matières",
+     "vocab": [
+      {
+       "id": "fr_le_coton",
+       "target": "Le coton",
+       "translationAr": "القطن",
+       "phonetic": "لو کوتون",
+       "emoji": "🧵",
+       "exampleTarget": "Un pull en coton.",
+       "exampleAr": "سترة من القطن."
+      },
+      {
+       "id": "fr_le_cuir",
+       "target": "Le cuir",
+       "translationAr": "الجلد",
+       "phonetic": "لو کویْر",
+       "emoji": "🥾",
+       "exampleTarget": "Des bottes en cuir.",
+       "exampleAr": "حذاء طويل من الجلد."
+      },
+      {
+       "id": "fr_la_laine",
+       "target": "La laine",
+       "translationAr": "الصوف",
+       "phonetic": "لا لِن",
+       "emoji": "🐑",
+       "exampleTarget": "Ce pull est en laine.",
+       "exampleAr": "هذه السترة من الصوف."
+      },
+      {
+       "id": "fr_le_velours",
+       "target": "Le velours",
+       "translationAr": "المخمل",
+       "phonetic": "لو ڤلور",
+       "emoji": "🎭",
+       "exampleTarget": "Une robe en velours.",
+       "exampleAr": "فستان من المخمل."
+      },
+      {
+       "id": "fr_rouge",
+       "target": "Rouge",
+       "translationAr": "أحمر",
+       "phonetic": "روج",
+       "emoji": "🔴",
+       "exampleTarget": "Une pomme rouge.",
+       "exampleAr": "تفاحة حمراء."
+      },
+      {
+       "id": "fr_bleu",
+       "target": "Bleu",
+       "translationAr": "أزرق",
+       "phonetic": "بلو",
+       "emoji": "🔵",
+       "exampleTarget": "Le ciel est bleu.",
+       "exampleAr": "السماء زرقاء."
+      },
+      {
+       "id": "fr_vert",
+       "target": "Vert",
+       "translationAr": "أخضر",
+       "phonetic": "ڤِر",
+       "emoji": "🟢",
+       "exampleTarget": "L'herbe est verte.",
+       "exampleAr": "العشب أخضر."
+      },
+      {
+       "id": "fr_jaune",
+       "target": "Jaune",
+       "translationAr": "أصفر",
+       "phonetic": "ژون",
+       "emoji": "🟡",
+       "exampleTarget": "Un citron jaune.",
+       "exampleAr": "ليمون أصفر."
+      },
+      {
+       "id": "fr_noir",
+       "target": "Noir",
+       "translationAr": "أسود",
+       "phonetic": "نوار",
+       "emoji": "⚫",
+       "exampleTarget": "Un chat noir.",
+       "exampleAr": "قطة سوداء."
+      },
+      {
+       "id": "fr_blanc",
+       "target": "Blanc",
+       "translationAr": "أبيض",
+       "phonetic": "بلان",
+       "emoji": "⚪",
+       "exampleTarget": "Une chemise blanche.",
+       "exampleAr": "قميص أبيض."
+      },
+      {
+       "id": "fr_gris",
+       "target": "Gris",
+       "translationAr": "رمادي",
+       "phonetic": "گری",
+       "emoji": "🩶",
+       "exampleTarget": "Un pantalon gris.",
+       "exampleAr": "بنطال رمادي."
+      },
+      {
+       "id": "fr_marron",
+       "target": "Marron",
+       "translationAr": "بني",
+       "phonetic": "مارون",
+       "emoji": "🟤",
+       "exampleTarget": "Des chaussures marron.",
+       "exampleAr": "أحذية بنية."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u18",
+   "color": "#FF6FB5",
+   "titleAr": "الطقس والفصول",
+   "titleEn": "Weather & Seasons",
+   "cefr": "B1",
+   "lessons": [
+    {
+     "id": "fr_u18_l1",
+     "titleAr": "الطقس",
+     "titleEn": "La météo",
+     "vocab": [
+      {
+       "id": "fr_le_soleil",
+       "target": "Le soleil",
+       "translationAr": "الشمس",
+       "phonetic": "لو سولَی",
+       "emoji": "☀️",
+       "exampleTarget": "Le soleil brille.",
+       "exampleAr": "الشمس تشرق."
+      },
+      {
+       "id": "fr_la_pluie",
+       "target": "La pluie",
+       "translationAr": "المطر",
+       "phonetic": "لا پلوی",
+       "emoji": "🌧️",
+       "exampleTarget": "La pluie tombe sur la ville.",
+       "exampleAr": "المطر يسقط على المدينة."
+      },
+      {
+       "id": "fr_la_neige",
+       "target": "La neige",
+       "translationAr": "الثلج",
+       "phonetic": "لا نِج",
+       "emoji": "❄️",
+       "exampleTarget": "La neige couvre les routes.",
+       "exampleAr": "يغطي الثلج الطرق."
+      },
+      {
+       "id": "fr_le_vent",
+       "target": "Le vent",
+       "translationAr": "الريح",
+       "phonetic": "لو ڤان",
+       "emoji": "🌬️",
+       "exampleTarget": "Le vent souffle fort.",
+       "exampleAr": "تهبّ الريح بشدة."
+      },
+      {
+       "id": "fr_le_nuage",
+       "target": "Le nuage",
+       "translationAr": "السحابة",
+       "phonetic": "لو نوآژ",
+       "emoji": "☁️",
+       "exampleTarget": "Un nuage cache la lune.",
+       "exampleAr": "سحابة تحجب القمر."
+      },
+      {
+       "id": "fr_lorage",
+       "target": "L'orage",
+       "translationAr": "العاصفة الرعدية",
+       "phonetic": "لُراج",
+       "emoji": "🌩️",
+       "exampleTarget": "L'orage approche.",
+       "exampleAr": "العاصفة تقترب."
+      },
+      {
+       "id": "fr_le_brouillard",
+       "target": "Le brouillard",
+       "translationAr": "الضباب",
+       "phonetic": "لو برویارد",
+       "emoji": "🌫️",
+       "exampleTarget": "Le brouillard est épais.",
+       "exampleAr": "الضباب كثيف."
+      },
+      {
+       "id": "fr_la_tempête",
+       "target": "La tempête",
+       "translationAr": "العاصفة",
+       "phonetic": "لا تامپِت",
+       "emoji": "🌪️",
+       "exampleTarget": "La tempête a brisé les vitres.",
+       "exampleAr": "كسرت العاصفة الزجاج."
+      },
+      {
+       "id": "fr_larc-en-ciel",
+       "target": "L'arc-en-ciel",
+       "translationAr": "قوس قزح",
+       "phonetic": "لارک آن سِل",
+       "emoji": "🌈",
+       "exampleTarget": "Un arc-en-ciel après la pluie.",
+       "exampleAr": "قوس قزح بعد المطر."
+      },
+      {
+       "id": "fr_le_degré",
+       "target": "Le degré",
+       "translationAr": "الدرجة",
+       "phonetic": "لو دِگر",
+       "emoji": "🌡️",
+       "exampleTarget": "Il fait trente degrés.",
+       "exampleAr": "الحرارة ثلاثون درجة."
+      },
+      {
+       "id": "fr_le_parapluie",
+       "target": "Le parapluie",
+       "translationAr": "المظلة",
+       "phonetic": "لو پاراپلوی",
+       "emoji": "☂️",
+       "exampleTarget": "Prends ton parapluie.",
+       "exampleAr": "خذ مظلتك."
+      },
+      {
+       "id": "fr_la_canicule",
+       "target": "La canicule",
+       "translationAr": "الموجة الحارّة",
+       "phonetic": "لا کنیکول",
+       "emoji": "🥵",
+       "exampleTarget": "La canicule dure une semaine.",
+       "exampleAr": "استمرت الموجة الحارّة أسبوعاً."
+      }
+     ]
+    },
+    {
+     "id": "fr_u18_l2",
+     "titleAr": "الفصول",
+     "titleEn": "Les saisons",
+     "vocab": [
+      {
+       "id": "fr_le_printemps",
+       "target": "Le printemps",
+       "translationAr": "الربيع",
+       "phonetic": "لو پرانتام",
+       "emoji": "🌸",
+       "exampleTarget": "Le printemps commence en mars.",
+       "exampleAr": "يبدأ الربيع في مارس."
+      },
+      {
+       "id": "fr_lété",
+       "target": "L'été",
+       "translationAr": "الصيف",
+       "phonetic": "لِتِ",
+       "emoji": "🏖️",
+       "exampleTarget": "L'été est très chaud.",
+       "exampleAr": "الصيف حار جداً."
+      },
+      {
+       "id": "fr_lautomne",
+       "target": "L'automne",
+       "translationAr": "الخريف",
+       "phonetic": "لُتون",
+       "emoji": "🍂",
+       "exampleTarget": "Les feuilles tombent en automne.",
+       "exampleAr": "تتساقط الأوراق في الخريف."
+      },
+      {
+       "id": "fr_lhiver",
+       "target": "L'hiver",
+       "translationAr": "الشتاء",
+       "phonetic": "لِڤِر",
+       "emoji": "⛄",
+       "exampleTarget": "L'hiver est rigoureux ici.",
+       "exampleAr": "الشتاء قاسٍ هنا."
+      },
+      {
+       "id": "fr_la_récolte",
+       "target": "La récolte",
+       "translationAr": "الحصاد",
+       "phonetic": "لا رِکولت",
+       "emoji": "🌾",
+       "exampleTarget": "La récolte de blé commence.",
+       "exampleAr": "يبدأ حصاد القمح."
+      },
+      {
+       "id": "fr_la_fleur",
+       "target": "La fleur",
+       "translationAr": "الزهرة",
+       "phonetic": "لا فِلور",
+       "emoji": "🌷",
+       "exampleTarget": "La fleur s'ouvre au printemps.",
+       "exampleAr": "تتفتح الزهرة في الربيع."
+      },
+      {
+       "id": "fr_la_glace",
+       "target": "La glace",
+       "translationAr": "الجليد",
+       "phonetic": "لا گلاس",
+       "emoji": "🧊",
+       "exampleTarget": "La glace recouvre l'étang.",
+       "exampleAr": "يغطي الجليد البركة."
+      },
+      {
+       "id": "fr_le_gel",
+       "target": "Le gel",
+       "translationAr": "الصقيع",
+       "phonetic": "لو ژل",
+       "emoji": "🥶",
+       "exampleTarget": "Le gel abîme les plantes.",
+       "exampleAr": "يضرّ الصقيع النباتات."
+      },
+      {
+       "id": "fr_laverse",
+       "target": "L'averse",
+       "translationAr": "الوابل",
+       "phonetic": "لا ڤرس",
+       "emoji": "🌦️",
+       "exampleTarget": "Une averse soudaine.",
+       "exampleAr": "وابل مفاجئ."
+      },
+      {
+       "id": "fr_léclair",
+       "target": "L'éclair",
+       "translationAr": "البرق",
+       "phonetic": "لِکلیر",
+       "emoji": "⚡",
+       "exampleTarget": "Un éclair illumine le ciel.",
+       "exampleAr": "يضيء البرق السماء."
+      },
+      {
+       "id": "fr_le_tonnerre",
+       "target": "Le tonnerre",
+       "translationAr": "الرعد",
+       "phonetic": "لو تونِر",
+       "emoji": "💥",
+       "exampleTarget": "Le tonnerre gronde.",
+       "exampleAr": "يُدوّي الرعد."
+      },
+      {
+       "id": "fr_le_climat",
+       "target": "Le climat",
+       "translationAr": "المناخ",
+       "phonetic": "لو کلما",
+       "emoji": "🌍",
+       "exampleTarget": "Le climat change.",
+       "exampleAr": "المناخ يتغيّر."
+      }
+     ]
+    },
+    {
+     "id": "fr_u18_l3",
+     "titleAr": "أنشطة فصلية",
+     "titleEn": "Activités saisonnières",
+     "vocab": [
+      {
+       "id": "fr_le_bonnet",
+       "target": "Le bonnet",
+       "translationAr": "الطاقية الشتوية",
+       "phonetic": "لو بونِه",
+       "emoji": "🧢",
+       "exampleTarget": "Un bonnet contre le froid.",
+       "exampleAr": "طاقية ضد البرد."
+      },
+      {
+       "id": "fr_la_randonnée",
+       "target": "La randonnée",
+       "translationAr": "المشي الجبلي",
+       "phonetic": "لا راندونه",
+       "emoji": "🥾",
+       "exampleTarget": "Une randonnée en automne.",
+       "exampleAr": "مشي جبلي في الخريف."
+      },
+      {
+       "id": "fr_le_pique-nique",
+       "target": "Le pique-nique",
+       "translationAr": "النزهة",
+       "phonetic": "لو پیک‌نیک",
+       "emoji": "🧺",
+       "exampleTarget": "Un pique-nique au printemps.",
+       "exampleAr": "نزهة في الربيع."
+      },
+      {
+       "id": "fr_la_rentrée",
+       "target": "La rentrée",
+       "translationAr": "موسم الدراسة",
+       "phonetic": "لا رانترِ",
+       "emoji": "🎒",
+       "exampleTarget": "La rentrée est en septembre.",
+       "exampleAr": "موسم الدراسة في سبتمبر."
+      },
+      {
+       "id": "fr_les_vacances",
+       "target": "Les vacances",
+       "translationAr": "العطلة",
+       "phonetic": "لی ڤاکانس",
+       "emoji": "🏝️",
+       "exampleTarget": "Bonnes vacances !",
+       "exampleAr": "عطلة سعيدة!"
+      },
+      {
+       "id": "fr_le_bulletin_météo",
+       "target": "Le bulletin météo",
+       "translationAr": "النشرة الجوية",
+       "phonetic": "لو بولتَان میٹیو",
+       "emoji": "📻",
+       "exampleTarget": "Le bulletin météo annonce la pluie.",
+       "exampleAr": "تنبّئ النشرة الجوية بالمطر."
+      },
+      {
+       "id": "fr_le_thermomètre",
+       "target": "Le thermomètre",
+       "translationAr": "ميزان الحرارة",
+       "phonetic": "لو تِرمومِتر",
+       "emoji": "🌡️",
+       "exampleTarget": "Le thermomètre monte.",
+       "exampleAr": "يرتفع ميزان الحرارة."
+      },
+      {
+       "id": "fr_labri",
+       "target": "L'abri",
+       "translationAr": "المأوى",
+       "phonetic": "لابری",
+       "emoji": "⛺",
+       "exampleTarget": "Cherchons un abri.",
+       "exampleAr": "لنبحث عن مأوى."
+      },
+      {
+       "id": "fr_se_rafraîchir",
+       "target": "Se rafraîchir",
+       "translationAr": "يتبرّد",
+       "phonetic": "سُ رافرشیر",
+       "emoji": "🧊",
+       "exampleTarget": "Se rafraîchir à l'ombre.",
+       "exampleAr": "يتبرّد في الظل."
+      },
+      {
+       "id": "fr_la_brume",
+       "target": "La brume",
+       "translationAr": "الرشاش الصباحي",
+       "phonetic": "لا بروم",
+       "emoji": "🌁",
+       "exampleTarget": "La brume du matin.",
+       "exampleAr": "رشاش الصباح."
+      },
+      {
+       "id": "fr_le_torrent",
+       "target": "Le torrent",
+       "translationAr": "السيل الجبلي",
+       "phonetic": "لو توران",
+       "emoji": "🏞️",
+       "exampleTarget": "Le torrent dévale la pente.",
+       "exampleAr": "يجري السيل انحداراً."
+      },
+      {
+       "id": "fr_la_sècheresse",
+       "target": "La sècheresse",
+       "translationAr": "الجفاف",
+       "phonetic": "لا سِشریس",
+       "emoji": "🌵",
+       "exampleTarget": "La sècheresse menace les cultures.",
+       "exampleAr": "يهدد الجفاف المحاصيل."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u19",
+   "color": "#2B70C9",
+   "titleAr": "التقنية الرقمية",
+   "titleEn": "Digital Life",
+   "cefr": "B1",
+   "lessons": [
+    {
+     "id": "fr_u19_l1",
+     "titleAr": "الأجهزة",
+     "titleEn": "Les appareils",
+     "vocab": [
+      {
+       "id": "fr_lordinateur",
+       "target": "L'ordinateur",
+       "translationAr": "الحاسوب",
+       "phonetic": "لُردیناتور",
+       "emoji": "💻",
+       "exampleTarget": "L'ordinateur redémarre.",
+       "exampleAr": "يعيد الحاسوب التشغيل."
+      },
+      {
+       "id": "fr_le_téléphone",
+       "target": "Le téléphone",
+       "translationAr": "الهاتف",
+       "phonetic": "لو تلیفون",
+       "emoji": "📱",
+       "exampleTarget": "Mon téléphone est en charge.",
+       "exampleAr": "هاتفي يشحن."
+      },
+      {
+       "id": "fr_lécran",
+       "target": "L'écran",
+       "translationAr": "الشاشة",
+       "phonetic": "لِکران",
+       "emoji": "🖥️",
+       "exampleTarget": "L'écran est trop lumineux.",
+       "exampleAr": "الشاشة ساطعة جداً."
+      },
+      {
+       "id": "fr_le_clavier",
+       "target": "Le clavier",
+       "translationAr": "لوحة المفاتيح",
+       "phonetic": "لو کلاڤیێ",
+       "emoji": "⌨️",
+       "exampleTarget": "Le clavier est propre.",
+       "exampleAr": "لوحة المفاتيح نظيفة."
+      },
+      {
+       "id": "fr_la_souris",
+       "target": "La souris",
+       "translationAr": "الفأرة",
+       "phonetic": "لا سوری",
+       "emoji": "🖱️",
+       "exampleTarget": "La souris ne marche plus.",
+       "exampleAr": "توقفت الفأرة عن العمل."
+      },
+      {
+       "id": "fr_le_casque",
+       "target": "Le casque",
+       "translationAr": "السماعة",
+       "phonetic": "لو کاسک",
+       "emoji": "🎧",
+       "exampleTarget": "Mets ton casque.",
+       "exampleAr": "البس سماعتك."
+      },
+      {
+       "id": "fr_limprimante",
+       "target": "L'imprimante",
+       "translationAr": "الطابعة",
+       "phonetic": "لِپریمپانت",
+       "emoji": "🖨️",
+       "exampleTarget": "L'imprimante manque d'encre.",
+       "exampleAr": "نفد حبر الطابعة."
+      },
+      {
+       "id": "fr_le_chargeur",
+       "target": "Le chargeur",
+       "translationAr": "الشاحن",
+       "phonetic": "لو شارژور",
+       "emoji": "🔌",
+       "exampleTarget": "Le chargeur chauffe.",
+       "exampleAr": "الشاحن يسخن."
+      },
+      {
+       "id": "fr_la_tablette",
+       "target": "La tablette",
+       "translationAr": "الجهاز اللوحي",
+       "phonetic": "لا تابلِت",
+       "emoji": "📲",
+       "exampleTarget": "Il lit sur sa tablette.",
+       "exampleAr": "يقرأ على جهازه اللوحي."
+      },
+      {
+       "id": "fr_les_écouteurs",
+       "target": "Les écouteurs",
+       "translationAr": "السماعات",
+       "phonetic": "لی کلوتور",
+       "emoji": "🎶",
+       "exampleTarget": "Où sont mes écouteurs ?",
+       "exampleAr": "أين سماعاتي؟"
+      },
+      {
+       "id": "fr_le_wifi",
+       "target": "Le wifi",
+       "translationAr": "الواي فاي",
+       "phonetic": "لو وای فای",
+       "emoji": "📶",
+       "exampleTarget": "Le wifi est lent.",
+       "exampleAr": "الواي فاي بطيء."
+      },
+      {
+       "id": "fr_lappareil_photo",
+       "target": "L'appareil photo",
+       "translationAr": "الكاميرا",
+       "phonetic": "لَپارَی فوتو",
+       "emoji": "📷",
+       "exampleTarget": "L'appareil photo est neuf.",
+       "exampleAr": "الكاميرا جديدة."
+      }
+     ]
+    },
+    {
+     "id": "fr_u19_l2",
+     "titleAr": "الإنترنت والتطبيقات",
+     "titleEn": "Internet & apps",
+     "vocab": [
+      {
+       "id": "fr_le_site_web",
+       "target": "Le site web",
+       "translationAr": "الموقع الإلكتروني",
+       "phonetic": "لو سیت وِب",
+       "emoji": "🌐",
+       "exampleTarget": "Ce site web est rapide.",
+       "exampleAr": "هذا الموقع سريع."
+      },
+      {
+       "id": "fr_le_mot_de_passe",
+       "target": "Le mot de passe",
+       "translationAr": "كلمة السر",
+       "phonetic": "لو مو دُ پاس",
+       "emoji": "🔑",
+       "exampleTarget": "Ne partage pas ton mot de passe.",
+       "exampleAr": "لا تشارك كلمة سرك."
+      },
+      {
+       "id": "fr_le_fichier",
+       "target": "Le fichier",
+       "translationAr": "الملف",
+       "phonetic": "لو فیشِیے",
+       "emoji": "📁",
+       "exampleTarget": "J'ai perdu un fichier.",
+       "exampleAr": "فقدت ملفاً."
+      },
+      {
+       "id": "fr_télécharger",
+       "target": "Télécharger",
+       "translationAr": "يحمّل",
+       "phonetic": "تِلیشارجِه",
+       "emoji": "⬇️",
+       "exampleTarget": "Télécharge l'application.",
+       "exampleAr": "حمّل التطبيق."
+      },
+      {
+       "id": "fr_lapplication",
+       "target": "L'application",
+       "translationAr": "التطبيق",
+       "phonetic": "لَپلیکاسیون",
+       "emoji": "📲",
+       "exampleTarget": "Cette application est gratuite.",
+       "exampleAr": "هذا التطبيق مجاني."
+      },
+      {
+       "id": "fr_la_messagerie",
+       "target": "La messagerie",
+       "translationAr": "تطبيق الرسائل",
+       "phonetic": "لا مِساجری",
+       "emoji": "💬",
+       "exampleTarget": "La messagerie affiche une erreur.",
+       "exampleAr": "تعرض الرسائل خطأ."
+      },
+      {
+       "id": "fr_le_réseau",
+       "target": "Le réseau",
+       "translationAr": "الشبكة",
+       "phonetic": "لو رِزو",
+       "emoji": "📶",
+       "exampleTarget": "Le réseau est faible.",
+       "exampleAr": "الشبكة ضعيفة."
+      },
+      {
+       "id": "fr_le_courriel",
+       "target": "Le courriel",
+       "translationAr": "البريد الإلكتروني",
+       "phonetic": "لو کوری",
+       "emoji": "📧",
+       "exampleTarget": "Envoie-moi un courriel.",
+       "exampleAr": "أرسل لي بريداً إلكترونياً."
+      },
+      {
+       "id": "fr_le_lien",
+       "target": "Le lien",
+       "translationAr": "الرابط",
+       "phonetic": "لو لیَن",
+       "emoji": "🔗",
+       "exampleTarget": "Clique sur le lien.",
+       "exampleAr": "انقر على الرابط."
+      },
+      {
+       "id": "fr_la_mise_à_jour",
+       "target": "La mise à jour",
+       "translationAr": "التحديث",
+       "phonetic": "لا میز ا ژور",
+       "emoji": "🆙",
+       "exampleTarget": "La mise à jour prend du temps.",
+       "exampleAr": "يستغرق التحديث وقتاً."
+      },
+      {
+       "id": "fr_le_virus",
+       "target": "Le virus",
+       "translationAr": "الفيروس",
+       "phonetic": "لو ڤیروس",
+       "emoji": "🦠",
+       "exampleTarget": "Un virus a infecté l'ordinateur.",
+       "exampleAr": "أصاب فيروس الحاسوب."
+      },
+      {
+       "id": "fr_sauvegarder",
+       "target": "Sauvegarder",
+       "translationAr": "يحفظ نسخة احتياطية",
+       "phonetic": "سُوڤارگاردِه",
+       "emoji": "☁️",
+       "exampleTarget": "Sauvegarde tes documents.",
+       "exampleAr": "احفظ مستنداتك احتياطياً."
+      }
+     ]
+    },
+    {
+     "id": "fr_u19_l3",
+     "titleAr": "الرقمنة اليومية",
+     "titleEn": "Le numérique au quotidien",
+     "vocab": [
+      {
+       "id": "fr_le_compte",
+       "target": "Le compte",
+       "translationAr": "الحساب",
+       "phonetic": "لو کونت",
+       "emoji": "👤",
+       "exampleTarget": "Son compte est sécurisé.",
+       "exampleAr": "حسابه آمن."
+      },
+      {
+       "id": "fr_le_message",
+       "target": "Le message",
+       "translationAr": "الرسالة",
+       "phonetic": "لو مِساج",
+       "emoji": "✉️",
+       "exampleTarget": "J'ai reçu ton message.",
+       "exampleAr": "استلمت رسالتك."
+      },
+      {
+       "id": "fr_labonnement",
+       "target": "L'abonnement",
+       "translationAr": "الاشتراك",
+       "phonetic": "لَبونمان",
+       "emoji": "🎟️",
+       "exampleTarget": "L'abonnement se renouvelle.",
+       "exampleAr": "يُجدد الاشتراك."
+      },
+      {
+       "id": "fr_le_streaming",
+       "target": "Le streaming",
+       "translationAr": "البث",
+       "phonetic": "لو ستریمینگ",
+       "emoji": "🎬",
+       "exampleTarget": "Le streaming consomme des données.",
+       "exampleAr": "يستهلك البث البيانات."
+      },
+      {
+       "id": "fr_les_données",
+       "target": "Les données",
+       "translationAr": "البيانات",
+       "phonetic": "لی دوني",
+       "emoji": "📊",
+       "exampleTarget": "Protège tes données.",
+       "exampleAr": "احمِ بياناتك."
+      },
+      {
+       "id": "fr_lalgorithme",
+       "target": "L'algorithme",
+       "translationAr": "الخوارزمية",
+       "phonetic": "لَگوریتم",
+       "emoji": "🤖",
+       "exampleTarget": "L'algorithme choisit les vidéos.",
+       "exampleAr": "تختار الخوارزمية الفيديوهات."
+      },
+      {
+       "id": "fr_lintelligence_artificielle",
+       "target": "L'intelligence artificielle",
+       "translationAr": "الذكاء الاصطناعي",
+       "phonetic": "لِنتلیجانس آرتیفیسِل",
+       "emoji": "🧠",
+       "exampleTarget": "L'intelligence artificielle aide les médecins.",
+       "exampleAr": "يساعد الذكاء الاصطناعي الأطباء."
+      },
+      {
+       "id": "fr_la_recherche",
+       "target": "La recherche",
+       "translationAr": "البحث",
+       "phonetic": "لا رُشرش",
+       "emoji": "🔍",
+       "exampleTarget": "La recherche en ligne est rapide.",
+       "exampleAr": "البحث على الإنترنت سريع."
+      },
+      {
+       "id": "fr_la_notification",
+       "target": "La notification",
+       "translationAr": "الإشعار",
+       "phonetic": "لا نوتیفیکاسیون",
+       "emoji": "🔔",
+       "exampleTarget": "Une notification apparaît.",
+       "exampleAr": "يظهر إشعار."
+      },
+      {
+       "id": "fr_le_code",
+       "target": "Le code",
+       "translationAr": "الرمز",
+       "phonetic": "لو کود",
+       "emoji": "🔢",
+       "exampleTarget": "Entre le code à quatre chiffres.",
+       "exampleAr": "أدخل الرمز المكوّن من أربعة أرقام."
+      },
+      {
+       "id": "fr_numérique",
+       "target": "Numérique",
+       "translationAr": "رقمي",
+       "phonetic": "نُومِریک",
+       "emoji": "💾",
+       "exampleTarget": "Le monde devient numérique.",
+       "exampleAr": "يصبح العالم رقمياً."
+      },
+      {
+       "id": "fr_hors_ligne",
+       "target": "Hors ligne",
+       "translationAr": "غير متصل",
+       "phonetic": "أور لیگ",
+       "emoji": "📴",
+       "exampleTarget": "Le mode hors ligne économise la batterie.",
+       "exampleAr": "يوفر وضع عدم الاتصال البطارية."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u20",
+   "color": "#58CC02",
+   "titleAr": "الأخبار والإعلام",
+   "titleEn": "News & Media",
+   "cefr": "B1",
+   "lessons": [
+    {
+     "id": "fr_u20_l1",
+     "titleAr": "الجريدة",
+     "titleEn": "Le journal",
+     "vocab": [
+      {
+       "id": "fr_les_actualités",
+       "target": "Les actualités",
+       "translationAr": "الأخبار",
+       "phonetic": "لی زاکتوالیتی",
+       "emoji": "🗞️",
+       "exampleTarget": "Les actualités commencent à vingt heures.",
+       "exampleAr": "تبدأ الأخبار في الثامنة."
+      },
+      {
+       "id": "fr_le_journal",
+       "target": "Le journal",
+       "translationAr": "الجريدة",
+       "phonetic": "لو ژورنال",
+       "emoji": "📰",
+       "exampleTarget": "Il lit le journal chaque matin.",
+       "exampleAr": "يقرأ الجريدة كل صباح."
+      },
+      {
+       "id": "fr_le_journaliste",
+       "target": "Le journaliste",
+       "translationAr": "الصحفي",
+       "phonetic": "لو ژورنالیست",
+       "emoji": "🎤",
+       "exampleTarget": "Le journaliste pose des questions.",
+       "exampleAr": "يطرح الصحفي أسئلة."
+      },
+      {
+       "id": "fr_larticle",
+       "target": "L'article",
+       "translationAr": "المقال",
+       "phonetic": "لارتیکل",
+       "emoji": "📃",
+       "exampleTarget": "Cet article est passionnant.",
+       "exampleAr": "هذا المقال شيّق."
+      },
+      {
+       "id": "fr_le_titre",
+       "target": "Le titre",
+       "translationAr": "العنوان",
+       "phonetic": "لو تیتر",
+       "emoji": "📌",
+       "exampleTarget": "Le titre résume l’article.",
+       "exampleAr": "يلخّص العنوان المقال."
+      },
+      {
+       "id": "fr_la_une",
+       "target": "La une",
+       "translationAr": "الصفحة الأولى",
+       "phonetic": "لا اون",
+       "emoji": "1️⃣",
+       "exampleTarget": "La photo est en une.",
+       "exampleAr": "الصورة في الصفحة الأولى."
+      },
+      {
+       "id": "fr_le_reportage",
+       "target": "Le reportage",
+       "translationAr": "التقرير",
+       "phonetic": "لو رُپورتاژ",
+       "emoji": "🎥",
+       "exampleTarget": "Le reportage dure dix minutes.",
+       "exampleAr": "يستغرق التقرير عشر دقائق."
+      },
+      {
+       "id": "fr_la_manchette",
+       "target": "La manchette",
+       "translationAr": "العنوان الرئيسي",
+       "phonetic": "لا مانشت",
+       "emoji": "📣",
+       "exampleTarget": "Le scandale fait la manchette.",
+       "exampleAr": "تحتل الفضيحة العنوان الرئيسي."
+      },
+      {
+       "id": "fr_lédito",
+       "target": "L'édito",
+       "translationAr": "الافتتاحية",
+       "phonetic": "لِدیٹو",
+       "emoji": "✒️",
+       "exampleTarget": "L'édito critique la décision.",
+       "exampleAr": "تنتقد الافتتاحية القرار."
+      },
+      {
+       "id": "fr_le_correspondant",
+       "target": "Le correspondant",
+       "translationAr": "المراسل",
+       "phonetic": "لو کُریسپوندان",
+       "emoji": "🌍",
+       "exampleTarget": "Notre correspondant est à Beyrouth.",
+       "exampleAr": "مراسلنا في بيروت."
+      },
+      {
+       "id": "fr_le_numéro",
+       "target": "Le numéro",
+       "translationAr": "العدد",
+       "phonetic": "لو نمرو",
+       "emoji": "#️⃣",
+       "exampleTarget": "Le numéro d'aujourd'hui est spécial.",
+       "exampleAr": "عدد اليوم خاص."
+      },
+      {
+       "id": "fr_la_lettre_du_lecteur",
+       "target": "La lettre du lecteur",
+       "translationAr": "رسالة القارئ",
+       "phonetic": "لا لِتر دو لیکتور",
+       "emoji": "💌",
+       "exampleTarget": "La lettre du lecteur est publiée.",
+       "exampleAr": "تُنشر رسالة القارئ."
+      }
+     ]
+    },
+    {
+     "id": "fr_u20_l2",
+     "titleAr": "على التلفاز",
+     "titleEn": "À la télévision",
+     "vocab": [
+      {
+       "id": "fr_la_diffusion",
+       "target": "La diffusion",
+       "translationAr": "البث",
+       "phonetic": "لا دیفوزیون",
+       "emoji": "📡",
+       "exampleTarget": "La diffusion commence bientôt.",
+       "exampleAr": "يبدأ البث قريباً."
+      },
+      {
+       "id": "fr_le_présentateur",
+       "target": "Le présentateur",
+       "translationAr": "المذيع",
+       "phonetic": "لو پریزنتاتور",
+       "emoji": "🧑‍💼",
+       "exampleTarget": "Le présentateur sourit.",
+       "exampleAr": "يبتسم المذيع."
+      },
+      {
+       "id": "fr_le_journal_télévisé",
+       "target": "Le journal télévisé",
+       "translationAr": "نشرة الأخبار",
+       "phonetic": "لو ژورنال تلیویزے",
+       "emoji": "📺",
+       "exampleTarget": "Le journal télévisé dure une heure.",
+       "exampleAr": "تستمر نشرة الأخبار ساعة."
+      },
+      {
+       "id": "fr_linterview",
+       "target": "L'interview",
+       "translationAr": "المقابلة",
+       "phonetic": "لِنترویو",
+       "emoji": "🎙️",
+       "exampleTarget": "L'interview est en direct.",
+       "exampleAr": "المقابلة مباشرة."
+      },
+      {
+       "id": "fr_la_publicité",
+       "target": "La publicité",
+       "translationAr": "الإعلان",
+       "phonetic": "لا پوبلیسیتِه",
+       "emoji": "📢",
+       "exampleTarget": "La publicité interrompt le film.",
+       "exampleAr": "يقاطع الإعلان الفيلم."
+      },
+      {
+       "id": "fr_le_son",
+       "target": "Le son",
+       "translationAr": "الصوت",
+       "phonetic": "لو سون",
+       "emoji": "🔊",
+       "exampleTarget": "Le son est trop bas.",
+       "exampleAr": "الصوت منخفض جداً."
+      },
+      {
+       "id": "fr_limage",
+       "target": "L'image",
+       "translationAr": "الصورة",
+       "phonetic": "لیمارژ",
+       "emoji": "🖼️",
+       "exampleTarget": "L'image est floue.",
+       "exampleAr": "الصورة ضبابية."
+      },
+      {
+       "id": "fr_la_prise",
+       "target": "La prise",
+       "translationAr": "المقبس الكهربائي",
+       "phonetic": "لا پریز",
+       "emoji": "🔌",
+       "exampleTarget": "Branche la prise.",
+       "exampleAr": "أوصِل المقبس."
+      },
+      {
+       "id": "fr_le_sondage",
+       "target": "Le sondage",
+       "translationAr": "الاستطلاع",
+       "phonetic": "لو سونداژ",
+       "emoji": "📊",
+       "exampleTarget": "Le sondage prévoit la victoire.",
+       "exampleAr": "يتوقع الاستطلاع الفوز."
+      },
+      {
+       "id": "fr_laudience",
+       "target": "L'audience",
+       "translationAr": "نسبة المشاهدة",
+       "phonetic": "لُدیانس",
+       "emoji": "📈",
+       "exampleTarget": "L'audience a doublé.",
+       "exampleAr": "تضاعفت نسبة المشاهدة."
+      },
+      {
+       "id": "fr_les_chiffres",
+       "target": "Les chiffres",
+       "translationAr": "الأرقام",
+       "phonetic": "لی شیفِر",
+       "emoji": "🔢",
+       "exampleTarget": "Les chiffres montent.",
+       "exampleAr": "ترتفع الأرقام."
+      },
+      {
+       "id": "fr_les_faits",
+       "target": "Les faits",
+       "translationAr": "الوقائع",
+       "phonetic": "لی فِه",
+       "emoji": "✅",
+       "exampleTarget": "Les faits sont vérifiés.",
+       "exampleAr": "الوقائع موثّقة."
+      }
+     ]
+    },
+    {
+     "id": "fr_u20_l3",
+     "titleAr": "عالم الأخبار",
+     "titleEn": "Le monde de l’info",
+     "vocab": [
+      {
+       "id": "fr_lévénement",
+       "target": "L'événement",
+       "translationAr": "الحدث",
+       "phonetic": "لِیِفنمون",
+       "emoji": "🚨",
+       "exampleTarget": "Un événement majeur s'est produit.",
+       "exampleAr": "وقع حدث كبير."
+      },
+      {
+       "id": "fr_les_coulisses",
+       "target": "Les coulisses",
+       "translationAr": "الكواليس",
+       "phonetic": "لی کولیس",
+       "emoji": "🎭",
+       "exampleTarget": "Les coulisses du journal.",
+       "exampleAr": "كواليس الجريدة."
+      },
+      {
+       "id": "fr_le_bruit",
+       "target": "Le bruit",
+       "translationAr": "الضجيج",
+       "phonetic": "لو بروی",
+       "emoji": "🔉",
+       "exampleTarget": "Le bruit médiatique s'est calmé.",
+       "exampleAr": "هدأ الضجيج الإعلامي."
+      },
+      {
+       "id": "fr_la_source",
+       "target": "La source",
+       "translationAr": "المصدر",
+       "phonetic": "لا سورس",
+       "emoji": "⛲",
+       "exampleTarget": "Une source fiable.",
+       "exampleAr": "مصدر موثوق."
+      },
+      {
+       "id": "fr_la_rumeur",
+       "target": "La rumeur",
+       "translationAr": "الشائعة",
+       "phonetic": "لا ریمور",
+       "emoji": "🌀",
+       "exampleTarget": "La rumeur se répand vite.",
+       "exampleAr": "تنتشر الشائعة بسرعة."
+      },
+      {
+       "id": "fr_la_liberté_dexpression",
+       "target": "La liberté d'expression",
+       "translationAr": "حرية التعبير",
+       "phonetic": "لا لیبرتِ دِکسپرسیون",
+       "emoji": "🕊️",
+       "exampleTarget": "La liberté d'expression est un droit.",
+       "exampleAr": "حرية التعبير حق."
+      },
+      {
+       "id": "fr_la_censure",
+       "target": "La censure",
+       "translationAr": "الرقابة",
+       "phonetic": "لا سانسور",
+       "emoji": "🚧",
+       "exampleTarget": "La censure interdit le film.",
+       "exampleAr": "تحظر الرقابة الفيلم."
+      },
+      {
+       "id": "fr_le_citoyen",
+       "target": "Le citoyen",
+       "translationAr": "المواطن",
+       "phonetic": "لو سیتوایَن",
+       "emoji": "🧑",
+       "exampleTarget": "Le citoyen s'informe.",
+       "exampleAr": "يتثقّف المواطن."
+      },
+      {
+       "id": "fr_sinformer",
+       "target": "S'informer",
+       "translationAr": "يتثقّف",
+       "phonetic": "سِنفرمِه",
+       "emoji": "🧐",
+       "exampleTarget": "Il faut s’informer chaque jour.",
+       "exampleAr": "عليك التثقّف كل يوم."
+      },
+      {
+       "id": "fr_vérifier",
+       "target": "Vérifier",
+       "translationAr": "يتحقق",
+       "phonetic": "ڤریفِیہ",
+       "emoji": "☑️",
+       "exampleTarget": "Vérifie avant de partager.",
+       "exampleAr": "تحقّق قبل المشاركة."
+      },
+      {
+       "id": "fr_publier",
+       "target": "Publier",
+       "translationAr": "ينشر",
+       "phonetic": "پوبلیه",
+       "emoji": "📤",
+       "exampleTarget": "Le site publie chaque jour.",
+       "exampleAr": "ينشر الموقع كل يوم."
+      },
+      {
+       "id": "fr_le_témoignage",
+       "target": "Le témoignage",
+       "translationAr": "الشهادة",
+       "phonetic": "لو تِمواناژ",
+       "emoji": "🗣️",
+       "exampleTarget": "Son témoignage est crucial.",
+       "exampleAr": "شهادته حاسمة."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u21",
+   "color": "#1CB0F6",
+   "titleAr": "تعبيرات شعبية",
+   "titleEn": "French Idioms",
+   "cefr": "B2",
+   "lessons": [
+    {
+     "id": "fr_u21_l1",
+     "titleAr": "تعبيرات بالجسد",
+     "titleEn": "Expressions avec le corps",
+     "vocab": [
+      {
+       "id": "fr_avoir_le_cafard",
+       "target": "Avoir le cafard",
+       "translationAr": "يشعر بالكآبة",
+       "phonetic": "آڤوار لو کافار",
+       "emoji": "🪳",
+       "exampleTarget": "Il a le cafard aujourd'hui.",
+       "exampleAr": "هو كئيب اليوم."
+      },
+      {
+       "id": "fr_avoir_la_pêche",
+       "target": "Avoir la pêche",
+       "translationAr": "يشعر بالنشاط",
+       "phonetic": "آڤوار لا پش",
+       "emoji": "🍑",
+       "exampleTarget": "Je n'ai pas la pêche ce matin.",
+       "exampleAr": "لست بنشاط هذا الصباح."
+      },
+      {
+       "id": "fr_casser_les_pieds",
+       "target": "Casser les pieds",
+       "translationAr": "يزعج",
+       "phonetic": "کاسِه لِه پی",
+       "emoji": "🦶",
+       "exampleTarget": "Ce bruit me casse les pieds.",
+       "exampleAr": "هذا الضجيج يزعجني."
+      },
+      {
+       "id": "fr_coûter_les_yeux_de_la_tête",
+       "target": "Coûter les yeux de la tête",
+       "translationAr": "غالٍ جداً",
+       "phonetic": "کُوتے لی زِیِه دُ لا تِت",
+       "emoji": "👁️",
+       "exampleTarget": "Cette voiture coûte les yeux de la tête.",
+       "exampleAr": "هذه السيارة غالية جداً."
+      },
+      {
+       "id": "fr_tomber_dans_les_pommes",
+       "target": "Tomber dans les pommes",
+       "translationAr": "يُغشى عليه",
+       "phonetic": "تومِه دان لِه پوم",
+       "emoji": "🍎",
+       "exampleTarget": "Elle est tombée dans les pommes.",
+       "exampleAr": "أُغشي عليها."
+      },
+      {
+       "id": "fr_avoir_la_banane",
+       "target": "Avoir la banane",
+       "translationAr": "يبتسم ابتسامة عريضة",
+       "phonetic": "آڤوار لا بانان",
+       "emoji": "🍌",
+       "exampleTarget": "Il a la banane ce matin.",
+       "exampleAr": "مبتسم هذا الصباح."
+      },
+      {
+       "id": "fr_se_casser_la_tête",
+       "target": "Se casser la tête",
+       "translationAr": "يتعب رأسه في التفكير",
+       "phonetic": "سُ کاسِه لا تِت",
+       "emoji": "🤯",
+       "exampleTarget": "Ne te casse pas la tête.",
+       "exampleAr": "لا تتعب رأسك في التفكير."
+      },
+      {
+       "id": "fr_avoir_le_cœur_gros",
+       "target": "Avoir le cœur gros",
+       "translationAr": "مثقل بالحزن",
+       "phonetic": "آڤوار لو کُر گرو",
+       "emoji": "🥀",
+       "exampleTarget": "Il avait le cœur gros.",
+       "exampleAr": "كان مثقلاً بالحزن."
+      },
+      {
+       "id": "fr_montrer_les_dents",
+       "target": "Montrer les dents",
+       "translationAr": "يُظهر الأنياب",
+       "phonetic": "مونتره لِه دان",
+       "emoji": "🐺",
+       "exampleTarget": "Le chien montre les dents.",
+       "exampleAr": "يُظهر الكلب أنيابه."
+      },
+      {
+       "id": "fr_avoir_une_mémoire_déléphant",
+       "target": "Avoir une mémoire d'éléphant",
+       "translationAr": "ذاكرة قوية جداً",
+       "phonetic": "آڤوار اون میموار دِ لیفان",
+       "emoji": "🐘",
+       "exampleTarget": "Il a une mémoire d'éléphant.",
+       "exampleAr": "ذاكرته قوية كذاكرة الفيل."
+      },
+      {
+       "id": "fr_être_à_louest",
+       "target": "Être à l'ouest",
+       "translationAr": "مشتّت الذهن",
+       "phonetic": "إِتر ا لُوست",
+       "emoji": "🧭",
+       "exampleTarget": "Tu es à l'ouest ce matin !",
+       "exampleAr": "أنت مشتّت الذهن هذا الصباح!"
+      },
+      {
+       "id": "fr_avoir_des_fourmis",
+       "target": "Avoir des fourmis",
+       "translationAr": "تنمّل",
+       "phonetic": "آڤوار دِه فُرمی",
+       "emoji": "🐜",
+       "exampleTarget": "J'ai des fourmis dans la jambe.",
+       "exampleAr": "تنمّلت ساقي."
+      }
+     ]
+    },
+    {
+     "id": "fr_u21_l2",
+     "titleAr": "تعبيرات يومية",
+     "titleEn": "Expressions du quotidien",
+     "vocab": [
+      {
+       "id": "fr_poser_un_lapin",
+       "target": "Poser un lapin",
+       "translationAr": "يتخلّف عن الموعد",
+       "phonetic": "پوزِه اُن لَپان",
+       "emoji": "🐇",
+       "exampleTarget": "Il m'a posé un lapin.",
+       "exampleAr": "تخلّف عن موعدنا."
+      },
+      {
+       "id": "fr_en_faire_tout_un_fromage",
+       "target": "En faire tout un fromage",
+       "translationAr": "يبالغ في الأمر",
+       "phonetic": "آن فِر توت اُن فُروماژ",
+       "emoji": "🧀",
+       "exampleTarget": "N'en fais pas tout un fromage !",
+       "exampleAr": "لا تبالغ في الأمر!"
+      },
+      {
+       "id": "fr_il_pleut_des_cordes",
+       "target": "Il pleut des cordes",
+       "translationAr": "تمطر بغزارة",
+       "phonetic": "إل پلوه دِه کورد",
+       "emoji": "☔",
+       "exampleTarget": "Reste ici, il pleut des cordes.",
+       "exampleAr": "ابقَ هنا، إنها تمطر بغزارة."
+      },
+      {
+       "id": "fr_quand_les_poules_auront_des_dents",
+       "target": "Quand les poules auront des dents",
+       "translationAr": "لن يحدث أبداً",
+       "phonetic": "کان لِه پول ارون دِه دان",
+       "emoji": "🐔",
+       "exampleTarget": "Je paierai quand les poules auront des dents.",
+       "exampleAr": "لن أدفع أبداً."
+      },
+      {
+       "id": "fr_appeler_un_chat_un_chat",
+       "target": "Appeler un chat un chat",
+       "translationAr": "يسمّي الشيء باسمه",
+       "phonetic": "اپِله اُن شا اُن شا",
+       "emoji": "🐱",
+       "exampleTarget": "Appelons un chat un chat.",
+       "exampleAr": "لنسمِّ الشيء باسمه."
+      },
+      {
+       "id": "fr_mettre_la_main_à_la_pâte",
+       "target": "Mettre la main à la pâte",
+       "translationAr": "يشارك في العمل",
+       "phonetic": "مِتر لا مَن ا لا پات",
+       "emoji": "🥖",
+       "exampleTarget": "Aide-nous, mets la main à la pâte.",
+       "exampleAr": "ساعدنا وشارك في العمل."
+      },
+      {
+       "id": "fr_prendre_la_poudre_descampette",
+       "target": "Prendre la poudre d'escampette",
+       "translationAr": "يهرب",
+       "phonetic": "پراندِر لا پودر دِسکامپت",
+       "emoji": "🏃",
+       "exampleTarget": "Il a pris la poudre d'escampette.",
+       "exampleAr": "هرب مسرعاً."
+      },
+      {
+       "id": "fr_avoir_dautres_chats_à_fouetter",
+       "target": "Avoir d'autres chats à fouetter",
+       "translationAr": "لديه أمور أهم",
+       "phonetic": "آڤوار دُتر شا ا فوْیِه",
+       "emoji": "🐈‍⬛",
+       "exampleTarget": "J'ai d'autres chats à fouetter.",
+       "exampleAr": "لدي أمور أهم."
+      },
+      {
+       "id": "fr_revenir_à_ses_moutons",
+       "target": "Revenir à ses moutons",
+       "translationAr": "نعود لموضوعنا",
+       "phonetic": "رُوُنیر ا سِه موطون",
+       "emoji": "🐑",
+       "exampleTarget": "Revenons à nos moutons.",
+       "exampleAr": "لنعُد إلى موضوعنا."
+      },
+      {
+       "id": "fr_dormir_comme_un_loir",
+       "target": "Dormir comme un loir",
+       "translationAr": "ينام نوماً عميقاً",
+       "phonetic": "دُرمیر کُم اُن لوَر",
+       "emoji": "😴",
+       "exampleTarget": "Il dort comme un loir.",
+       "exampleAr": "ينام نوماً عميقاً."
+      },
+      {
+       "id": "fr_filer_à_langlaise",
+       "target": "Filer à l'anglaise",
+       "translationAr": "ينسحب بهدوء",
+       "phonetic": "فیله ا لانگلیز",
+       "emoji": "👻",
+       "exampleTarget": "Elle a filé à l’anglaise.",
+       "exampleAr": "انسحبت بهدوء."
+      },
+      {
+       "id": "fr_avoir_le_coup_de_foudre",
+       "target": "Avoir le coup de foudre",
+       "translationAr": "يقع في الحب من أول نظرة",
+       "phonetic": "آڤوار لو کو دُ فودر",
+       "emoji": "💘",
+       "exampleTarget": "J'ai eu le coup de foudre.",
+       "exampleAr": "قعنا في الحب من أول نظرة."
+      }
+     ]
+    },
+    {
+     "id": "fr_u21_l3",
+     "titleAr": "أرقام وحكمة",
+     "titleEn": "Nombres & sagesse",
+     "vocab": [
+      {
+       "id": "fr_deux_poids_deux_mesures",
+       "target": "Deux poids, deux mesures",
+       "translationAr": "معيار مزدوج",
+       "phonetic": "دُه پوا دُه موزور",
+       "emoji": "⚖️",
+       "exampleTarget": "C'est deux poids, deux mesures.",
+       "exampleAr": "هذا معيار مزدوج."
+      },
+      {
+       "id": "fr_cinq_sur_cinq",
+       "target": "Cinq sur cinq",
+       "translationAr": "ممتاز وكامل",
+       "phonetic": "سَنک سور سَنک",
+       "emoji": "💯",
+       "exampleTarget": "Sa réponse est cinq sur cinq.",
+       "exampleAr": "إجابته كاملة."
+      },
+      {
+       "id": "fr_en_un_clin_dœil",
+       "target": "En un clin d’œil",
+       "translationAr": "في لمح البصر",
+       "phonetic": "آن اُن کلَن دُ یِه",
+       "emoji": "👁️",
+       "exampleTarget": "Il a rangé en un clin d’œil.",
+       "exampleAr": "رتّب في لمح البصر."
+      },
+      {
+       "id": "fr_aux_quatre_coins",
+       "target": "Aux quatre coins",
+       "translationAr": "في كل مكان",
+       "phonetic": "او کاتر کوان",
+       "emoji": "🗺️",
+       "exampleTarget": "Aux quatre coins du monde.",
+       "exampleAr": "في كل أنحاء العالم."
+      },
+      {
+       "id": "fr_en_moins_de_deux",
+       "target": "En moins de deux",
+       "translationAr": "فوراً",
+       "phonetic": "آن موَن دُ دُه",
+       "emoji": "🚀",
+       "exampleTarget": "Prépare ça en moins de deux.",
+       "exampleAr": "جهّز ذلك فوراً."
+      },
+      {
+       "id": "fr_se_dire_les_quatre_vérités",
+       "target": "Se dire les quatre vérités",
+       "translationAr": "يقول الحقيقة بلا مجاملة",
+       "phonetic": "سُ دیر لِه کاتر ڤریتِه",
+       "emoji": "💬",
+       "exampleTarget": "Il s'est dit les quatre vérités.",
+       "exampleAr": "قال له الحقيقة بلا مجاملة."
+      },
+      {
+       "id": "fr_ne_faire_ni_une_ni_deux",
+       "target": "Ne faire ni une ni deux",
+       "translationAr": "لم يتردد",
+       "phonetic": "نُ فیر نی اُن نی دُه",
+       "emoji": "2️⃣",
+       "exampleTarget": "Ni une ni deux, il a sauté.",
+       "exampleAr": "لم يتردد فقفز."
+      },
+      {
+       "id": "fr_les_cinq_sens",
+       "target": "Les cinq sens",
+       "translationAr": "الحواس الخمس",
+       "phonetic": "لی سَنک سان",
+       "emoji": "👃",
+       "exampleTarget": "Utilise tes cinq sens.",
+       "exampleAr": "استخدم حواسّك الخمس."
+      },
+      {
+       "id": "fr_faire_dune_pierre_deux_coups",
+       "target": "Faire d'une pierre deux coups",
+       "translationAr": "يحقق هدفين بحجر واحد",
+       "phonetic": "فیر دُن پیر دُه کو",
+       "emoji": "🪨",
+       "exampleTarget": "On fait d'une pierre deux coups.",
+       "exampleAr": "نحقق هدفين بحجر واحد."
+      },
+      {
+       "id": "fr_être_à_cheval_sur",
+       "target": "Être à cheval sur",
+       "translationAr": "صارم في",
+       "phonetic": "إِتر ا شُوال سور",
+       "emoji": "🐎",
+       "exampleTarget": "Il est à cheval sur les règles.",
+       "exampleAr": "صارم في القواعد."
+      },
+      {
+       "id": "fr_cent_fois",
+       "target": "Cent fois",
+       "translationAr": "مئة مرة",
+       "phonetic": "سان فوا",
+       "emoji": "🔁",
+       "exampleTarget": "Je te l’ai dit cent fois.",
+       "exampleAr": "قلت لك مئة مرة."
+      },
+      {
+       "id": "fr_le_goût_du_risque",
+       "target": "Le goût du risque",
+       "translationAr": "حب المخاطرة",
+       "phonetic": "لو گو دُ ریسک",
+       "emoji": "🎲",
+       "exampleTarget": "Il a le goût du risque.",
+       "exampleAr": "يحب المخاطرة."
       }
      ]
     }

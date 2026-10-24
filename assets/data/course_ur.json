@@ -10,6 +10,7 @@
    "color": "#58CC02",
    "titleAr": "الأساسيات",
    "titleEn": "Basics",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "ur_u1_l1",
@@ -195,6 +196,7 @@
    "color": "#1CB0F6",
    "titleAr": "الأرقام والوقت",
    "titleEn": "Numbers & Time",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "ur_u2_l1",
@@ -403,6 +405,7 @@
    "color": "#CE82FF",
    "titleAr": "العائلة",
    "titleEn": "Family",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "ur_u3_l1",
@@ -579,6 +582,7 @@
    "color": "#FF9600",
    "titleAr": "الطعام والشراب",
    "titleEn": "Food & Drink",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "ur_u4_l1",
@@ -757,6 +761,7 @@
    "color": "#FFC800",
    "titleAr": "الألوان والأيام",
    "titleEn": "Colors & Days",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "ur_u5_l1",
@@ -898,6 +903,7 @@
    "color": "#A0522D",
    "titleAr": "الحيوانات",
    "titleEn": "Animals",
+   "cefr": "A1",
    "lessons": [
     {
      "id": "ur_u6_l1",
@@ -1039,6 +1045,7 @@
    "color": "#FF4B4B",
    "titleAr": "الحياة اليومية",
    "titleEn": "Daily Life",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "ur_u7_l1",
@@ -1166,6 +1173,7 @@
    "color": "#1CB0F6",
    "titleAr": "الطعام والشراب",
    "titleEn": "Food & Drink",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "ur_u8_l1",
@@ -1411,6 +1419,7 @@
    "color": "#CE82FF",
    "titleAr": "العمل والمهن",
    "titleEn": "Jobs & Work",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "ur_u9_l1",
@@ -1643,6 +1652,7 @@
    "color": "#FF9600",
    "titleAr": "السفر والحياة اليومية",
    "titleEn": "Travel & Daily Life",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "ur_u10_l1",
@@ -1882,6 +1892,7 @@
    "color": "#FF9600",
    "titleAr": "المنزل والمدينة",
    "titleEn": "Home & City",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "ur_u11_l1",
@@ -2197,6 +2208,7 @@
    "color": "#2B70C9",
    "titleAr": "المدرسة والعمل",
    "titleEn": "School & Work",
+   "cefr": "A2",
    "lessons": [
     {
      "id": "ur_u12_l1",
@@ -2506,6 +2518,7 @@
    "color": "#00CD9C",
    "titleAr": "الرياضة وأوقات الفراغ",
    "titleEn": "Sports & Free Time",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "ur_u13_l1",
@@ -2807,6 +2820,7 @@
    "color": "#CE82FF",
    "titleAr": "التقنية والحياة العصرية",
    "titleEn": "Technology",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "ur_u14_l1",
@@ -3118,6 +3132,7 @@
    "color": "#FF6FB5",
    "titleAr": "المطعم والطعام",
    "titleEn": "Restaurant & Food",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "ur_u15_l1",
@@ -3405,6 +3420,7 @@
    "color": "#58CC02",
    "titleAr": "الشخصية والصفات",
    "titleEn": "Personality",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "ur_u16_l1",
@@ -3690,6 +3706,7 @@
    "color": "#2B70C9",
    "titleAr": "المناسبات والأعياد",
    "titleEn": "Celebrations",
+   "cefr": "B1",
    "lessons": [
     {
      "id": "ur_u17_l1",
@@ -3965,6 +3982,1422 @@
        "translationAr": "العطر",
        "phonetic": "خوش-بو",
        "emoji": "🌸"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u18",
+   "color": "#FF6FB5",
+   "titleAr": "الصحة والجسم",
+   "titleEn": "Health & Body",
+   "cefr": "B1",
+   "lessons": [
+    {
+     "id": "ur_u18_l1",
+     "titleAr": "جسم کے حصے",
+     "titleEn": "Body parts",
+     "vocab": [
+      {
+       "id": "ur_سر",
+       "target": "سر",
+       "translationAr": "الرأس",
+       "phonetic": "سر",
+       "emoji": "👤",
+       "exampleTarget": "میرا سر درد کر رہا ہے",
+       "exampleAr": "رأسي يؤلمني"
+      },
+      {
+       "id": "ur_بازو",
+       "target": "بازو",
+       "translationAr": "الذراع",
+       "phonetic": "بازو",
+       "emoji": "💪",
+       "exampleTarget": "اس کا بازو مضبوط ہے",
+       "exampleAr": "ذراعه قوية"
+      },
+      {
+       "id": "ur_ٹانگ",
+       "target": "ٹانگ",
+       "translationAr": "الساق",
+       "phonetic": "ٹانگ",
+       "emoji": "🦵",
+       "exampleTarget": "میری ٹانگ میں درد ہے",
+       "exampleAr": "في ساقي ألم"
+      },
+      {
+       "id": "ur_دل",
+       "target": "دل",
+       "translationAr": "القلب",
+       "phonetic": "دل",
+       "emoji": "❤️",
+       "exampleTarget": "دل صاف ہونا چاہیے",
+       "exampleAr": "يجب أن يكون القلب صافياً"
+      },
+      {
+       "id": "ur_پیٹ",
+       "target": "پیٹ",
+       "translationAr": "المعدة",
+       "phonetic": "پیٹ",
+       "emoji": "🫄",
+       "exampleTarget": "پیٹ خراب ہے",
+       "exampleAr": "معدتي مضطربة"
+      },
+      {
+       "id": "ur_جسم",
+       "target": "جسم",
+       "translationAr": "الجسم",
+       "phonetic": "جسم",
+       "emoji": "🧍",
+       "exampleTarget": "جسم صحت مند ہے",
+       "exampleAr": "الجسم سليم"
+      },
+      {
+       "id": "ur_ناخن",
+       "target": "ناخن",
+       "translationAr": "الأظافر",
+       "phonetic": "ناخن",
+       "emoji": "💅",
+       "exampleTarget": "ناخن کاٹ لیں",
+       "exampleAr": "قلّم أظافرك"
+      },
+      {
+       "id": "ur_آنکھ",
+       "target": "آنکھ",
+       "translationAr": "العين",
+       "phonetic": "آنکھ",
+       "emoji": "👁️",
+       "exampleTarget": "آنکھوں کی روشنی",
+       "exampleAr": "نور العينين"
+      },
+      {
+       "id": "ur_کان",
+       "target": "کان",
+       "translationAr": "الأذن",
+       "phonetic": "کان",
+       "emoji": "👂",
+       "exampleTarget": "بچے کے کان نرم ہیں",
+       "exampleAr": "أذنا الطفل رخوتان"
+      },
+      {
+       "id": "ur_دانت",
+       "target": "دانت",
+       "translationAr": "الأسنان",
+       "phonetic": "دانت",
+       "emoji": "🦷",
+       "exampleTarget": "دانت صاف کریں",
+       "exampleAr": "نظّف أسنانك"
+      },
+      {
+       "id": "ur_ہاتھ",
+       "target": "ہاتھ",
+       "translationAr": "اليد",
+       "phonetic": "ہاتھ",
+       "emoji": "✋",
+       "exampleTarget": "ہاتھ دھو لیں",
+       "exampleAr": "اغسل يدك"
+      },
+      {
+       "id": "ur_پاؤں",
+       "target": "پاؤں",
+       "translationAr": "القدم",
+       "phonetic": "پاؤں",
+       "emoji": "🦶",
+       "exampleTarget": "پاؤں میں چوٹ ہے",
+       "exampleAr": "في قدمي إصابة"
+      }
+     ]
+    },
+    {
+     "id": "ur_u18_l2",
+     "titleAr": "صحت اور بیماری",
+     "titleEn": "Health & illness",
+     "vocab": [
+      {
+       "id": "ur_صحت",
+       "target": "صحت",
+       "translationAr": "الصحة",
+       "phonetic": "صحت",
+       "emoji": "🌿",
+       "exampleTarget": "صحت سب سے بڑی نعمت ہے",
+       "exampleAr": "الصحة أعظم نعمة"
+      },
+      {
+       "id": "ur_درد",
+       "target": "درد",
+       "translationAr": "الألم",
+       "phonetic": "درد",
+       "emoji": "😣",
+       "exampleTarget": "درد کم ہو رہا ہے",
+       "exampleAr": "يخفّ الألم"
+      },
+      {
+       "id": "ur_دوا",
+       "target": "دوا",
+       "translationAr": "الدواء",
+       "phonetic": "دوا",
+       "emoji": "💊",
+       "exampleTarget": "وقت پر دوا لو",
+       "exampleAr": "تناول الدواء في وقته"
+      },
+      {
+       "id": "ur_شفا",
+       "target": "شفا",
+       "translationAr": "الشفاء",
+       "phonetic": "شفا",
+       "emoji": "🕊️",
+       "exampleTarget": "اللہ شفا دے",
+       "exampleAr": "الله يمنح الشفاء"
+      },
+      {
+       "id": "ur_کلینک",
+       "target": "کلینک",
+       "translationAr": "العيادة",
+       "phonetic": "کلینک",
+       "emoji": "🏥",
+       "exampleTarget": "کلینک صبح سے کھلا ہے",
+       "exampleAr": "العيادة مفتوحة من الصباح"
+      },
+      {
+       "id": "ur_نسخہ",
+       "target": "نسخہ",
+       "translationAr": "الوصفة",
+       "phonetic": "نسخہ",
+       "emoji": "📜",
+       "exampleTarget": "ڈاکٹر نے نسخہ لکھا",
+       "exampleAr": "كتب الطبيب وصفة"
+      },
+      {
+       "id": "ur_بخار",
+       "target": "بخار",
+       "translationAr": "الحمى",
+       "phonetic": "بخار",
+       "emoji": "🌡️",
+       "exampleTarget": "اسے بخار ہے",
+       "exampleAr": "عنده حمى"
+      },
+      {
+       "id": "ur_کھانسی",
+       "target": "کھانسی",
+       "translationAr": "السعال",
+       "phonetic": "کھانسی",
+       "emoji": "🤧",
+       "exampleTarget": "کھانسی تھوڑی کم ہے",
+       "exampleAr": "خفّ السعال قليلاً"
+      },
+      {
+       "id": "ur_چوٹ",
+       "target": "چوٹ",
+       "translationAr": "الإصابة",
+       "phonetic": "چوٹ",
+       "emoji": "🤕",
+       "exampleTarget": "چوٹ تازہ ہے",
+       "exampleAr": "الإصابة حديثة"
+      },
+      {
+       "id": "ur_سکون",
+       "target": "سکون",
+       "translationAr": "السكينة",
+       "phonetic": "سکون",
+       "emoji": "😌",
+       "exampleTarget": "دل کو سکون ملتا ہے",
+       "exampleAr": "يجد القلب سكوناً"
+      },
+      {
+       "id": "ur_مریض",
+       "target": "مریض",
+       "translationAr": "المريض",
+       "phonetic": "مریض",
+       "emoji": "🤒",
+       "exampleTarget": "مریض سو رہا ہے",
+       "exampleAr": "المريض نائم"
+      },
+      {
+       "id": "ur_طبیب",
+       "target": "طبیب",
+       "translationAr": "الطبيب",
+       "phonetic": "طبیب",
+       "emoji": "🩺",
+       "exampleTarget": "طبیب معائنہ کر رہا ہے",
+       "exampleAr": "يفحص الطبيب"
+      }
+     ]
+    },
+    {
+     "id": "ur_u18_l3",
+     "titleAr": "علاج",
+     "titleEn": "Treatment",
+     "vocab": [
+      {
+       "id": "ur_علاج",
+       "target": "علاج",
+       "translationAr": "العلاج",
+       "phonetic": "علاج",
+       "emoji": "🧑‍⚕️",
+       "exampleTarget": "علاج جاری ہے",
+       "exampleAr": "العلاج جارٍ"
+      },
+      {
+       "id": "ur_ٹیکہ",
+       "target": "ٹیکہ",
+       "translationAr": "التطعيم",
+       "phonetic": "ٹیکہ",
+       "emoji": "💉",
+       "exampleTarget": "بچوں کو ٹیکہ لگوا دیں",
+       "exampleAr": "لقّحوا الأطفال"
+      },
+      {
+       "id": "ur_خوراک",
+       "target": "خوراک",
+       "translationAr": "الجرعة والغذاء",
+       "phonetic": "خوراک",
+       "emoji": "🍲",
+       "exampleTarget": "دوا کی خوراک بتائیں",
+       "exampleAr": "أخبرني بجرعة الدواء"
+      },
+      {
+       "id": "ur_معائنہ",
+       "target": "معائنہ",
+       "translationAr": "الفحص",
+       "phonetic": "معائنہ",
+       "emoji": "📋",
+       "exampleTarget": "معائنہ مکمل ہوا",
+       "exampleAr": "اكتمل الفحص"
+      },
+      {
+       "id": "ur_کمزور",
+       "target": "کمزور",
+       "translationAr": "ضعيف",
+       "phonetic": "کمزور",
+       "emoji": "🥀",
+       "exampleTarget": "بیمار کمزور ہے",
+       "exampleAr": "المريض ضعيف"
+      },
+      {
+       "id": "ur_توانا",
+       "target": "توانا",
+       "translationAr": "قوي متجدد",
+       "phonetic": "توانا",
+       "emoji": "💪",
+       "exampleTarget": "اب وہ توانا ہے",
+       "exampleAr": "هو الآن قوي"
+      },
+      {
+       "id": "ur_سانس",
+       "target": "سانس",
+       "translationAr": "التنفس",
+       "phonetic": "سانس",
+       "emoji": "🌬️",
+       "exampleTarget": "سانس لینا مشکل ہے",
+       "exampleAr": "التنفس صعب"
+      },
+      {
+       "id": "ur_نبض",
+       "target": "نبض",
+       "translationAr": "النبض",
+       "phonetic": "نبض",
+       "emoji": "💓",
+       "exampleTarget": "نبض تیز ہے",
+       "exampleAr": "النبض سريع"
+      },
+      {
+       "id": "ur_خون",
+       "target": "خون",
+       "translationAr": "الدم",
+       "phonetic": "خون",
+       "emoji": "🩸",
+       "exampleTarget": "خون کی جانچ",
+       "exampleAr": "تحليل الدم"
+      },
+      {
+       "id": "ur_صحت_مند",
+       "target": "صحت مند",
+       "translationAr": "معافى",
+       "phonetic": "صحت مند",
+       "emoji": "😊",
+       "exampleTarget": "اب وہ صحت مند ہے",
+       "exampleAr": "هو معافى الآن"
+      },
+      {
+       "id": "ur_حفاظتی",
+       "target": "حفاظتی",
+       "translationAr": "وقائي",
+       "phonetic": "حفاظتی",
+       "emoji": "🛡️",
+       "exampleTarget": "حفاظتی اقدامات اختیار کریں",
+       "exampleAr": "اتخذ إجراءات وقائية"
+      },
+      {
+       "id": "ur_بیمار",
+       "target": "بیمار",
+       "translationAr": "المتوعّك",
+       "phonetic": "بیمار",
+       "emoji": "🤢",
+       "exampleTarget": "بیمار کی دیکھ بھال کریں",
+       "exampleAr": "اعتنِ بالمريض"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u19",
+   "color": "#2B70C9",
+   "titleAr": "الطقس والفصول",
+   "titleEn": "Weather & Seasons",
+   "cefr": "B1",
+   "lessons": [
+    {
+     "id": "ur_u19_l1",
+     "titleAr": "موسم",
+     "titleEn": "Weather",
+     "vocab": [
+      {
+       "id": "ur_موسم",
+       "target": "موسم",
+       "translationAr": "الموسم والطقس",
+       "phonetic": "موسم",
+       "emoji": "🌤️",
+       "exampleTarget": "موسم خوشگوار ہے",
+       "exampleAr": "الطقس لطيف"
+      },
+      {
+       "id": "ur_ژالہ_باری",
+       "target": "ژالہ باری",
+       "translationAr": "تساقط البَرَد",
+       "phonetic": "ژالہ باری",
+       "emoji": "🌨️",
+       "exampleTarget": "ژالہ باری شروع ہو گئی",
+       "exampleAr": "بدأ تساقط البرد"
+      },
+      {
+       "id": "ur_برفباری",
+       "target": "برفباری",
+       "translationAr": "تساقط الثلج",
+       "phonetic": "برفباری",
+       "emoji": "❄️",
+       "exampleTarget": "برفباری سے سفر مشکل ہوا",
+       "exampleAr": "صعّب تساقط الثلج السفر"
+      },
+      {
+       "id": "ur_ٹھنڈی_ہوا",
+       "target": "ٹھنڈی ہوا",
+       "translationAr": "النسيم البارد",
+       "phonetic": "ٹھنڈی ہوا",
+       "emoji": "🍃",
+       "exampleTarget": "ٹھنڈی ہوا چل رہی ہے",
+       "exampleAr": "تهبّ نسيم بارد"
+      },
+      {
+       "id": "ur_دھوپ",
+       "target": "دھوپ",
+       "translationAr": "الشمس الحارقة",
+       "phonetic": "دھوپ",
+       "emoji": "☀️",
+       "exampleTarget": "دھوپ تیز ہے",
+       "exampleAr": "الشمس حارقة"
+      },
+      {
+       "id": "ur_بادل",
+       "target": "بادل",
+       "translationAr": "السحابة",
+       "phonetic": "بادل",
+       "emoji": "☁️",
+       "exampleTarget": "کالے بادل چھائے ہیں",
+       "exampleAr": "تغيّم بالسحب السوداء"
+      },
+      {
+       "id": "ur_طوفان",
+       "target": "طوفان",
+       "translationAr": "العاصفة",
+       "phonetic": "طوفان",
+       "emoji": "🌪️",
+       "exampleTarget": "طوفان آ رہا ہے",
+       "exampleAr": "عاصفة قادمة"
+      },
+      {
+       "id": "ur_بہار",
+       "target": "بہار",
+       "translationAr": "الربيع",
+       "phonetic": "بہار",
+       "emoji": "🌸",
+       "exampleTarget": "بہار کا موسم آ گیا",
+       "exampleAr": "حان ربيع"
+      },
+      {
+       "id": "ur_خزاں",
+       "target": "خزاں",
+       "translationAr": "الخريف",
+       "phonetic": "خزاں",
+       "emoji": "🍂",
+       "exampleTarget": "خزاں میں پتے گرتے ہیں",
+       "exampleAr": "في الخريف تتساقط الأوراق"
+      },
+      {
+       "id": "ur_سردی",
+       "target": "سردی",
+       "translationAr": "البرد",
+       "phonetic": "سردی",
+       "emoji": "🥶",
+       "exampleTarget": "سردی بہت ہے",
+       "exampleAr": "البرد شديد"
+      },
+      {
+       "id": "ur_گرمی",
+       "target": "گرمی",
+       "translationAr": "الحرارة",
+       "phonetic": "گرمی",
+       "emoji": "🥵",
+       "exampleTarget": "گرمی میں سایہ تلاش کریں",
+       "exampleAr": "في الحرارة ابحث عن ظل"
+      },
+      {
+       "id": "ur_درجۂ_حرارت",
+       "target": "درجۂ حرارت",
+       "translationAr": "درجة الحرارة",
+       "phonetic": "درجۂ حرارت",
+       "emoji": "🌡️",
+       "exampleTarget": "درجۂ حرارت بڑھ رہا ہے",
+       "exampleAr": "ترتفع درجة الحرارة"
+      }
+     ]
+    },
+    {
+     "id": "ur_u19_l2",
+     "titleAr": "آسمان اور موسم",
+     "titleEn": "Sky & weather",
+     "vocab": [
+      {
+       "id": "ur_آندھی",
+       "target": "آندھی",
+       "translationAr": "الإعصار",
+       "phonetic": "آندھی",
+       "emoji": "💨",
+       "exampleTarget": "آندھی نے درخت گرائے",
+       "exampleAr": "أقلعت الإعصار الأشجار"
+      },
+      {
+       "id": "ur_بجلی",
+       "target": "بجلی",
+       "translationAr": "البرق",
+       "phonetic": "بجلی",
+       "emoji": "⚡",
+       "exampleTarget": "بجلی گرجی",
+       "exampleAr": "مرّ البرق"
+      },
+      {
+       "id": "ur_گرج",
+       "target": "گرج",
+       "translationAr": "الرعد",
+       "phonetic": "گرج",
+       "emoji": "🌩️",
+       "exampleTarget": "گرج کی آواز",
+       "exampleAr": "صوت الرعد"
+      },
+      {
+       "id": "ur_دھند",
+       "target": "دھند",
+       "translationAr": "الضباب",
+       "phonetic": "دھند",
+       "emoji": "🌫️",
+       "exampleTarget": "دھند بڑھ گئی",
+       "exampleAr": "اشتدّ الضباب"
+      },
+      {
+       "id": "ur_مینہ",
+       "target": "مینہ",
+       "translationAr": "المطر",
+       "phonetic": "مینہ",
+       "emoji": "🌧️",
+       "exampleTarget": "مینہ برس رہی ہے",
+       "exampleAr": "تمطر السماء"
+      },
+      {
+       "id": "ur_پھوہار",
+       "target": "پھوہار",
+       "translationAr": "النافورة",
+       "phonetic": "پھوہار",
+       "emoji": "⛲",
+       "exampleTarget": "پھوہار چل رہے ہیں",
+       "exampleAr": "النوافير تعمل"
+      },
+      {
+       "id": "ur_سورج",
+       "target": "سورج",
+       "translationAr": "الشمس",
+       "phonetic": "سورج",
+       "emoji": "🌅",
+       "exampleTarget": "سورج نکل آیا",
+       "exampleAr": "طلعت الشمس"
+      },
+      {
+       "id": "ur_چاند",
+       "target": "چاند",
+       "translationAr": "القمر",
+       "phonetic": "چاند",
+       "emoji": "🌙",
+       "exampleTarget": "چاند پورا ہے",
+       "exampleAr": "اكتمل القمر"
+      },
+      {
+       "id": "ur_ستارے",
+       "target": "ستارے",
+       "translationAr": "النجوم",
+       "phonetic": "ستارے",
+       "emoji": "✨",
+       "exampleTarget": "آسمان پر ستارے",
+       "exampleAr": "نجوم في السماء"
+      },
+      {
+       "id": "ur_شبنم",
+       "target": "شبنم",
+       "translationAr": "الندى",
+       "phonetic": "شبنم",
+       "emoji": "💧",
+       "exampleTarget": "پتوں پر شبنم ہے",
+       "exampleAr": "ندى على الأوراق"
+      },
+      {
+       "id": "ur_سایہ",
+       "target": "سایہ",
+       "translationAr": "الظل",
+       "phonetic": "سایہ",
+       "emoji": "🌳",
+       "exampleTarget": "درخت کا سایہ",
+       "exampleAr": "ظل الشجرة"
+      },
+      {
+       "id": "ur_نمی",
+       "target": "نمی",
+       "translationAr": "الرطوبة",
+       "phonetic": "نمی",
+       "emoji": "💦",
+       "exampleTarget": "ہوا میں نمي ہے",
+       "exampleAr": "في الهواء رطوبة"
+      }
+     ]
+    },
+    {
+     "id": "ur_u19_l3",
+     "titleAr": "فصلوں کی تفصیل",
+     "titleEn": "Season details",
+     "vocab": [
+      {
+       "id": "ur_کلی",
+       "target": "کلی",
+       "translationAr": "البرعم",
+       "phonetic": "کلی",
+       "emoji": "🌿",
+       "exampleTarget": "کلیاں کھلنے لگیں",
+       "exampleAr": "بدأت البراعم بالتفتّح"
+      },
+      {
+       "id": "ur_پتہ",
+       "target": "پتہ",
+       "translationAr": "الورقة",
+       "phonetic": "پتہ",
+       "emoji": "🍁",
+       "exampleTarget": "پتے پیلے ہو گئے",
+       "exampleAr": "اصفرّت الأوراق"
+      },
+      {
+       "id": "ur_مہک",
+       "target": "مہک",
+       "translationAr": "العطر الفواح",
+       "phonetic": "مہک",
+       "emoji": "🌺",
+       "exampleTarget": "مہک پھیل گئی",
+       "exampleAr": "فاح العطر"
+      },
+      {
+       "id": "ur_کھیتی",
+       "target": "کھیتی",
+       "translationAr": "الزراعة",
+       "phonetic": "کھیتی",
+       "emoji": "🌾",
+       "exampleTarget": "کھیتی تیار ہے",
+       "exampleAr": "الحقل جاهز"
+      },
+      {
+       "id": "ur_فصل",
+       "target": "فصل",
+       "translationAr": "المحصول",
+       "phonetic": "فصل",
+       "emoji": "🌱",
+       "exampleTarget": "فصل کاٹ لی گئی",
+       "exampleAr": "حُصد المحصول"
+      },
+      {
+       "id": "ur_آب_و_ہوا",
+       "target": "آب و ہوا",
+       "translationAr": "المناخ",
+       "phonetic": "آب و ہوا",
+       "emoji": "🌍",
+       "exampleTarget": "آب و ہوا موزوں ہے",
+       "exampleAr": "المناخ معتدل"
+      },
+      {
+       "id": "ur_قحط",
+       "target": "قحط",
+       "translationAr": "الجفاف والمجاعة",
+       "phonetic": "قحط",
+       "emoji": "🏜️",
+       "exampleTarget": "قحط کی نوبت آئی",
+       "exampleAr": "حلّت سنوات القحط"
+      },
+      {
+       "id": "ur_سیلاب",
+       "target": "سیلاب",
+       "translationAr": "الفيضان",
+       "phonetic": "سیلاب",
+       "emoji": "🌊",
+       "exampleTarget": "سیلاب نے راستہ بند کیا",
+       "exampleAr": "أغلق الفيضان الطريق"
+      },
+      {
+       "id": "ur_چشمہ",
+       "target": "چشمہ",
+       "translationAr": "النبع",
+       "phonetic": "چشمہ",
+       "emoji": "♨️",
+       "exampleTarget": "چشمہ پہاڑ سے نکلا",
+       "exampleAr": "انبعث النبع من الجبل"
+      },
+      {
+       "id": "ur_برسات",
+       "target": "برسات",
+       "translationAr": "موسم الأمطار",
+       "phonetic": "برسات",
+       "emoji": "☔",
+       "exampleTarget": "برسات شروع ہو گئی",
+       "exampleAr": "بدأ موسم الأمطار"
+      },
+      {
+       "id": "ur_چھتر",
+       "target": "چھتر",
+       "translationAr": "المظلة",
+       "phonetic": "چھتر",
+       "emoji": "☂️",
+       "exampleTarget": "چھتر ساتھ رکھیں",
+       "exampleAr": "خذ معك المظلة"
+      },
+      {
+       "id": "ur_خوشگوار",
+       "target": "خوشگوار",
+       "translationAr": "لطيف",
+       "phonetic": "خوشگوار",
+       "emoji": "🤗",
+       "exampleTarget": "موسم خوشگوار گزرے",
+       "exampleAr": "أمضِ موسماً لطيفاً"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u20",
+   "color": "#58CC02",
+   "titleAr": "الأخبار والإعلام",
+   "titleEn": "News & Media",
+   "cefr": "B1",
+   "lessons": [
+    {
+     "id": "ur_u20_l1",
+     "titleAr": "خبر اور اخبارات",
+     "titleEn": "News & newspapers",
+     "vocab": [
+      {
+       "id": "ur_خبر",
+       "target": "خبر",
+       "translationAr": "الخبر",
+       "phonetic": "خبر",
+       "emoji": "📰",
+       "exampleTarget": "خبر پھیل گئی",
+       "exampleAr": "انتشر الخبر"
+      },
+      {
+       "id": "ur_اخبارات",
+       "target": "اخبارات",
+       "translationAr": "الجرائد",
+       "phonetic": "اخبارات",
+       "emoji": "🗞️",
+       "exampleTarget": "اخبارات پڑھنے کی عادت ہے",
+       "exampleAr": "عادة قراءة الجرائد"
+      },
+      {
+       "id": "ur_صحافی",
+       "target": "صحافی",
+       "translationAr": "الصحفي",
+       "phonetic": "صحافی",
+       "emoji": "✍️",
+       "exampleTarget": "صحافی نے سوال کیا",
+       "exampleAr": "سأل الصحفي"
+      },
+      {
+       "id": "ur_میڈیا",
+       "target": "میڈیا",
+       "translationAr": "وسائل الإعلام",
+       "phonetic": "میڈیا",
+       "emoji": "📺",
+       "exampleTarget": "میڈیا طاقتور ہے",
+       "exampleAr": "وسائل الإعلام قوية"
+      },
+      {
+       "id": "ur_نشریات",
+       "target": "نشریات",
+       "translationAr": "البث",
+       "phonetic": "نشریات",
+       "emoji": "📡",
+       "exampleTarget": "نشریات زندہ ہیں",
+       "exampleAr": "البث مباشر"
+      },
+      {
+       "id": "ur_چینل",
+       "target": "چینل",
+       "translationAr": "القناة",
+       "phonetic": "چینل",
+       "emoji": "🎦",
+       "exampleTarget": "چینل بدل دیں",
+       "exampleAr": "غيّر القناة"
+      },
+      {
+       "id": "ur_اعلان",
+       "target": "اعلان",
+       "translationAr": "الإعلان",
+       "phonetic": "اعلان",
+       "emoji": "📢",
+       "exampleTarget": "اعلان وقفے میں آیا",
+       "exampleAr": "جاء الإعلان في الفاصل"
+      },
+      {
+       "id": "ur_سرخی",
+       "target": "سرخی",
+       "translationAr": "العنوان الرئيسي",
+       "phonetic": "سرخی",
+       "emoji": "📌",
+       "exampleTarget": "سرخی چوک میں چھپی",
+       "exampleAr": "طُبع العنوان في الصفحة الأولى"
+      },
+      {
+       "id": "ur_پروگرام",
+       "target": "پروگرام",
+       "translationAr": "البرنامج",
+       "phonetic": "پروگرام",
+       "emoji": "📻",
+       "exampleTarget": "پروگرام دلچسپ ہے",
+       "exampleAr": "البرنامج ممتع"
+      },
+      {
+       "id": "ur_کیمرہ",
+       "target": "کیمرہ",
+       "translationAr": "الكاميرا",
+       "phonetic": "کیمرہ",
+       "emoji": "📷",
+       "exampleTarget": "کیمرہ آن کریں",
+       "exampleAr": "شغّل الكاميرا"
+      },
+      {
+       "id": "ur_عوام",
+       "target": "عوام",
+       "translationAr": "الشعب",
+       "phonetic": "عوام",
+       "emoji": "🧑‍🤝‍🧑",
+       "exampleTarget": "عوام کی رائے اہم ہے",
+       "exampleAr": "رأي الشعب مهم"
+      },
+      {
+       "id": "ur_معلومات",
+       "target": "معلومات",
+       "translationAr": "المعلومات",
+       "phonetic": "معلومات",
+       "emoji": "ℹ️",
+       "exampleTarget": "معلومات درست ہونی چاہییں",
+       "exampleAr": "يجب أن تكون المعلومات صحيحة"
+      }
+     ]
+    },
+    {
+     "id": "ur_u20_l2",
+     "titleAr": "ریڈیو اور ٹی وی",
+     "titleEn": "Radio & TV",
+     "vocab": [
+      {
+       "id": "ur_ریڈیو",
+       "target": "ریڈیو",
+       "translationAr": "الراديو",
+       "phonetic": "ریڈیو",
+       "emoji": "📻",
+       "exampleTarget": "ریڈیو پر خبر سنی",
+       "exampleAr": "سمعت الخبر في الراديو"
+      },
+      {
+       "id": "ur_سیٹلائٹ",
+       "target": "سیٹلائٹ",
+       "translationAr": "القمر الصناعي",
+       "phonetic": "سیٹلائٹ",
+       "emoji": "🛰️",
+       "exampleTarget": "سیٹلائٹ سے نشریات آتی ہیں",
+       "exampleAr": "تأتي البث من القمر الصناعي"
+      },
+      {
+       "id": "ur_براہِ_راست",
+       "target": "براہِ راست",
+       "translationAr": "مباشرة",
+       "phonetic": "براہِ راست",
+       "emoji": "🔴",
+       "exampleTarget": "براہِ راست نشریات",
+       "exampleAr": "بث مباشر"
+      },
+      {
+       "id": "ur_پیش_کنندہ",
+       "target": "پیش کنندہ",
+       "translationAr": "المقدّم",
+       "phonetic": "پیش کنندہ",
+       "emoji": "🎤",
+       "exampleTarget": "پیش کنندہ نے تعارف کروایا",
+       "exampleAr": "قدّم المقدّم التعريف"
+      },
+      {
+       "id": "ur_حاضرین",
+       "target": "حاضرین",
+       "translationAr": "الحاضرون",
+       "phonetic": "حاضرین",
+       "emoji": "🎩",
+       "exampleTarget": "حاضرین نے داد دی",
+       "exampleAr": "صفّق الحاضرون"
+      },
+      {
+       "id": "ur_سکرپٹ",
+       "target": "سکرپٹ",
+       "translationAr": "النص",
+       "phonetic": "سکرپٹ",
+       "emoji": "📄",
+       "exampleTarget": "سکرپٹ یاد کر لیا",
+       "exampleAr": "حفظ النص"
+      },
+      {
+       "id": "ur_ناظرین",
+       "target": "ناظرین",
+       "translationAr": "المشاهدون",
+       "phonetic": "ناظرین",
+       "emoji": "👀",
+       "exampleTarget": "ناظرین کی تعداد بڑھی",
+       "exampleAr": "زاد عدد المشاهدين"
+      },
+      {
+       "id": "ur_انٹرویو",
+       "target": "انٹرویو",
+       "translationAr": "المقابلة",
+       "phonetic": "انٹرویو",
+       "emoji": "🎙️",
+       "exampleTarget": "انٹرویو ریکارڈ ہوا",
+       "exampleAr": "سُجّلت المقابلة"
+      },
+      {
+       "id": "ur_جانچ",
+       "target": "جانچ",
+       "translationAr": "التحقق",
+       "phonetic": "جانچ",
+       "emoji": "🔬",
+       "exampleTarget": "خبر کی جانچ ہوئی",
+       "exampleAr": "جرى التحقق من الخبر"
+      },
+      {
+       "id": "ur_منظر",
+       "target": "منظر",
+       "translationAr": "المشهد",
+       "phonetic": "منظر",
+       "emoji": "🎞️",
+       "exampleTarget": "آخری منظر شاندار تھا",
+       "exampleAr": "كان المشهد الأخير رائعاً"
+      },
+      {
+       "id": "ur_آواز",
+       "target": "آواز",
+       "translationAr": "الصوت",
+       "phonetic": "آواز",
+       "emoji": "🔊",
+       "exampleTarget": "آواز صاف نہیں",
+       "exampleAr": "الصوت غير واضح"
+      },
+      {
+       "id": "ur_رنگین_پردہ",
+       "target": "رنگین پردہ",
+       "translationAr": "الشاشة الملونة",
+       "phonetic": "رنگین پردہ",
+       "emoji": "🎨",
+       "exampleTarget": "رنگین پردہ روشن ہے",
+       "exampleAr": "الشاشة الملونة مضيئة"
+      }
+     ]
+    },
+    {
+     "id": "ur_u20_l3",
+     "titleAr": "میڈیا اور سچ",
+     "titleEn": "Media & truth",
+     "vocab": [
+      {
+       "id": "ur_سچ",
+       "target": "سچ",
+       "translationAr": "الحقيقة",
+       "phonetic": "سچ",
+       "emoji": "🤍",
+       "exampleTarget": "سچ بولنا اچھی عادت ہے",
+       "exampleAr": "قول الحقيقة عادة حسنة"
+      },
+      {
+       "id": "ur_جھوٹ",
+       "target": "جھوٹ",
+       "translationAr": "الكذب",
+       "phonetic": "جھوٹ",
+       "emoji": "👎",
+       "exampleTarget": "جھوٹ نقصان دہ ہے",
+       "exampleAr": "الكذب ضار"
+      },
+      {
+       "id": "ur_شہرت",
+       "target": "شہرت",
+       "translationAr": "الشهرة",
+       "phonetic": "شہرت",
+       "emoji": "🌟",
+       "exampleTarget": "شہرت ذمہ داری ہے",
+       "exampleAr": "الشهرة مسؤولية"
+      },
+      {
+       "id": "ur_تنقید",
+       "target": "تنقید",
+       "translationAr": "النقد",
+       "phonetic": "تنقید",
+       "emoji": "✒️",
+       "exampleTarget": "تنقید برداشت کریں",
+       "exampleAr": "تقبّل النقد"
+      },
+      {
+       "id": "ur_رائے",
+       "target": "رائے",
+       "translationAr": "الرأي",
+       "phonetic": "رائے",
+       "emoji": "💭",
+       "exampleTarget": "ہر ایک کی رائے ہے",
+       "exampleAr": "لكل شخص رأي"
+      },
+      {
+       "id": "ur_بحث",
+       "target": "بحث",
+       "translationAr": "النقاش",
+       "phonetic": "بحث",
+       "emoji": "🗣️",
+       "exampleTarget": "بحث مؤدبانہ کریں",
+       "exampleAr": "ناقش بأدب"
+      },
+      {
+       "id": "ur_حکم",
+       "target": "حکم",
+       "translationAr": "الحكم",
+       "phonetic": "حکم",
+       "emoji": "⚖️",
+       "exampleTarget": "عدالت نے حکم دیا",
+       "exampleAr": "أصدرت المحكمة حكمها"
+      },
+      {
+       "id": "ur_تفصیل",
+       "target": "تفصیل",
+       "translationAr": "التفاصيل",
+       "phonetic": "تفصیل",
+       "emoji": "📑",
+       "exampleTarget": "تفصیل اگلی خبر میں",
+       "exampleAr": "التفاصيل في الخبر التالي"
+      },
+      {
+       "id": "ur_تلخیص",
+       "target": "تلخیص",
+       "translationAr": "الملخص",
+       "phonetic": "تلخیص",
+       "emoji": "📝",
+       "exampleTarget": "تلخیص پیش کریں",
+       "exampleAr": "قدّم ملخصاً"
+      },
+      {
+       "id": "ur_شواہد",
+       "target": "شواہد",
+       "translationAr": "الأدلة",
+       "phonetic": "شواہد",
+       "emoji": "🧾",
+       "exampleTarget": "شواہد جمع کیے",
+       "exampleAr": "جمع الأدلة"
+      },
+      {
+       "id": "ur_ذرائع_ابلاغ",
+       "target": "ذرائع ابلاغ",
+       "translationAr": "وسائل البث",
+       "phonetic": "ذرائع ابلاغ",
+       "emoji": "🛰️",
+       "exampleTarget": "ذرائع ابلاغ بہت تیز ہیں",
+       "exampleAr": "وسائل الإعلام سريعة جداً"
+      },
+      {
+       "id": "ur_شعور",
+       "target": "شعور",
+       "translationAr": "الوعي",
+       "phonetic": "شعور",
+       "emoji": "🧠",
+       "exampleTarget": "میڈیا شعور بڑھاتا ہے",
+       "exampleAr": "يرفع الإعلام الوعي"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u21",
+   "color": "#1CB0F6",
+   "titleAr": "تعبيرات شعبية",
+   "titleEn": "Urdu Idioms",
+   "cefr": "B2",
+   "lessons": [
+    {
+     "id": "ur_u21_l1",
+     "titleAr": "جسم والی محاورے",
+     "titleEn": "Body idioms",
+     "vocab": [
+      {
+       "id": "ur_آنکھ_کا_تارا",
+       "target": "آنکھ کا تارا",
+       "translationAr": "نور العين",
+       "phonetic": "آنکھ کا تارا",
+       "emoji": "🌟",
+       "exampleTarget": "بیٹا آنکھ کا تارا ہے",
+       "exampleAr": "الابن نور العين"
+      },
+      {
+       "id": "ur_ناک_میں_دم_کرنا",
+       "target": "ناک میں دم کرنا",
+       "translationAr": "يزعج جداً",
+       "phonetic": "ناک میں دم کرنا",
+       "emoji": "😤",
+       "exampleTarget": "اس نے ناک میں دم کر دیا",
+       "exampleAr": "أزعجني جداً"
+      },
+      {
+       "id": "ur_ہاتھ_بٹانا",
+       "target": "ہاتھ بٹانا",
+       "translationAr": "يمدّ يد العون",
+       "phonetic": "ہاتھ بٹانا",
+       "emoji": "🤲",
+       "exampleTarget": "مشکل میں ہاتھ بٹائیے",
+       "exampleAr": "ساعدنا في الشدة"
+      },
+      {
+       "id": "ur_دل_ٹوٹنا",
+       "target": "دل ٹوٹنا",
+       "translationAr": "ينكسر قلبه",
+       "phonetic": "دل ٹوٹنا",
+       "emoji": "💔",
+       "exampleTarget": "ناکامی سے دل ٹوٹ گیا",
+       "exampleAr": "كسره الفشل"
+      },
+      {
+       "id": "ur_گلے_پڑنا",
+       "target": "گلے پڑنا",
+       "translationAr": "يُلحّ عليّ",
+       "phonetic": "گلے پڑنا",
+       "emoji": "🫱",
+       "exampleTarget": "وہ گلے پڑ رہا ہے",
+       "exampleAr": "هو يلحّ عليّ"
+      },
+      {
+       "id": "ur_پانی_پانی_ہونا",
+       "target": "پانی پانی ہونا",
+       "translationAr": "يخجل",
+       "phonetic": "پانی پانی ہونا",
+       "emoji": "💧",
+       "exampleTarget": "غلطی پر پانی پانی ہو گیا",
+       "exampleAr": "خجل من خطئه"
+      },
+      {
+       "id": "ur_دال_نہ_گلنا",
+       "target": "دال نہ گلنا",
+       "translationAr": "لم يُقنع",
+       "phonetic": "دال نہ گلنا",
+       "emoji": "🍲",
+       "exampleTarget": "اس کی باتوں پر دال نہ گلے",
+       "exampleAr": "لم تُقنِه كلماته"
+      },
+      {
+       "id": "ur_آسمان_سے_گرانا",
+       "target": "آسمان سے گرانا",
+       "translationAr": "يمجّح بالمبالغة",
+       "phonetic": "آسمان سے گرانا",
+       "emoji": "🏔️",
+       "exampleTarget": "تعریف کر کے آسمان سے گرایا",
+       "exampleAr": "أمجحه حتى المبالغة"
+      },
+      {
+       "id": "ur_دو_ٹوک_بات",
+       "target": "دو ٹوک بات",
+       "translationAr": "كلام صريح",
+       "phonetic": "دو ٹوک بات",
+       "emoji": "✂️",
+       "exampleTarget": "دو ٹوک بات کیجیے",
+       "exampleAr": "قل كلامك صريحاً"
+      },
+      {
+       "id": "ur_دل_جیتنا",
+       "target": "دل جیتنا",
+       "translationAr": "يفوز بالقلوب",
+       "phonetic": "دل جیتنا",
+       "emoji": "🏆",
+       "exampleTarget": "دل جیت لیا",
+       "exampleAr": "فاز بالقلوب"
+      },
+      {
+       "id": "ur_منہ_میں_پانی_بھرنا",
+       "target": "منہ میں پانی بھرنا",
+       "translationAr": "يُسكِت",
+       "phonetic": "منہ میں پانی بھرنا",
+       "emoji": "🤐",
+       "exampleTarget": "جواب نے منہ میں پانی بھر دیا",
+       "exampleAr": "أفق الرُّدُّ كل لسان"
+      },
+      {
+       "id": "ur_ایڑی_چبیانا",
+       "target": "ایڑی چبیانا",
+       "translationAr": "يماطل",
+       "phonetic": "ایڑی چبیانا",
+       "emoji": "🐌",
+       "exampleTarget": "کام میں ایڑی نہ چبیاو",
+       "exampleAr": "لا تماطل في العمل"
+      }
+     ]
+    },
+    {
+     "id": "ur_u21_l2",
+     "titleAr": "روزمرہ محاورے",
+     "titleEn": "Daily idioms",
+     "vocab": [
+      {
+       "id": "ur_آنا_کانا",
+       "target": "آنا کانا",
+       "translationAr": "يتردد",
+       "phonetic": "آنا کانا",
+       "emoji": "🤨",
+       "exampleTarget": "وہ آنا کانا کرتا ہے",
+       "exampleAr": "هو يتردد"
+      },
+      {
+       "id": "ur_آنکھیں_دکھانا",
+       "target": "آنکھیں دکھانا",
+       "translationAr": "يحدّق بغضب",
+       "phonetic": "آنکھیں دکھانا",
+       "emoji": "😠",
+       "exampleTarget": "استاد نے آنکھیں دکھائیں",
+       "exampleAr": "حدّق المعلم غاضباً"
+      },
+      {
+       "id": "ur_خاک_چھانٹنا",
+       "target": "خاک چھانٹنا",
+       "translationAr": "ينتظر طويلاً",
+       "phonetic": "خاک چھانٹنا",
+       "emoji": "⏳",
+       "exampleTarget": "بوڑھے نے خاک چھانٹی",
+       "exampleAr": "انتظر الشيخ طويلاً"
+      },
+      {
+       "id": "ur_لوہے_کے_چنے",
+       "target": "لوہے کے چنے",
+       "translationAr": "مهمات صعبة",
+       "phonetic": "لوہے کے چنے",
+       "emoji": "⛰️",
+       "exampleTarget": "آگے لوہے کے چنے ہیں",
+       "exampleAr": "أمامك مهمات صعبة"
+      },
+      {
+       "id": "ur_آسیں_پر_رکھنا",
+       "target": "آسیں پر رکھنا",
+       "translationAr": "يريح من القلق",
+       "phonetic": "آسیں پر رکھنا",
+       "emoji": "🧘",
+       "exampleTarget": "بات نے آسیں پر رکھ دیا",
+       "exampleAr": "أراح الكلامُ من القلق"
+      },
+      {
+       "id": "ur_دل_پر_نہ_لینا",
+       "target": "دل پر نہ لینا",
+       "translationAr": "لا يأخذ الأمر على قلبه",
+       "phonetic": "دل پر نہ لینا",
+       "emoji": "🫶",
+       "exampleTarget": "بات کو دل پر نہ لو",
+       "exampleAr": "لا تأخذ الأمر على قلبك"
+      },
+      {
+       "id": "ur_اونٹ_کے_منہ_میں_کھرا",
+       "target": "اونٹ کے منہ میں کھرا",
+       "translationAr": "جهد في غير موضعه",
+       "phonetic": "اونٹ کے منہ میں کھرا",
+       "emoji": "🐫",
+       "exampleTarget": "اس کو نصیحت، اونٹ کے منہ میں کھرا",
+       "exampleAr": "نصحه جهداً ضائعاً"
+      },
+      {
+       "id": "ur_چراغ_رکھنا",
+       "target": "چراغ رکھنا",
+       "translationAr": "أكرم الضيف",
+       "phonetic": "چراغ رکھنا",
+       "emoji": "🕯️",
+       "exampleTarget": "مہمانوں کا چراغ رکھا",
+       "exampleAr": "أكرم ضيوفه"
+      },
+      {
+       "id": "ur_منہ_کالا_کرنا",
+       "target": "منہ کالا کرنا",
+       "translationAr": "يشوّه السمعة",
+       "phonetic": "منہ کالا کرنا",
+       "emoji": "🖤",
+       "exampleTarget": "کام خراب کر منہ کالا کیا",
+       "exampleAr": "أفسد سمعته"
+      },
+      {
+       "id": "ur_دودھ_کا_دودھ",
+       "target": "دودھ کا دودھ",
+       "translationAr": "يظهر الحق",
+       "phonetic": "دودھ کا دودھ",
+       "emoji": "🥛",
+       "exampleTarget": "تحقیق نے دودھ کا دودھ کر دیا",
+       "exampleAr": "أثبت التحقيق الحق"
+      },
+      {
+       "id": "ur_ایک_ہاتھ_سے_تالی_نہیں_بجتی",
+       "target": "ایک ہاتھ سے تالی نہیں بجتی",
+       "translationAr": "التأيّد من طرفين",
+       "phonetic": "ایک ہاتھ سے تالی نہیں بجتی",
+       "emoji": "👏",
+       "exampleTarget": "یاد رکھیے، ایک ہاتھ سے تالی نہیں بجتی",
+       "exampleAr": "تذكّر أن التصفيق يحتاج كفّين"
+      },
+      {
+       "id": "ur_بات_کا_بات_میں_جواب",
+       "target": "بات کا بات میں جواب",
+       "translationAr": "يردّ بأدق الجوابات",
+       "phonetic": "بات کا بات میں جواب",
+       "emoji": "🎯",
+       "exampleTarget": "اس نے بات کا بات میں جواب دیا",
+       "exampleAr": "ردّ بالجواب الأدق"
+      }
+     ]
+    },
+    {
+     "id": "ur_u21_l3",
+     "titleAr": "مشورے والے محاورے",
+     "titleEn": "Wisdom idioms",
+     "vocab": [
+      {
+       "id": "ur_اپنی_گدھی_پر_چڑھنا",
+       "target": "اپنی گدھی پر چڑھنا",
+       "translationAr": "يتصرف بحماقة",
+       "phonetic": "اپنی گدھی پر چڑھنا",
+       "emoji": "🫏",
+       "exampleTarget": "اب اپنی گدھی پر نہ چڑھیے",
+       "exampleAr": "لا تتصرف بتهور"
+      },
+      {
+       "id": "ur_کان_بھرنا",
+       "target": "کان بھرنا",
+       "translationAr": "يوشّي",
+       "phonetic": "کان بھرنا",
+       "emoji": "👂",
+       "exampleTarget": "اس نے کان بھرے",
+       "exampleAr": "وشّى فيه"
+      },
+      {
+       "id": "ur_دوستی_نبھانا",
+       "target": "دوستی نبھانا",
+       "translationAr": "يحفظ الصداقة",
+       "phonetic": "دوستی نبھانا",
+       "emoji": "🫂",
+       "exampleTarget": "دوستی نبھائے رکھیے",
+       "exampleAr": "حافظ على الصداقة"
+      },
+      {
+       "id": "ur_سچ_کڑوا_ہوتا_ہے",
+       "target": "سچ کڑوا ہوتا ہے",
+       "translationAr": "الحقيقة مرّة",
+       "phonetic": "سچ کڑوا ہوتا ہے",
+       "emoji": "🍋",
+       "exampleTarget": "یاد رکھیے، سچ کڑوا ہوتا ہے",
+       "exampleAr": "تذكّر أن الحقيقة مرّة"
+      },
+      {
+       "id": "ur_وقت_پہ_برسنا",
+       "target": "وقت پہ برسنا",
+       "translationAr": "يحضر في وقته",
+       "phonetic": "وقت پہ برسنا",
+       "emoji": "⏱️",
+       "exampleTarget": "بارش وقت پہ برسی",
+       "exampleAr": "أمطرت في وقتها"
+      },
+      {
+       "id": "ur_گل_سیس_پہ_رکھنا",
+       "target": "گل سیس پہ رکھنا",
+       "translationAr": "يحمل إجلالاً",
+       "phonetic": "گل سیس پہ رکھنا",
+       "emoji": "👑",
+       "exampleTarget": "مہمانوں کو گل سیس پہ رکھا",
+       "exampleAr": "أحسن ضيافة الضيوف"
+      },
+      {
+       "id": "ur_آنکھوں_میں_رہنا",
+       "target": "آنکھوں میں رہنا",
+       "translationAr": "عزيز في القلب",
+       "phonetic": "آنکھوں میں رہنا",
+       "emoji": "💖",
+       "exampleTarget": "دادا آنکھوں میں رہتے ہیں",
+       "exampleAr": "الجد عزيز في القلب"
+      },
+      {
+       "id": "ur_پانی_میں_آگ_لگانا",
+       "target": "پانی میں آگ لگانا",
+       "translationAr": "عمل مستحيل",
+       "phonetic": "پانی میں آگ لگانا",
+       "emoji": "🔥",
+       "exampleTarget": "یہ پانی میں آگ لگانا ہے",
+       "exampleAr": "هذا عمل مستحيل"
+      },
+      {
+       "id": "ur_بل_کھانا",
+       "target": "بل کھانا",
+       "translationAr": "يتألم بلا سبب",
+       "phonetic": "بل کھانا",
+       "emoji": "😩",
+       "exampleTarget": "بے واجہ بل نہ کھائیے",
+       "exampleAr": "لا تتألم بلا سبب"
+      },
+      {
+       "id": "ur_مٹھی_میں_رکھنا",
+       "target": "مٹھی میں رکھنا",
+       "translationAr": "يتحكم بمطّمح",
+       "phonetic": "مٹھی میں رکھنا",
+       "emoji": "✊",
+       "exampleTarget": "سب کچھ مٹھی میں رکھا",
+       "exampleAr": "ضبط كل شيء"
+      },
+      {
+       "id": "ur_سیدھا_سیڈھا",
+       "target": "سیدھا سیڈھا",
+       "translationAr": "بسيط ومستقيم",
+       "phonetic": "سیدھا سیڈھا",
+       "emoji": "➡️",
+       "exampleTarget": "سیدھا سیڈھا جواب دو",
+       "exampleAr": "أعطِ جواباً صريحاً"
+      },
+      {
+       "id": "ur_دعا_گو",
+       "target": "دعا گو",
+       "translationAr": "شاكر للدعاء",
+       "phonetic": "دعا گو",
+       "emoji": "🙏",
+       "exampleTarget": "ہمیشہ دعا گو رہیے",
+       "exampleAr": "كن دائماً شاكراً"
       }
      ]
     }

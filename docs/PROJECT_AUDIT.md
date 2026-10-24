@@ -120,3 +120,20 @@ Also in v4.1: l10n keys for all new surfaces (ar+en), version strings bumped to
 widget 6, weak_words 3, srs 10, app_state 8, placement 5, storage 2). No new
 permissions, no network calls, no dependencies added; dark mode + RTL respected
 by the new screens (theme-context colors only).
+
+## 7. v4.2 increment (curriculum depth + CEFR ladder — ROADMAP v4.2 items 1+2)
+
+Scope: content expansion of all three courses plus a formal (self-referenced)
+CEFR ladder. No engine or storage changes; existing behavior untouched.
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Corpus expansion | EN 48→52 units (+4×4 lessons×12 words: Phrasal Verbs, Idioms & Sayings, Business & Money, Academic & Exams), FR 15→21 (+6×3×12), UR 17→21 (+4×3×12). Total 2986→**3538** words, 80→94 units, 288→334 lessons. Every new word ships `exampleTarget`/`exampleAr`. | `assets/data/course_en.json`, `course_fr.json`, `course_ur.json` (append-only: new ids `en_u49…52`, `fr_u16…21`, `ur_u18…21`; zero renames of shipped ids) | `python3 scripts/validate_content.py` → PASS, 0 fatal, 3538 unique ids; generator asserts no id/target collisions before writing (`scripts/expand_curriculum_v42.py`) |
+| CEFR ladder | Every unit (old + new) now carries a `cefr` field; monotonic non-decreasing A1→C1 in path order. `Unit` model gained `cefr` (defaults `A1` for any JSON without the tag — no migration needed). | `lib/models.dart`, all 3 course JSONs, `scripts/validate_content.py` (REQ_UNIT + monotonic rule) | Validator fails on invalid values or any decrease; `test/content_test.dart` asserts ladder validity on the real assets |
+| Unit banner pill | CEFR tag rendered as a pill next to the lesson counter on every unit banner. | `lib/screens/learn_path.dart` | White-on-unit-color pill, same pattern as the progress pill; dark mode unaffected (banner is color-owned surface) |
+| Content asset tests | New test group loading the three real assets via `rootBundle`: corpus shape (52/204/2208 · 21/63/711 · 21/67/619 = 3538), CEFR validity + monotonicity, global vocab-id uniqueness, required-field completeness, per-lesson emoji uniqueness for the new units, append-only id endpoints (`en_u52`/`fr_u21`/`ur_u21`). | `test/content_test.dart` (new) | Fails `flutter test` if a shipped content file drifts — mirrors the Python gate inside the Dart test suite |
+
+Also in v4.2: `pubspec.yaml` → `4.2.0+10`; validator stats line now prints the
+CEFR span per course. No new permissions, no network calls, no dependencies
+added. Known limitations remain documented in CONTENT_AUDIT.md (self-referenced
+labels need human translation review; legacy emoji-ambiguity notices unchanged).

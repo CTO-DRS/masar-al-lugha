@@ -309,6 +309,24 @@ class UnitSection extends StatelessWidget {
                       fontSize: 14),
                 ),
               ),
+              const SizedBox(width: 8),
+              // v4.2: self-referenced CEFR tag on every unit banner
+              // (docs/CONTENT_AUDIT.md — not an official certification).
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.25),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  unit.cefr,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 13),
+                ),
+              ),
             ],
           ),
         ),

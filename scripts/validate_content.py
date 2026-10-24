@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Course content validator (v4.0, MASTER PROMPT Wave 5).
+"""Course content validator (v4.2, MASTER PROMPT Wave 5).
 
 Runs against every course JSON in assets/data and FAILS (exit 1) on any
 fatal problem, so CI catches broken content before it ships:
 
   fatal   : missing/empty required fields, duplicate vocab ids (in-course or
-            cross-course), invalid JSON, bad unit color, unknown id format
+            cross-course), invalid JSON, bad unit color, unknown id format,
+            bad/missing unit CEFR tag, non-monotonic CEFR progression
+            (unit order on the path IS the difficulty order)
   notice  : same-lesson duplicate emojis (the exercise generator now skips
             shared-emoji words for picture rounds, so these are ambiguity
             notes, not defects — see docs/CONTENT_AUDIT.md M10)
@@ -18,14 +20,17 @@ import os
 import sys
 
 REQ_COURSE = ('id', 'nameAr', 'nameEn', 'flag', 'ttsLang', 'units')
-REQ_UNIT = ('id', 'titleAr', 'titleEn', 'color', 'lessons')
+REQ_UNIT = ('id', 'titleAr', 'titleEn', 'color', 'lessons', 'cefr')
 REQ_LESSON = ('id', 'titleAr', 'titleEn', 'vocab')
 REQ_VOCAB = ('id', 'target', 'translationAr')
+CEFR_LEVELS = ('A1', 'A2', 'B1', 'B2', 'C1', 'C2')
 
 
 def walk(course, name, fatal, notices):
     ids = {}
     n_lessons = n_vocab = 0
+    prev_cefr_idx = -1
+    cefr_seen = []
     for u in course.get('units', []):
         uid = u.get('id', '?')
         for req in REQ_UNIT:
@@ -34,6 +39,20 @@ def walk(course, name, fatal, notices):
         color = u.get('color')
         if not (isinstance(color, str) and len(color) in (6, 7)):
             fatal.append(f"{name}: unit {uid} bad color '{color}'")
+        cefr = u.get('cefr')
+        if cefr not in CEFR_LEVELS:
+            fatal.append(f"{name}: unit {uid} bad cefr '{cefr}' "
+                         f"(must be one of {','.join(CEFR_LEVELS)})")
+            cefr_idx = -1
+        else:
+            cefr_idx = CEFR_LEVELS.index(cefr)
+            if cefr_idx < prev_cefr_idx:
+                fatal.append(f"{name}: unit {uid} cefr {cefr} is lower than "
+                             f"the previous unit's ({CEFR_LEVELS[prev_cefr_idx]}) "
+                             "— path order must be non-decreasing")
+            prev_cefr_idx = max(prev_cefr_idx, cefr_idx)
+            if not cefr_seen or cefr_seen[-1] != cefr:
+                cefr_seen.append(cefr)
         for l in u.get('lessons', []):
             lid = l.get('id', '?')
             n_lessons += 1
@@ -76,7 +95,7 @@ def walk(course, name, fatal, notices):
            and not v.replace('_v31', '').replace('_', '').replace('-', '').isalnum()]
     if bad:
         fatal.append(f"{name}: unusual id format: {bad[:8]}")
-    return ids, n_lessons, n_vocab
+    return ids, n_lessons, n_vocab, ('→'.join(cefr_seen) if cefr_seen else '?')
 
 
 def main() -> int:
@@ -96,8 +115,8 @@ def main() -> int:
         except json.JSONDecodeError as e:
             fatal.append(f"{lang}: INVALID JSON — {e}")
             continue
-        ids, nl, nv = walk(course, lang, fatal, notices)
-        stats[lang] = (len(course.get('units', [])), nl, nv)
+        ids, nl, nv, span = walk(course, lang, fatal, notices)
+        stats[lang] = (len(course.get('units', [])), nl, nv, span)
         for vid, loc in ids.items():
             if vid in global_ids:
                 fatal.append(f"CROSS-COURSE duplicate id '{vid}': "
@@ -105,8 +124,9 @@ def main() -> int:
             global_ids[vid] = f"{lang}/{loc}"
 
     print("=== CONTENT VALIDATION ===")
-    for lang, (nu, nl, nv) in stats.items():
-        print(f"  {lang}: {nu} units, {nl} lessons, {nv} words")
+    for lang, (nu, nl, nv, span) in stats.items():
+        print(f"  {lang}: {nu} units, {nl} lessons, {nv} words "
+              f"(CEFR {span})")
     print(f"  total unique vocab ids: {len(global_ids)}")
     ok = not fatal
     print(f"=== FATAL: {len(fatal)} | NOTICES: {len(notices)} ===")
