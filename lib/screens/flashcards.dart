@@ -329,6 +329,8 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
       children: [
         Text(
           v.target,
+          // v4.12.1: sentence vocab builds a full target-language line.
+          textDirection: directionOf(v.target),
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w900),
         ),
@@ -382,6 +384,8 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
               children: [
                 Text(
                   v.exampleTarget!,
+                  // v4.12.1: example is target-language text — own direction.
+                  textDirection: directionOf(v.exampleTarget!),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,

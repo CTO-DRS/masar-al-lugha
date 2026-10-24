@@ -324,6 +324,8 @@ class _WordTileState extends State<_WordTile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(v.exampleTarget!,
+                          // v4.12.1: example is target-language text.
+                          textDirection: directionOf(v.exampleTarget!),
                           style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 14)),
                       const SizedBox(height: 2),

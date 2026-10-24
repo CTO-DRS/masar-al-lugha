@@ -1,8 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.13.0+22** — see docs/PROJECT_AUDIT.md and the v4.13
-section below for the placement→domain suggestion increment with test
-evidence.
+**Current release: v4.13.1+23** — see docs/PROJECT_AUDIT.md and the
+v4.13.1 section below for the RTL direction-safety fix (built sentences
+no longer render reversed inside the Arabic UI) with test evidence.
 
 ## Where we are
 
@@ -30,6 +30,7 @@ evidence.
 | v4.11 | **Path determination: 9 thematic fields (business/travel/food/…) tagged over the CEFR-tagged units by a frozen keyword catalog + 3 level tiers (مبتدئ A1–A2 / متوسط B1–B2 / خبير C1+) with band relaxation — a setup wizard stores a per-course plan (field × level) and the learn path re-orders plan units first (never locks); additive null-safe `pathDomain`/`pathTier` maps** |
 | v4.12 | **The placement test now AUTO-LINKS its result to the level: `Placement.recommendedTier` reuses the consecutive-pass prefix rule (nothing proven → مبتدئ, ≥ half → متوسط, all → خبير), `AppState.setPathTier` stores it keeping any chosen field, the result card shows a green "level detected" badge, and the setup wizard pre-fills + refreshes the level step from the test** |
 | v4.13 | **The placement result now suggests the FIELD too: `Placement.recommendedDomain` lets every correctly answered word vote for its unit's domain (majority wins, catalog-order ties, no signal → no guess), `AppState.setPathDomain` stores it keeping the detected tier — so confirming the test can complete a whole plan (مجال × مستوى) without the wizard; a second badge shows the suggestion and both wizard steps pre-fill + refresh from it** |
+| v4.13.1 | **RTL direction-safety fix (learner-reported): target-language tiles in the build (arrange) exercise inherited the Arabic UI's RTL and rendered English sentences REVERSED (`morning \| Good`) — new first-strong `directionOf` + `ScriptDirection` widget lay every target-language surface (build rows, cloze prompt, dictation field, mcq/tf prompts, feedback answer, option cards, flashcard front, example lines) in its OWN script direction; the Urdu course keeps flowing RTL — pinned in `test/rtl_direction_test.dart`** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -384,6 +385,40 @@ evidence.
    as the v4.12 tier seed) and refreshes field + level together when the
    learner returns from the test; the hint row now says the test detects
    BOTH (مستواك أو مجالك) automatically.
+
+## v4.13.1 — the built sentence reads in its own direction (SHIPPED)
+
+The learner-reported bug (with a screenshot of the same flaw in another
+learning app): in the build (arrange) exercise the TARGET-language tiles
+inherited the Arabic UI's RTL direction, so tapping "Good" then
+"morning" laid the answer out as `morning | Good` — the sentence read
+REVERSED. Root cause: the app shell is Arabic-first RTL
+(`uiLocale='ar'` → `Locale('ar')`), and every `Wrap`/`Text` that shows
+target-language content inherits it — unless told otherwise.
+
+1. ✅ **`directionOf(text)` (theme.dart, first-strong rule)** — scans for
+   the first strong directional character: Arabic/Hebrew blocks → RTL,
+   Latin/Greek/Cyrillic letters → LTR; digits, punctuation, the `______`
+   cloze marker, spaces and emoji are NEUTRAL and skipped; defaults LTR.
+   Per-content (not a blanket LTR) because the Urdu course builds real
+   RTL sentences and must keep flowing right-to-left.
+2. ✅ **`ScriptDirection` widget** — wraps a subtree in the direction of
+   its own text. Applied to BOTH build rows (placed answer + source
+   bank) keyed on `tiles.join(' ')`, so the composed sentence and the
+   bank visually match the sentence being built.
+3. ✅ **Whole exercise-family sweep** (same reversal class): cloze
+   prompt (the `______` blank used to jump to the wrong side), the
+   dictation `TextField` (typed text now aligns/shapes in the target
+   direction), the mcq/truefalse prompt card, the "الجواب الصحيح"
+   feedback line (answer on its own line+direction so trailing `?`/`!`
+   cannot flip), `OptionCard` (listen rounds show full target
+   sentences), flashcard front + the `exampleTarget` example lines in
+   flashcards / dictionary / weak-words.
+4. ✅ **Pinned in `test/rtl_direction_test.dart`** — pure `directionOf`
+   cases (Latin/Urdu/French accents/neutral-first/no-strong-char),
+   `ScriptDirection` widget tests (English→LTR and Urdu→RTL inside an
+   RTL shell via `Directionality.of`), and `OptionCard` direction for
+   English vs Arabic options inside an RTL shell.
 
 ## Hard invariants (never break)
 

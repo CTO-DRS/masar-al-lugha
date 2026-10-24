@@ -52,6 +52,48 @@ extension MasarThemeX on BuildContext {
       isDark ? AppColors.darkInkLight : AppColors.lockedDark;
 }
 
+/// v4.12.1 — first-strong-character text direction for mixed ar/en content.
+///
+/// The UI is Arabic-first (RTL), but the TARGET language of a course may be
+/// Latin-script (English/French -> LTR) or Arabic-script (Urdu -> RTL).
+/// Content that inherits the shell's direction renders REVERSED: the build
+/// exercise laid "Good morning" out as "morning | Good". This scans for the
+/// first strong directional character: Arabic/Hebrew blocks -> RTL, any
+/// Latin/Greek/Cyrillic letter -> LTR; digits/punctuation/space/emoji are
+/// neutral and skipped. Defaults to LTR when no strong character exists.
+TextDirection directionOf(String text) {
+  for (final r in text.runes) {
+    final rtl = (r >= 0x0590 && r <= 0x05FF) || // Hebrew
+        (r >= 0x0600 && r <= 0x06FF) || // Arabic + Urdu core
+        (r >= 0x0750 && r <= 0x077F) || // Arabic supplement
+        (r >= 0x08A0 && r <= 0x08FF) || // Arabic extended-A
+        (r >= 0xFB50 && r <= 0xFDFF) || // Arabic presentation forms-A
+        (r >= 0xFE70 && r <= 0xFEFF); // Arabic presentation forms-B
+    if (rtl) return TextDirection.rtl;
+    final ltr = (r >= 0x0041 && r <= 0x005A) || // A-Z
+        (r >= 0x0061 && r <= 0x007A) || // a-z
+        (r >= 0x00C0 && r <= 0x024F) || // Latin-1 letters + extended
+        (r >= 0x0370 && r <= 0x04FF); // Greek + Cyrillic
+    if (ltr) return TextDirection.ltr;
+  }
+  return TextDirection.ltr;
+}
+
+/// v4.12.1 — wraps content in the direction of its own script so
+/// target-language words/sentences lay out correctly inside the Arabic RTL
+/// shell (and vice versa for Urdu inside a future LTR shell).
+/// Used by the build (arrange) exercise, sentence prompts and example lines.
+class ScriptDirection extends StatelessWidget {
+  final String text;
+  final Widget child;
+
+  const ScriptDirection({super.key, required this.text, required this.child});
+
+  @override
+  Widget build(BuildContext context) =>
+      Directionality(textDirection: directionOf(text), child: child);
+}
+
 ThemeData buildMasarTheme({required bool dark}) {
   final scheme = dark
       ? ColorScheme(
@@ -285,8 +327,11 @@ class OptionCard extends StatelessWidget {
               const SizedBox(width: 10),
             ],
             Expanded(
+              // v4.12.1: options may be full target-language sentences
+              // (listen rounds) — lay them out in their own script direction.
               child: Text(
                 text,
+                textDirection: directionOf(text),
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 16,

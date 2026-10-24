@@ -241,6 +241,8 @@ class _WeakWordsScreenState extends State<WeakWordsScreen> {
               children: [
                 Text(
                   v.exampleTarget!,
+                  // v4.12.1: example is target-language text — own direction.
+                  textDirection: directionOf(v.exampleTarget!),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontWeight: FontWeight.w700, fontSize: 15),

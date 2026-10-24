@@ -339,6 +339,35 @@ and "what your path plan targets":
   the test can complete a WHOLE plan (field × level) without the wizard,
   and the wizard pre-seeds + refreshes both steps on return.
 
+### 4f. RTL direction safety (v4.13.1)
+
+The shell is Arabic-first RTL (`uiLocale='ar'` → `Locale('ar')`), but a
+course's TARGET language may be Latin-script (English/French) or
+Arabic-script (Urdu). Any target-language content that inherits the
+shell's direction renders REVERSED — the learner-reported case: the
+build (arrange) exercise laid "Good morning" out as `morning | Good`.
+
+- **`directionOf(text)`** (`theme.dart`, pure): first-strong-character
+  rule — Arabic/Hebrew blocks → RTL, Latin/Greek/Cyrillic → LTR,
+  digits/punctuation/`______`/space/emoji are neutral and skipped,
+  defaults LTR. Per-content, NOT a blanket LTR, so the Urdu course keeps
+  its natural right-to-left flow.
+- **`ScriptDirection`** (`theme.dart`): `Directionality` wrapper keyed on
+  its `text`. The build exercise wraps BOTH rows (placed answer + source
+  bank) with `text: tiles.join(' ')` so the sentence under construction
+  and the word bank always read in the sentence's own direction.
+- Same-class sweep: cloze prompt (blank side), dictation `TextField`
+  (typed direction), mcq/truefalse prompt card, the "الجواب الصحيح"
+  feedback answer (own line + direction so trailing punctuation cannot
+  flip), `OptionCard` (full sentence options in listen rounds), the
+  flashcard front for sentence vocab, and every `exampleTarget` example
+  line (flashcards / dictionary / weak-words).
+- Pinned by `test/rtl_direction_test.dart`: pure first-strong cases
+  (incl. neutral-first cloze blanks and French accents), ScriptDirection
+  widget tests asserting `Directionality.of` = LTR for English and RTL
+  for Urdu inside an RTL shell, and OptionCard direction for both
+  scripts.
+
 ## 5. Content pipeline
 
 Python generators (append-only IDs) → `assets/data/*.json` → validated by

@@ -654,11 +654,17 @@ void main() {
   });
 
   group('l10n parity for v4.13 keys', () {
-    test('placementDomainAuto exists in ar and en, version bumped', () {
+    test('placementDomainAuto exists in ar and en', () {
       expect(L.t('ar', 'placementDomainAuto'), 'مجالك المقترح من الاختبار');
       expect(L.t('en', 'placementDomainAuto'), 'Field suggested by the test');
-      expect(L.t('ar', 'version'), contains('4.13.0'));
-      expect(L.t('en', 'version'), contains('4.13.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v4.13.1 keys', () {
+    test('version bumped for the RTL direction-safety wave', () {
+      expect(L.t('ar', 'version'), contains('4.13.1'));
+      expect(L.t('en', 'version'), contains('4.13.1'));
     });
   });
 

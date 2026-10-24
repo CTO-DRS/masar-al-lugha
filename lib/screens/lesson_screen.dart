@@ -320,6 +320,9 @@ class _LessonScreenState extends State<LessonScreen> {
                 ),
                 child: Text(
                   ex.prompt,
+                  // v4.12.1: the mcq prompt can be a full target-language
+                  // sentence — lay it out in its own direction.
+                  textDirection: directionOf(ex.prompt),
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
                 ),
               ),
@@ -454,34 +457,44 @@ class _LessonScreenState extends State<LessonScreen> {
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
                 const SizedBox(height: 14),
-                // answer line
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  children: [
-                    for (final i in placed)
-                      WordTile(
-                        text: ex.tiles[i],
-                        onTap: answered
-                            ? null
-                            : () => setState(() => placed.remove(i)),
-                      ),
-                  ],
+                // answer line — v4.12.1: tiles are the TARGET language
+                // (English/French LTR, Urdu RTL); they must lay out in
+                // their own script direction, NOT the Arabic UI's RTL,
+                // or the built sentence renders reversed ("morning | Good").
+                ScriptDirection(
+                  text: ex.tiles.join(' '),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      for (final i in placed)
+                        WordTile(
+                          text: ex.tiles[i],
+                          onTap: answered
+                              ? null
+                              : () => setState(() => placed.remove(i)),
+                        ),
+                    ],
+                  ),
                 ),
                 Divider(color: context.line, height: 24),
-                // source tiles
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  children: [
-                    for (final i in remaining)
-                      WordTile(
-                        text: ex.tiles[i],
-                        onTap: answered
-                            ? null
-                            : () => setState(() => placed.add(i)),
-                      ),
-                    if (remaining.isEmpty && placed.isEmpty)
-                      const Text('', style: TextStyle(fontSize: 8)),
-                  ],
+                // source tiles — same direction as the answer line so the
+                // bank visually matches the sentence being built.
+                ScriptDirection(
+                  text: ex.tiles.join(' '),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      for (final i in remaining)
+                        WordTile(
+                          text: ex.tiles[i],
+                          onTap: answered
+                              ? null
+                              : () => setState(() => placed.add(i)),
+                        ),
+                      if (remaining.isEmpty && placed.isEmpty)
+                        const Text('', style: TextStyle(fontSize: 8)),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -648,6 +661,9 @@ class _LessonScreenState extends State<LessonScreen> {
                 ),
                 child: Text(
                   ex.prompt,
+                  // v4.12.1: the cloze prompt is a TARGET-language sentence
+                  // with a blank — keep the blank on its correct side.
+                  textDirection: directionOf(ex.prompt),
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
                 ),
@@ -730,6 +746,8 @@ class _LessonScreenState extends State<LessonScreen> {
                   onTap: () => AppScope.ttsOf(context).speak(ex.audioText),
                   child: Text(
                     ex.prompt,
+                    // v4.12.1: prompt is the target-language word/phrase.
+                    textDirection: directionOf(ex.prompt),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
                   ),
@@ -840,29 +858,34 @@ class _LessonScreenState extends State<LessonScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(color: context.mutedText, fontSize: 15)),
           const SizedBox(height: 14),
-          TextField(
-            controller: _typed,
-            enabled: !answered,
-            textInputAction: TextInputAction.done,
-            onChanged: (_) => setState(() {}),
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-            decoration: InputDecoration(
-              hintText: tr('typeHere'),
-              filled: true,
-              fillColor: context.card,
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: context.line, width: 2),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(color: AppColors.blue, width: 2),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: context.line, width: 2),
+          // v4.12.1: typed target-language text — align and shape it in its
+          // own direction instead of the Arabic UI's RTL.
+          ScriptDirection(
+            text: ex.answer,
+            child: TextField(
+              controller: _typed,
+              enabled: !answered,
+              textInputAction: TextInputAction.done,
+              onChanged: (_) => setState(() {}),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+              decoration: InputDecoration(
+                hintText: tr('typeHere'),
+                filled: true,
+                fillColor: context.card,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: context.line, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(color: AppColors.blue, width: 2),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: context.line, width: 2),
+                ),
               ),
             ),
           ),
@@ -1188,11 +1211,23 @@ class _LessonScreenState extends State<LessonScreen> {
                       style: TextStyle(
                           color: fg, fontWeight: FontWeight.w900, fontSize: 17),
                     ),
-                    if (!wasCorrect)
+                    if (!wasCorrect) ...[
                       Text(
-                        '${tr('correctAnswerIs')} ${ex.answer}',
+                        tr('correctAnswerIs'),
                         style: TextStyle(color: fg, fontSize: 15),
                       ),
+                      // v4.12.1: the answer is target-language text — render
+                      // it in its own line and direction so trailing
+                      // punctuation cannot flip in the RTL feedback bar.
+                      Text(
+                        ex.answer,
+                        textDirection: directionOf(ex.answer),
+                        style: TextStyle(
+                            color: fg,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800),
+                      ),
+                    ],
                   ],
                 ),
               ),
