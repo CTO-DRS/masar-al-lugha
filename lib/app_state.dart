@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import 'decks.dart';
 import 'insights.dart';
 import 'mascot.dart';
 import 'models.dart';
@@ -72,6 +73,12 @@ class AppState extends ChangeNotifier {
 
   /// courseId -> starred vocab ids (newest first) — favorites deck.
   Map<String, List<String>> favorites = {};
+
+  /// v4.7: user-authored word lists (schema-v2 additive `decks` key).
+  /// Bounded and validated in lib/decks.dart; ids are store-assigned and
+  /// never trusted from payloads.
+  List<CustomDeck> customDecks = [];
+  int _deckCounter = 0;
 
   static const int _maxConfusionPairs = 60;
   static const int _keepConfusionPairs = 40;
@@ -572,6 +579,102 @@ class AppState extends ChangeNotifier {
     return pendingBadges.removeAt(0);
   }
 
+  // ================= v4.7: custom word lists =================
+
+  CustomDeck? deckById(String id) {
+    for (final d in customDecks) {
+      if (d.id == id) return d;
+    }
+    return null;
+  }
+
+  static int _maxDeckNum(List<CustomDeck> decks) {
+    var m = 0;
+    for (final d in decks) {
+      final n = int.tryParse(d.id.substring(2));
+      if (n != null && n > m) m = n;
+    }
+    return m;
+  }
+
+  /// Re-derives the deck-id counter from the loaded deck set (used by
+  /// ProfileStore after loading a stored payload — payload ids are never
+  /// trusted for the monotonic sequence).
+  void rebaseDeckCounter() => _deckCounter = _maxDeckNum(customDecks);
+
+  void _decksChanged() {
+    scheduleSave();
+    notifyListeners();
+  }
+
+  /// Creates a deck for the current course. Returns null when the name is
+  /// unusable or the deck budget is spent (12).
+  CustomDeck? createCustomDeck(String name) {
+    final clean = DeckLimits.cleanName(name);
+    if (clean == null) return null;
+    if (customDecks.length >= DeckLimits.maxDecks) return null;
+    _deckCounter++;
+    final deck =
+        CustomDeck(id: 'cd$_deckCounter', name: clean, courseId: courseId);
+    customDecks.add(deck);
+    _decksChanged();
+    return deck;
+  }
+
+  /// Renames a deck; false when the deck is unknown or the name unusable.
+  bool renameCustomDeck(String deckId, String name) {
+    final clean = DeckLimits.cleanName(name);
+    if (clean == null) return false;
+    final i = customDecks.indexWhere((d) => d.id == deckId);
+    if (i < 0) return false;
+    customDecks[i] = customDecks[i].copyWith(name: clean);
+    _decksChanged();
+    return true;
+  }
+
+  bool deleteCustomDeck(String deckId) {
+    final before = customDecks.length;
+    customDecks.removeWhere((d) => d.id == deckId);
+    if (customDecks.length == before) return false;
+    _decksChanged();
+    return true;
+  }
+
+  /// Adds a word to a deck. Returns an l10n error key on failure
+  /// ('invalidWord' / 'dupWord' / 'listFull') or null on success.
+  String? addCustomWord(String deckId, String target, String translationAr) {
+    final deck = deckById(deckId);
+    if (deck == null) return 'invalidWord';
+    final t = DeckLimits.cleanWord(target);
+    final a = DeckLimits.cleanWord(translationAr, maxLen: 80);
+    if (t == null || a == null) return 'invalidWord';
+    if (deck.words.length >= CustomDeck.maxWords) return 'listFull';
+    final key = DeckLimits.dupKey(t);
+    for (final w in deck.words) {
+      if (DeckLimits.dupKey(w.target) == key) return 'dupWord';
+    }
+    final word = CustomWord(
+      id: '${deck.id}_w${deck.nextSeq}',
+      target: t,
+      translationAr: a,
+    );
+    final i = customDecks.indexWhere((d) => d.id == deckId);
+    customDecks[i] =
+        deck.copyWith(words: [...deck.words, word], nextSeq: deck.nextSeq + 1);
+    _decksChanged();
+    return null;
+  }
+
+  bool removeCustomWord(String deckId, String wordId) {
+    final deck = deckById(deckId);
+    if (deck == null) return false;
+    final i = customDecks.indexWhere((d) => d.id == deckId);
+    customDecks[i] =
+        deck.copyWith(words: deck.words.where((w) => w.id != wordId).toList());
+    _decksChanged();
+    return true;
+  }
+
   Future<void> resetAll() async {
     xp = 0;
     streak = 0;
@@ -595,6 +698,8 @@ class AppState extends ChangeNotifier {
     hourCorrect = List<int>.filled(24, 0);
     answerLog = {};
     favorites = {};
+    customDecks = [];
+    _deckCounter = 0;
     mascotId = 'rafiq';
     pendingBadges.clear();
     await save();
@@ -635,6 +740,7 @@ class AppState extends ChangeNotifier {
         },
         'favorites': favorites,
         'mascot': mascotId,
+        'decks': customDecks.map((d) => d.toJson()).toList(),
         'settings': {
           'darkMode': darkMode,
           'reduceMotion': reduceMotion,
@@ -726,6 +832,21 @@ class AppState extends ChangeNotifier {
       }
       favorites = ((p['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(
           k as String, ((v as List?) ?? []).map((e) => e as String).toList()));
+      // v4.7: custom decks — strict parse, bounded, counter re-derived
+      // (payload ids are never trusted for the monotonic sequence).
+      final ds = p['decks'];
+      if (ds is List) {
+        final loaded = <CustomDeck>[];
+        final seenIds = <String>{};
+        for (final raw in ds.take(DeckLimits.maxDecks)) {
+          if (raw is! Map) continue;
+          final d = CustomDeck.fromJson(Map<String, dynamic>.from(raw));
+          if (d == null || !seenIds.add(d.id)) continue;
+          loaded.add(d);
+        }
+        customDecks = loaded;
+        _deckCounter = _maxDeckNum(customDecks);
+      }
       // v4.5: companion — only ids from the cast are accepted.
       final m = p['mascot'];
       if (m is String && mascotCast.any((c) => c.id == m)) mascotId = m;

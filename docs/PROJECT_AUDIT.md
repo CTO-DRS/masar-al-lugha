@@ -230,3 +230,24 @@ Test count 104 → **118** (+14: `test/exercise_v46_test.dart` — 5 normalizer,
 lessons of all three courses × all three modes).
 Gates at commit time: `validate_content.py` PASS 0 fatal · `dart format`
 clean · `flutter analyze` No issues · `flutter test` 118/118.
+
+## 12. v4.7 increment (custom word lists — ROADMAP v5.0 item 3 pulled forward)
+
+Scope: user-authored word lists ("قوائمي") with flip-card practice. No new
+dependencies, no network, no permissions, no schema bump (additive
+null-safe `decks` key on the existing schema-v2 payload).
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Deck engine | `CustomDeck`/`CustomWord` strict parse: deck ids `^cd[0-9]+$` (cannot collide with course ids), word ids must belong to their deck, duplicate ids rejected, malformed entries silently dropped, parse-time bounds (12 decks × 200 words), per-deck monotonic `next` counter keeps word ids stable across deletions; `dupKey` folds case+punctuation only (diacritics are content). `toVocab` seam lets decks feed future exercise flows. | `lib/decks.dart` (new) | 4 engine tests: bounds, dupKey semantics, tampered shapes (incl. `en_u1` collision attempt), lossless round-trip |
+| State & persistence | AppState CRUD with l10n error keys (`invalidWord`/`dupWord`/`listFull`); `rebaseDeckCounter()` public seam so ProfileStore never touches private state; additive `decks` key on load/save/export/import; `resetAll` clears; payload ids never drive the counter. | `lib/app_state.dart`, `lib/profile_store.dart` | 6 state tests: CRUD + id stability across removals, both budgets, reset counter restart, save→load survival, export/import carry, tampered import drop |
+| UI | Cards-tab entry button → deck list (per current course, create dialog, companion empty state) → deck detail (add-word form with inline errors, tap-to-hear rows, delete confirm, guarded practice) → flip-card practice (prev/next/shuffle/progress, TTS in course language). Theme-context colors only (dark-mode safe), RTL-safe icons with explicit LTR text direction. | `lib/screens/custom_decks_screen.dart` (new), `lib/screens/flashcards.dart` | Analyzer clean; widget flows behind the same AppScope pattern as shipped screens |
+| l10n & version | +21 keys/locale (`myLists`…`invalidWord`) → 242 per locale; `version` → 4.7.0; pubspec `4.7.0+15`. | `lib/l10n.dart`, `pubspec.yaml` | No duplicate keys (analyzer) |
+
+Test count 118 → **128** (+10 in `test/custom_decks_test.dart`).
+Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
+`flutter test` 128/128. Known limits: decks are per-course (created under
+the active course and listed there); practice is honest self-rating flip
+cards — deck words intentionally do NOT enter the course SRS (no fake
+mastery claims); examples are accepted from imports but the add-word form
+keeps to word+meaning for speed.

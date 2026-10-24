@@ -185,6 +185,28 @@ character behind the stable `Mascot` API; `MascotBubble` with reduce-motion-
 aware entrance). Wiring: LessonResultScreen, LessonFailedScreen, Profile
 companion card.
 
+## 4c. Custom word lists (v4.7)
+
+`lib/decks.dart` is a Flutter-free engine for user-authored decks, stored
+in the schema-v2 profile under the additive `decks` key. Invariants:
+
+- **Tamper-proof parse.** Deck ids must match `^cd[0-9]+$` — they can
+  never collide with `en_`/`fr_`/`ur_` course vocab ids; word ids must
+  belong to their own deck (`<deckId>_w<n>`) and duplicates are dropped;
+  malformed entries are silently skipped; bounds (12 decks, 200 words per
+  deck) are enforced at parse time, not just at write time.
+- **Stable ids.** A per-deck monotonic `next` counter survives load and
+  deletions, so word ids are never reused — future per-word progress can
+  safely key on them. Payload ids never drive the counter; the store
+  re-derives it via `AppState.rebaseDeckCounter()`.
+- **Honest practice.** Deck practice is explicit flip-card self-review —
+  deck words deliberately do NOT enter the course SRS, so no fake mastery
+  signal is recorded. `CustomWord.toVocab()` is the seam for feeding
+  future exercise flows if that ever changes.
+- **CRUD guards.** `addCustomWord` returns l10n error keys
+  (`invalidWord` / `dupWord` / `listFull`); duplicates fold case and
+  punctuation (diacritics are content).
+
 ## 5. Content pipeline
 
 Python generators (append-only IDs) → `assets/data/*.json` → validated by

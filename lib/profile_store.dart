@@ -11,6 +11,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_state.dart';
+import 'decks.dart';
 import 'mascot.dart';
 import 'models.dart';
 
@@ -94,6 +95,21 @@ class ProfileStore {
         s.favorites = ((j['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(
             k as String,
             ((v as List?) ?? []).map((e) => e as String).toList()));
+        // v4.7 custom decks (additive, null-safe for old payloads):
+        // strict parse in decks.dart drops malformed entries silently.
+        final ds = j['decks'];
+        if (ds is List) {
+          final loaded = <CustomDeck>[];
+          final seenIds = <String>{};
+          for (final raw in ds.take(DeckLimits.maxDecks)) {
+            if (raw is! Map) continue;
+            final d = CustomDeck.fromJson(Map<String, dynamic>.from(raw));
+            if (d == null || !seenIds.add(d.id)) continue;
+            loaded.add(d);
+          }
+          s.customDecks = loaded;
+          s.rebaseDeckCounter();
+        }
         // v4.5 companion (additive, null-safe for old payloads).
         // Unknown ids fall back to the default companion.
         final m = j['mascot'];
@@ -157,6 +173,7 @@ class ProfileStore {
       },
       'favorites': s.favorites,
       'mascot': s.mascotId,
+      'decks': s.customDecks.map((d) => d.toJson()).toList(),
       'settings': {
         'darkMode': s.darkMode,
         'reduceMotion': s.reduceMotion,

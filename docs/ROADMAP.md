@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.6.0+14** — see docs/PROJECT_AUDIT.md §11 for the v4.6
+**Current release: v4.7.0+15** — see docs/PROJECT_AUDIT.md §12 for the v4.7
 increment with file/test evidence.
 
 ## Where we are
@@ -21,6 +21,7 @@ increment with file/test evidence.
 | v4.4 | **Local intelligence + favorites: on-device insights engine (accuracy trend, best study hour, confusion pairs, smart daily-goal suggestion, review forecast, rule-based tutor tips), Learning Insights screen, confusion capture inside lessons with pair practice, favorites (star in dictionary + dedicated flashcards deck), new launcher icon — 72 tests** |
 | v4.5 | **Companion wave: Rafiq & Friends — interactive character system (5 evidence-unlocked companions, 9 event types, 54 bilingual encouragement lines with anti-repeat rotation), speech-bubble moments on lesson result/failed screens, companion picker card in Profile, +180 CEFR words (EN idioms & nuance C1, FR/UR B2→C1) — 104 tests** |
 | v4.6 | **Mastery wave: two new exercise types — dictation (hear→type with tolerant grading: case/punctuation/diacritics/spacing) and listening comprehension (hear the sentence→pick its Arabic meaning), wired into all three lesson styles; confusion capture extended to typed answers; +180 words (EN business/economics + argument/persuasion C1, FR argumentation/médias + monde professionnel C1, UR صحافت/میڈیا + رسمی خطابت C1) — 106 units / 370 lessons / 3898 words, 118 tests** |
+| v4.7 | **Custom word lists ("قوائمي"): user-authored decks stored in the schema-v2 profile (bounded 12×200, tamper-proof strict parse, stable monotonic word ids), add/remove words with duplicate + length guards, flip-card practice with shuffle + tap-to-hear, full export/import/reset coverage, entry from the Cards tab — 128 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -137,12 +138,41 @@ increment with file/test evidence.
    guards, and a corpus-wide sweep: first/middle/last lesson of all three
    courses × all three modes keep the v4.6 invariants).
 
+## v4.7 — custom word lists (SHIPPED)
+
+1. ✅ **Deck engine (`lib/decks.dart`, Flutter-free)** — `CustomDeck` /
+   `CustomWord` with strict `fromJson` validation: ids must match
+   `^cd[0-9]+$` (can never collide with `en_`/`fr_`/`ur_` course ids),
+   word ids must belong to their own deck, malformed entries are dropped
+   silently, bounds are enforced at parse time (12 decks × 200 words).
+   Word ids are **stable across deletions** — a per-deck monotonic
+   counter (`next`) survives round-trips, so future per-word progress can
+   safely key on them.
+2. ✅ **State & persistence** — AppState CRUD (`createCustomDeck`,
+   `renameCustomDeck`, `deleteCustomDeck`, `addCustomWord` with duplicate
+   (punct/case-folded) + length guards returning l10n error keys,
+   `removeCustomWord`, `deckById`); the additive schema-v2 `decks` key
+   rides load/save/export/import/reset — payload ids never drive the
+   counter (`rebaseDeckCounter`).
+3. ✅ **UI** — entry button on the Cards tab → `CustomDecksScreen`
+   (decks of the current course + create dialog + empty state with the
+   companion) → `CustomDeckScreen` (add-word form with two fields and
+   inline error keys, word rows with tap-to-hear + remove, delete-deck
+   confirm, practice button disabled when empty) → `DeckPracticeScreen`
+   (flip cards, prev/next, shuffle, progress, TTS in the course
+   language). l10n +21 keys/locale (242).
+4. ✅ **Tests 118 → 128** (+10: validation bounds, dupKey semantics,
+   tampered-shape rejection incl. course-id collision attempt, lossless
+   round-trip, CRUD with id stability across removals, both budgets,
+   reset behavior, save→load survival, export/import carry + tampered
+   import drop).
+
 ## v5.0 — platform growth
 
 1. **Fourth language** (Turkish or German — poll in-app after v4.1).
 2. **Local leaderboard** (device-local, offline-only; no accounts by design).
-3. **Custom word lists** — user-authored decks stored in the same schema-v2
-   profile; exportable via the existing backup format.
+3. ✅ **Custom word lists** — SHIPPED in v4.7 (user-authored decks in the
+   schema-v2 profile, exportable via the existing backup format).
 4. **Tablet two-pane layout** — learn path + lesson side-by-side.
 
 ## Hard invariants (never break)

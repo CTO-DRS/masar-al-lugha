@@ -6,6 +6,7 @@ import '../scope.dart';
 import '../srs.dart';
 import '../theme.dart';
 import '../widgets/mascot.dart';
+import 'custom_decks_screen.dart';
 import 'home_shell.dart';
 
 class FlashcardsScreen extends StatefulWidget {
@@ -148,6 +149,40 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                 ),
               ),
             ),
+          // v4.7: entry to user-authored word lists (always available).
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 2, 20, 4),
+            child: SizedBox(
+              width: double.infinity,
+              height: 42,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => const CustomDecksScreen(),
+                  ));
+                },
+                icon: const Icon(
+                  Icons.playlist_add,
+                  color: AppColors.purple,
+                  size: 20,
+                ),
+                label: Text(
+                  tr('myLists'),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 13.5,
+                    color: AppColors.purple,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: AppColors.purple, width: 2),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: dueCount == 0
                 ? _emptyState(tr)
