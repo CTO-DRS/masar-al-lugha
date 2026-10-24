@@ -1,7 +1,7 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.9.0+18** — see docs/PROJECT_AUDIT.md §15 for the v4.9
-increment with file/test evidence.
+**Current release: v4.10.0+19** — see docs/PROJECT_AUDIT.md §16 for the
+v4.10 increment with file/test evidence.
 
 ## Where we are
 
@@ -25,6 +25,7 @@ increment with file/test evidence.
 | v4.8 | **Records board ("السجلات"): all-time personal bests engine (Flutter-free) + dedicated screen — bestStreak / bestDayXp / activeDays counters maintained at zero storage cost inside the existing streak hook, 14-record grid, two-week XP momentum bars, record-broken mascot celebration (10th event, 6 new bilingual lines), entry from Profile — 143 tests** |
 | v4.8.1 | **Companion art upgrade: the five characters are redrawn as layered vector art (CustomPainter, normalized 100×100 canvas) — owl tufts + eye discs + feet, chick crest, cat whiskers + tail, fox muzzle + big ears, bunny long ears + blush, per-mood expressions (smile / neutral / worried frown / star + confetti), mood-aware beaks and mouths. No new deps, no images, same Mascot/MascotBubble API — 143 tests** |
 | v4.9 | **Living human companions: the cast is redrawn as HUMANS (coach Rafiq with glasses, hijabi classmates Farah/Nur/Salma, curly-haired path expert Zayd) and everything LIVES — idle breathing + blink cycle, celebration hop with raised arms, typewriter speech bubbles with a talking mouth synced to the reveal, tap any companion → it waves and says a fresh encouragement line (6 tap lines), home-path companion greets by time of day (3 slots × 2 lines), reduce-motion respected, animated:false stays static for tests — 153 tests** |
+| v4.10 | **The companions never go quiet: automatic speech + ambient chatter — lesson companions react LIVE to every answer (header mascot hops on correct / frowns on wrong, zero taps), the feedback bar speaks a praise line after every correct answer and a gentle nudge after every wrong one (2 new banks × 6 bilingual lines), a fresh spoken line triggers a body gesture automatically (talking-edge motion), and the new `LiveCompanion` widget keeps the home path and profile card talking ALL the time (greeting → 8 ambient motivation lines every 24–36 s, tap = instant reply, paused in background, welcome-back on resume) — 160 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -242,6 +243,45 @@ increment with file/test evidence.
    settle-ability; the two legacy widget tests moved from
    `pumpAndSettle` to fixed-duration pumps because idle motion now
    intentionally never settles).
+
+## v4.10 — the companions never go quiet (SHIPPED)
+
+1. ✅ **Reactive lesson companions (zero taps)** — the seven in-prompt
+   mascots now render the LIVE answer state: on a correct answer the
+   header companion hops with raised arms (`_headerMood` → celebrate,
+   the mood flip auto-plays the celebration action), on a wrong one it
+   shows the worried face — then returns to happy for the next
+   exercise. They also render the SELECTED companion for the first
+   time (`characterId: st.mascotId` instead of the rafiq default).
+2. ✅ **Automatic encouragement in the feedback bar** — after every
+   answer the companion speaks WITHOUT any tap: a praise line after a
+   correct one (`MascotEngine.praiseLine`, 6 bilingual lines) and a
+   gentle nudge after a wrong one (`mascotNudgeLines`, comfort never
+   shame), through a compact `MascotBubble` with the typewriter +
+   talking mouth. Praise/nudge banks are parity-tested, placeholder-
+   free and deterministic (`salt: correctCount` / `salt: mistakes`).
+3. ✅ **Speech moves the body** — `Mascot` now listens to the `talking`
+   notifier edge (false→true) and plays a gesture burst automatically,
+   so every spoken line visibly animates its speaker everywhere (result
+   screen, failed screen, feedback bar, live companions) — suppressed
+   while a celebration owns the arms or motion is disabled.
+4. ✅ **LiveCompanion: talks ALL the time** — a new widget wraps
+   `MascotBubble` with an autonomous conversation loop: opening line
+   (time-of-day greeting, or a caller-provided `openingText`), then a
+   deterministic ambient timer (`MascotEngine.ambientIntervalMs`,
+   24–36 s per turn) speaking fresh motivation from the new 8-line
+   ambient bank ({s}/{lvl} personalized and fill-tested). Every tap
+   (avatar or bubble — `MascotBubble` now forwards `onTap` to its
+   avatar too) replies instantly and restarts the quiet window; the
+   timer pauses in the background (`WidgetsBindingObserver`) and a
+   welcome-back line fires on resume. Wired on the learn path (replaces
+   `_HomeCompanion` internals) and the profile companion card.
+5. ✅ **Tests 153 → 160** (+7 in `test/mascot_test.dart`: praise/nudge
+   parity + script checks + rotation, ambient placeholder allow-list
+   {s}/{lvl} + fill + rotation, `ambientIntervalMs` determinism/range/
+   variety, LiveCompanion greeting→ambient rotation without input, tap
+   replies with fresh lines, reduce-motion still chatters; each widget
+   test unmounts at the end so the re-armed timer is cancelled).
 
 ## v5.0 — platform growth
 

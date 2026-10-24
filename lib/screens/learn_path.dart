@@ -3,7 +3,6 @@
 // (M9), stable node sides (M7), and a weak-words practice launcher (H4).
 import 'package:flutter/material.dart';
 
-import '../mascot.dart' show MascotEngine;
 import '../models.dart';
 import '../scope.dart';
 import '../theme.dart';
@@ -591,41 +590,26 @@ Color _hexToColor(String hex) {
   return Color(int.parse(hex, radix: 16));
 }
 
-// v4.9: the home-screen companion. Greets by time of day (deterministic
-// daily rotation); tapping it waves and says a fresh encouragement line.
+// v4.9: the home-screen companion greets by time of day and replies to
+// taps. v4.10: it now NEVER goes quiet — LiveCompanion speaks a fresh
+// motivation line every 24–36 s while the path stays open, replies on
+// every tap, pauses in the background and greets again on resume.
 class _HomeCompanion extends StatefulWidget {
   @override
   State<_HomeCompanion> createState() => _HomeCompanionState();
 }
 
 class _HomeCompanionState extends State<_HomeCompanion> {
-  final ValueNotifier<bool> _talking = ValueNotifier(false);
-  int _taps = 0;
-
-  @override
-  void dispose() {
-    _talking.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final st = AppScope.of(context);
-    final now = DateTime.now();
-    final text = _taps == 0
-        ? MascotEngine.greetingLine(
-            hour: now.hour, locale: st.uiLocale, salt: now.day)
-        : MascotEngine.tapLine(st.mascotFacts, st.uiLocale, salt: _taps);
-    return GestureDetector(
-      onTap: () => setState(() => _taps++),
-      child: MascotBubble(
-        characterId: st.mascotId,
-        mood: _taps == 0 ? MascotMood.happy : MascotMood.celebrate,
-        text: text,
-        size: 56,
-        animate: !st.reduceMotion,
-        talking: _talking,
-      ),
+    return LiveCompanion(
+      characterId: st.mascotId,
+      facts: st.mascotFacts,
+      locale: st.uiLocale,
+      size: 56,
+      reduceMotion: st.reduceMotion,
+      salt: DateTime.now().day,
     );
   }
 }

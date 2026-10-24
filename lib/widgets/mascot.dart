@@ -1,4 +1,4 @@
-// Rafiq & Friends — living human companions (v4.9).
+// Rafiq & Friends — living human companions (v4.9, v4.10).
 //
 // v4.9: the cast is now drawn as HUMAN characters (a coach, classmates,
 // mentors) instead of animals — and everything LIVES:
@@ -6,6 +6,12 @@
 //   * celebration hop with raised arms when a milestone lands
 //   * a talking mouth synced to the speech-bubble typewriter
 //   * tap any companion → it waves at you
+// v4.10: the companions speak on their OWN, all the time:
+//   * a fresh spoken line triggers a body gesture automatically — no tap
+//     needed (encouragement and motivation visibly move the character)
+//   * LiveCompanion wraps the bubble with an ambient chatter timer (a new
+//     line every 24–36 s), greets on open, replies on every tap, pauses
+//     in the background and greets again on resume
 // Art is still layered vector paths on a normalized 100x100 canvas — no
 // images, no emoji glyphs, no new dependencies, identical on every device.
 // Motion respects MediaQuery.disableAnimations (reduce motion) and the
@@ -14,17 +20,19 @@
 //
 // Personality data comes from lib/mascot.dart (engine: cast, unlocks,
 // lines, typewriter math). This file only renders:
-//   * Mascot        — an animated human body reacting to mood/talking/taps
-//   * MascotBubble  — companion + speech bubble with a typewriter reveal
+//   * Mascot         — an animated human body reacting to mood/talking/taps
+//   * MascotBubble   — companion + speech bubble with a typewriter reveal
+//   * LiveCompanion  — the always-talking wrapper (greeting → ambient loop)
 //
 // Back-compat: `MascotMood` is re-exported from the engine, and Mascot
 // defaults to `rafiq`, so every pre-4.5 call site keeps compiling.
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 
-import '../mascot.dart' show MascotEngine, MascotMood;
+import '../mascot.dart' show MascotEngine, MascotFacts, MascotMood;
 import '../theme.dart';
 
 export '../mascot.dart' show MascotMood;
@@ -220,14 +228,31 @@ class _MascotState extends State<Mascot> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    // v4.10: a fresh spoken line moves the body automatically — the
+    // character gestures while it talks, no tap required.
+    widget.talking?.addListener(_onTalking);
     if (widget.animated && widget.mood == MascotMood.celebrate) {
       _action.forward();
     }
   }
 
+  /// v4.10: edge-triggered on false→true (a new line starts typing).
+  void _onTalking() {
+    if (widget.talking?.value != true) return;
+    if (!_live) return;
+    if (widget.mood == MascotMood.celebrate) {
+      return; // celebration owns the arms
+    }
+    _action.forward(from: 0);
+  }
+
   @override
   void didUpdateWidget(covariant Mascot old) {
     super.didUpdateWidget(old);
+    if (old.talking != widget.talking) {
+      old.talking?.removeListener(_onTalking);
+      widget.talking?.addListener(_onTalking);
+    }
     if (old.mood != widget.mood) {
       if (widget.mood == MascotMood.celebrate && _live) {
         _action.forward(from: 0);
@@ -246,6 +271,7 @@ class _MascotState extends State<Mascot> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    widget.talking?.removeListener(_onTalking);
     for (final c in [_bob, _blink, _talk, _action]) {
       c.dispose();
     }
@@ -702,6 +728,9 @@ class _MascotBubbleState extends State<MascotBubble>
             mood: widget.mood,
             characterId: widget.characterId,
             talking: widget.talking,
+            // v4.10: tapping the avatar also speaks a fresh line, so the
+            // whole companion (not just the text) answers interaction.
+            onTap: widget.onTap,
           ),
           const SizedBox(width: 10),
         ],
@@ -771,6 +800,164 @@ class _MascotBubbleState extends State<MascotBubble>
           opacity: t.clamp(0.0, 1.0),
           child: Transform.scale(scale: 0.9 + 0.1 * t, child: child)),
       child: body,
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// v4.10 — LiveCompanion: the companion that never goes quiet.
+//
+// Wraps [MascotBubble] with an autonomous conversation loop:
+//   * opening line — the time-of-day greeting, or [openingText] provided
+//     by the caller (e.g. the profile card's comeback moment);
+//   * ambient chatter — every 24–36 s (MascotEngine.ambientIntervalMs,
+//     deterministic per turn) a fresh motivation line is spoken WITHOUT
+//     any user action — the "talks all the time" contract;
+//   * interaction — every tap (avatar or bubble) replies with a fresh
+//     encouragement line and restarts the quiet window;
+//   * lifecycle-aware — chatter pauses while the app is backgrounded and
+//     the companion speaks a welcome-back line on resume.
+// Reduce motion only disables the typewriter/entrance animation; the
+// companion still talks, because rotating text is content, not motion.
+// The timer is cancelled on dispose, so widget tests can unmount the
+// tree to avoid pending-timer failures.
+// ---------------------------------------------------------------------------
+class LiveCompanion extends StatefulWidget {
+  final String characterId;
+  final MascotMood mood;
+  final double size;
+  final MascotFacts facts;
+  final String locale;
+  final bool reduceMotion;
+
+  /// Stable per-session salt (e.g. DateTime.now().day) mixed into line
+  /// rotation so different screens and days differ.
+  final int salt;
+
+  /// Overrides the time-of-day greeting as the first spoken line.
+  final String? openingText;
+
+  const LiveCompanion({
+    super.key,
+    required this.characterId,
+    required this.facts,
+    required this.locale,
+    this.mood = MascotMood.happy,
+    this.size = 56,
+    this.reduceMotion = false,
+    this.salt = 0,
+    this.openingText,
+  });
+
+  @override
+  State<LiveCompanion> createState() => _LiveCompanionState();
+}
+
+enum _SpeakKind { opening, ambient, tap }
+
+class _LiveCompanionState extends State<LiveCompanion>
+    with WidgetsBindingObserver {
+  final ValueNotifier<bool> _talking = ValueNotifier(false);
+  Timer? _chatter;
+  _SpeakKind _kind = _SpeakKind.opening;
+  int _turns = 0;
+
+  String get _line {
+    final w = widget;
+    switch (_kind) {
+      case _SpeakKind.opening:
+        return w.openingText ??
+            MascotEngine.greetingLine(
+              hour: DateTime.now().hour,
+              locale: w.locale,
+              salt: w.salt,
+            );
+      case _SpeakKind.ambient:
+        return MascotEngine.ambientLine(w.facts, w.locale,
+            salt: _turns + w.salt);
+      case _SpeakKind.tap:
+        return MascotEngine.tapLine(w.facts, w.locale, salt: _turns + w.salt);
+    }
+  }
+
+  /// (Re)arms the ambient timer. Each turn uses a different interval so
+  /// several live companions on screen never speak in unison.
+  void _arm() {
+    _chatter?.cancel();
+    _chatter = Timer(
+      Duration(
+          milliseconds: MascotEngine.ambientIntervalMs(_turns + widget.salt)),
+      _speakAmbient,
+    );
+  }
+
+  void _speakAmbient() {
+    if (!mounted) return;
+    setState(() {
+      _turns++;
+      _kind = _SpeakKind.ambient;
+    });
+    _arm();
+  }
+
+  void _speakTap() {
+    if (!mounted) return;
+    setState(() {
+      _turns++;
+      _kind = _SpeakKind.tap;
+    });
+    _arm(); // a tap restarts the quiet window
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _arm();
+  }
+
+  @override
+  void didUpdateWidget(covariant LiveCompanion old) {
+    super.didUpdateWidget(old);
+    // A locale/facts/opening change re-renders the CURRENT kind in the
+    // new context instead of waiting for the next tick.
+    if (old.locale != widget.locale ||
+        old.facts != widget.facts ||
+        old.openingText != widget.openingText) {
+      setState(() {}); // recompute _line
+    }
+    _arm();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // Background pauses the timer; returning deserves a fresh line.
+      _speakAmbient();
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden) {
+      _chatter?.cancel();
+    }
+  }
+
+  @override
+  void dispose() {
+    _chatter?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    _talking.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MascotBubble(
+      characterId: widget.characterId,
+      mood: widget.mood,
+      text: _line,
+      size: widget.size,
+      animate: !widget.reduceMotion,
+      talking: _talking,
+      onTap: _speakTap,
     );
   }
 }

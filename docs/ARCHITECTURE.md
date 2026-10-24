@@ -199,6 +199,30 @@ contract, not just art:
   placeholder-free and salt-rotation rules (`test/mascot_test.dart`
   enforces all three).
 
+Since v4.10 the speech contract is AUTONOMOUS — the companion speaks and
+moves on its own, without any user action:
+
+- **Speech moves the body.** A false→true edge on the shared `talking`
+  notifier auto-plays a gesture burst on the speaker (`Mascot` listens
+  to the notifier, not to taps); suppressed while a celebration owns the
+  arms or motion is disabled.
+- **Every answer is a spoken moment.** The lesson feedback bar renders a
+  compact bubble that praises (`mascotPraiseLines`) or nudges
+  (`mascotNudgeLines`) automatically — deterministic salts
+  (`correctCount` / `mistakes`), comfort never shame, the in-prompt
+  mascots react in kind (celebrate hop / worried face) via `_headerMood`.
+- **Ambient chatter is lifecycle-aware.** `LiveCompanion` (widget layer)
+  runs a deterministic timer — `MascotEngine.ambientIntervalMs`, 24–36 s
+  per turn so several companions never sync — speaking from the
+  `{s}`/`{lvl}`-personalized ambient bank; every tap replies instantly
+  and restarts the window; the timer cancels in background and re-fires
+  a fresh line on resume; dispose always cancels (widget tests unmount
+  to avoid pending timers). Reduce-motion keeps the chatter (content)
+  and only drops the typewriter/entrance animation (motion).
+- **No mid-question interruptions.** Ambient chatter deliberately does
+  not run inside an open exercise; automatic speech lands at natural
+  moments (per answer, result/failed, home/profile rotation).
+
 ## 4c. Custom word lists (v4.7)
 
 `lib/decks.dart` is a Flutter-free engine for user-authored decks, stored

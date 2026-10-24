@@ -251,6 +251,43 @@ class MascotEngine {
     return locale == 'ar' ? tpl.$1 : tpl.$2;
   }
 
+  // ---------------------------------------------------------------------
+  // v4.10 — always-talking primitives. The companion now speaks on its
+  // own: praise after a correct answer, a gentle nudge after a wrong one,
+  // and ambient motivation while a screen simply stays open.
+  // ---------------------------------------------------------------------
+
+  /// v4.10: quick encouragement spoken AUTOMATICALLY when an answer is
+  /// correct. Short by design — it must never delay the next step.
+  static String praiseLine(String locale, {required int salt}) {
+    final tpl = mascotPraiseLines[salt % mascotPraiseLines.length];
+    return locale == 'ar' ? tpl.$1 : tpl.$2;
+  }
+
+  /// v4.10: gentle motivation spoken AUTOMATICALLY when an answer is
+  /// wrong. Comforts without shaming (same tone rules as the catalog).
+  static String nudgeLine(String locale, {required int salt}) {
+    final tpl = mascotNudgeLines[salt % mascotNudgeLines.length];
+    return locale == 'ar' ? tpl.$1 : tpl.$2;
+  }
+
+  /// v4.10: ambient chatter — the self-spoken motivation line used by
+  /// LiveCompanion between events. Personal: {s}/{lvl} are filled from
+  /// the profile facts.
+  static String ambientLine(
+    MascotFacts f,
+    String locale, {
+    required int salt,
+  }) {
+    final tpl = mascotAmbientLines[salt % mascotAmbientLines.length];
+    return fill(locale == 'ar' ? tpl.$1 : tpl.$2, f);
+  }
+
+  /// v4.10: deterministic ambient cadence, 24–36 s. The salt (turn count)
+  /// spreads companions on different screens apart so they never sync
+  /// into a chorus, and stays stable for widget tests.
+  static int ambientIntervalMs(int salt) => 24000 + (salt % 4) * 4000;
+
   static int _greetingSlot(int hour) {
     if (hour >= 5 && hour < 12) return 0;
     if (hour >= 12 && hour < 18) return 1;
@@ -549,6 +586,90 @@ const List<MascotBiLine> mascotTapLines = [
   (
     'الطريق طويل لكن خطواتك تُحتسب كلها',
     'The path is long, but every step of yours counts'
+  ),
+];
+
+// ---------------------------------------------------------------------------
+// v4.10 — praise bursts (ar, en): spoken automatically after a CORRECT
+// answer inside the lesson feedback bar. Short, energetic, no placeholders.
+// ---------------------------------------------------------------------------
+const List<MascotBiLine> mascotPraiseLines = [
+  ('أحسنت! إجابة موفقة تماماً', 'Well done! Spot on'),
+  (
+    'صحيح! كل كلمة تُتقنها تقرّبك من الطلاقة',
+    'Right! Every word mastered brings fluency closer'
+  ),
+  ('ممتاز! تركيزك واضح اليوم', 'Brilliant! Your focus shows today'),
+  ('رائع! هذا إتقان حقيقي', 'Awesome! That is real mastery'),
+  ('إجابة صحيحة — استمر على هذا الإيقاع', 'Correct — keep this rhythm going'),
+  ('جميل! عقلك يعمل بامتياز', 'Lovely! Your brain is firing on all cylinders'),
+];
+
+// ---------------------------------------------------------------------------
+// v4.10 — nudge bursts (ar, en): spoken automatically after a WRONG answer.
+// Comfort first, never shame — the correct answer is already on screen.
+// ---------------------------------------------------------------------------
+const List<MascotBiLine> mascotNudgeLines = [
+  (
+    'لا بأس أبداً — الأخطاء طريق الإتقان نفسه',
+    'It is absolutely fine — mistakes ARE the way'
+  ),
+  (
+    'قريب جداً! راجع الإجابة وستثبت المرة القادمة',
+    'So close! Review the answer and it will stick next time'
+  ),
+  (
+    'لا مشكلة — الدماغ يتعلّم من الأخطاء أكثر من النجاحات',
+    'No problem — the brain learns more from misses than wins'
+  ),
+  (
+    'خذها بسهولة، سنعود لهذه الكلمة قريباً معاً',
+    'Take it easy — we will revisit this word together soon'
+  ),
+  (
+    'خطأ صغير اليوم = كلمة محفوظة غداً',
+    'A small slip today = a word remembered tomorrow'
+  ),
+  ('استمر! المثابرة تصنع الفارق دائماً', 'Keep going! Persistence always wins'),
+];
+
+// ---------------------------------------------------------------------------
+// v4.10 — ambient chatter (ar, en): the LiveCompanion speaks one of these
+// every 24–36 s while a screen stays open. Personal ({s} streak, {lvl}
+// level) and calm — motivation without fake urgency.
+// ---------------------------------------------------------------------------
+const List<MascotBiLine> mascotAmbientLines = [
+  (
+    'سلسلتك {s} يوماً وتنمو — أنت على الطريق الصحيح',
+    'Your streak is {s} days and growing — you are on track'
+  ),
+  (
+    'أنت الآن في المستوى {lvl} — تقدم يستحق الإعجاب',
+    'You are level {lvl} now — progress worth admiring'
+  ),
+  (
+    'درس قصير الآن يبني عادة أقوى غداً',
+    'One short lesson now builds a stronger habit tomorrow'
+  ),
+  (
+    'المراجعة المنتظمة تخطف الكلمات من النسيان',
+    'Regular reviews steal words back from forgetting'
+  ),
+  (
+    'كلماتك النجمة تنتظر مراجعة سريعة',
+    'Your starred words await a quick review'
+  ),
+  (
+    'خمس دقائق تكفي — ابدأ درساً قصيراً متى شئت',
+    'Five minutes is enough — start a short lesson anytime'
+  ),
+  (
+    'كل يوم تتعلم فيه يجعل هدف الطلاقة أقرب',
+    'Every learning day brings your fluency goal closer'
+  ),
+  (
+    'أنا معك في كل خطوة — تقدّم بإيقاعك أنت',
+    'I am with you at every step — move at your own pace'
   ),
 ];
 

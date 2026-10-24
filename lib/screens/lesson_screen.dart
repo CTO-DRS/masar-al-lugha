@@ -91,11 +91,24 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   void dispose() {
     _typed.dispose();
+    _fbTalking.dispose();
     super.dispose();
   }
 
   bool get isLast => index >= exercises.length - 1;
   Exercise get ex => exercises[index];
+
+  // v4.10: the feedback-bar companion's mouth is driven by its bubble's
+  // typewriter while it praises/nudges after every answer.
+  final ValueNotifier<bool> _fbTalking = ValueNotifier(false);
+
+  /// v4.10: the in-prompt companion reacts to the answer LIVE — it hops
+  /// with raised arms on a correct answer and shows a worried face on a
+  /// wrong one, then returns to happy for the next exercise. No tap
+  /// needed: the mood flip plays the celebration animation by itself.
+  MascotMood get _headerMood => answered
+      ? (wasCorrect ? MascotMood.celebrate : MascotMood.sad)
+      : MascotMood.happy;
 
   @override
   void initState() {
@@ -239,7 +252,11 @@ class _LessonScreenState extends State<LessonScreen> {
         children: [
           Row(
             children: [
-              Mascot(size: 56, mood: MascotMood.happy),
+              Mascot(
+                size: 56,
+                mood: _headerMood,
+                characterId: AppScope.of(context).mascotId,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -375,7 +392,11 @@ class _LessonScreenState extends State<LessonScreen> {
           const SizedBox(height: 10),
           Row(
             children: [
-              Mascot(size: 56, mood: MascotMood.happy),
+              Mascot(
+                size: 56,
+                mood: _headerMood,
+                characterId: AppScope.of(context).mascotId,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -483,7 +504,11 @@ class _LessonScreenState extends State<LessonScreen> {
             children: [
               Row(
                 children: [
-                  Mascot(size: 56, mood: MascotMood.happy),
+                  Mascot(
+                    size: 56,
+                    mood: _headerMood,
+                    characterId: AppScope.of(context).mascotId,
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
@@ -598,7 +623,11 @@ class _LessonScreenState extends State<LessonScreen> {
             children: [
               Row(
                 children: [
-                  Mascot(size: 56, mood: MascotMood.happy),
+                  Mascot(
+                    size: 56,
+                    mood: _headerMood,
+                    characterId: AppScope.of(context).mascotId,
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(tr('fillBlank'),
@@ -669,7 +698,11 @@ class _LessonScreenState extends State<LessonScreen> {
           const SizedBox(height: 10),
           Row(
             children: [
-              Mascot(size: 56, mood: MascotMood.happy),
+              Mascot(
+                size: 56,
+                mood: _headerMood,
+                characterId: AppScope.of(context).mascotId,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(tr('trueOrFalse'),
@@ -762,7 +795,11 @@ class _LessonScreenState extends State<LessonScreen> {
           const SizedBox(height: 10),
           Row(
             children: [
-              Mascot(size: 56, mood: MascotMood.happy),
+              Mascot(
+                size: 56,
+                mood: _headerMood,
+                characterId: AppScope.of(context).mascotId,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(tr('typeWhatYouHear'),
@@ -843,7 +880,11 @@ class _LessonScreenState extends State<LessonScreen> {
           const SizedBox(height: 10),
           Row(
             children: [
-              Mascot(size: 56, mood: MascotMood.happy),
+              Mascot(
+                size: 56,
+                mood: _headerMood,
+                characterId: AppScope.of(context).mascotId,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(tr('matchPairs'),
@@ -1111,6 +1152,12 @@ class _LessonScreenState extends State<LessonScreen> {
     final fg = wasCorrect ? AppColors.greenDark : AppColors.redDark;
     final btnColor = wasCorrect ? AppColors.green : AppColors.red;
     final btnDark = wasCorrect ? AppColors.greenDark : AppColors.redDark;
+    // v4.10: the companion speaks AUTOMATICALLY after every answer —
+    // praise after a correct one, a gentle nudge after a wrong one.
+    final st = AppScope.of(context);
+    final spoken = wasCorrect
+        ? MascotEngine.praiseLine(st.uiLocale, salt: correctCount)
+        : MascotEngine.nudgeLine(st.uiLocale, salt: mistakes);
 
     return Container(
       color: bg,
@@ -1150,6 +1197,17 @@ class _LessonScreenState extends State<LessonScreen> {
                 ),
               ),
             ],
+          ),
+          // v4.10: automatic encouragement — the avatar animates (talks
+          // and gestures) without any tap, exactly when it matters.
+          const SizedBox(height: 8),
+          MascotBubble(
+            characterId: st.mascotId,
+            mood: wasCorrect ? MascotMood.celebrate : MascotMood.happy,
+            text: spoken,
+            size: 40,
+            animate: !st.reduceMotion,
+            talking: _fbTalking,
           ),
           const SizedBox(height: 12),
           ChunkyButton(

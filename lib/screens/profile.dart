@@ -658,16 +658,9 @@ class _CompanionCard extends StatefulWidget {
 }
 
 class _CompanionCardState extends State<_CompanionCard> {
-  int _tipSalt = 0;
-  // v4.9: the bubble's typewriter drives the avatar's mouth.
-  final ValueNotifier<bool> _talking = ValueNotifier(false);
-
-  @override
-  void dispose() {
-    _talking.dispose();
-    super.dispose();
-  }
-
+  // v4.10: the card is now a LiveCompanion — it speaks the comeback/idle
+  // moment on open, keeps chatting ambient motivation every 24–36 s, and
+  // replies to every tap. No local tap counter or talking notifier needed.
   @override
   Widget build(BuildContext context) {
     final st = AppScope.of(context);
@@ -678,7 +671,7 @@ class _CompanionCardState extends State<_CompanionCard> {
     final comeback = st.mascotMissedDays >= 3;
     final event = comeback ? MascotEvent.comeback : MascotEvent.idle;
     final tip = MascotEngine.lineFor(event, st.mascotFacts, st.uiLocale,
-        salt: _tipSalt + (comeback ? 0 : AppState.todayKey().hashCode % 97));
+        salt: comeback ? 0 : AppState.todayKey().hashCode % 97);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -713,16 +706,14 @@ class _CompanionCardState extends State<_CompanionCard> {
             ],
           ),
           const SizedBox(height: 12),
-          GestureDetector(
-            onTap: () => setState(() => _tipSalt++),
-            child: MascotBubble(
-              characterId: st.mascotId,
-              mood: comeback ? MascotMood.happy : MascotMood.neutral,
-              text: tip,
-              size: 64,
-              animate: !st.reduceMotion,
-              talking: _talking,
-            ),
+          LiveCompanion(
+            characterId: st.mascotId,
+            facts: st.mascotFacts,
+            locale: st.uiLocale,
+            mood: comeback ? MascotMood.happy : MascotMood.neutral,
+            size: 64,
+            reduceMotion: st.reduceMotion,
+            openingText: tip,
           ),
           const SizedBox(height: 10),
           Center(

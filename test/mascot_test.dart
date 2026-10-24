@@ -458,6 +458,176 @@ void main() {
     });
   });
 
+  group('v4.10 always-talking engine', () {
+    test('praise lines: parity, no placeholders, deterministic rotation', () {
+      expect(mascotPraiseLines.length, greaterThanOrEqualTo(4));
+      for (var i = 0; i < mascotPraiseLines.length; i++) {
+        final ar = MascotEngine.praiseLine('ar', salt: i);
+        final en = MascotEngine.praiseLine('en', salt: i);
+        expect(ar, mascotPraiseLines[i].$1, reason: 'salt $i');
+        expect(en, mascotPraiseLines[i].$2, reason: 'salt $i');
+        expect(ar.trim().isNotEmpty, true);
+        expect(en.trim().isNotEmpty, true);
+        expect(ar.contains('{'), isFalse, reason: ar);
+        expect(en.contains('{'), isFalse, reason: en);
+        // Arabic-only script in ar, none in en
+        expect(RegExp(r'[\u0600-\u06FF]').hasMatch(ar), true, reason: ar);
+        expect(RegExp(r'[\u0600-\u06FF]').hasMatch(en), false, reason: en);
+      }
+      // rotation actually rotates
+      expect(MascotEngine.praiseLine('ar', salt: 0),
+          isNot(MascotEngine.praiseLine('ar', salt: 1)));
+    });
+
+    test('nudge lines: parity, no placeholders, deterministic rotation', () {
+      expect(mascotNudgeLines.length, greaterThanOrEqualTo(4));
+      for (var i = 0; i < mascotNudgeLines.length; i++) {
+        final ar = MascotEngine.nudgeLine('ar', salt: i);
+        final en = MascotEngine.nudgeLine('en', salt: i);
+        expect(ar, mascotNudgeLines[i].$1, reason: 'salt $i');
+        expect(en, mascotNudgeLines[i].$2, reason: 'salt $i');
+        expect(ar.contains('{'), isFalse, reason: ar);
+        expect(en.contains('{'), isFalse, reason: en);
+        expect(RegExp(r'[\u0600-\u06FF]').hasMatch(ar), true, reason: ar);
+        expect(RegExp(r'[\u0600-\u06FF]').hasMatch(en), false, reason: en);
+      }
+      expect(MascotEngine.nudgeLine('ar', salt: 0),
+          isNot(MascotEngine.nudgeLine('ar', salt: 1)));
+    });
+
+    test('ambient lines: parity, only {s}/{lvl} allowed, fill works', () {
+      expect(mascotAmbientLines.length, greaterThanOrEqualTo(4));
+      const allowed = {'{s}', '{lvl}'};
+      final f = _f(streak: 9, level: 5);
+      for (var i = 0; i < mascotAmbientLines.length; i++) {
+        final ar = MascotEngine.ambientLine(f, 'ar', salt: i);
+        final en = MascotEngine.ambientLine(f, 'en', salt: i);
+        expect(ar.trim().isNotEmpty, true);
+        expect(en.trim().isNotEmpty, true);
+        for (final line in [
+          mascotAmbientLines[i].$1,
+          mascotAmbientLines[i].$2
+        ]) {
+          for (final m in RegExp(r'\{[a-zA-Z]+\}').allMatches(line)) {
+            expect(allowed.contains(m.group(0)), true,
+                reason: 'unknown placeholder ${m.group(0)}: $line');
+          }
+        }
+        // no {m} outside comeback (ambient is not a comeback context)
+        expect(mascotAmbientLines[i].$1.contains('{m}'), false);
+        expect(mascotAmbientLines[i].$2.contains('{m}'), false);
+        // fill substitutes what the line actually uses
+        expect(ar.contains('{'), isFalse, reason: ar);
+        expect(en.contains('{'), isFalse, reason: en);
+      }
+      // rotation actually rotates
+      expect(MascotEngine.ambientLine(f, 'ar', salt: 0),
+          isNot(MascotEngine.ambientLine(f, 'ar', salt: 1)));
+    });
+
+    test('ambientIntervalMs: deterministic, 24-36 s, varied across salts', () {
+      for (var s = 0; s < 24; s++) {
+        final ms = MascotEngine.ambientIntervalMs(s);
+        expect(ms, inInclusiveRange(24000, 36000), reason: 'salt $s');
+        expect(ms, MascotEngine.ambientIntervalMs(s)); // deterministic
+      }
+      final distinct = <int>{
+        for (var i = 0; i < 8; i++) MascotEngine.ambientIntervalMs(i)
+      };
+      expect(distinct.length, greaterThanOrEqualTo(3),
+          reason: 'cadence must vary so companions never sync');
+    });
+  });
+
+  group('v4.10 LiveCompanion widget', () {
+    testWidgets('greets first, then speaks ambient lines on its own',
+        (tester) async {
+      final f = _f(streak: 4, level: 2);
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: LiveCompanion(
+            characterId: 'rafiq',
+            facts: f,
+            locale: 'en',
+            reduceMotion: true, // instant text, chatter still runs
+          ),
+        ),
+      ));
+      await tester.pump(); // first build
+      final bubble = tester.widget<MascotBubble>(find.byType(MascotBubble));
+      expect(bubble.text, isNotEmpty);
+      expect(bubble.animate, isFalse); // reduceMotion honored
+      expect(find.text(bubble.text), findsOneWidget);
+
+      // Advance past the ambient window — the line changes WITHOUT any
+      // user action (the "talks all the time" contract).
+      await tester.pump(const Duration(seconds: 40));
+      final next = tester.widget<MascotBubble>(find.byType(MascotBubble)).text;
+      expect(next, isNot(bubble.text));
+      expect(find.text(next), findsOneWidget);
+
+      // Unmount so the re-armed timer is cancelled (no pending timers).
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+    });
+
+    testWidgets('every tap replies with a fresh line', (tester) async {
+      final f = _f(streak: 2);
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: LiveCompanion(
+            characterId: 'rafiq',
+            facts: f,
+            locale: 'en',
+            reduceMotion: true,
+          ),
+        ),
+      ));
+      await tester.pump();
+      final first = tester.widget<MascotBubble>(find.byType(MascotBubble)).text;
+
+      await tester.tap(find.byType(LiveCompanion));
+      await tester.pump();
+      final second =
+          tester.widget<MascotBubble>(find.byType(MascotBubble)).text;
+      expect(second, isNot(first));
+
+      await tester.tap(find.byType(LiveCompanion));
+      await tester.pump();
+      final third = tester.widget<MascotBubble>(find.byType(MascotBubble)).text;
+      expect(third, isNot(second));
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+    });
+
+    testWidgets('chatter stays silent while reduce-motion prints instantly',
+        (tester) async {
+      // animate:false must not break the ambient rotation: content is
+      // speech, motion is decoration.
+      final f = _f();
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: LiveCompanion(
+            characterId: 'nur',
+            facts: f,
+            locale: 'ar',
+            reduceMotion: true,
+          ),
+        ),
+      ));
+      await tester.pump();
+      final before =
+          tester.widget<MascotBubble>(find.byType(MascotBubble)).text;
+      await tester.pump(const Duration(seconds: 30));
+      final after = tester.widget<MascotBubble>(find.byType(MascotBubble)).text;
+      expect(after, isNot(before));
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+    });
+  });
+
   group('v4.9 living widgets', () {
     testWidgets('typewriter reveals progressively then completes',
         (tester) async {

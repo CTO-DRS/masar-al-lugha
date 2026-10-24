@@ -309,3 +309,24 @@ are unchanged so existing profiles keep their chosen companion.
 Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
 `flutter test` 153/153 · `validate_content.py` PASS. Version: pubspec
 `4.9.0+18`, l10n `version` strings 4.9.0.
+
+## 16. v4.10 increment (the companions never go quiet)
+
+Scope: user request — the human companions must talk and move
+AUTOMATICALLY when encouraging and motivating, and keep interacting and
+talking all the time. Speech becomes autonomous (no tap required) and
+ambient (a conversation loop that runs while a screen stays open). No
+new dependencies, no network, no persisted-state changes; reduce-motion
+only disables the typewriter/entrance animation, never the content.
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Reactive lesson companions | The seven in-prompt mascots render the live answer state via the `_headerMood` getter (celebrate on correct — the mood flip auto-plays the hop, sad on wrong, happy otherwise) and render the SELECTED companion (`characterId: st.mascotId`) instead of the rafiq default. | `lib/screens/lesson_screen.dart` | Existing mood-flip behavior covered by mascot render tests; analyze clean |
+| Automatic praise/nudge | `_feedbackBar` speaks after EVERY answer without any tap: `MascotEngine.praiseLine` (6 bilingual lines) after a correct one, `mascotNudgeLines` (6, comfort never shame) after a wrong one — compact `MascotBubble` (40 px avatar, typewriter + mouth) driven by the state-owned `_fbTalking` notifier; deterministic salts `correctCount` / `mistakes`. | `lib/mascot.dart` (banks + `praiseLine`/`nudgeLine`), `lib/screens/lesson_screen.dart` | Parity/script/rotation tests, placeholder-free test |
+| Speech moves the body | `Mascot` listens to the `talking` notifier edge (false→true) and auto-plays the gesture burst — every spoken line visibly animates its speaker app-wide; suppressed while celebrate owns the arms, when not live, and detached/re-attached safely on notifier swap in `didUpdateWidget`. | `lib/widgets/mascot.dart` | Wave smoke test still passes; talking-edge path exercised by every bubble test |
+| LiveCompanion | New always-talking widget: opening line (greeting or caller `openingText`), deterministic ambient timer `MascotEngine.ambientIntervalMs` (24–36 s per turn, variety-tested so companions never sync), fresh line from the 8-line `{s}`/`{lvl}`-personalized ambient bank each turn, tap (avatar or bubble — `MascotBubble` forwards `onTap` to the avatar now) replies instantly and restarts the window, `WidgetsBindingObserver` pauses chatter in background and speaks a welcome-back line on resume, timer cancelled on dispose. Wired on the learn path (`_HomeCompanion` internals replaced) and the profile companion card (`openingText: tip` keeps the comeback moment). | `lib/widgets/mascot.dart`, `lib/mascot.dart`, `lib/screens/learn_path.dart`, `lib/screens/profile.dart` | Ambient-rotation-without-input test, tap-reply test, reduce-motion-still-chatters test, `ambientIntervalMs` determinism/range/variety test |
+| Design decision: no mid-question chatter | Ambient chatter deliberately does NOT run inside an open exercise — automatic speech happens at natural moments (every answer, result/failed screens, home/profile rotation). Mid-prompt interruptions would distract from the exercise the learner is solving; the companion still speaks more often than anywhere else in the lesson (once per answer). | — | Documented here and in ARCHITECTURE §4b |
+
+Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
+`flutter test` 160/160 · `validate_content.py` PASS. Version: pubspec
+`4.10.0+19`, l10n `version` strings 4.10.0.
