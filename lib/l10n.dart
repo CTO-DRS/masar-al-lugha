@@ -130,7 +130,6 @@ class L {
       'badge_all_fr_units': 'خبير الفرنسية — أكمل كل الوحدات',
       'badge_polyglot': 'متعدد اللغات — أكملت الدورات الثلاث',
       // v4.0
-      'version': 'الإصدار 4.0.0',
       'darkMode': 'الوضع الليلي',
       'reduceMotion': 'تقليل الحركة والمؤثرات',
       'backupRestore': 'نسخ احتياطي واستعادة',
@@ -302,7 +301,6 @@ class L {
       'badge_all_fr_units': 'French Master — finish all units',
       'badge_polyglot': 'Polyglot — finished all three courses',
       // v4.0
-      'version': 'Version 4.0.0',
       'darkMode': 'Dark mode',
       'reduceMotion': 'Reduce motion & effects',
       'backupRestore': 'Backup & restore',
