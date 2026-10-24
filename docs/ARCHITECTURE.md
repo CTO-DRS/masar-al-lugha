@@ -298,6 +298,34 @@ third engine following the insights/records contract:
   `PathPlan` is never persisted, so a content update instantly reshapes
   an old plan without migration.
 
+### 4e. Placement → level auto-link (v4.12)
+
+The placement quiz no longer only picks a starting lesson — it now sets the
+learner's `LevelTier` automatically, closing the loop between "where you
+start" and "what your path plan targets":
+
+- **One rule, two outputs.** `Placement.recommendedTier` reuses the exact
+  consecutive-pass prefix semantics of `recommendedFlatIndex`: the count of
+  leading fully-correct checkpoints maps through `tierForPassed` — nothing
+  proven (or the first checkpoint failed) → beginner, at least half →
+  intermediate, everything → expert. The thresholds are ratios, so they
+  hold for any checkpoint count, and degenerate inputs (empty list, zero
+  total) degrade to beginner instead of over-claiming.
+- **Ready-for band, not a certificate.** The tier describes the material
+  the learner is ready to study next (checkpoints sample course depth
+  evenly and never unit 0), which is precisely what `PathEngine.build`
+  filters units by.
+- **Additive state, one writer.** `AppState.setPathTier(courseId, tier)`
+  validates the enum name, keeps any previously chosen domain (an existing
+  plan moves to the detected tier), skips no-op saves, and persists in the
+  same `pathTier` map — nothing new in the schema. "Start from zero" links
+  the beginner tier so no stale higher tier survives a deliberate reset.
+- **Shared keys, one source.** The domain/tier → l10n-key and emoji maps
+  moved into Flutter-free `path.dart` (v4.12) so the placement result
+  badge, the learn-path banner and the setup wizard render identical
+  labels. The wizard pre-seeds its level step from the stored result and
+  refreshes it when the learner returns from the test.
+
 ## 5. Content pipeline
 
 Python generators (append-only IDs) → `assets/data/*.json` → validated by

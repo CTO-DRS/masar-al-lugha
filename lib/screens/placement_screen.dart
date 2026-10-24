@@ -1,9 +1,14 @@
 // Placement quiz UI (v4.0): quick multiple-choice across course depth,
 // then pre-unlocks the recommended level. Reached from the learn path
 // header when a course has no completed lessons yet.
+// v4.12: the result now ALSO sets the learner's LevelTier automatically
+// (badge on the result card + AppState.setPathTier) — confirming the
+// placement links the detected level to the path plan; "start from zero"
+// links the beginner tier.
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../path.dart';
 import '../placement.dart';
 import '../scope.dart';
 import '../theme.dart';
@@ -161,6 +166,9 @@ class _PlacementScreenState extends State<PlacementScreen> {
   Widget _result(String Function(String) tr, AppState st) {
     final course = st.course;
     final flat = recommended;
+    // v4.12: the detected level shown on the result card and stored when
+    // the learner confirms — same consecutive-pass rule as the skip.
+    final tier = Placement.recommendedTier(checkpoints, results);
     String title;
     if (flat <= 0) {
       title = tr('placementFromStart');
@@ -195,11 +203,45 @@ class _PlacementScreenState extends State<PlacementScreen> {
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 19),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 12),
+          // v4.12: the auto-linked level — mirrors what setPathTier stores.
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.green.withValues(alpha: 0.10),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                  color: AppColors.green.withValues(alpha: 0.5), width: 2),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.auto_awesome,
+                    size: 17, color: AppColors.green),
+                const SizedBox(width: 7),
+                Flexible(
+                  child: Text(
+                    '${tr('placementLevelAuto')}: ${tr(pathTierL10nKey(tier))}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 14,
+                        color: AppColors.green),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 26),
           ChunkyButton(
             label: tr('placementConfirm'),
             onPressed: () {
               st.setPlacementSkip(st.courseId, flat);
+              // v4.12: link the detected level automatically — the path
+              // plan (if any) moves to this tier, otherwise the wizard
+              // pre-selects it next time.
+              st.setPathTier(st.courseId, tier.name);
               Navigator.of(context).pop();
             },
           ),
@@ -210,6 +252,9 @@ class _PlacementScreenState extends State<PlacementScreen> {
             colorDark: AppColors.inkLight,
             onPressed: () {
               st.setPlacementSkip(st.courseId, 0);
+              // Starting from zero IS the beginner tier — keep the two
+              // linked instead of leaving a stale higher tier behind.
+              st.setPathTier(st.courseId, LevelTier.beginner.name);
               Navigator.of(context).pop();
             },
           ),

@@ -4,6 +4,7 @@
 // plan persistence (save/load/export/import, old-payload null-safety) and
 // the setup wizard widget flow.
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -13,6 +14,7 @@ import 'package:masar_al_lugha/app_state.dart';
 import 'package:masar_al_lugha/l10n.dart';
 import 'package:masar_al_lugha/models.dart';
 import 'package:masar_al_lugha/path.dart';
+import 'package:masar_al_lugha/placement.dart';
 import 'package:masar_al_lugha/scope.dart';
 import 'package:masar_al_lugha/services/tts.dart';
 import 'package:masar_al_lugha/theme.dart';
@@ -74,9 +76,49 @@ Course _course() => Course(
       ],
     );
 
+/// Deep synthetic course for the v4.12 placement→tier tests: 12 units of
+/// 2 lessons × 3 single words each, so `Placement.sample` yields 4 distinct
+/// depth checkpoints (units 2/4/7/9) with enough unsampled words.
+Course _deepCourse() {
+  final units = <Unit>[];
+  for (var u = 0; u < 12; u++) {
+    final lessons = <Lesson>[];
+    for (var l = 0; l < 2; l++) {
+      final vocab = <Vocab>[];
+      for (var w = 0; w < 3; w++) {
+        vocab.add(Vocab(
+          id: 'd_${u}_$l$w',
+          target: 'word${u}_$l$w',
+          translationAr: 'معنى${u}_$l$w',
+        ));
+      }
+      lessons.add(Lesson(
+        id: 'dl_${u}_$l',
+        titleAr: 'درس',
+        titleEn: 'L',
+        vocab: vocab,
+      ));
+    }
+    units.add(Unit(
+      id: 'du$u',
+      titleAr: 'وحدة',
+      titleEn: 'U',
+      colorHex: '58CC02',
+      lessons: lessons,
+    ));
+  }
+  return Course(
+    id: 'en',
+    nameAr: 'إنجليزية',
+    nameEn: 'English',
+    flag: '🇬🇧',
+    ttsLang: 'en-US',
+    units: units,
+  );
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
   group('cefr tiers', () {
     test('ranks are monotonic A1..C2, unknown ranks 0', () {
       expect(PathEngine.cefrRank('A1'), 0);
@@ -317,6 +359,127 @@ void main() {
     });
   });
 
+  group('auto level linking (v4.12)', () {
+    test('tierForPassed pins the ready-for-band thresholds', () {
+      // Nothing proven / degenerate inputs never over-claim.
+      expect(Placement.tierForPassed(0, 4), LevelTier.beginner);
+      expect(Placement.tierForPassed(0, 0), LevelTier.beginner);
+      expect(Placement.tierForPassed(-1, 4), LevelTier.beginner);
+      expect(Placement.tierForPassed(2, 0), LevelTier.beginner);
+      // Quarter depth proven → still beginner; half → intermediate;
+      // everything → expert. (4 checkpoints = the shipped default.)
+      expect(Placement.tierForPassed(1, 4), LevelTier.beginner);
+      expect(Placement.tierForPassed(2, 4), LevelTier.intermediate);
+      expect(Placement.tierForPassed(3, 4), LevelTier.intermediate);
+      expect(Placement.tierForPassed(4, 4), LevelTier.expert);
+      // Thresholds are ratio-based, not hardcoded to 4 checkpoints.
+      expect(Placement.tierForPassed(1, 2), LevelTier.intermediate);
+      expect(Placement.tierForPassed(2, 2), LevelTier.expert);
+      expect(Placement.tierForPassed(2, 3), LevelTier.intermediate);
+    });
+
+    test('recommendedTier mirrors the consecutive-pass skip rule', () {
+      final c = _deepCourse();
+      final cps = Placement.sample(c, rng: Random(7));
+      expect(cps.length, 4);
+
+      // All wrong → beginner.
+      final wrong = {
+        for (final cp in cps)
+          for (final id in cp.wordIds) id: false,
+      };
+      expect(Placement.recommendedTier(cps, wrong), LevelTier.beginner);
+
+      // Only the FIRST checkpoint correct (second broken) → beginner:
+      // the prefix rule — a pass AFTER a failure never counts.
+      final onlyFirst = {
+        for (final cp in cps)
+          for (final id in cp.wordIds) id: true,
+      };
+      onlyFirst[cps[1].wordIds.first] = false; // break the SECOND
+      expect(Placement.recommendedTier(cps, onlyFirst), LevelTier.beginner);
+
+      // First two correct (third broken) → intermediate.
+      final firstTwo = {
+        for (final cp in cps)
+          for (final id in cp.wordIds) id: true,
+      };
+      firstTwo[cps[2].wordIds.first] = false;
+      expect(Placement.recommendedTier(cps, firstTwo), LevelTier.intermediate);
+
+      // Everything correct → expert.
+      final allRight = {
+        for (final cp in cps)
+          for (final id in cp.wordIds) id: true,
+      };
+      expect(Placement.recommendedTier(cps, allRight), LevelTier.expert);
+
+      // Sanity: the prefix semantics agree with recommendedFlatIndex —
+      // breaking the third checkpoint skips through the 2nd, exactly the
+      // case the intermediate tier was assigned for.
+      expect(
+        Placement.recommendedFlatIndex(c, cps, firstTwo),
+        Placement.flatEndOfUnit(c, cps[1].unitIndex),
+      );
+    });
+
+    test('setPathTier stores valid names, rejects invalid, keeps domain',
+        () async {
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      final st = AppState();
+      st.courses['en'] = _course();
+      await st.load();
+
+      // Invalid enum names are rejected silently.
+      st.setPathTier('en', 'hacker');
+      expect(st.pathTierOf('en'), isNull);
+
+      // Without a domain: tier stored, but no active plan yet.
+      st.setPathTier('en', 'intermediate');
+      expect(st.pathTierOf('en'), LevelTier.intermediate);
+      expect(st.activePathPlan, isNull);
+
+      // With a domain: the plan picks the tier up — the linking contract.
+      st.setPathPlan('en', 'business', 'beginner');
+      expect(st.activePathPlan!.effectiveTier, LevelTier.beginner);
+      st.setPathTier('en', 'expert');
+      expect(st.pathDomainOf('en'), PathDomain.business); // domain survives
+      expect(st.pathTierOf('en'), LevelTier.expert); // linked tier stored
+      // The plan now REQUESTS expert; the tiny synthetic course has no C1
+      // business units, so build() relaxes one band down (by design).
+      final plan = st.activePathPlan;
+      expect(plan, isNotNull);
+      expect(plan!.tier, LevelTier.expert);
+      expect(plan.effectiveTier, LevelTier.intermediate);
+      expect(plan.tierRelaxed, isTrue);
+    });
+
+    test('setPathTier result survives save/load and export/import', () async {
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      final st = AppState();
+      st.courses['en'] = _course();
+      await st.load();
+      st.setPathTier('en', 'expert');
+      await st
+          .save(); // deterministic write (setPathTier saves fire-and-forget)
+
+      // Persistence round-trip through the real save() → load() path.
+      final st2 = AppState();
+      st2.courses['en'] = _course();
+      await st2.load();
+      expect(st2.pathTierOf('en'), LevelTier.expert);
+
+      // Export/import round-trip too.
+      final st3 = AppState();
+      st3.courses['en'] = _course();
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      await st3.load();
+      final err = await st3.importProfileJson(st.exportProfileJson());
+      expect(err, isNull);
+      expect(st3.pathTier['en'], 'expert');
+    });
+  });
+
   group('l10n parity for v4.11 keys', () {
     test('every new key exists in ar and en, version bumped', () {
       const keys = [
@@ -334,8 +497,17 @@ void main() {
         expect(L.t('ar', k), isNot(k), reason: k);
         expect(L.t('en', k), isNot(k), reason: k);
       }
-      expect(L.t('ar', 'version'), contains('4.11.0'));
-      expect(L.t('en', 'version'), contains('4.11.0'));
+      // Version itself is pinned by the v4.12 group below.
+    });
+  });
+
+  group('l10n parity for v4.12 keys', () {
+    test('placementLevelAuto exists in ar and en, version bumped', () {
+      expect(L.t('ar', 'placementLevelAuto'), 'مستواك المحدد من الاختبار');
+      expect(L.t('en', 'placementLevelAuto'), 'Level detected by the test');
+      // No accidental duplicate keys / missing update in either language.
+      expect(L.t('ar', 'version'), contains('4.12.0'));
+      expect(L.t('en', 'version'), contains('4.12.0'));
     });
   });
 

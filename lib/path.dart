@@ -29,6 +29,45 @@ enum PathDomain {
   daily,
 }
 
+// v4.12: l10n keys + emoji for domains/tiers — pure string maps that live
+// here (Flutter-free) so the engine, the learn-path banner, the setup
+// wizard AND the placement result screen share one source of truth.
+String pathDomainL10nKey(PathDomain d) => const {
+      PathDomain.basics: 'domainBasics',
+      PathDomain.travel: 'domainTravel',
+      PathDomain.food: 'domainFood',
+      PathDomain.health: 'domainHealth',
+      PathDomain.tech: 'domainTech',
+      PathDomain.nature: 'domainNature',
+      PathDomain.culture: 'domainCulture',
+      PathDomain.business: 'domainBusiness',
+      PathDomain.daily: 'domainDaily',
+    }[d]!;
+
+String pathDomainEmoji(PathDomain d) => const {
+      PathDomain.basics: '🔤',
+      PathDomain.travel: '✈️',
+      PathDomain.food: '🍽️',
+      PathDomain.health: '🩺',
+      PathDomain.tech: '💻',
+      PathDomain.nature: '🌿',
+      PathDomain.culture: '🎬',
+      PathDomain.business: '🏪',
+      PathDomain.daily: '🏠',
+    }[d]!;
+
+String pathTierL10nKey(LevelTier t) => const {
+      LevelTier.beginner: 'tierBeginner',
+      LevelTier.intermediate: 'tierIntermediate',
+      LevelTier.expert: 'tierExpert',
+    }[t]!;
+
+String pathTierSubL10nKey(LevelTier t) => const {
+      LevelTier.beginner: 'tierBeginnerSub',
+      LevelTier.intermediate: 'tierIntermediateSub',
+      LevelTier.expert: 'tierExpertSub',
+    }[t]!;
+
 class PathPlan {
   final PathDomain domain;
 

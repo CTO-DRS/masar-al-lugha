@@ -394,6 +394,20 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// v4.12: stores ONLY the level tier for [courseId] — the placement test
+  /// calls this to link its result to the learner's level automatically.
+  /// A previously chosen domain survives, so an existing plan just moves to
+  /// the detected tier; without a domain nothing shows until the wizard
+  /// completes, but the tier is pre-selected there. Invalid enum names are
+  /// rejected silently; re-storing the same value skips the save.
+  void setPathTier(String courseId, String tier) {
+    if (PathEngine.tierByName(tier) == null) return;
+    if (pathTier[courseId] == tier) return;
+    pathTier[courseId] = tier;
+    save();
+    notifyListeners();
+  }
+
   /// v4.11: removes the plan for [courseId] (no-op when none was set).
   void clearPathPlan(String courseId) {
     final had = pathDomain.remove(courseId) != null ||

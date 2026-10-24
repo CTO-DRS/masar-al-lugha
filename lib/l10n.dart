@@ -145,12 +145,13 @@ class L {
       'unitProgress': 'أكملت',
       'placementTitle': 'اختبار تحديد المستوى',
       'placementIntro':
-          'أجب عن أسئلة سريعة لنتخطى ما تعرفه وتبدأ من المستوى المناسب لك.',
+          'أجب عن أسئلة سريعة لنتخطى ما تعرفه ونحدد مستواك (مبتدئ/متوسط/خبير) تلقائياً.',
       'placementMeaningOf': 'ما معنى هذه الكلمة؟',
       'placementResult': 'ننصحك بالبدء من هنا',
       'placementConfirm': 'ابدأ من هذا المستوى',
       'placementSkip': 'تخطي الاختبار والبدء من البداية',
       'placementFromStart': 'سنبدأ من الدرس الأول — ممتاز!',
+      'placementLevelAuto': 'مستواك المحدد من الاختبار',
       'newCardsTomorrow': 'أنجزت بطاقات اليوم الجديدة — عُد غداً',
       'weakWords': 'الكلمات الأصعب',
       'practiceWeak': 'تدريب على الكلمات الأصعب',
@@ -227,7 +228,7 @@ class L {
       'tierExpertSub': 'من C1 وما فوق',
       'tierRelaxedNote':
           'لا توجد وحدات بهذا المستوى في مجالك — اخترنا أقرب مستوى متاح.',
-      'pathPlacementHint': 'لا تعرف مستواك؟ جرّب اختبار التحديد',
+      'pathPlacementHint': 'لا تعرف مستواك؟ اختبار التحديد يحدده تلقائياً',
       'pathStartPlan': 'ابدأ مساري',
       'pathPlanBanner': 'مسارك',
       'pathEditPlan': 'تعديل المسار',
@@ -309,7 +310,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 4.11.0',
+      'version': 'الإصدار 4.12.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -454,12 +455,13 @@ class L {
       'unitProgress': 'Completed',
       'placementTitle': 'Placement test',
       'placementIntro':
-          'Answer a few quick questions so we can skip what you already know and start you at the right level.',
+          'Answer a few quick questions and we will skip what you already know — and set your level (beginner/intermediate/expert) automatically.',
       'placementMeaningOf': 'What does this word mean?',
       'placementResult': 'We suggest starting here',
       'placementConfirm': 'Start from this level',
       'placementSkip': 'Skip the test and start from zero',
       'placementFromStart': 'We will start from the first lesson — great!',
+      'placementLevelAuto': 'Level detected by the test',
       'newCardsTomorrow': 'New cards for today are done — come back tomorrow',
       'weakWords': 'Hardest words',
       'practiceWeak': 'Practice tough words',
@@ -539,7 +541,8 @@ class L {
       'tierExpertSub': 'C1 and beyond',
       'tierRelaxedNote':
           'No units at this level in your field — the closest available level was picked.',
-      'pathPlacementHint': 'Not sure of your level? Try the placement test',
+      'pathPlacementHint':
+          'Not sure of your level? The placement test detects it automatically',
       'pathStartPlan': 'Start my path',
       'pathPlanBanner': 'Your path',
       'pathEditPlan': 'Edit path',
@@ -622,7 +625,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 4.11.0',
+      'version': 'Version 4.12.0',
     },
   };
 

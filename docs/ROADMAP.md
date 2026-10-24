@@ -1,7 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.10.0+19** — see docs/PROJECT_AUDIT.md §16 for the
-v4.10 increment with file/test evidence.
+**Current release: v4.12.0+21** — see docs/PROJECT_AUDIT.md and the v4.12
+section below for the placement→level auto-link increment with test
+evidence.
 
 ## Where we are
 
@@ -26,6 +27,8 @@ v4.10 increment with file/test evidence.
 | v4.8.1 | **Companion art upgrade: the five characters are redrawn as layered vector art (CustomPainter, normalized 100×100 canvas) — owl tufts + eye discs + feet, chick crest, cat whiskers + tail, fox muzzle + big ears, bunny long ears + blush, per-mood expressions (smile / neutral / worried frown / star + confetti), mood-aware beaks and mouths. No new deps, no images, same Mascot/MascotBubble API — 143 tests** |
 | v4.9 | **Living human companions: the cast is redrawn as HUMANS (coach Rafiq with glasses, hijabi classmates Farah/Nur/Salma, curly-haired path expert Zayd) and everything LIVES — idle breathing + blink cycle, celebration hop with raised arms, typewriter speech bubbles with a talking mouth synced to the reveal, tap any companion → it waves and says a fresh encouragement line (6 tap lines), home-path companion greets by time of day (3 slots × 2 lines), reduce-motion respected, animated:false stays static for tests — 153 tests** |
 | v4.10 | **The companions never go quiet: automatic speech + ambient chatter — lesson companions react LIVE to every answer (header mascot hops on correct / frowns on wrong, zero taps), the feedback bar speaks a praise line after every correct answer and a gentle nudge after every wrong one (2 new banks × 6 bilingual lines), a fresh spoken line triggers a body gesture automatically (talking-edge motion), and the new `LiveCompanion` widget keeps the home path and profile card talking ALL the time (greeting → 8 ambient motivation lines every 24–36 s, tap = instant reply, paused in background, welcome-back on resume) — 160 tests** |
+| v4.11 | **Path determination: 9 thematic fields (business/travel/food/…) tagged over the CEFR-tagged units by a frozen keyword catalog + 3 level tiers (مبتدئ A1–A2 / متوسط B1–B2 / خبير C1+) with band relaxation — a setup wizard stores a per-course plan (field × level) and the learn path re-orders plan units first (never locks); additive null-safe `pathDomain`/`pathTier` maps** |
+| v4.12 | **The placement test now AUTO-LINKS its result to the level: `Placement.recommendedTier` reuses the consecutive-pass prefix rule (nothing proven → مبتدئ, ≥ half → متوسط, all → خبير), `AppState.setPathTier` stores it keeping any chosen field, the result card shows a green "level detected" badge, and the setup wizard pre-fills + refreshes the level step from the test** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -321,6 +324,35 @@ v4.10 increment with file/test evidence.
    thing is additive: `pathDomain`/`pathTier` are per-course maps in the
    schema-v2 payload, null-safe on old backups, unknown names dropped on
    import.
+
+## v4.12 — placement result auto-links the level (SHIPPED)
+
+1. ✅ **One rule, two outputs (engine, Flutter-free)** —
+   `Placement.recommendedTier` reuses the exact consecutive-pass prefix
+   semantics of `recommendedFlatIndex` and maps the passed-checkpoint count
+   through `tierForPassed`: nothing proven (or the first checkpoint failed)
+   → beginner, at least half the checkpoints → intermediate, everything →
+   expert. Thresholds are ratios (hold for any checkpoint count) and
+   degenerate inputs degrade to beginner instead of over-claiming — pinned
+   in `test/path_test.dart` ("auto level linking (v4.12)").
+2. ✅ **`AppState.setPathTier(courseId, tier)`** — validates the enum name,
+   keeps any previously chosen domain (an existing plan moves to the
+   detected tier), skips no-op saves, and persists through the existing
+   `pathTier` map: save/load and export/import round-trips tested; nothing
+   new in the schema, old payloads import untouched. Confirming the
+   placement stores the detected level; "start from zero" links the
+   beginner tier so no stale higher tier survives a deliberate reset.
+3. ✅ **Result screen shows the link** — a green badge on the placement
+   result card ("مستواك المحدد من الاختبار: متوسط") renders the detected
+   level via the SAME shared `pathTierL10nKey` labels the path banner and
+   wizard use (the domain/tier l10n-key + emoji maps moved into
+   Flutter-free `path.dart` so all three surfaces share one source of
+   truth — no import cycle).
+4. ✅ **Wizard pre-fills the level** — `PathSetupScreen` seeds its level
+   step from the stored test result (null-safe: no test → unchanged
+   manual picker) and refreshes it when the learner returns from the
+   placement test launched from its own hint row; the hint now says the
+   test detects the level automatically.
 
 ## Hard invariants (never break)
 

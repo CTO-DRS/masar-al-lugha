@@ -1,6 +1,9 @@
 // Path setup wizard (v4.11): the learner picks a field (PathDomain) and a
 // level (LevelTier); the pure-Dart PathEngine derives the ordered unit plan
 // and AppState stores it per course. Reached from the learn-path hero.
+// v4.12: the level step is pre-filled from the placement-test result
+// (lib/placement.dart → AppState.setPathTier) and refreshes when the
+// learner returns from the test, so the two stay linked automatically.
 import 'package:flutter/material.dart';
 
 import '../path.dart';
@@ -8,43 +11,6 @@ import '../scope.dart';
 import '../theme.dart';
 import '../widgets/mascot.dart';
 import 'placement_screen.dart';
-
-/// l10n keys + emoji for domains/tiers — shared with the learn-path banner.
-String pathDomainL10nKey(PathDomain d) => const {
-      PathDomain.basics: 'domainBasics',
-      PathDomain.travel: 'domainTravel',
-      PathDomain.food: 'domainFood',
-      PathDomain.health: 'domainHealth',
-      PathDomain.tech: 'domainTech',
-      PathDomain.nature: 'domainNature',
-      PathDomain.culture: 'domainCulture',
-      PathDomain.business: 'domainBusiness',
-      PathDomain.daily: 'domainDaily',
-    }[d]!;
-
-String pathDomainEmoji(PathDomain d) => const {
-      PathDomain.basics: '🔤',
-      PathDomain.travel: '✈️',
-      PathDomain.food: '🍽️',
-      PathDomain.health: '🩺',
-      PathDomain.tech: '💻',
-      PathDomain.nature: '🌿',
-      PathDomain.culture: '🎬',
-      PathDomain.business: '🏪',
-      PathDomain.daily: '🏠',
-    }[d]!;
-
-String pathTierL10nKey(LevelTier t) => const {
-      LevelTier.beginner: 'tierBeginner',
-      LevelTier.intermediate: 'tierIntermediate',
-      LevelTier.expert: 'tierExpert',
-    }[t]!;
-
-String pathTierSubL10nKey(LevelTier t) => const {
-      LevelTier.beginner: 'tierBeginnerSub',
-      LevelTier.intermediate: 'tierIntermediateSub',
-      LevelTier.expert: 'tierExpertSub',
-    }[t]!;
 
 class PathSetupScreen extends StatefulWidget {
   const PathSetupScreen({super.key});
@@ -57,10 +23,21 @@ class _PathSetupScreenState extends State<PathSetupScreen> {
   PathDomain? _domain;
   LevelTier? _tier;
 
+  /// Guards the one-time seed of [_tier] from a stored placement result —
+  /// afterwards the learner's manual pick in this session wins.
+  bool _tierSeeded = false;
+
   @override
   Widget build(BuildContext context) {
     final st = AppScope.of(context);
     final course = st.course;
+
+    // v4.12: seed the level once from a stored placement result (null-safe
+    // — learners without a test simply see the manual picker as before).
+    if (!_tierSeeded) {
+      _tierSeeded = true;
+      _tier ??= st.pathTierOf(st.courseId);
+    }
 
     // Cheap per-course counts (56 units max) recomputed per frame.
     final unitsOfDomain = <PathDomain, int>{};
@@ -130,10 +107,17 @@ class _PathSetupScreenState extends State<PathSetupScreen> {
                       ),
                     InkWell(
                       borderRadius: BorderRadius.circular(12),
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                      onTap: () async {
+                        // v4.12: taking the test links its result to the
+                        // level — when the learner comes back the tier
+                        // step is already reflecting the detected level.
+                        await Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => const PlacementScreen(),
                         ));
+                        if (!mounted) return;
+                        setState(() {
+                          _tier = st.pathTierOf(st.courseId) ?? _tier;
+                        });
                       },
                       child: Row(
                         children: [
