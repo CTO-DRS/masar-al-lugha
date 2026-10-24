@@ -13,7 +13,12 @@ import '../widgets/mascot.dart';
 
 class LessonScreen extends StatefulWidget {
   final Lesson lesson;
-  const LessonScreen({super.key, required this.lesson});
+
+  /// v4.3: lesson style — classic (default), sentence-mining or audio-first.
+  final LessonMode mode;
+
+  const LessonScreen(
+      {super.key, required this.lesson, this.mode = LessonMode.classic});
 
   @override
   State<LessonScreen> createState() => _LessonScreenState();
@@ -49,7 +54,7 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   void initState() {
     super.initState();
-    exercises = ExerciseGen.forLesson(widget.lesson);
+    exercises = ExerciseGen.forLesson(widget.lesson, mode: widget.mode);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _speakIfNeeded();
       setState(() {});
@@ -73,6 +78,16 @@ class _LessonScreenState extends State<LessonScreen> {
         tts
             .setLanguage(AppScope.of(context).course.ttsLang)
             .then((_) => tts.speak(ex.audioText));
+        break;
+      case ExerciseType.build:
+        // v4.3 audio-first: the sentence is played before the learner
+        // arranges its words (with a replay button on the card).
+        if (widget.mode == LessonMode.audio && ex.audioText.isNotEmpty) {
+          final tts = AppScope.ttsOf(context);
+          tts
+              .setLanguage(AppScope.of(context).course.ttsLang)
+              .then((_) => tts.speak(ex.audioText));
+        }
         break;
       default:
         break;
@@ -149,6 +164,20 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
+  /// v4.3: the three listen variants get accurate captions — word options
+  /// (classic), Arabic-meaning options (audio mode) and whole-sentence
+  /// options (sentence-mining / audio mode).
+  String _listenTitle(String Function(String) tr) {
+    if (ex.answer == ex.vocab.translationAr &&
+        ex.vocab.translationAr.isNotEmpty) {
+      return tr('listenMeaning');
+    }
+    if (ex.options.any((o) => o.trim().contains(' '))) {
+      return tr('listenSentence');
+    }
+    return tr('listenAndChoose');
+  }
+
   Widget _promptCard(String Function(String) tr, {required bool isListen}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -161,7 +190,7 @@ class _LessonScreenState extends State<LessonScreen> {
               Expanded(
                 child: Text(
                   isListen
-                      ? tr('listenAndChoose')
+                      ? _listenTitle(tr)
                       : ex.type == ExerciseType.reverse
                           ? tr('chooseWord')
                           : tr('chooseTranslation'),
@@ -239,6 +268,9 @@ class _LessonScreenState extends State<LessonScreen> {
     final badgeLetters = AppScope.of(context).uiLocale == 'ar'
         ? ['أ', 'ب', 'ج', 'د']
         : ['A', 'B', 'C', 'D'];
+    // v4.3: sentence-length options (sentence-mining / audio rounds) get
+    // full-width rows so they wrap instead of overflowing a 2-col grid.
+    final longOptions = ex.options.any((o) => o.trim().length > 24);
     return Column(
       children: [
         _promptCard(tr, isListen: isListen),
@@ -246,9 +278,9 @@ class _LessonScreenState extends State<LessonScreen> {
           child: GridView.builder(
             shrinkWrap: true,
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 2.1,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: longOptions ? 1 : 2,
+              childAspectRatio: longOptions ? 3.2 : 2.1,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),
@@ -292,13 +324,46 @@ class _LessonScreenState extends State<LessonScreen> {
               Mascot(size: 56, mood: MascotMood.happy),
               const SizedBox(width: 12),
               Expanded(
-                child: Text(prompt,
+                child: Text(
+                    // v4.3 audio-first: the sentence was just spoken —
+                    // say so instead of the generic arrange prompt.
+                    widget.mode == LessonMode.audio && ex.audioText.isNotEmpty
+                        ? tr('audioBuild')
+                        : prompt,
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
               ),
             ],
           ),
           const SizedBox(height: 10),
+          if (widget.mode == LessonMode.audio && ex.audioText.isNotEmpty) ...[
+            // Replay button — the core interaction of an audio-first build.
+            GestureDetector(
+              onTap: () {
+                final tts = AppScope.ttsOf(context);
+                tts
+                    .setLanguage(AppScope.of(context).course.ttsLang)
+                    .then((_) => tts.speak(ex.audioText));
+              },
+              child: Container(
+                width: 76,
+                height: 76,
+                decoration: BoxDecoration(
+                  color: AppColors.blue,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppColors.blueDark,
+                        offset: Offset(0, 4),
+                        blurRadius: 0),
+                  ],
+                ),
+                child:
+                    const Icon(Icons.volume_up, color: Colors.white, size: 38),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
@@ -978,7 +1043,8 @@ class _LessonScreenState extends State<LessonScreen> {
   void _showFailed() {
     AppScope.ttsOf(context).stop();
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (_) => LessonFailedScreen(lesson: widget.lesson),
+      builder: (_) =>
+          LessonFailedScreen(lesson: widget.lesson, mode: widget.mode),
     ));
   }
 
@@ -1197,7 +1263,13 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
 
 class LessonFailedScreen extends StatelessWidget {
   final Lesson lesson;
-  const LessonFailedScreen({super.key, required this.lesson});
+  final LessonMode mode; // v4.3: retry keeps the same lesson style
+
+  const LessonFailedScreen({
+    super.key,
+    required this.lesson,
+    this.mode = LessonMode.classic,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1229,7 +1301,8 @@ class LessonFailedScreen extends StatelessWidget {
                 icon: Icons.refresh,
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (_) => LessonScreen(lesson: lesson),
+                    builder: (_) => LessonScreen(
+                        lesson: lesson, mode: mode), // v4.3: keep style
                   ));
                 },
               ),

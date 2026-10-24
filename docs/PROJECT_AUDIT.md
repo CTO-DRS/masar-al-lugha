@@ -137,3 +137,25 @@ Also in v4.2: `pubspec.yaml` → `4.2.0+10`; validator stats line now prints the
 CEFR span per course. No new permissions, no network calls, no dependencies
 added. Known limitations remain documented in CONTENT_AUDIT.md (self-referenced
 labels need human translation review; legacy emoji-ambiguity notices unchanged).
+
+## 8. v4.3 increment (lesson styles — ROADMAP v4.3 items 1–3)
+
+Scope: two new lesson styles over the unchanged v4.2 corpus plus the entry
+point to choose between them. No storage, schema, or content-file changes;
+classic lesson behavior is byte-for-byte the same plan (`_classicPlan` is the
+moved, not edited, v2.0 body).
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Sentence-mining style | `LessonMode.sentences` plan: up to 6 cloze rounds (keyword hidden in real example sentences), up to 4 sentence-arrange builds (3–8 word tiles reconstruct `audioText`), up to 4 listen-and-pick-the-sentence rounds (needs ≥2 distinct sentences), top-up classic drills when material is thin (<5 exercises), words-only match boss (sentence chips would overflow). | `lib/exercise_gen.dart` (`_sentencePlan`), `lib/models.dart` (`LessonMode`) | `test/lesson_modes_test.dart`: cloze-first ordering (`firstBlank` ≤ index 5), blank validity (`______` present, answer absent, answer in options), tiles.join == answer, sentence-only listen options, bare-lesson fallback (4 top-up drills + valid options) |
+| Audio-first style | `LessonMode.audio` plan: ears-first pass over the whole lesson (hear→pick word / hear→pick Arabic meaning, alternating), up to 3 audio sentence builds, a whole-sentence listen round, tap-to-hear match boss. Every exercise except the boss carries non-empty `audioText`. | `lib/exercise_gen.dart` (`_audioPlan`) | Same test file: first exercise is `listen` for rich AND bare lessons, ≥4 listens with both answer variants, `audioText` non-empty per exercise, audio build `audioText == tiles.join(' ')` |
+| Style chooser | Bottom sheet on lesson tap in the learn path (3 tiles: Full / Sentence mining / Listening). Hero quick-start keeps the classic one-tap flow; lesson retry (`LessonFailedScreen`) preserves the active style. Long options (sentences) render as full-width rows (1-col grid, aspect 3.2) instead of the 2-col word grid; build body gains a replay speaker button and an audio-specific prompt in audio mode; listen captions are now variant-accurate (`listenMeaning` / `listenSentence` / `listenAndChoose`). | `lib/screens/learn_path.dart` (`_openLesson`, `_pushLesson`, `_modeTile`), `lib/screens/lesson_screen.dart` (`mode` param, `_speakIfNeeded` build case, `_buildBody` replay, `_listenTitle`, `_mcqBody` adaptive grid), `lib/l10n.dart` (12 new ar/en keys) | Analyze clean; classic listen captions unchanged (`answer == vocab.target` falls through to `listenAndChoose`) |
+| Version & docs | `pubspec.yaml` → `4.3.0+11`; l10n `version` strings → 4.3.0 (replaced, not duplicated — v4.1 CI lesson); ROADMAP v4.3 marked SHIPPED; ARCHITECTURE §3.1 lesson-styles; CONTENT_AUDIT sentence-material coverage section. | `pubspec.yaml`, `lib/l10n.dart`, `docs/*.md` | `grep version` single key per locale |
+
+Also in v4.3: test count 39 → **49** (10 new in `test/lesson_modes_test.dart`:
+classic regression 1, sentence-mining 4, audio-first 4, modes-differ 1).
+Sentence-material coverage on the shipped corpus: **en 881/2208, fr 264/711,
+ur 350/619** vocab items qualify as sentence-plan candidates (example sentence
+or multi-word item). No new permissions, no network calls, no dependencies
+added; dark mode uses theme-context colors only; RTL unaffected (new strings
+are Arabic-first, sheet layout uses stretch + Expanded rows).

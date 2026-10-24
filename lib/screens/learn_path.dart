@@ -351,8 +351,125 @@ class UnitSection extends StatelessWidget {
   }
 
   void _openLesson(BuildContext context, Lesson lesson) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => LessonScreen(lesson: lesson)),
+    // v4.3: pick a lesson style — classic mixed drills, sentence mining or
+    // audio-first listening. All three run on the same corpus and progress.
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: context.card,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetCtx) {
+        String tr(String k) => sheetCtx.tr(k);
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(tr('lessonModes'),
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+                const SizedBox(height: 14),
+                _modeTile(
+                  sheetCtx,
+                  tr,
+                  Icons.menu_book,
+                  AppColors.green,
+                  'modeClassic',
+                  'modeClassicSub',
+                  () => _pushLesson(
+                      context, sheetCtx, lesson, LessonMode.classic),
+                ),
+                const SizedBox(height: 10),
+                _modeTile(
+                  sheetCtx,
+                  tr,
+                  Icons.notes,
+                  AppColors.blue,
+                  'modeSentences',
+                  'modeSentencesSub',
+                  () => _pushLesson(
+                      context, sheetCtx, lesson, LessonMode.sentences),
+                ),
+                const SizedBox(height: 10),
+                _modeTile(
+                  sheetCtx,
+                  tr,
+                  Icons.headphones,
+                  AppColors.yellowDark,
+                  'modeAudio',
+                  'modeAudioSub',
+                  () =>
+                      _pushLesson(context, sheetCtx, lesson, LessonMode.audio),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _pushLesson(BuildContext pageCtx, BuildContext sheetCtx, Lesson lesson,
+      LessonMode mode) {
+    Navigator.of(sheetCtx).pop();
+    Navigator.of(pageCtx).push(MaterialPageRoute(
+      builder: (_) => LessonScreen(lesson: lesson, mode: mode),
+    ));
+  }
+
+  Widget _modeTile(
+    BuildContext ctx,
+    String Function(String) tr,
+    IconData icon,
+    Color color,
+    String titleKey,
+    String subKey,
+    VoidCallback onTap,
+  ) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: ctx.softBg,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: ctx.line, width: 2),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 46,
+              height: 46,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: Icon(icon, color: color, size: 26),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(tr(titleKey),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                  const SizedBox(height: 2),
+                  Text(tr(subKey),
+                      style: TextStyle(color: ctx.mutedText, fontSize: 13)),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right, color: ctx.mutedText),
+          ],
+        ),
+      ),
     );
   }
 }

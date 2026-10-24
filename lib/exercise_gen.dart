@@ -1,6 +1,8 @@
 // Generates varied interactive exercises from lesson vocabulary.
 // v2.0: adds interactive picture rounds (word<->emoji), fill-in-the-blank
 // and true/false alongside the classic mcq / reverse / listen / build / match.
+// v4.3: lesson styles — classic (unchanged mix), sentence-mining (cloze-first)
+// and audio-first (TTS-led). Same corpus, different exercise sequence.
 import 'dart:math';
 
 import 'models.dart';
@@ -10,8 +12,192 @@ class ExerciseGen {
 
   static const _fallbackEmojis = ['🎓', '🎨', '🎵', '⚽', '📚', '🌟'];
 
-  /// Full exercise plan for a lesson.
-  static List<Exercise> forLesson(Lesson lesson) {
+  /// Full exercise plan for a lesson in the requested style.
+  static List<Exercise> forLesson(Lesson lesson,
+      {LessonMode mode = LessonMode.classic}) {
+    switch (mode) {
+      case LessonMode.sentences:
+        return _sentencePlan(lesson);
+      case LessonMode.audio:
+        return _audioPlan(lesson);
+      case LessonMode.classic:
+        return _classicPlan(lesson);
+    }
+  }
+
+  /// v4.3 — sentence-mining plan: cloze first, then sentence building,
+  /// then listen-to-the-whole-sentence, topped up with classic drills for
+  /// lessons with little sentence material. Never returns an empty plan.
+  static List<Exercise> _sentencePlan(Lesson lesson) {
+    final pool = lesson.vocab;
+    final exercises = <Exercise>[];
+
+    // Sentence material: multi-word items + words with an example sentence.
+    final candidates = pool.where(_canBlank).toList()..shuffle(_rng);
+
+    // 1) Cloze rounds (up to 6): the keyword hidden inside a real sentence.
+    var cloze = 0;
+    for (final v in candidates) {
+      if (cloze >= 6) break;
+      final b = _makeBlank(v, pool);
+      if (b == null) continue;
+      exercises.add(b);
+      cloze++;
+    }
+
+    // 2) Build rounds (up to 4): arrange the sentence's words back in order.
+    var builds = 0;
+    for (final v in candidates) {
+      if (builds >= 4) break;
+      final t = v.isSentence ? v.target : v.exampleTarget!;
+      final words = t.trim().split(RegExp(r'\s+'));
+      if (words.length < 3 || words.length > 8) continue;
+      exercises.add(Exercise(
+        type: ExerciseType.build,
+        prompt:
+            v.isSentence ? v.translationAr : (v.exampleAr ?? v.translationAr),
+        answer: t,
+        tiles: words,
+        vocab: v,
+        audioText: t,
+        hint: v.isSentence ? null : v.target,
+      ));
+      builds++;
+    }
+
+    // 3) Listen rounds (up to 4): hear the whole sentence, pick it out.
+    final sentences = candidates.where((v) => v.isSentence).toList()
+      ..shuffle(_rng);
+    var listens = 0;
+    for (final v in sentences) {
+      if (listens >= 4) break;
+      final opts = <String>[v.target];
+      for (final o in sentences) {
+        if (o == v || opts.contains(o.target)) continue;
+        opts.add(o.target);
+        if (opts.length >= 3) break;
+      }
+      if (opts.length < 2) continue; // need at least one distractor sentence
+      opts.shuffle(_rng);
+      exercises.add(Exercise(
+        type: ExerciseType.listen,
+        prompt: '',
+        answer: v.target,
+        options: opts,
+        vocab: v,
+        audioText: v.target,
+      ));
+      listens++;
+    }
+
+    // 4) Thin material → top up with classic drills so the lesson is playable.
+    if (exercises.length < 5) {
+      final covered = exercises.map((e) => e.vocab.id).toSet();
+      const cycle = [ExerciseType.reverse, ExerciseType.mcq];
+      var i = 0;
+      for (final v in pool) {
+        if (exercises.length >= 6) break;
+        if (covered.contains(v.id)) continue;
+        exercises.add(_make(cycle[i++ % cycle.length], v, pool));
+        covered.add(v.id);
+      }
+    }
+
+    // Boss: matching pairs (words only — sentence chips would overflow).
+    _addMatchBoss(exercises, pool);
+
+    return _capped(exercises);
+  }
+
+  /// v4.3 — audio-first plan: every word starts as sound (hear → pick the
+  /// word, hear → pick the meaning), then audio sentence building and a
+  /// listen-to-the-sentence round. Every exercise except the tap-to-speak
+  /// match boss carries non-empty [Exercise.audioText] (test-enforced).
+  static List<Exercise> _audioPlan(Lesson lesson) {
+    final pool = lesson.vocab;
+    final vocab = List<Vocab>.from(pool)..shuffle(_rng);
+    final exercises = <Exercise>[];
+
+    // 1) Ears-first recognition pass over the whole lesson.
+    for (var i = 0; i < vocab.length; i++) {
+      final v = vocab[i];
+      if (i.isEven) {
+        // hear the word -> pick the written word
+        exercises.add(Exercise(
+          type: ExerciseType.listen,
+          prompt: '',
+          answer: v.target,
+          options: _distractors(
+              correct: v.target, pool: pool.map((e) => e.target).toList()),
+          vocab: v,
+          audioText: v.target,
+        ));
+      } else {
+        // hear the word -> pick the Arabic meaning
+        exercises.add(Exercise(
+          type: ExerciseType.listen,
+          prompt: '',
+          answer: v.translationAr,
+          options: _distractors(
+              correct: v.translationAr,
+              pool: pool.map((e) => e.translationAr).toList()),
+          vocab: v,
+          audioText: v.target,
+        ));
+      }
+    }
+
+    // 2) Audio build rounds (up to 3): hear the sentence, arrange the words.
+    final candidates = pool.where(_canBlank).toList()..shuffle(_rng);
+    var builds = 0;
+    for (final v in candidates) {
+      if (builds >= 3) break;
+      final t = v.isSentence ? v.target : v.exampleTarget!;
+      final words = t.trim().split(RegExp(r'\s+'));
+      if (words.length < 3 || words.length > 8) continue;
+      exercises.add(Exercise(
+        type: ExerciseType.build,
+        prompt:
+            v.isSentence ? v.translationAr : (v.exampleAr ?? v.translationAr),
+        answer: t,
+        tiles: words,
+        vocab: v,
+        audioText: t,
+        hint: v.isSentence ? null : v.target,
+      ));
+      builds++;
+    }
+
+    // 3) Hear the whole sentence -> pick it among the lesson's sentences.
+    final sentences = candidates.where((v) => v.isSentence).toList()
+      ..shuffle(_rng);
+    if (sentences.length >= 2) {
+      final v = sentences.first;
+      final opts = <String>[v.target];
+      for (final o in sentences) {
+        if (o == v) continue;
+        opts.add(o.target);
+        if (opts.length >= 3) break;
+      }
+      opts.shuffle(_rng);
+      exercises.add(Exercise(
+        type: ExerciseType.listen,
+        prompt: '',
+        answer: v.target,
+        options: opts,
+        vocab: v,
+        audioText: v.target,
+      ));
+    }
+
+    // Boss: matching pairs with tap-to-hear on the target column.
+    _addMatchBoss(exercises, pool);
+
+    return _capped(exercises);
+  }
+
+  /// Classic mixed plan (v2.0 behaviour, unchanged).
+  static List<Exercise> _classicPlan(Lesson lesson) {
     final vocab = List<Vocab>.from(lesson.vocab)..shuffle(_rng);
     final pool = lesson.vocab;
     final exercises = <Exercise>[];
@@ -110,32 +296,42 @@ class ExerciseGen {
     }
 
     // Boss round: matching pairs.
-    if (vocab.length >= 4) {
-      final picks = <Vocab>[...vocab]..shuffle(_rng);
-      final four = picks.take(4).toList();
-      final left = four.map((e) => e.target).toList();
-      final right = four.map((e) => e.translationAr).toList()..shuffle(_rng);
-      exercises.add(Exercise(
-        type: ExerciseType.match,
-        prompt: '',
-        answer: '',
-        matchLeft: left,
-        matchRight: right,
-        vocab: four.first,
-        audioText: '',
-      ));
-    }
+    _addMatchBoss(exercises, pool);
 
-    // Cap length so lessons stay snappy (keep the match boss at the end).
+    return _capped(exercises);
+  }
+
+  /// Shared boss round: 4 word<->meaning pairs (words only — sentence chips
+  /// would overflow the match UI). No-op for tiny lessons.
+  static void _addMatchBoss(List<Exercise> exercises, List<Vocab> pool) {
+    final wordsOnly = pool.where((v) => !v.isSentence).length >= 4
+        ? pool.where((v) => !v.isSentence).toList()
+        : pool;
+    if (wordsOnly.length < 4) return;
+    final four = wordsOnly.toList()..shuffle(_rng);
+    final picks = four.take(4).toList();
+    final left = picks.map((e) => e.target).toList();
+    final right = picks.map((e) => e.translationAr).toList()..shuffle(_rng);
+    exercises.add(Exercise(
+      type: ExerciseType.match,
+      prompt: '',
+      answer: '',
+      matchLeft: left,
+      matchRight: right,
+      vocab: picks.first,
+      audioText: '',
+    ));
+  }
+
+  /// Cap length so lessons stay snappy (keep the match boss at the end).
+  static List<Exercise> _capped(List<Exercise> exercises) {
     const maxLen = 14;
-    if (exercises.length > maxLen) {
-      final matchEx = exercises.firstWhere((e) => e.type == ExerciseType.match);
-      final trimmed =
-          exercises.where((e) => e != matchEx).take(maxLen - 1).toList();
-      trimmed.add(matchEx);
-      return trimmed;
-    }
-    return exercises;
+    if (exercises.length <= maxLen) return exercises;
+    final matchEx = exercises.firstWhere((e) => e.type == ExerciseType.match);
+    final trimmed =
+        exercises.where((e) => e != matchEx).take(maxLen - 1).toList();
+    trimmed.add(matchEx);
+    return trimmed;
   }
 
   // ================= helpers =================

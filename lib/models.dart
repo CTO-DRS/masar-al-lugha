@@ -119,6 +119,13 @@ class Course {
 
 // ---------------- Exercises ----------------
 
+/// v4.3: lesson styles. The same Lesson/Vocab corpus feeds all three —
+/// only the exercise mix changes (docs/ARCHITECTURE.md §3.1).
+/// - classic   : the full mixed drill set (default, unchanged since v2.0).
+/// - sentences : cloze-first sentence mining (fill blanks + build sentences).
+/// - audio     : TTS-led listening lesson (ears first, then build/choose).
+enum LessonMode { classic, sentences, audio }
+
 enum ExerciseType {
   mcq,
   reverse,

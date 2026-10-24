@@ -33,6 +33,27 @@
   and monotonicity, global id uniqueness, and per-lesson emoji uniqueness for
   the new units — so a content regression fails both the Python gate and tests.
 
+## Sentence-material coverage (v4.3 — lesson styles)
+
+v4.3 adds sentence-mining and audio-first lesson styles that mine the
+`exampleTarget`/`exampleAr` fields and multi-word (`isSentence`) items.
+Coverage counted over the shipped corpus (vocab items usable by the
+sentence plan: multi-word item, or example containing its target word):
+
+| Course | Sentence-plan candidates | Total vocab | Coverage |
+|---|---|---|---|
+| English | 881 | 2208 | 39.9% |
+| French | 264 | 711 | 37.1% |
+| Urdu | 350 | 619 | 56.5% |
+
+What this means in practice: the sentence plan opens with real-sentence
+cloze/build rounds wherever material exists; lessons with thin material
+(<5 sentence exercises) are transparently topped up with classic drills, so
+**every** lesson stays playable in every style (test-enforced in
+`test/lesson_modes_test.dart`). Expanding example-sentence coverage on the
+legacy (pre-v4.2) vocab is the natural next content task — new v4.2+ words
+already ship examples by generator contract.
+
 ## Verified clean
 
 - ✅ JSON parses; required course/unit/lesson/vocab fields present and non-empty

@@ -159,7 +159,7 @@ class L {
       'aboutEngine':
           'محرك التكرار المتباعد مستوحى من SM-2/FSRS مع خطوات تعلّم وفواصل متكيفة.',
       // v4.1
-      'version': 'الإصدار 4.1.0',
+      'version': 'الإصدار 4.3.0',
       'weakPracticeTitle': 'تدريب الكلمات الصعبة',
       'weakPracticeHint': 'اقرأ الكلمة ثم اقلب البطاقة وقيّم نفسك بصدق',
       'practiceDone': 'أنهيت جلسة التدريب!',
@@ -173,6 +173,18 @@ class L {
       'analysisCourseEn': 'القائمة تعرض كلمات دورة الإنجليزية الحالية',
       'analysisCourseOther': 'القائمة تعرض كلمات الدورة المختارة حالياً',
       'placementRetest': 'إعادة اختبار تحديد المستوى',
+      // v4.3 — lesson styles
+      'lessonModes': 'اختر نمط الدرس',
+      'modeClassic': 'الدرس الكامل',
+      'modeClassicSub': 'كل أنواع التمارين كما هي',
+      'modeSentences': 'تعدين الجُمل',
+      'modeSentencesSub': 'أكمل الفراغات ورتّب كلمات الجُمل',
+      'modeAudio': 'الدرس الصوتي',
+      'modeAudioSub': 'ابدأ بأذنيك — استمع ثم رتّب واختر',
+      'replayAudio': 'إعادة الاستماع',
+      'listenSentence': 'استمع واختر الجملة الصحيحة',
+      'listenMeaning': 'استمع واختر المعنى الصحيح',
+      'audioBuild': 'استمع ثم رتّب الكلمات',
     },
     'en': {
       'appName': 'Language Path',
@@ -331,7 +343,7 @@ class L {
       'aboutEngine':
           'The spaced-repetition engine is inspired by SM-2/FSRS with learning steps and adaptive intervals.',
       // v4.1
-      'version': 'Version 4.1.0',
+      'version': 'Version 4.3.0',
       'weakPracticeTitle': 'Tough-words practice',
       'weakPracticeHint':
           'Read the word, flip the card, rate yourself honestly',
@@ -346,6 +358,18 @@ class L {
       'analysisCourseEn': 'This list covers your current English course',
       'analysisCourseOther': 'This list covers the currently selected course',
       'placementRetest': 'Re-take placement test',
+      // v4.3 — lesson styles
+      'lessonModes': 'Choose a lesson style',
+      'modeClassic': 'Full lesson',
+      'modeClassicSub': 'All exercise types, as usual',
+      'modeSentences': 'Sentence mining',
+      'modeSentencesSub': 'Cloze gaps and sentence building',
+      'modeAudio': 'Listening lesson',
+      'modeAudioSub': 'Ears first — listen, then build and choose',
+      'replayAudio': 'Replay audio',
+      'listenSentence': 'Listen and choose the right sentence',
+      'listenMeaning': 'Listen and choose the correct meaning',
+      'audioBuild': 'Listen, then arrange the words',
     },
   };
 

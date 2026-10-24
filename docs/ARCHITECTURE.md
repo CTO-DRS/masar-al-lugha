@@ -86,6 +86,34 @@ new-card cap (10)** built **only** from lessons already completed → `placement
   from the learn-path hero; confirming overwrites `placementSkip[courseId]`, completed
   lessons keep their stars.
 
+### 3.1 Lesson styles (v4.3)
+
+One `Lesson` corpus, three exercise plans — selected by a bottom sheet on
+lesson tap (learn path). `LessonScreen` takes a `LessonMode`; `ExerciseGen.forLesson`
+routes to a dedicated plan generator. Progress, XP and SRS feeding are
+mode-agnostic: every style ends through the same `completeLesson` +
+`applyLessonResults` path, so a sentence-mining or audio session counts
+exactly like a classic one.
+
+- **classic** — the unchanged v2.0 mixed drill set (mcq/reverse/listen/build +
+  picture, fill-blank, true-false rounds + match boss, capped at 14).
+- **sentences** (cloze-first) — up to 6 fill-blank rounds on real example
+  sentences → up to 4 sentence-arrange builds (3–8 tiles) → up to 4
+  listen-and-pick-the-sentence rounds → thin lessons (<5 exercises) are
+  topped up with classic reverse/mcq drills → words-only match boss. The
+  guarantee is *playability on any lesson*: no sentence material still yields
+  a valid drill plan (test-enforced).
+- **audio** (TTS-led) — an ears-first pass over the whole lesson (hear→pick
+  the written word / hear→pick the Arabic meaning, alternating) → up to 3
+  audio sentence builds (sentence auto-spoken, replay button on the card) →
+  a whole-sentence listen round → tap-to-hear match boss. Invariant
+  (test-enforced): every exercise except the boss carries non-empty
+  `audioText`, i.e. nothing in an audio lesson is read-first.
+
+UI seam: long listen options (sentences) switch the option grid to full-width
+rows; listen captions are variant-accurate (`listenAndChoose` /
+`listenMeaning` / `listenSentence`); retries re-enter with the same style.
+
 ## 4. Content pipeline
 
 Python generators (append-only IDs) → `assets/data/*.json` → validated by
