@@ -4,11 +4,13 @@
 import 'package:flutter/material.dart';
 
 import '../models.dart';
+import '../path.dart';
 import '../scope.dart';
 import '../theme.dart';
 import '../widgets/mascot.dart';
 import 'home_shell.dart';
 import 'lesson_screen.dart';
+import 'path_setup_screen.dart';
 import 'placement_screen.dart';
 
 class LearnPath extends StatelessWidget {
@@ -20,6 +22,32 @@ class LearnPath extends StatelessWidget {
     final st = AppScope.of(context);
     final course = st.course;
 
+    // v4.11: when a path plan is active, its units lead the list in
+    // pedagogical order; the remaining units follow a divider (never
+    // hidden — the plan re-orders, it does not lock).
+    final plan = st.activePathPlan;
+    final entries = <Object>[]; // int = unit index, String = divider marker
+    if (plan == null || plan.unitIndices.isEmpty) {
+      for (var i = 0; i < course.units.length; i++) {
+        entries.add(i);
+      }
+    } else {
+      final planSet = plan.unitIndices.toSet();
+      var otherCount = 0;
+      for (var i = 0; i < course.units.length; i++) {
+        if (!planSet.contains(i)) otherCount++;
+      }
+      for (final ui in plan.unitIndices) {
+        entries.add(ui);
+      }
+      if (otherCount > 0) {
+        entries.add('divider');
+        for (var i = 0; i < course.units.length; i++) {
+          if (!planSet.contains(i)) entries.add(i);
+        }
+      }
+    }
+
     return Scaffold(
       body: Column(
         children: [
@@ -27,23 +55,164 @@ class LearnPath extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(bottom: 32),
-              itemCount: course.units.length + 1,
+              itemCount: entries.length + 1,
               itemBuilder: (context, i) {
                 if (i == 0) {
                   return _HomeHero(openTab: openTab);
                 }
-                final ui = i - 1;
-                final unit = course.units[ui];
-                final beforeUnits =
-                    course.units.take(ui).expand((u) => u.lessons).length;
+                final e = entries[i - 1];
+                if (e is String) {
+                  return _OtherUnitsDivider(
+                      count: _othersAfterDivider(entries));
+                }
+                final ui = e as int;
                 return UnitSection(
-                  unit: unit,
+                  unit: course.units[ui],
                   unitIndex: ui,
-                  flatStart: beforeUnits,
+                  flatStart: _flatStart(course, ui),
                 );
               },
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  static int _othersAfterDivider(List<Object> entries) {
+    final idx = entries.indexOf('divider');
+    if (idx < 0) return 0;
+    var n = 0;
+    for (var i = idx + 1; i < entries.length; i++) {
+      if (entries[i] is int) n++;
+    }
+    return n;
+  }
+
+  static int _flatStart(Course course, int unitIndex) =>
+      course.units.take(unitIndex).fold(0, (n, u) => n + u.lessons.length);
+}
+
+// v4.11: divider between the learner's planned units and the rest of the
+// course — the plan re-orders the path, it never hides content.
+class _OtherUnitsDivider extends StatelessWidget {
+  final int count;
+  const _OtherUnitsDivider({required this.count});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 22, 16, 0),
+      child: Row(
+        children: [
+          const Expanded(child: Divider()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.more_horiz, size: 16, color: context.mutedText),
+                const SizedBox(width: 5),
+                Text(
+                  '${context.tr('pathOtherUnits')} ($count)',
+                  style: TextStyle(
+                    color: context.mutedText,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(child: Divider()),
+        ],
+      ),
+    );
+  }
+}
+
+// v4.11: compact banner of the active path plan — field emoji + name, the
+// (effective) tier, plan size, and edit/remove actions.
+class _PlanBanner extends StatelessWidget {
+  final PathPlan plan;
+  const _PlanBanner({required this.plan});
+
+  @override
+  Widget build(BuildContext context) {
+    final st = AppScope.of(context);
+    final domainName = context.tr(pathDomainL10nKey(plan.domain));
+    final tierName = context.tr(pathTierL10nKey(plan.effectiveTier));
+    final stats = context.trF('pathPlanStats',
+        {'u': '${plan.unitIndices.length}', 'l': '${plan.lessonCount}'});
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 10, 4, 10),
+      decoration: BoxDecoration(
+        color: AppColors.green.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(14),
+        border:
+            Border.all(color: AppColors.green.withValues(alpha: 0.5), width: 2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(pathDomainEmoji(plan.domain),
+                  style: const TextStyle(fontSize: 20)),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${context.tr('pathPlanBanner')}: $domainName · $tierName',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900, fontSize: 13),
+                    ),
+                    Text(
+                      stats,
+                      style: TextStyle(
+                          color: context.mutedText,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 11),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                tooltip: context.tr('pathEditPlan'),
+                visualDensity: VisualDensity.compact,
+                icon: const Icon(Icons.edit, size: 18),
+                color: AppColors.green,
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => const PathSetupScreen(),
+                  ));
+                },
+              ),
+              IconButton(
+                tooltip: context.tr('pathClearPlan'),
+                visualDensity: VisualDensity.compact,
+                icon: const Icon(Icons.close, size: 18),
+                color: context.mutedText,
+                onPressed: () => st.clearPathPlan(st.courseId),
+              ),
+            ],
+          ),
+          if (plan.tierRelaxed)
+            Padding(
+              padding: const EdgeInsets.only(top: 2, right: 4, left: 4),
+              child: Text(
+                context.tr('tierRelaxedNote'),
+                style: TextStyle(
+                    color: context.mutedText,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
         ],
       ),
     );
@@ -60,6 +229,7 @@ class _HomeHero extends StatelessWidget {
     final st = AppScope.of(context);
     String tr(String k) => context.tr(k);
     final course = st.course;
+    final plan = st.activePathPlan; // v4.11
 
     // Next lesson = first unlocked, not-yet-completed lesson.
     Lesson? next;
@@ -100,6 +270,11 @@ class _HomeHero extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // v4.11: the active path plan — field × level with edit/remove.
+            if (plan != null) ...[
+              _PlanBanner(plan: plan),
+              const SizedBox(height: 12),
+            ],
             // v4.9: the companion greets you on the home path (time of day),
             // taps → fresh encouragement, mouth synced to the typewriter.
             _HomeCompanion(),
@@ -164,6 +339,29 @@ class _HomeHero extends StatelessWidget {
                   style: const TextStyle(
                       fontWeight: FontWeight.w800, fontSize: 14)),
             ],
+            // v4.11: path setup — always available, plan or not.
+            InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const PathSetupScreen(),
+                ));
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.alt_route, size: 18, color: context.mutedText),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(tr('pathSetupBtn'),
+                        style: TextStyle(
+                            color: context.mutedText,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 13)),
+                  ),
+                  Icon(Icons.chevron_right, size: 18, color: context.mutedText),
+                ],
+              ),
+            ),
             // Placement entry: only when this course is still untouched.
             if (lessonsDone == 0 &&
                 (st.placementDone[st.courseId] != true)) ...[

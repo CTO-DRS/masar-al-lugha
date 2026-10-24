@@ -14,6 +14,7 @@ import 'app_state.dart';
 import 'decks.dart';
 import 'mascot.dart';
 import 'models.dart';
+import 'path.dart';
 
 class ProfileStore {
   ProfileStore(this._state);
@@ -79,6 +80,13 @@ class ProfileStore {
             .map((k, v) => MapEntry(k as String, v as bool));
         s.placementSkip = ((j['placementSkip'] as Map?) ?? {})
             .map((k, v) => MapEntry(k as String, (v as num).toInt()));
+        // v4.11 learning path (additive, null-safe; unknown names dropped).
+        s.pathDomain = ((j['pathDomain'] as Map?) ?? {})
+            .map((k, v) => MapEntry(k as String, v as String))
+          ..removeWhere((k, v) => PathEngine.domainByName(v) == null);
+        s.pathTier = ((j['pathTier'] as Map?) ?? {})
+            .map((k, v) => MapEntry(k as String, v as String))
+          ..removeWhere((k, v) => PathEngine.tierByName(v) == null);
         s.newCardsToday = (j['newCardsToday'] as num?)?.toInt() ?? 0;
         s.newCardsDay = (j['newCardsDay'] as String?) ?? '';
         // v4.4 local intelligence (additive, null-safe for old payloads).
@@ -170,6 +178,8 @@ class ProfileStore {
       'wordMistakes': s.wordMistakes,
       'placement': s.placementDone,
       'placementSkip': s.placementSkip,
+      'pathDomain': s.pathDomain,
+      'pathTier': s.pathTier,
       'newCardsToday': s.newCardsToday,
       'newCardsDay': s.newCardsDay,
       'insights': {

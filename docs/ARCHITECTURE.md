@@ -267,6 +267,37 @@ estimates, zero network.
   records screen owns the key→label and key→icon maps, so the engine
   stays unit-testable without any Flutter dependency.
 
+### 4d. Learning path engine (v4.11)
+
+`lib/path.dart` is a Flutter-free planner over the CEFR-tagged units — the
+third engine following the insights/records contract:
+
+- **Catalog, not guesses.** `PathDomain` (9 fields, `daily` = catch-all)
+  is assigned per unit by a frozen keyword catalog mirroring
+  `scripts/domain_mapping_sim.py`; Latin keywords match whole words only
+  (`\b..\b`), Arabic keywords by substring, first match wins. The
+  simulation ran BEFORE the Dart existed and caught two keyword bugs
+  (`\bsea` matching "Seasons", Latin `time` matching "Free Time"); the
+  81 shipped units partition exactly (pinned counts in
+  `test/path_test.dart`).
+- **Tiers are bands, plans relax.** `LevelTier` maps to CEFR bands
+  (A1–A2 / B1–B2 / C1+). `PathEngine.build` keeps units inside the band;
+  when a band is empty in the chosen field it relaxes ONE band at a time
+  toward beginner, then falls back to the field's full list — `build`
+  never returns an empty plan for a non-empty field, and the UI surfaces
+  the relaxation (`tierRelaxed` → banner note).
+- **Order is pedagogy.** Picked units sort by CEFR rank (course order as
+  tiebreak): a "business × beginner" path teaches A1 jobs vocabulary
+  before anything harder, regardless of where the units sit in the
+  course.
+- **Re-order, never lock.** The learn path lists plan units first, a
+  divider, then the rest of the course; unlock chains, stars and
+  placement skips are untouched. The plan is two per-course string maps
+  (`pathDomain`/`pathTier`) in the schema-v2 payload — additive,
+  null-safe on old backups, unknown names dropped on import; the derived
+  `PathPlan` is never persisted, so a content update instantly reshapes
+  an old plan without migration.
+
 ## 5. Content pipeline
 
 Python generators (append-only IDs) → `assets/data/*.json` → validated by

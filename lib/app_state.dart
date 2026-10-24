@@ -9,6 +9,7 @@ import 'decks.dart';
 import 'insights.dart';
 import 'mascot.dart';
 import 'models.dart';
+import 'path.dart';
 import 'profile_store.dart';
 import 'srs.dart';
 import 'theme.dart';
@@ -60,6 +61,10 @@ class AppState extends ChangeNotifier {
   Map<String, int> wordMistakes = {}; // vocabId -> lifetime mistake count
   Map<String, int> placementSkip =
       {}; // courseId -> flat lesson index unlocked by placement
+  // v4.11 learning path plan per course (engine-parsed enum names, null-safe
+  // on old payloads — see lib/path.dart and PathEngine.domainByName).
+  Map<String, String> pathDomain = {}; // courseId -> PathDomain.name
+  Map<String, String> pathTier = {}; // courseId -> LevelTier.name
   int newCardsToday = 0; // new SRS cards introduced today
   String newCardsDay = '';
 
@@ -376,6 +381,41 @@ class AppState extends ChangeNotifier {
   void setPlacementSkip(String courseId, int flatIndex) {
     placementSkip[courseId] = flatIndex;
     markPlacement(courseId);
+  }
+
+  /// v4.11: stores the learner's path plan (domain + tier) for [courseId].
+  /// Invalid enum names are rejected silently — the stored plan stays put.
+  void setPathPlan(String courseId, String domain, String tier) {
+    if (PathEngine.domainByName(domain) == null) return;
+    if (PathEngine.tierByName(tier) == null) return;
+    pathDomain[courseId] = domain;
+    pathTier[courseId] = tier;
+    save();
+    notifyListeners();
+  }
+
+  /// v4.11: removes the plan for [courseId] (no-op when none was set).
+  void clearPathPlan(String courseId) {
+    final had = pathDomain.remove(courseId) != null ||
+        pathTier.remove(courseId) != null;
+    if (!had) return;
+    save();
+    notifyListeners();
+  }
+
+  PathDomain? pathDomainOf(String courseId) =>
+      PathEngine.domainByName(pathDomain[courseId]);
+
+  LevelTier? pathTierOf(String courseId) =>
+      PathEngine.tierByName(pathTier[courseId]);
+
+  /// The active plan for the CURRENT course, or null when unset or when the
+  /// stored names no longer parse (e.g. payload from a future version).
+  PathPlan? get activePathPlan {
+    final d = pathDomainOf(courseId);
+    final t = pathTierOf(courseId);
+    if (d == null || t == null) return null;
+    return PathEngine.build(course, d, t);
   }
 
   /// Vocab ids that belong to lessons the learner already completed.
@@ -703,6 +743,8 @@ class AppState extends ChangeNotifier {
     wordMistakes = {};
     placementDone = {};
     placementSkip = {};
+    pathDomain = {};
+    pathTier = {};
     newCardsToday = 0;
     newCardsDay = todayKey();
     confusionPairs = {};
@@ -747,6 +789,9 @@ class AppState extends ChangeNotifier {
         'badges': badges,
         'wordMistakes': wordMistakes,
         'placement': placementDone,
+        'placementSkip': placementSkip,
+        'pathDomain': pathDomain,
+        'pathTier': pathTier,
         'insights': {
           'confusionPairs': confusionPairs,
           'hourTotal': hourTotal,
@@ -838,6 +883,13 @@ class AppState extends ChangeNotifier {
         ..remove('');
       placementDone = ((p['placement'] as Map?) ?? {})
           .map((k, v) => MapEntry(k as String, v as bool));
+      // v4.11 path plan (additive, null-safe; unknown names are dropped).
+      pathDomain = ((p['pathDomain'] as Map?) ?? {})
+          .map((k, v) => MapEntry(k as String, v as String))
+        ..removeWhere((k, v) => PathEngine.domainByName(v) == null);
+      pathTier = ((p['pathTier'] as Map?) ?? {})
+          .map((k, v) => MapEntry(k as String, v as String))
+        ..removeWhere((k, v) => PathEngine.tierByName(v) == null);
       final ins = p['insights'];
       if (ins is Map) {
         confusionPairs = ((ins['confusionPairs'] as Map?) ?? {})

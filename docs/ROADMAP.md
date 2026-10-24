@@ -293,6 +293,35 @@ v4.10 increment with file/test evidence.
    schema-v2 profile, exportable via the existing backup format).
 4. **Tablet two-pane layout** — learn path + lesson side-by-side.
 
+## v4.11 — path & level & field determination (SHIPPED)
+
+1. ✅ **Domain catalog (engine, Flutter-free)** — `lib/path.dart` tags every
+   unit of every course with one of nine thematic fields (basics, travel,
+   food, health, tech, nature, culture, business, daily) via a keyword
+   catalog mirroring `scripts/domain_mapping_sim.py`: Latin keywords match
+   whole words only (`\b..\b` — a start-only boundary once sent
+   "Seasons & Climate" to travel via `sea`), Arabic keywords match by
+   substring, first match wins, `daily` is the catch-all — so the 81 shipped
+   units partition cleanly (pinned counts in `test/path_test.dart`).
+2. ✅ **Level tiers over CEFR** — beginner A1–A2, intermediate B1–B2,
+   expert C1+. `PathEngine.build(course, domain, tier)` keeps only units
+   inside the requested band, RELAXES one band at a time toward beginner
+   when the band is empty in that field (never returns an empty plan), and
+   orders the result by CEFR rank (course order as tiebreak) so easier
+   material always teaches first.
+3. ✅ **Setup wizard** — `PathSetupScreen`: field grid (emoji + unit counts
+   per course) → level cards (unit counts per band, empty bands disabled)
+   → "start my path" stores the plan per course. The placement test stays
+   one tap away for learners unsure of their level.
+4. ✅ **The plan re-orders, it never locks** — with a plan active the learn
+   path lists the planned units first in pedagogical order, then an
+   "other units" divider, then the rest of the course; stars, unlock
+   chains and placement skips all keep working unchanged. A compact hero
+   banner shows field × level × plan size with edit/remove, and the whole
+   thing is additive: `pathDomain`/`pathTier` are per-course maps in the
+   schema-v2 payload, null-safe on old backups, unknown names dropped on
+   import.
+
 ## Hard invariants (never break)
 
 - `applicationId com.masar.allugha` is immutable.

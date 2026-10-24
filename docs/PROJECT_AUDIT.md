@@ -330,3 +330,22 @@ only disables the typewriter/entrance animation, never the content.
 Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
 `flutter test` 160/160 · `validate_content.py` PASS. Version: pubspec
 `4.10.0+19`, l10n `version` strings 4.10.0.
+## 17. v4.11 increment (path & level & field determination)
+
+Scope: user request — a path-determination system, level-based teaching
+(beginner / intermediate / expert) and a field system (commerce, market,
+…). Ships as a pure-Dart engine over the existing CEFR-tagged units plus a
+two-step wizard; no new dependencies, no network, no content changes. The
+plan re-orders the learn path — it never locks or hides units.
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Domain engine | `PathDomain` (9 fields incl. `daily` catch-all) + keyword catalog mirroring `scripts/domain_mapping_sim.py`; Latin keywords match whole words (`\b..\b`), Arabic by substring, first match wins. Catalog frozen against all 81 shipped units with pinned per-course counts; two keyword bugs caught by the simulation before writing Dart (`\bsea` matched "Seasons", Latin `time` matched "Free Time"). | `lib/path.dart`, `scripts/domain_mapping_sim.py` | Partition test (every unit exactly one domain) + regression pins over real assets |
+| Tier engine | `LevelTier` bands over CEFR (beginner A1–A2, intermediate B1–B2, expert C1+); `PathEngine.build` filters by band, relaxes one band at a time toward beginner when empty (urdu business × expert lands on its A2 units; en basics × expert relaxes exactly one band to the B1 calendar unit), then orders by CEFR rank so easier material teaches first. | `lib/path.dart` | Plan-shape tests incl. one-band and two-band relaxation |
+| Persistence | Per-course `pathDomain`/`pathTier` name maps in the schema-v2 payload: store/load/export/import all additive and null-safe; unknown names dropped on import; `setPathPlan` silently rejects invalid enum names; `activePathPlan` derives the plan on demand (no cache staleness). Bonus: `placementSkip` now also survives export/import (was load-only before). | `lib/app_state.dart`, `lib/profile_store.dart` | Round-trip + tampered-name + old-payload tests |
+| Setup wizard | `PathSetupScreen`: field grid with per-course unit counts → level cards with per-band counts (empty bands disabled) → `pathStartPlan` stores and pops. Selected companion renders on top (happy → celebrate once a field is picked); placement test linked for unsure learners. | `lib/screens/path_setup_screen.dart` | Widget tests: full flow stores the plan; start disabled before both picks |
+| Learn-path integration | With a plan active: planned units lead in pedagogical order (real unit numbers preserved), then an "other units (N)" divider, then the rest — unlock chains, stars and placement skips untouched. Hero gains a compact `_PlanBanner` (emoji, field × effective tier, plan stats, relaxed note, edit/remove) and an always-available `pathSetupBtn` row. | `lib/screens/learn_path.dart` | Full suite 179/179; banner exercised via state tests, divider logic unit-covered |
+
+Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
+`flutter test` 179/179 · `validate_content.py` PASS. Version: pubspec
+`4.11.0+20`, l10n `version` strings 4.11.0.
