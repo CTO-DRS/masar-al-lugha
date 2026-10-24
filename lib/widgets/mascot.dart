@@ -1,12 +1,22 @@
-// Rafiq & Friends — companion widgets (v4.5).
+// Rafiq & Friends — companion widgets (v4.5, rich art v4.8.1).
 //
-// The shape-drawn companions get their personality from lib/mascot.dart
-// (engine: cast, unlocks, lines). This file only renders:
+// The companions are drawn as layered vector art on a normalized 100x100
+// canvas by [_CompanionPainter] — flat "Duolingo-style" shapes with soft
+// shading, distinct silhouettes per character (owl tufts, chick crest,
+// cat whiskers + tail, fox muzzle, bunny ears) and per-mood facial
+// expressions (happy / celebrate / sad / neutral). No emoji glyphs, no
+// images, no new dependencies — everything is CustomPainter paths, so it
+// renders identically on every device and in widget tests.
+//
+// Personality data comes from lib/mascot.dart (engine: cast, unlocks,
+// lines). This file only renders:
 //   * Mascot        — a character body reacting to a mood
 //   * MascotBubble  — companion + speech bubble for engine lines
 //
 // Back-compat: `MascotMood` is re-exported from the engine, and Mascot
 // defaults to `rafiq`, so every pre-4.5 call site keeps compiling.
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../mascot.dart' show MascotMood, mascotById;
@@ -14,21 +24,21 @@ import '../theme.dart';
 
 export '../mascot.dart' show MascotMood;
 
+// ---------------- per-character palettes ----------------
+
 class _Palette {
   final Color body;
-  final Color shadow;
-  final Color belly;
-  final Color ear;
+  final Color dark; // shading: wings, ears, brows, strokes
+  final Color light; // belly / inner ears / muzzle
   final Color accent; // beak / nose
-  final bool hasBeak;
+  final bool bird; // birds get a beak + feet, furry get a muzzle
 
   const _Palette({
     required this.body,
-    required this.shadow,
-    required this.belly,
-    required this.ear,
+    required this.dark,
+    required this.light,
     required this.accent,
-    required this.hasBeak,
+    required this.bird,
   });
 }
 
@@ -41,50 +51,47 @@ _Palette _paletteFor(String id) {
     case 'farah':
       return const _Palette(
         body: AppColors.orange,
-        shadow: _orangeDark,
-        belly: AppColors.yellow,
-        ear: _orangeDark,
+        dark: _orangeDark,
+        light: AppColors.yellow,
         accent: AppColors.yellowDark,
-        hasBeak: true,
+        bird: true,
       );
     case 'nur':
       return const _Palette(
         body: AppColors.blue,
-        shadow: AppColors.blueDark,
-        belly: AppColors.blueLight,
-        ear: AppColors.blueDark,
+        dark: AppColors.blueDark,
+        light: AppColors.blueLight,
         accent: AppColors.ink,
-        hasBeak: false,
+        bird: false,
       );
     case 'zayd':
       return const _Palette(
         body: AppColors.yellow,
-        shadow: AppColors.yellowDark,
-        belly: AppColors.bg,
-        ear: AppColors.yellowDark,
+        dark: AppColors.yellowDark,
+        light: AppColors.bg,
         accent: AppColors.ink,
-        hasBeak: false,
+        bird: false,
       );
     case 'salma':
       return const _Palette(
         body: AppColors.purple,
-        shadow: _purpleDark,
-        belly: _purpleLight,
-        ear: _purpleDark,
+        dark: _purpleDark,
+        light: _purpleLight,
         accent: AppColors.ink,
-        hasBeak: false,
+        bird: false,
       );
     default: // rafiq
       return const _Palette(
         body: AppColors.green,
-        shadow: AppColors.greenDark,
-        belly: AppColors.greenLight,
-        ear: AppColors.green,
+        dark: AppColors.greenDark,
+        light: AppColors.greenLight,
         accent: AppColors.orange,
-        hasBeak: true,
+        bird: true,
       );
   }
 }
+
+// ---------------- the widget ----------------
 
 class Mascot extends StatelessWidget {
   final double size;
@@ -100,237 +107,417 @@ class Mascot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final p = _paletteFor(mascotById(characterId).id);
-    final eyeOffset = mood == MascotMood.sad ? 2.0 : 0.0;
-    return SizedBox(
-      width: size,
-      height: size,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // ears / crest behind the body
-          ..._ears(size, p),
-          // body
-          Container(
-            width: size,
-            height: size * 0.92,
-            decoration: BoxDecoration(
-              color: p.body,
-              borderRadius: BorderRadius.circular(size * 0.42),
-              boxShadow: [
-                BoxShadow(
-                    color: p.shadow, offset: const Offset(0, 4), blurRadius: 0),
-              ],
-            ),
-          ),
-          // belly
-          Positioned(
-            bottom: size * 0.06,
-            child: Container(
-              width: size * 0.55,
-              height: size * 0.38,
-              decoration: BoxDecoration(
-                color: p.belly,
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(size * 0.3)),
-              ),
-            ),
-          ),
-          // wings (birds)
-          if (p.hasBeak) ...[
-            Positioned(
-              left: -size * 0.02,
-              top: size * 0.34,
-              child: _wing(size, p.shadow),
-            ),
-            Positioned(
-              right: -size * 0.02,
-              top: size * 0.34,
-              child: _wing(size, p.shadow),
-            ),
-          ],
-          // eyes
-          Positioned(
-            top: size * 0.18,
-            child: Row(
-              children: [
-                _eye(size, eyeOffset),
-                SizedBox(width: size * 0.10),
-                _eye(size, eyeOffset),
-              ],
-            ),
-          ),
-          // beak (birds) or nose (furry)
-          Positioned(
-            top: p.hasBeak ? size * 0.44 : size * 0.46,
-            child: Container(
-              width: p.hasBeak ? size * 0.16 : size * 0.10,
-              height: p.hasBeak ? size * 0.13 : size * 0.08,
-              decoration: BoxDecoration(
-                color: p.accent,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(size * 0.1),
-                  bottomRight: Radius.circular(size * 0.1),
-                  topLeft: Radius.circular(size * 0.05),
-                  topRight: Radius.circular(size * 0.05),
-                ),
-              ),
-            ),
-          ),
-          if (mood == MascotMood.celebrate)
-            Positioned(
-              top: -size * 0.02,
-              right: size * 0.02,
-              child: Text('⭐', style: TextStyle(fontSize: size * 0.22)),
-            ),
-        ],
-      ),
-    );
-  }
-
-  List<Widget> _ears(double size, _Palette p) {
     final id = mascotById(characterId).id;
-    switch (id) {
-      case 'farah': // single crest
-        return [
-          Positioned(
-            top: 0,
-            child: Container(
-              width: size * 0.12,
-              height: size * 0.16,
-              decoration: BoxDecoration(
-                color: p.ear,
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(size * 0.06)),
-              ),
-            ),
-          ),
-        ];
-      case 'nur': // two small triangle ears
-      case 'zayd': // two larger triangle ears
-        final w = id == 'zayd' ? 0.18 : 0.14;
-        final h = id == 'zayd' ? 0.22 : 0.16;
-        return [
-          Positioned(
-            top: 0,
-            left: size * 0.16,
-            child: _triangle(size * w, size * h, p.ear),
-          ),
-          Positioned(
-            top: 0,
-            right: size * 0.16,
-            child: _triangle(size * w, size * h, p.ear),
-          ),
-        ];
-      case 'salma': // two long rounded bunny ears
-        return [
-          Positioned(
-            top: -size * 0.10,
-            left: size * 0.24,
-            child: Container(
-              width: size * 0.13,
-              height: size * 0.34,
-              decoration: BoxDecoration(
-                color: p.ear,
-                borderRadius: BorderRadius.circular(size * 0.07),
-              ),
-            ),
-          ),
-          Positioned(
-            top: -size * 0.10,
-            right: size * 0.24,
-            child: Container(
-              width: size * 0.13,
-              height: size * 0.34,
-              decoration: BoxDecoration(
-                color: p.ear,
-                borderRadius: BorderRadius.circular(size * 0.07),
-              ),
-            ),
-          ),
-        ];
-      default: // rafiq: owl tufts
-        return [
-          Positioned(
-            top: 0,
-            left: size * 0.22,
-            child: _tuft(size, p.body),
-          ),
-          Positioned(
-            top: 0,
-            right: size * 0.22,
-            child: _tuft(size, p.body),
-          ),
-        ];
-    }
-  }
-
-  Widget _triangle(double w, double h, Color c) => CustomPaint(
-        size: Size(w, h),
-        painter: _TrianglePainter(c),
-      );
-
-  Widget _wing(double size, Color c) => Container(
-        width: size * 0.16,
-        height: size * 0.34,
-        decoration: BoxDecoration(
-          color: c,
-          borderRadius: BorderRadius.circular(size * 0.1),
-        ),
-      );
-
-  Widget _tuft(double size, Color c) => Container(
-        width: size * 0.10,
-        height: size * 0.14,
-        decoration: BoxDecoration(
-          color: c,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(size * 0.06),
-          ),
-        ),
-      );
-
-  Widget _eye(double size, double sadOffset) {
-    return Container(
-      width: size * 0.22,
-      height: size * 0.22,
-      alignment: Alignment.center,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(bottom: sadOffset * (size / 120)),
-        child: Container(
-          width: size * 0.10,
-          height: size * 0.10,
-          decoration: BoxDecoration(
-            color: AppColors.ink,
-            shape: BoxShape.circle,
-          ),
-        ),
-      ),
+    return CustomPaint(
+      size: Size.square(size),
+      painter: _CompanionPainter(id, mood),
     );
   }
 }
 
-class _TrianglePainter extends CustomPainter {
-  final Color color;
-  _TrianglePainter(this.color);
+// ---------------- painter ----------------
+
+class _CompanionPainter extends CustomPainter {
+  final String characterId;
+  final MascotMood mood;
+
+  _CompanionPainter(this.characterId, this.mood);
 
   @override
   void paint(Canvas canvas, Size size) {
+    final p = _paletteFor(characterId);
+    canvas.save();
+    canvas.scale(size.width / 100, size.height / 100);
+
+    _groundShadow(canvas);
+    switch (characterId) {
+      case 'farah':
+        _paintChick(canvas, p);
+        break;
+      case 'nur':
+        _paintCat(canvas, p);
+        break;
+      case 'zayd':
+        _paintFox(canvas, p);
+        break;
+      case 'salma':
+        _paintBunny(canvas, p);
+        break;
+      default:
+        _paintOwl(canvas, p);
+    }
+    if (mood == MascotMood.celebrate) _celebration(canvas);
+
+    canvas.restore();
+  }
+
+  // ---------------- shared helpers ----------------
+
+  void _groundShadow(Canvas c) {
+    c.drawOval(
+      Rect.fromCenter(center: const Offset(50, 96.5), width: 46, height: 6),
+      Paint()..color = const Color(0x1A3C3C3C),
+    );
+  }
+
+  void _ellipse(
+          Canvas c, double cx, double cy, double rx, double ry, Color color) =>
+      c.drawOval(
+        Rect.fromCenter(center: Offset(cx, cy), width: rx * 2, height: ry * 2),
+        Paint()..color = color,
+      );
+
+  void _circle(Canvas c, double cx, double cy, double r, Color color) =>
+      _ellipse(c, cx, cy, r, r, color);
+
+  void _triangle(Canvas c, Offset a, Offset b, Offset d, Color color,
+      {bool rounded = false}) {
     final path = Path()
-      ..moveTo(size.width / 2, 0)
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
+      ..moveTo(a.dx, a.dy)
+      ..lineTo(b.dx, b.dy)
+      ..lineTo(d.dx, d.dy)
       ..close();
-    canvas.drawPath(path, Paint()..color = color);
+    c.drawPath(
+      path,
+      Paint()
+        ..color = color
+        ..strokeJoin = rounded ? StrokeJoin.round : StrokeJoin.miter
+        ..style = PaintingStyle.fill,
+    );
+  }
+
+  /// Eye: white sclera + pupil + highlight. Sad looks down a little.
+  void _eye(Canvas c, double cx, double cy, double r, MascotMood mood) {
+    _circle(c, cx, cy, r, Colors.white);
+    final dy = mood == MascotMood.sad ? r * 0.28 : 0.0;
+    _circle(c, cx, cy + dy, r * 0.46, AppColors.ink);
+    _circle(c, cx - r * 0.16, cy + dy - r * 0.18, r * 0.14, Colors.white);
+  }
+
+  /// Brows above the eyes: worried (inner ends up) when sad, raised and
+  /// excited when celebrating. Hidden for happy/neutral.
+  void _brows(Canvas c, MascotMood mood, Color color,
+      {required Offset left, required Offset right, double w = 5}) {
+    if (mood != MascotMood.sad && mood != MascotMood.celebrate) return;
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = w
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+    final raise = mood == MascotMood.celebrate ? 3.0 : 0.0;
+    final innerLift = mood == MascotMood.sad ? 6.0 : 3.0;
+    // left brow: outer -> inner (inner end lifted)
+    c.drawLine(Offset(left.dx - 7, left.dy - raise),
+        Offset(left.dx, left.dy - raise - innerLift), paint);
+    // right brow: inner -> outer (mirrored)
+    c.drawLine(Offset(right.dx, right.dy - raise - innerLift),
+        Offset(right.dx + 7, right.dy - raise), paint);
+  }
+
+  /// Furry mouth: nose + smile / frown / open smile per mood.
+  void _muzzle(Canvas c, MascotMood mood, Offset nose, Color noseColor,
+      {double w = 12}) {
+    final paint = Paint()
+      ..color = AppColors.ink
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+    c.drawCircle(nose, w * 0.18, Paint()..color = noseColor);
+    final mouth = Path();
+    switch (mood) {
+      case MascotMood.sad:
+        mouth
+          ..moveTo(nose.dx - 5, nose.dy + 9)
+          ..quadraticBezierTo(nose.dx, nose.dy + 4.5, nose.dx + 5, nose.dy + 9);
+        break;
+      case MascotMood.celebrate:
+        mouth
+          ..moveTo(nose.dx - 5, nose.dy + 6)
+          ..quadraticBezierTo(nose.dx, nose.dy + 13, nose.dx + 5, nose.dy + 6)
+          ..close();
+        c.drawPath(mouth, Paint()..color = AppColors.ink);
+        return;
+      case MascotMood.neutral:
+        mouth
+          ..moveTo(nose.dx - 3.5, nose.dy + 8)
+          ..lineTo(nose.dx + 3.5, nose.dy + 8);
+        break;
+      case MascotMood.happy:
+        mouth
+          ..moveTo(nose.dx - 5, nose.dy + 6)
+          ..quadraticBezierTo(nose.dx, nose.dy + 11, nose.dx + 5, nose.dy + 6);
+        break;
+    }
+    c.drawPath(mouth, paint);
+  }
+
+  /// Bird beak per mood: open diamond when celebrating, droopy when sad.
+  void _beak(Canvas c, MascotMood mood, double cx, double cy, Color accent) {
+    switch (mood) {
+      case MascotMood.celebrate:
+        _triangle(c, Offset(cx - 6, cy), Offset(cx + 6, cy), Offset(cx, cy + 9),
+            accent,
+            rounded: true);
+        _triangle(c, Offset(cx - 4.5, cy + 1), Offset(cx + 4.5, cy + 1),
+            Offset(cx, cy + 6.5), AppColors.ink.withValues(alpha: .55));
+        break;
+      case MascotMood.sad:
+        _triangle(c, Offset(cx - 4, cy + 1), Offset(cx + 4, cy + 1),
+            Offset(cx, cy + 6), accent,
+            rounded: true);
+        break;
+      default:
+        _triangle(c, Offset(cx - 5, cy - 1), Offset(cx + 5, cy - 1),
+            Offset(cx, cy + 8), accent,
+            rounded: true);
+    }
+  }
+
+  void _celebration(Canvas c) {
+    // star top-right
+    final star = Path();
+    const center = Offset(84, 12);
+    const outer = 8.0;
+    for (var i = 0; i < 10; i++) {
+      final r = i.isEven ? outer : outer * 0.45;
+      final a = -math.pi / 2 + i * math.pi / 5;
+      final pt =
+          Offset(center.dx + r * math.cos(a), center.dy + r * math.sin(a));
+      if (i == 0) {
+        star.moveTo(pt.dx, pt.dy);
+      } else {
+        star.lineTo(pt.dx, pt.dy);
+      }
+    }
+    star.close();
+    c.drawPath(star, Paint()..color = AppColors.yellow);
+    c.drawPath(
+      star,
+      Paint()
+        ..color = AppColors.yellowDark
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.4
+        ..strokeJoin = StrokeJoin.round,
+    );
+    // confetti
+    _circle(c, 14, 16, 2.6, AppColors.blue);
+    _circle(c, 22, 6, 2.0, AppColors.red);
+    _circle(c, 70, 5, 2.0, AppColors.purple);
+    c.save();
+    c.translate(10, 28);
+    c.rotate(0.5);
+    c.drawRRect(
+      RRect.fromRectAndRadius(
+          const Rect.fromLTWH(-3, -1.5, 6, 3), const Radius.circular(1.5)),
+      Paint()..color = AppColors.orange,
+    );
+    c.restore();
+  }
+
+  // ---------------- characters ----------------
+
+  /// Rafiq — the wise owl: tufts, big eye discs, wings, little feet.
+  void _paintOwl(Canvas c, _Palette p) {
+    // ear tufts (behind body)
+    _triangle(c, const Offset(28, 20), const Offset(40, 22),
+        const Offset(33, 6), p.dark,
+        rounded: true);
+    _triangle(c, const Offset(60, 22), const Offset(72, 20),
+        const Offset(67, 6), p.dark,
+        rounded: true);
+    // body
+    _ellipse(c, 50, 56, 37, 38, p.body);
+    // wings
+    _ellipse(c, 17, 60, 9, 16, p.dark);
+    _ellipse(c, 83, 60, 9, 16, p.dark);
+    // belly
+    _ellipse(c, 50, 73, 21, 17, p.light);
+    // big owl eye discs
+    _circle(c, 38, 45, 13.5, Colors.white);
+    _circle(c, 62, 45, 13.5, Colors.white);
+    _eye(c, 38, 45, 9, mood);
+    _eye(c, 62, 45, 9, mood);
+    _brows(c, mood, p.dark,
+        left: const Offset(35, 27.5), right: const Offset(65, 27.5));
+    _beak(c, mood, 50, 56, p.accent);
+    // feet
+    _ellipse(c, 42, 93.5, 4.5, 3, p.accent);
+    _ellipse(c, 58, 93.5, 4.5, 3, p.accent);
+  }
+
+  /// Farah — the chirpy chick: single crest feather, round body.
+  void _paintChick(Canvas c, _Palette p) {
+    // crest feather
+    final crest = Path()
+      ..moveTo(50, 22)
+      ..quadraticBezierTo(46, 6, 58, 4)
+      ..quadraticBezierTo(55, 12, 56, 22)
+      ..close();
+    c.drawPath(
+      crest,
+      Paint()
+        ..color = p.dark
+        ..strokeJoin = StrokeJoin.round,
+    );
+    // body
+    _circle(c, 50, 58, 36, p.body);
+    // wings
+    _ellipse(c, 16, 62, 8, 13, p.dark);
+    _ellipse(c, 84, 62, 8, 13, p.dark);
+    // belly
+    _ellipse(c, 50, 73, 18, 14, p.light);
+    // face
+    _circle(c, 39, 48, 11, Colors.white);
+    _circle(c, 61, 48, 11, Colors.white);
+    _eye(c, 39, 48, 7.5, mood);
+    _eye(c, 61, 48, 7.5, mood);
+    _brows(c, mood, p.dark,
+        left: const Offset(36, 33), right: const Offset(64, 33));
+    _beak(c, mood, 50, 57, p.accent);
+    // feet
+    _ellipse(c, 42, 93.5, 4, 2.8, p.dark);
+    _ellipse(c, 58, 93.5, 4, 2.8, p.dark);
+  }
+
+  /// Nur — the night cat: pointed ears, whiskers, curling tail.
+  void _paintCat(Canvas c, _Palette p) {
+    // tail (behind body)
+    final tail = Path()
+      ..moveTo(80, 78)
+      ..quadraticBezierTo(97, 72, 93, 52);
+    c.drawPath(
+      tail,
+      Paint()
+        ..color = p.dark
+        ..strokeWidth = 7
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke,
+    );
+    // ears with inner triangles
+    _triangle(c, const Offset(24, 26), const Offset(44, 26),
+        const Offset(29, 8), p.body,
+        rounded: true);
+    _triangle(c, const Offset(56, 26), const Offset(76, 26),
+        const Offset(71, 8), p.body,
+        rounded: true);
+    _triangle(c, const Offset(30, 22), const Offset(40, 22),
+        const Offset(32, 13), p.light);
+    _triangle(c, const Offset(60, 22), const Offset(70, 22),
+        const Offset(68, 13), p.light);
+    // body
+    _ellipse(c, 50, 58, 34, 35, p.body);
+    // belly + muzzle patch
+    _ellipse(c, 50, 75, 18, 12, p.light);
+    _ellipse(c, 50, 63, 15, 10.5, p.light);
+    // face
+    _circle(c, 38, 47, 10, Colors.white);
+    _circle(c, 62, 47, 10, Colors.white);
+    _eye(c, 38, 47, 6.8, mood);
+    _eye(c, 62, 47, 6.8, mood);
+    _brows(c, mood, p.dark,
+        left: const Offset(35, 33), right: const Offset(65, 33));
+    _muzzle(c, mood, const Offset(50, 59), p.accent);
+    // whiskers
+    final whisker = Paint()
+      ..color = p.dark
+      ..strokeWidth = 1.6
+      ..strokeCap = StrokeCap.round;
+    for (final dy in [-2.5, 0.0, 2.5]) {
+      c.drawLine(Offset(30, 60 + dy), Offset(19, 57 + dy * 1.6), whisker);
+      c.drawLine(Offset(70, 60 + dy), Offset(81, 57 + dy * 1.6), whisker);
+    }
+  }
+
+  /// Zayd — the path fox: big ears, white muzzle, sly default brows.
+  void _paintFox(Canvas c, _Palette p) {
+    // tail with light tip (behind body)
+    final tail = Path()
+      ..moveTo(80, 80)
+      ..quadraticBezierTo(98, 70, 92, 50);
+    c.drawPath(
+      tail,
+      Paint()
+        ..color = p.dark
+        ..strokeWidth = 8
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke,
+    );
+    _circle(c, 92, 50, 4.5, p.light);
+    // big ears with dark inner
+    _triangle(c, const Offset(20, 30), const Offset(44, 28),
+        const Offset(26, 6), p.body,
+        rounded: true);
+    _triangle(c, const Offset(56, 28), const Offset(80, 30),
+        const Offset(74, 6), p.body,
+        rounded: true);
+    _triangle(c, const Offset(27, 25), const Offset(39, 24),
+        const Offset(29, 13), p.dark);
+    _triangle(c, const Offset(61, 24), const Offset(73, 25),
+        const Offset(71, 13), p.dark);
+    // body
+    _ellipse(c, 50, 58, 34, 35, p.body);
+    // belly + white muzzle
+    _ellipse(c, 50, 76, 16, 12, p.light);
+    final muzzle = Path()
+      ..moveTo(37, 58)
+      ..quadraticBezierTo(50, 54, 63, 58)
+      ..quadraticBezierTo(60, 72, 50, 73)
+      ..quadraticBezierTo(40, 72, 37, 58)
+      ..close();
+    c.drawPath(muzzle, Paint()..color = p.light);
+    // face
+    _circle(c, 38, 46, 10, Colors.white);
+    _circle(c, 62, 46, 10, Colors.white);
+    _eye(c, 38, 46, 6.8, mood);
+    _eye(c, 62, 46, 6.8, mood);
+    _brows(c, mood, p.dark,
+        left: const Offset(35, 32.5), right: const Offset(65, 32.5));
+    _muzzle(c, mood, const Offset(50, 60), p.accent, w: 11);
+  }
+
+  /// Salma — the calm bunny: long ears with light inner, blush cheeks.
+  void _paintBunny(Canvas c, _Palette p) {
+    // long ears with inner
+    for (final dx in [-11.0, 11.0]) {
+      final ear = RRect.fromRectAndCorners(
+        Rect.fromLTWH(50 + dx - 5.5, 2, 11, 32),
+        topLeft: const Radius.circular(6),
+        topRight: const Radius.circular(6),
+        bottomLeft: const Radius.circular(4),
+        bottomRight: const Radius.circular(4),
+      );
+      c.drawRRect(ear, Paint()..color = p.body);
+      c.drawRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTWH(50 + dx - 2.8, 6, 5.6, 22),
+          topLeft: const Radius.circular(3),
+          topRight: const Radius.circular(3),
+          bottomLeft: const Radius.circular(2),
+          bottomRight: const Radius.circular(2),
+        ),
+        Paint()..color = p.light,
+      );
+    }
+    // body
+    _ellipse(c, 50, 60, 33, 34, p.body);
+    // belly
+    _ellipse(c, 50, 76, 17, 13, p.light);
+    // face
+    _circle(c, 39, 50, 10, Colors.white);
+    _circle(c, 61, 50, 10, Colors.white);
+    _eye(c, 39, 50, 6.8, mood);
+    _eye(c, 61, 50, 6.8, mood);
+    _brows(c, mood, p.dark,
+        left: const Offset(36, 36.5), right: const Offset(64, 36.5));
+    // blush
+    _circle(c, 29, 60, 3.2, Colors.white.withValues(alpha: .35));
+    _circle(c, 71, 60, 3.2, Colors.white.withValues(alpha: .35));
+    _muzzle(c, mood, const Offset(50, 62), p.accent, w: 11);
   }
 
   @override
-  bool shouldRepaint(covariant _TrianglePainter oldDelegate) =>
-      oldDelegate.color != color;
+  bool shouldRepaint(covariant _CompanionPainter old) =>
+      old.characterId != characterId || old.mood != mood;
 }
 
 /// Companion + speech bubble. The text comes from MascotEngine lines.

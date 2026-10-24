@@ -273,3 +273,19 @@ are global (not per-course) — per-course splits can follow; the two-week
 momentum depends on `xpLog`'s 30-day retention, which comfortably covers
 both windows; record counters added in v4.8 start at zero for existing
 profiles (they catch up with the very next lesson/day of activity).
+
+
+## 14. v4.8.1 increment (companion art upgrade)
+
+Scope: in-app visual identity fix — the launcher icon had been upgraded in
+v4.4 while the five in-app companions were still simple stacked shapes.
+No new dependencies, no assets, no API changes.
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Vector characters | `Mascot` now renders via `_CompanionPainter` on a normalized 100×100 canvas: per-character silhouettes (owl tufts + eye discs + wings + feet, chick crest feather, cat pointed ears + whiskers + curling tail, fox big ears + white muzzle + tail tip, bunny long ears + inner-ear + blush), soft ground shadow, per-mood expressions (pupil offset + worried brows when sad; raised brows + open beak/mouth when celebrating; star + confetti burst drawn as paths). No emoji glyphs — text-free painter is widget-test stable and font-independent. | `lib/widgets/mascot.dart` (rewritten render layer) | `flutter analyze` clean; all 143 tests pass including the mascot widget-rendering group; visual grid verified for 5 characters × 4 moods during development |
+| Compatibility | Public API unchanged (`Mascot`, `MascotBubble`, re-exported `MascotMood`); all call sites (lesson screens, result/failed, onboarding, profile picker, weak-words, custom decks empty state) compile untouched. | — | Analyzer clean |
+
+Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
+`flutter test` 143/143 · `validate_content.py` PASS. Version: pubspec
+`4.8.1+17`, l10n `version` strings 4.8.1.
