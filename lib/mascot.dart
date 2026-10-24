@@ -127,6 +127,7 @@ enum MascotEvent {
   lessonFailed, // hearts ran out
   streakMilestone, // 3/7/14/30/60/100
   levelUp,
+  recordBroken, // v4.8: a new bestStreak/bestDayXp was set this lesson
   comeback, // returned after >= 3 missed days
   idle, // profile tip rotation
 }
@@ -150,16 +151,19 @@ class MascotEngine {
   }
 
   /// Highest-priority event for the result screen.
-  /// Priority: fresh streak milestone > level up > lesson quality.
+  /// Priority: fresh streak milestone > new personal record (v4.8) >
+  /// level up > lesson quality.
   static MascotEvent resultEvent({
     required MascotEvent lessonQuality,
     required bool leveledUp,
     required int streakBefore,
     required int streakAfter,
+    bool brokeRecord = false, // v4.8: bestStreak/bestDayXp just grew
   }) {
     if (streakAfter > streakBefore && isMilestone(streakAfter)) {
       return MascotEvent.streakMilestone;
     }
+    if (brokeRecord) return MascotEvent.recordBroken;
     if (leveledUp) return MascotEvent.levelUp;
     return lessonQuality;
   }
@@ -170,6 +174,7 @@ class MascotEngine {
       case MascotEvent.lessonPerfect:
       case MascotEvent.streakMilestone:
       case MascotEvent.levelUp:
+      case MascotEvent.recordBroken:
         return MascotMood.celebrate;
       case MascotEvent.lessonGreat:
       case MascotEvent.lessonGood:
@@ -388,6 +393,35 @@ const Map<MascotEvent, List<MascotBiLine>> mascotLineCatalog = {
     (
       'المستوى {lvl}! استمر، القمة ليست بعيدة',
       'Level {lvl}! Keep going, the summit is near'
+    ),
+  ],
+  // v4.8: personal-record celebration. The concrete number is always on
+  // the result card next to the mascot, so lines celebrate the moment
+  // without inventing new placeholders.
+  MascotEvent.recordBroken: [
+    (
+      'رقم قياسي جديد! إيقاعك اليوم لا يشبه أحداً',
+      'A new record! Your pace today is unmatched'
+    ),
+    (
+      'حطّمت حاجزك السابق — الطلاقة تقترب أسرع',
+      'You shattered your own best — fluency is getting closer'
+    ),
+    (
+      'ما شاء الله! سجل جديد يُضاف لإنجازاتك',
+      'Well done! A new record joins your achievements'
+    ),
+    (
+      'أفضل نسخة منك حتى الآن — سجلّك يقول ذلك!',
+      'The best version of you so far — your record proves it!'
+    ),
+    (
+      'إنجاز يستحق الاحتفال: رقم قياسي جديد 🎉',
+      'An achievement worth celebrating: a new personal best 🎉'
+    ),
+    (
+      'كل خطوة تُحسب — وسجلّ اليوم أثبت ذلك',
+      'Every step counts — and today proved it'
     ),
   ],
   MascotEvent.comeback: [

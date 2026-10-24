@@ -53,6 +53,10 @@ class ProfileStore {
         _migrateSchema(j);
         s.xp = (j['xp'] as num?)?.toInt() ?? 0;
         s.streak = (j['streak'] as num?)?.toInt() ?? 0;
+        // v4.8 records (additive, null-safe for old payloads).
+        s.bestStreak = (j['bestStreak'] as num?)?.toInt() ?? 0;
+        s.bestDayXp = (j['bestDayXp'] as num?)?.toInt() ?? 0;
+        s.activeDays = (j['activeDays'] as num?)?.toInt() ?? 0;
         s.lastActiveDay = j['lastActiveDay'] as String?;
         s.dailyGoal = (j['dailyGoal'] as num?)?.toInt() ?? 20;
         s.dailyXp = (j['dailyXp'] as num?)?.toInt() ?? 0;
@@ -149,6 +153,9 @@ class ProfileStore {
       'schema': AppState.progressSchema,
       'xp': s.xp,
       'streak': s.streak,
+      'bestStreak': s.bestStreak, // v4.8
+      'bestDayXp': s.bestDayXp, // v4.8
+      'activeDays': s.activeDays, // v4.8
       'lastActiveDay': s.lastActiveDay,
       'dailyGoal': s.dailyGoal,
       'dailyXp': s.dailyXp,

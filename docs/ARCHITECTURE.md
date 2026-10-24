@@ -207,6 +207,28 @@ in the schema-v2 profile under the additive `decks` key. Invariants:
   (`invalidWord` / `dupWord` / `listFull`); duplicates fold case and
   punctuation (diacritics are content).
 
+## 4d. Records engine (v4.8)
+
+`lib/records.dart` is a Flutter-free engine that derives the all-time
+personal-best board ("السجلات") from state the profile already tracks —
+same contract as the insights layer: thresholds and derivations, never
+estimates, zero network.
+
+- **Zero-cost counters.** `bestStreak` / `bestDayXp` / `activeDays` are
+  three additive ints maintained inside hooks that already run:
+  `_bumpStreak` fires exactly once per active day (so it counts the day
+  and stamps the streak record) and `addXp` stamps the day-XP record.
+  No extra write path, no new stored state beyond the three ints.
+- **Day-key convention.** `Records.dayKey` reproduces the exact
+  `AppState.todayKey` format (local, zero-padded yyyy-MM-dd) so the
+  engine reads the same `xpLog` buckets the app writes.
+- **Weekly momentum.** `weeklyXp` compares the 7-day window ending
+  today with the 7 days before it; `xpLog` keeps 30 days, which
+  comfortably covers both windows.
+- **Flutter-free by design.** The engine emits stable string keys; the
+  records screen owns the key→label and key→icon maps, so the engine
+  stays unit-testable without any Flutter dependency.
+
 ## 5. Content pipeline
 
 Python generators (append-only IDs) → `assets/data/*.json` → validated by

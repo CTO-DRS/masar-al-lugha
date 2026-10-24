@@ -12,6 +12,7 @@ import '../widgets/mascot.dart';
 import 'error_analysis_screen.dart';
 import 'home_shell.dart';
 import 'insights_screen.dart';
+import 'records_screen.dart';
 import 'settings.dart';
 import 'weak_words_screen.dart';
 
@@ -508,6 +509,17 @@ class _WeakWordsCard extends StatelessWidget {
                         },
                         icon: const Icon(Icons.insights,
                             color: AppColors.blue, size: 22),
+                      ),
+                      // v4.8: all-time personal records board.
+                      IconButton(
+                        tooltip: tr('recordsTitle'),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const RecordsScreen(),
+                          ));
+                        },
+                        icon: const Icon(Icons.emoji_events,
+                            color: AppColors.yellow, size: 22),
                       ),
                     ],
                   ),

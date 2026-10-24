@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.7.0+15** — see docs/PROJECT_AUDIT.md §12 for the v4.7
+**Current release: v4.8.0+16** — see docs/PROJECT_AUDIT.md §13 for the v4.8
 increment with file/test evidence.
 
 ## Where we are
@@ -22,6 +22,7 @@ increment with file/test evidence.
 | v4.5 | **Companion wave: Rafiq & Friends — interactive character system (5 evidence-unlocked companions, 9 event types, 54 bilingual encouragement lines with anti-repeat rotation), speech-bubble moments on lesson result/failed screens, companion picker card in Profile, +180 CEFR words (EN idioms & nuance C1, FR/UR B2→C1) — 104 tests** |
 | v4.6 | **Mastery wave: two new exercise types — dictation (hear→type with tolerant grading: case/punctuation/diacritics/spacing) and listening comprehension (hear the sentence→pick its Arabic meaning), wired into all three lesson styles; confusion capture extended to typed answers; +180 words (EN business/economics + argument/persuasion C1, FR argumentation/médias + monde professionnel C1, UR صحافت/میڈیا + رسمی خطابت C1) — 106 units / 370 lessons / 3898 words, 118 tests** |
 | v4.7 | **Custom word lists ("قوائمي"): user-authored decks stored in the schema-v2 profile (bounded 12×200, tamper-proof strict parse, stable monotonic word ids), add/remove words with duplicate + length guards, flip-card practice with shuffle + tap-to-hear, full export/import/reset coverage, entry from the Cards tab — 128 tests** |
+| v4.8 | **Records board ("السجلات"): all-time personal bests engine (Flutter-free) + dedicated screen — bestStreak / bestDayXp / activeDays counters maintained at zero storage cost inside the existing streak hook, 14-record grid, two-week XP momentum bars, record-broken mascot celebration (10th event, 6 new bilingual lines), entry from Profile — 143 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -167,10 +168,47 @@ increment with file/test evidence.
    reset behavior, save→load survival, export/import carry + tampered
    import drop).
 
+## v4.8 — records board (SHIPPED)
+
+1. ✅ **Records engine (`lib/records.dart`, Flutter-free)** — same
+   philosophy as insights: every number derived from data already
+   tracked, rules documented next to each record, no estimates.
+   `compute(...)` emits 14 display-ordered `RecordStat`s (bestStreak,
+   streak, xp, bestDayXp, activeDays, lessons, perfectLessons, stars,
+   words, cards, accuracy, customWords, favorites, badges);
+   `weeklyXp(xpLog, today)` compares the 7-day window ending today with
+   the 7 days before it, using the exact `AppState.todayKey` day-key
+   convention.
+2. ✅ **Zero-cost record counters** — three additive profile fields
+   (`bestStreak`, `bestDayXp`, `activeDays`) maintained inside the
+   hooks that already run: `_bumpStreak` (fires exactly once per active
+   day → counts the day + stamps the streak record) and `addXp` (stamps
+   the day-XP record). No extra stored state beyond the three ints;
+   additive null-safe keys ride load/save/export/import/reset.
+3. ✅ **Records screen (`lib/screens/records_screen.dart`)** — privacy
+   banner, green hero card (current streak / longest streak / total XP),
+   two-week XP momentum card with signed delta + trend icon, 2-column
+   grid of 14 record tiles (key → localized label + icon map in the
+   screen, engine stays Flutter-free). Entry: trophy IconButton next to
+   Insights on the Profile weak-words card. l10n +14 keys/locale (235).
+4. ✅ **Record-broken celebration** — 10th mascot event `recordBroken`
+   (celebrate mood, 6 new bilingual lines, no new placeholders — the
+   concrete number sits on the result card next to the mascot);
+   `resultEvent` priority: streak milestone > record broken > level up
+   > lesson quality; lesson screen captures pre-lesson record evidence.
+5. ✅ **Tests 128 → 143** (+15 in `test/records_test.dart`: compute order
+   & values, day-key convention, weekly window boundaries incl.
+   future/empty/even logs, counter semantics across simulated days
+   (same-day, consecutive, 3-day gap), completeLesson feeding, save/load
+   + export/import round trips, old-payload zeros, record-vs-levelup
+   priority, milestone outranks record, catalog shape/parity/rotation).
+
 ## v5.0 — platform growth
 
 1. **Fourth language** (Turkish or German — poll in-app after v4.1).
-2. **Local leaderboard** (device-local, offline-only; no accounts by design).
+2. ~~**Local leaderboard** (device-local, offline-only; no accounts by
+   design)~~ — SHIPPED in v4.8 as the **Records board** (all-time
+   personal bests + weekly momentum; per-course splits can follow).
 3. ✅ **Custom word lists** — SHIPPED in v4.7 (user-authored decks in the
    schema-v2 profile, exportable via the existing backup format).
 4. **Tablet two-pane layout** — learn path + lesson side-by-side.

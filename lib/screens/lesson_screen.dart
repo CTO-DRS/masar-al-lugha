@@ -1201,6 +1201,9 @@ class _LessonScreenState extends State<LessonScreen> {
     // level-ups and fresh streak milestones on the result screen.
     final levelBefore = st.level;
     final streakBefore = st.streak;
+    // v4.8: capture pre-lesson records for the record-broken celebration.
+    final bestStreakBefore = st.bestStreak;
+    final bestDayXpBefore = st.bestDayXp;
     final accuracy = correctCount + mistakes > 0
         ? (correctCount * 100 / (correctCount + mistakes)).round()
         : 100;
@@ -1222,6 +1225,8 @@ class _LessonScreenState extends State<LessonScreen> {
       leveledUp: st.level > levelBefore,
       streakBefore: streakBefore,
       streakAfter: st.streak,
+      brokeRecord: st.bestStreak > bestStreakBefore ||
+          st.bestDayXp > bestDayXpBefore, // v4.8
     );
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (_) => LessonResultScreen(

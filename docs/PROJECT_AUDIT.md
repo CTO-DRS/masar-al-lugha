@@ -251,3 +251,25 @@ the active course and listed there); practice is honest self-rating flip
 cards — deck words intentionally do NOT enter the course SRS (no fake
 mastery claims); examples are accepted from imports but the add-word form
 keeps to word+meaning for speed.
+
+## 13. v4.8 increment (records board — ROADMAP v5.0 item 2 pulled forward)
+
+Scope: an all-time personal-records board ("السجلات") + record-broken
+celebration. No new dependencies, no network, no permissions, no schema
+bump (three additive null-safe ints on the existing schema-v2 payload).
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Records engine | `compute(...)` → 14 display-ordered `RecordStat`s (bestStreak, streak, xp, bestDayXp, activeDays, lessons, perfectLessons, stars, words, cards, accuracy, customWords, favorites, badges); `weeklyXp(xpLog, today)` = 7-day window ending today vs the 7 before, using the exact `AppState.todayKey` convention via `Records.dayKey`; `WeekXp.delta` signed. Flutter-free, rules documented per record. | `lib/records.dart` (new) | Engine tests: compute order/values, day-key format, window boundaries (edge days, future day, empty log, even weeks) |
+| Record counters | Additive profile fields `bestStreak` / `bestDayXp` / `activeDays`, maintained inside hooks that already run: `_bumpStreak` fires exactly once per active day (counts the day, stamps the streak record) and `addXp` stamps the day-XP record — zero extra writes. Additive null-safe keys ride load/save/export/import/reset; old payloads load as zeros. | `lib/app_state.dart`, `lib/profile_store.dart` | Counter semantics across simulated days (same-day idempotence, consecutive-day extension, 3-day gap keeps bestStreak), save/load + export/import round trips, old-payload zeros |
+| Records UI | Privacy banner, green hero card (current streak / longest streak / total XP), two-week XP momentum card (bars + signed delta + trend icon), 2-column grid of 14 record tiles; key→label and key→(icon,color) maps live in the screen so the engine stays Flutter-free; dark-mode safe via context theme colors. Entry: trophy IconButton next to Insights on the Profile weak-words card. | `lib/screens/records_screen.dart` (new), `lib/screens/profile.dart` | Analyzer clean; StatefulWidget (State context) like InsightsScreen |
+| Mascot record event | 10th event `recordBroken`: celebrate mood, 6 new bilingual lines (no new placeholders — the concrete number is on the result card beside the mascot); `resultEvent` priority now streak milestone > record broken > level up > lesson quality; lesson result captures pre-lesson `bestStreak`/`bestDayXp` evidence. | `lib/mascot.dart`, `lib/screens/lesson_screen.dart` | Priority tests (record beats level-up, milestone beats record, unchanged default chain), catalog shape/parity/rotation via `MascotEvent.values` sweep |
+| l10n & version | +14 keys/locale (`recordsTitle`…`weekLast`) → 235 per locale; `version` → 4.8.0; pubspec `4.8.0+16`. | `lib/l10n.dart`, `pubspec.yaml` | Key parity ar/en verified programmatically |
+
+Test count 128 → **143** (+15 in `test/records_test.dart`).
+Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
+`flutter test` 143/143 · `validate_content.py` PASS. Known limits: records
+are global (not per-course) — per-course splits can follow; the two-week
+momentum depends on `xpLog`'s 30-day retention, which comfortably covers
+both windows; record counters added in v4.8 start at zero for existing
+profiles (they catch up with the very next lesson/day of activity).

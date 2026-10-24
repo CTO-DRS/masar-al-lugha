@@ -169,7 +169,7 @@ class L {
       'unlockLessons': 'افتح بعد {n} درس',
       'mascotSelected': 'مختار',
       'mascotTapSelect': 'انقر للاختيار',
-      'version': 'الإصدار 4.7.0',
+
       'myLists': 'قوائمي',
       'myListsHint': 'أنشئ قوائم كلماتك ودرّب عليها بطاقات',
       'noListsYet': 'لا قوائم بعد',
@@ -262,6 +262,23 @@ class L {
       'exitFavorites': 'إنهاء جلسة المفضلة',
       'favoritesEmpty': 'مجموعة المفضلة فارغة',
       'favoritesHint': 'أضف كلمات بنجمة من القاموس ثم عد هنا لمراجعتها',
+      // v4.8 — records board (السجلات)
+      'recordsTitle': 'السجلات',
+      'recordsPrivacy':
+          'كل السجلات تُحسب وتُحفظ على جهازك من تقدّمك الحقيقي — بلا شبكة ولا حسابات.',
+      'recordsHero': 'بطل المسار',
+      'recordBestStreak': 'أطول سلسلة',
+      'recordBestDay': 'أفضل يوم',
+      'recordActiveDays': 'أيام نشطة',
+      'recordPerfectLessons': 'دروس مثالية',
+      'recordStars': 'نجوم الدروس',
+      'recordCards': 'بطاقات مُراجَعة',
+      'recordCustomWords': 'كلمات قوائمي',
+      'recordFavorites': 'كلمات مفضلة',
+      'weekMomentum': 'نقاط آخر أسبوعين',
+      'weekThis': 'هذا الأسبوع',
+      'weekLast': 'الأسبوع الماضي',
+      'version': 'الإصدار 4.8.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -431,7 +448,7 @@ class L {
       'unlockLessons': 'Unlocks after {n} lessons',
       'mascotSelected': 'Selected',
       'mascotTapSelect': 'Tap to select',
-      'version': 'Version 4.7.0',
+
       'myLists': 'My lists',
       'myListsHint': 'Build your own word lists and drill them as cards',
       'noListsYet': 'No lists yet',
@@ -526,6 +543,23 @@ class L {
       'favoritesEmpty': 'Your favorites deck is empty',
       'favoritesHint':
           'Star words in the Dictionary, then come back to review them',
+      // v4.8 — records board
+      'recordsTitle': 'Records',
+      'recordsPrivacy':
+          'Every record is computed and stored on your device from your real progress — no network, no accounts.',
+      'recordsHero': 'Path champion',
+      'recordBestStreak': 'Longest streak',
+      'recordBestDay': 'Best day',
+      'recordActiveDays': 'Active days',
+      'recordPerfectLessons': 'Perfect lessons',
+      'recordStars': 'Lesson stars',
+      'recordCards': 'Cards reviewed',
+      'recordCustomWords': 'My-list words',
+      'recordFavorites': 'Favorite words',
+      'weekMomentum': 'XP — last two weeks',
+      'weekThis': 'This week',
+      'weekLast': 'Last week',
+      'version': 'Version 4.8.0',
     },
   };
 

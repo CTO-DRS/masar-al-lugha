@@ -33,6 +33,10 @@ class AppState extends ChangeNotifier {
   int xp = 0;
   int streak = 0;
   String? lastActiveDay; // yyyy-MM-dd
+  // v4.8 all-time records (additive schema keys, null-safe on old payloads):
+  int bestStreak = 0; // longest streak ever — updated in _bumpStreak
+  int bestDayXp = 0; // best single-day XP — updated in addXp
+  int activeDays = 0; // all-time days with any activity — one bump per day
   int dailyGoal = 20;
   int dailyXp = 0;
   String dailyXpDay = '';
@@ -409,6 +413,7 @@ class AppState extends ChangeNotifier {
     ensureDaily();
     xp += amount;
     dailyXp += amount;
+    if (dailyXp > bestDayXp) bestDayXp = dailyXp; // v4.8 record
     _bumpStreak();
     lastActiveDay = todayKey();
     xpLog[dailyXpDay] = (xpLog[dailyXpDay] ?? 0) + amount;
@@ -434,11 +439,15 @@ class AppState extends ChangeNotifier {
   /// Must run BEFORE [lastActiveDay] is overwritten with today.
   void _bumpStreak() {
     if (lastActiveDay == todayKey()) return; // already counted today
+    // v4.8: this branch runs exactly once per active day — the perfect
+    // hook to count all-time active days without any extra stored state.
+    activeDays += 1;
     if (lastActiveDay == yesterdayKey()) {
       streak += 1; // consecutive day
     } else {
       streak = 1; // first activity ever, or after a gap reset
     }
+    if (streak > bestStreak) bestStreak = streak; // v4.8 record
   }
 
   void recordAnswer(bool correct) {
@@ -678,6 +687,9 @@ class AppState extends ChangeNotifier {
   Future<void> resetAll() async {
     xp = 0;
     streak = 0;
+    bestStreak = 0; // v4.8 records reset with everything else
+    bestDayXp = 0;
+    activeDays = 0;
     lastActiveDay = null;
     dailyXp = 0;
     dailyXpDay = todayKey();
@@ -719,6 +731,9 @@ class AppState extends ChangeNotifier {
         'schema': progressSchema,
         'xp': xp,
         'streak': streak,
+        'bestStreak': bestStreak, // v4.8
+        'bestDayXp': bestDayXp, // v4.8
+        'activeDays': activeDays, // v4.8
         'lastActiveDay': lastActiveDay,
         'dailyGoal': dailyGoal,
         'dailyXp': dailyXp,
@@ -797,6 +812,10 @@ class AppState extends ChangeNotifier {
       final s = p['settings'];
       xp = (p['xp'] as num?)?.toInt() ?? 0;
       streak = (p['streak'] as num?)?.toInt() ?? 0;
+      // v4.8 records (additive, null-safe for old payloads).
+      bestStreak = (p['bestStreak'] as num?)?.toInt() ?? 0;
+      bestDayXp = (p['bestDayXp'] as num?)?.toInt() ?? 0;
+      activeDays = (p['activeDays'] as num?)?.toInt() ?? 0;
       lastActiveDay = p['lastActiveDay'] as String?;
       dailyGoal = (p['dailyGoal'] as num?)?.toInt() ?? 20;
       dailyXp = (p['dailyXp'] as num?)?.toInt() ?? 0;
