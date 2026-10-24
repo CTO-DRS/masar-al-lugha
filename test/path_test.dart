@@ -117,6 +117,40 @@ Course _deepCourse() {
   );
 }
 
+/// Three units with DISTINCT catalog domains (travel / food / business) and
+/// three single words each — lets the v4.13 domain-suggestion tests build
+/// checkpoints by hand instead of relying on sample() + rng.
+Course _domainCourse() {
+  Unit unit(String id, String ar, String en, List<Vocab> vocab) => Unit(
+        id: id,
+        titleAr: ar,
+        titleEn: en,
+        colorHex: '58CC02',
+        lessons: [
+          Lesson(id: 'l_$id', titleAr: 'درس', titleEn: 'L', vocab: vocab),
+        ],
+      );
+  Vocab v(String id) => Vocab(
+        id: id,
+        target: 'word_$id',
+        translationAr: 'معنى_$id',
+      );
+  return Course(
+    id: 'en',
+    nameAr: 'إنجليزية',
+    nameEn: 'English',
+    flag: '🇬🇧',
+    ttsLang: 'en-US',
+    units: [
+      unit('trav', 'السفر والمواصلات', 'Travel & Transport',
+          [v('t0'), v('t1'), v('t2')]),
+      unit('food', 'الطعام والشراب', 'Food & Drink',
+          [v('f0'), v('f1'), v('f2')]),
+      unit('biz', 'العمل والمهن', 'Jobs & Work', [v('b0'), v('b1'), v('b2')]),
+    ],
+  );
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('cefr tiers', () {
@@ -480,6 +514,116 @@ void main() {
     });
   });
 
+  group('auto domain suggestion (v4.13)', () {
+    test('recommendedDomain votes by the units of correctly answered words',
+        () {
+      final c = _domainCourse();
+      final cps = [
+        const PlacementCheckpoint(0, ['t0', 't1', 't2']), // travel unit
+        const PlacementCheckpoint(1, ['f0', 'f1', 'f2']), // food unit
+      ];
+
+      // Travel majority: 3 travel correct vs 1 food.
+      final travelWin = {
+        't0': true,
+        't1': true,
+        't2': true,
+        'f0': true,
+        'f1': false,
+        'f2': false,
+      };
+      expect(Placement.recommendedDomain(c, cps, travelWin), PathDomain.travel);
+
+      // Food majority: 2 food vs 1 travel.
+      final foodWin = {
+        't0': true,
+        't1': false,
+        't2': false,
+        'f0': true,
+        'f1': true,
+        'f2': false,
+      };
+      expect(Placement.recommendedDomain(c, cps, foodWin), PathDomain.food);
+
+      // Tie 1–1 resolves in catalog (enum) order: travel precedes food.
+      final tie = {
+        't0': true,
+        't1': false,
+        't2': false,
+        'f0': true,
+        'f1': false,
+        'f2': false,
+      };
+      expect(Placement.recommendedDomain(c, cps, tie), PathDomain.travel);
+
+      // All wrong → no signal, no guess.
+      final allWrong = {
+        for (final cp in cps)
+          for (final id in cp.wordIds) id: false,
+      };
+      expect(Placement.recommendedDomain(c, cps, allWrong), isNull);
+
+      // Empty checkpoints degrade to null too.
+      expect(Placement.recommendedDomain(c, const [], travelWin), isNull);
+
+      // Correct answers OUTSIDE the sampled set are ignored — the
+      // suggestion only reads the test's own words.
+      expect(Placement.recommendedDomain(c, cps, {'ghost': true}), isNull);
+    });
+
+    test('setPathDomain stores valid names, rejects invalid, keeps tier',
+        () async {
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      final st = AppState();
+      st.courses['en'] = _course();
+      await st.load();
+
+      // Invalid enum names are rejected silently.
+      st.setPathDomain('en', 'hacker');
+      expect(st.pathDomainOf('en'), isNull);
+
+      // Without a tier: domain stored, but no active plan yet.
+      st.setPathDomain('en', 'business');
+      expect(st.pathDomainOf('en'), PathDomain.business);
+      expect(st.activePathPlan, isNull);
+
+      // With a tier: the plan picks the domain up — the linking contract.
+      st.setPathPlan('en', 'basics', 'beginner');
+      expect(st.activePathPlan!.domain, PathDomain.basics);
+      st.setPathDomain('en', 'business');
+      expect(st.pathTierOf('en'), LevelTier.beginner); // tier survives
+      final plan = st.activePathPlan!;
+      expect(plan.domain, PathDomain.business);
+      expect(plan.tier, LevelTier.beginner);
+      expect(plan.effectiveTier, LevelTier.beginner); // u1 is A1 — no relax
+      expect(plan.tierRelaxed, isFalse);
+    });
+
+    test('setPathDomain result survives save/load and export/import', () async {
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      final st = AppState();
+      st.courses['en'] = _course();
+      await st.load();
+      st.setPathDomain('en', 'business');
+      await st.save(); // deterministic write (setPathDomain saves async)
+
+      // Persistence round-trip through the real save() → load() path.
+      final st2 = AppState();
+      st2.courses['en'] = _course();
+      await st2.load();
+      expect(st2.pathDomainOf('en'), PathDomain.business);
+
+      // Export/import round-trip too.
+      final st3 = AppState();
+      st3.courses['en'] = _course();
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      await st3.load();
+      final err = await st3.importProfileJson(st.exportProfileJson());
+      expect(err, isNull);
+      expect(st3.pathDomain['en'], 'business');
+    });
+  });
+
   group('l10n parity for v4.11 keys', () {
     test('every new key exists in ar and en, version bumped', () {
       const keys = [
@@ -505,9 +649,16 @@ void main() {
     test('placementLevelAuto exists in ar and en, version bumped', () {
       expect(L.t('ar', 'placementLevelAuto'), 'مستواك المحدد من الاختبار');
       expect(L.t('en', 'placementLevelAuto'), 'Level detected by the test');
-      // No accidental duplicate keys / missing update in either language.
-      expect(L.t('ar', 'version'), contains('4.12.0'));
-      expect(L.t('en', 'version'), contains('4.12.0'));
+      // Version itself is pinned by the v4.13 group below.
+    });
+  });
+
+  group('l10n parity for v4.13 keys', () {
+    test('placementDomainAuto exists in ar and en, version bumped', () {
+      expect(L.t('ar', 'placementDomainAuto'), 'مجالك المقترح من الاختبار');
+      expect(L.t('en', 'placementDomainAuto'), 'Field suggested by the test');
+      expect(L.t('ar', 'version'), contains('4.13.0'));
+      expect(L.t('en', 'version'), contains('4.13.0'));
     });
   });
 

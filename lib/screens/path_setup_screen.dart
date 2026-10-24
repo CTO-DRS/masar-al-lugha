@@ -4,6 +4,8 @@
 // v4.12: the level step is pre-filled from the placement-test result
 // (lib/placement.dart → AppState.setPathTier) and refreshes when the
 // learner returns from the test, so the two stay linked automatically.
+// v4.13: the field step joins the link (setPathDomain) — both steps
+// pre-fill from a stored result and refresh together on return.
 import 'package:flutter/material.dart';
 
 import '../path.dart';
@@ -23,8 +25,9 @@ class _PathSetupScreenState extends State<PathSetupScreen> {
   PathDomain? _domain;
   LevelTier? _tier;
 
-  /// Guards the one-time seed of [_tier] from a stored placement result —
-  /// afterwards the learner's manual pick in this session wins.
+  /// Guards the one-time seed of [_domain]/[_tier] from stored placement
+  /// results — afterwards the learner's manual picks in this session win.
+  bool _domainSeeded = false;
   bool _tierSeeded = false;
 
   @override
@@ -32,11 +35,16 @@ class _PathSetupScreenState extends State<PathSetupScreen> {
     final st = AppScope.of(context);
     final course = st.course;
 
-    // v4.12: seed the level once from a stored placement result (null-safe
-    // — learners without a test simply see the manual picker as before).
+    // v4.12 + v4.13: seed both steps once from stored placement results
+    // (null-safe — learners without a test simply see the manual pickers
+    // as before).
     if (!_tierSeeded) {
       _tierSeeded = true;
       _tier ??= st.pathTierOf(st.courseId);
+    }
+    if (!_domainSeeded) {
+      _domainSeeded = true;
+      _domain ??= st.pathDomainOf(st.courseId);
     }
 
     // Cheap per-course counts (56 units max) recomputed per frame.
@@ -108,15 +116,16 @@ class _PathSetupScreenState extends State<PathSetupScreen> {
                     InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () async {
-                        // v4.12: taking the test links its result to the
-                        // level — when the learner comes back the tier
-                        // step is already reflecting the detected level.
+                        // v4.12 + v4.13: taking the test links its result
+                        // to the level AND the field — when the learner
+                        // comes back both steps already reflect it.
                         await Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => const PlacementScreen(),
                         ));
                         if (!mounted) return;
                         setState(() {
                           _tier = st.pathTierOf(st.courseId) ?? _tier;
+                          _domain = st.pathDomainOf(st.courseId) ?? _domain;
                         });
                       },
                       child: Row(

@@ -1,7 +1,7 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.12.0+21** — see docs/PROJECT_AUDIT.md and the v4.12
-section below for the placement→level auto-link increment with test
+**Current release: v4.13.0+22** — see docs/PROJECT_AUDIT.md and the v4.13
+section below for the placement→domain suggestion increment with test
 evidence.
 
 ## Where we are
@@ -29,6 +29,7 @@ evidence.
 | v4.10 | **The companions never go quiet: automatic speech + ambient chatter — lesson companions react LIVE to every answer (header mascot hops on correct / frowns on wrong, zero taps), the feedback bar speaks a praise line after every correct answer and a gentle nudge after every wrong one (2 new banks × 6 bilingual lines), a fresh spoken line triggers a body gesture automatically (talking-edge motion), and the new `LiveCompanion` widget keeps the home path and profile card talking ALL the time (greeting → 8 ambient motivation lines every 24–36 s, tap = instant reply, paused in background, welcome-back on resume) — 160 tests** |
 | v4.11 | **Path determination: 9 thematic fields (business/travel/food/…) tagged over the CEFR-tagged units by a frozen keyword catalog + 3 level tiers (مبتدئ A1–A2 / متوسط B1–B2 / خبير C1+) with band relaxation — a setup wizard stores a per-course plan (field × level) and the learn path re-orders plan units first (never locks); additive null-safe `pathDomain`/`pathTier` maps** |
 | v4.12 | **The placement test now AUTO-LINKS its result to the level: `Placement.recommendedTier` reuses the consecutive-pass prefix rule (nothing proven → مبتدئ, ≥ half → متوسط, all → خبير), `AppState.setPathTier` stores it keeping any chosen field, the result card shows a green "level detected" badge, and the setup wizard pre-fills + refreshes the level step from the test** |
+| v4.13 | **The placement result now suggests the FIELD too: `Placement.recommendedDomain` lets every correctly answered word vote for its unit's domain (majority wins, catalog-order ties, no signal → no guess), `AppState.setPathDomain` stores it keeping the detected tier — so confirming the test can complete a whole plan (مجال × مستوى) without the wizard; a second badge shows the suggestion and both wizard steps pre-fill + refresh from it** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -353,6 +354,36 @@ evidence.
    manual picker) and refreshes it when the learner returns from the
    placement test launched from its own hint row; the hint now says the
    test detects the level automatically.
+
+## v4.13 — placement result suggests the field (SHIPPED)
+
+1. ✅ **Vote-based domain suggestion (engine, Flutter-free)** —
+   `Placement.recommendedDomain(course, checkpoints, results)` maps every
+   CORRECTLY answered word back to its sampled unit (checkpoints carry
+   unitIndex) and lets it vote for that unit's catalog domain
+   (`PathEngine.domainOfUnit`): majority wins, ties break in catalog
+   (enum) order, and zero correct answers — or answers outside the
+   sampled set — return null: no signal, no guess. Unlike the tier's
+   prefix rule it reads ALL correct answers (even partial ones inside a
+   failed checkpoint) because the suggestion describes demonstrated
+   strengths, not a skip position — pinned in `test/path_test.dart`
+   ("auto domain suggestion (v4.13)").
+2. ✅ **`AppState.setPathDomain(courseId, domain)`** — validates the enum
+   name, keeps the stored tier (a linked tier + suggested domain
+   COMPLETE a full plan without the wizard), skips no-op saves, and
+   persists through the existing `pathDomain` map: save/load and
+   export/import round-trips tested; nothing new in the schema. Applied
+   on BOTH result buttons when a signal exists — the suggestion reflects
+   strengths regardless of the skip position.
+3. ✅ **Second badge on the result card** — "مجالك المقترح من الاختبار:
+   🏪 التجارة والأعمال" renders via the shared `pathDomainL10nKey` +
+   `pathDomainEmoji` maps, appears only when a suggestion exists, and
+   mirrors exactly what confirming stores.
+4. ✅ **Wizard seeds both steps** — `PathSetupScreen` pre-fills the field
+   step from the stored result (new `_domainSeeded` guard, same pattern
+   as the v4.12 tier seed) and refreshes field + level together when the
+   learner returns from the test; the hint row now says the test detects
+   BOTH (مستواك أو مجالك) automatically.
 
 ## Hard invariants (never break)
 

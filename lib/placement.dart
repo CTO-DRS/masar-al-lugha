@@ -117,4 +117,47 @@ class Placement {
     if (frac >= 0.5) return LevelTier.intermediate;
     return LevelTier.beginner;
   }
+
+  /// v4.13: suggests a [PathDomain] from the words the learner answered
+  /// CORRECTLY — every correct word votes for the domain of the unit its
+  /// checkpoint sampled ([PathEngine.domainOfUnit] over the unit title);
+  /// the majority wins and ties break in catalog (enum) order, so the
+  /// result is fully deterministic.
+  ///
+  /// Unlike [recommendedTier] (a prefix rule for the skip), this reads ALL
+  /// correct answers — including partial ones inside a failed checkpoint —
+  /// because the suggestion describes demonstrated strengths, not a skip
+  /// position. Returns null when nothing was answered correctly or the
+  /// answers fall outside the sampled set: no signal, no guess.
+  static PathDomain? recommendedDomain(Course course,
+      List<PlacementCheckpoint> checkpoints, Map<String, bool> results) {
+    // word id -> sampled unit index (last write wins on the degenerate
+    // small-course case where two checkpoints hit the same unit).
+    final unitOf = <String, int>{};
+    for (final cp in checkpoints) {
+      for (final id in cp.wordIds) {
+        unitOf[id] = cp.unitIndex;
+      }
+    }
+    final votes = <PathDomain, int>{};
+    for (final entry in results.entries) {
+      if (entry.value != true) continue;
+      final unit = unitOf[entry.key];
+      if (unit == null || unit < 0 || unit >= course.units.length) continue;
+      final d = PathEngine.domainOfUnit(course.units[unit]);
+      votes[d] = (votes[d] ?? 0) + 1;
+    }
+    PathDomain? best;
+    var bestCount = 0;
+    // Iterating the enum in order makes ties resolve to the earliest
+    // catalog domain — deterministic without extra tiebreak state.
+    for (final d in PathDomain.values) {
+      final c = votes[d] ?? 0;
+      if (c > bestCount) {
+        best = d;
+        bestCount = c;
+      }
+    }
+    return best;
+  }
 }

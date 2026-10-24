@@ -5,6 +5,10 @@
 // (badge on the result card + AppState.setPathTier) — confirming the
 // placement links the detected level to the path plan; "start from zero"
 // links the beginner tier.
+// v4.13: a suggested PathDomain (from the units whose words the learner
+// answered correctly) joins the link via AppState.setPathDomain — both
+// badges show what confirming will store, so the test can complete a
+// whole path plan (field × level) without the wizard.
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
@@ -169,6 +173,9 @@ class _PlacementScreenState extends State<PlacementScreen> {
     // v4.12: the detected level shown on the result card and stored when
     // the learner confirms — same consecutive-pass rule as the skip.
     final tier = Placement.recommendedTier(checkpoints, results);
+    // v4.13: the suggested field — votes from the units whose words the
+    // learner answered correctly; null when nothing was answered right.
+    final domain = Placement.recommendedDomain(course, checkpoints, results);
     String title;
     if (flat <= 0) {
       title = tr('placementFromStart');
@@ -204,34 +211,75 @@ class _PlacementScreenState extends State<PlacementScreen> {
             style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 19),
           ),
           const SizedBox(height: 12),
-          // v4.12: the auto-linked level — mirrors what setPathTier stores.
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              color: AppColors.green.withValues(alpha: 0.10),
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                  color: AppColors.green.withValues(alpha: 0.5), width: 2),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.auto_awesome,
-                    size: 17, color: AppColors.green),
-                const SizedBox(width: 7),
-                Flexible(
-                  child: Text(
-                    '${tr('placementLevelAuto')}: ${tr(pathTierL10nKey(tier))}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 14,
-                        color: AppColors.green),
+          // v4.12 + v4.13: the auto-linked level and the suggested field —
+          // exactly what confirming stores (tier always, domain when a
+          // signal exists).
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                decoration: BoxDecoration(
+                  color: AppColors.green.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                      color: AppColors.green.withValues(alpha: 0.5), width: 2),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.auto_awesome,
+                        size: 17, color: AppColors.green),
+                    const SizedBox(width: 7),
+                    Flexible(
+                      child: Text(
+                        '${tr('placementLevelAuto')}: ${tr(pathTierL10nKey(tier))}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 14,
+                            color: AppColors.green),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (domain != null) ...[
+                const SizedBox(height: 8),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.green.withValues(alpha: 0.10),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                        color: AppColors.green.withValues(alpha: 0.5),
+                        width: 2),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(pathDomainEmoji(domain),
+                          style: const TextStyle(fontSize: 15)),
+                      const SizedBox(width: 7),
+                      Flexible(
+                        child: Text(
+                          '${tr('placementDomainAuto')}: ${tr(pathDomainL10nKey(domain))}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 14,
+                              color: AppColors.green),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
-            ),
+            ],
           ),
           const SizedBox(height: 26),
           ChunkyButton(
@@ -242,6 +290,11 @@ class _PlacementScreenState extends State<PlacementScreen> {
               // plan (if any) moves to this tier, otherwise the wizard
               // pre-selects it next time.
               st.setPathTier(st.courseId, tier.name);
+              // v4.13: link the suggested field too — with the tier now
+              // stored the plan may complete WITHOUT the wizard.
+              if (domain != null) {
+                st.setPathDomain(st.courseId, domain.name);
+              }
               Navigator.of(context).pop();
             },
           ),
@@ -255,6 +308,12 @@ class _PlacementScreenState extends State<PlacementScreen> {
               // Starting from zero IS the beginner tier — keep the two
               // linked instead of leaving a stale higher tier behind.
               st.setPathTier(st.courseId, LevelTier.beginner.name);
+              // v4.13: the field suggestion reflects demonstrated
+              // strengths regardless of the skip position, so it applies
+              // here too when a signal exists (same rule as confirm).
+              if (domain != null) {
+                st.setPathDomain(st.courseId, domain.name);
+              }
               Navigator.of(context).pop();
             },
           ),

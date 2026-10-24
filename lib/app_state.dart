@@ -408,6 +408,20 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// v4.13: stores ONLY the domain for [courseId] — the placement test
+  /// calls this to link its suggested field (derived from the units whose
+  /// words the learner answered correctly) to the plan automatically. A
+  /// previously chosen tier survives, so a stored tier + suggested domain
+  /// completes a full plan without the wizard. Invalid enum names are
+  /// rejected silently; re-storing the same value skips the save.
+  void setPathDomain(String courseId, String domain) {
+    if (PathEngine.domainByName(domain) == null) return;
+    if (pathDomain[courseId] == domain) return;
+    pathDomain[courseId] = domain;
+    save();
+    notifyListeners();
+  }
+
   /// v4.11: removes the plan for [courseId] (no-op when none was set).
   void clearPathPlan(String courseId) {
     final had = pathDomain.remove(courseId) != null ||

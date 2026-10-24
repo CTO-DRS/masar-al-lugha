@@ -298,11 +298,12 @@ third engine following the insights/records contract:
   `PathPlan` is never persisted, so a content update instantly reshapes
   an old plan without migration.
 
-### 4e. Placement → level auto-link (v4.12)
+### 4e. Placement → level & domain auto-link (v4.12 + v4.13)
 
 The placement quiz no longer only picks a starting lesson — it now sets the
-learner's `LevelTier` automatically, closing the loop between "where you
-start" and "what your path plan targets":
+learner's `LevelTier` automatically (v4.12) AND suggests their
+`PathDomain` (v4.13), closing the loop between "what you demonstrated"
+and "what your path plan targets":
 
 - **One rule, two outputs.** `Placement.recommendedTier` reuses the exact
   consecutive-pass prefix semantics of `recommendedFlatIndex`: the count of
@@ -325,6 +326,18 @@ start" and "what your path plan targets":
   badge, the learn-path banner and the setup wizard render identical
   labels. The wizard pre-seeds its level step from the stored result and
   refreshes it when the learner returns from the test.
+- **The field is a vote, not a placement (v4.13).**
+  `Placement.recommendedDomain` lets every CORRECTLY answered word vote
+  for the domain of the unit its checkpoint sampled
+  (`PathEngine.domainOfUnit`); majority wins, ties resolve in catalog
+  (enum) order, and no correct answers → null (no signal, no guess).
+  Unlike the tier (a prefix rule for the skip), it reads all correct
+  answers — including partial ones inside a failed checkpoint — because
+  the suggestion describes demonstrated strengths, not a skip position.
+  `AppState.setPathDomain` mirrors `setPathTier` (validates the name,
+  keeps the stored tier, skips no-op saves): with both linked, confirming
+  the test can complete a WHOLE plan (field × level) without the wizard,
+  and the wizard pre-seeds + refreshes both steps on return.
 
 ## 5. Content pipeline
 
