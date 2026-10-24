@@ -5,6 +5,9 @@ on:
     branches: ["**"]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,6 +27,16 @@ jobs:
           channel: stable
           flutter-version: "3.47.7"
           cache: true
+
+      - name: Read app version
+        id: version
+        run: |
+          VERSION=$(grep '^version:' pubspec.yaml | cut -d':' -f2 | tr -d ' ' | cut -d'+' -f1)
+          BUILD=$(grep '^version:' pubspec.yaml | cut -d':' -f2 | tr -d ' ' | cut -d'+' -f2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "build=$BUILD" >> $GITHUB_OUTPUT
+          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+          echo "App version: $VERSION+$BUILD"
 
       - name: Validate course content (v4.0 gate)
         run: python3 scripts/validate_content.py
@@ -52,3 +65,38 @@ jobs:
           name: masar-al-lugha-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
+
+      - name: Rename APK with version
+        run: |
+          mkdir -p release
+          cp build/app/outputs/flutter-apk/app-release.apk "release/masar-al-lugha-v${{ steps.version.outputs.version }}.apk"
+
+      - name: Create GitHub Release with APK
+        if: github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: مسار اللغة v${{ steps.version.outputs.version }}
+          body: |
+            ## 🚀 مسار اللغة — الإصدار v${{ steps.version.outputs.version }} (بناء ${{ steps.version.outputs.build }})
+
+            ### 📦 التحميل
+            حمّل التطبيق من المرفقات بالأسفل: **masar-al-lugha-v${{ steps.version.outputs.version }}.apk**
+
+            ### ✅ ما الجديد في هذا الإصدار
+            - **قوائمي (v4.7)**: أنشئ قوائم كلماتك الخاصة وتدرّب عليها ببطاقات القلب
+            - **موجة الإتقان (v4.6)**: إملاء + استماع تفهمي + 180 كلمة CEFR
+            - **رفيق وأصدقاؤه (v4.5)**: شخصيات تفاعلية مرافقة للتعلّم
+            - **ذكاء محلي + المفضلة (v4.4)**: اقتراحات ذكية تعمل بدون إنترنت
+            - **أنماط دروس جديدة (v4.3)**: استخراج الجمل (cloze) + دروس صوتية
+
+            ### 📥 التثبيت
+            1. حمّل ملف APK
+            2. فعّل "التثبيت من مصادر غير معروفة" في إعدادات جهازك
+            3. ثبّت التطبيق واستمتع بالتعلّم!
+
+            ---
+            🔒 هذا البناء من الفرع `main` بعد نجاح جميع الاختبارات (تحقق المحتوى + التنسيق + التحليل + الاختبارات).
+          files: release/masar-al-lugha-v${{ steps.version.outputs.version }}.apk
+          fail_on_unmatched_files: true
+          overwrite_files: true
