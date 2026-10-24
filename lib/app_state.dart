@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'insights.dart';
+import 'mascot.dart';
 import 'models.dart';
 import 'profile_store.dart';
 import 'srs.dart';
@@ -25,6 +26,7 @@ class AppState extends ChangeNotifier {
 
   // ---- ui ----
   String uiLocale = 'ar'; // 'ar' | 'en'
+  String mascotId = 'rafiq'; // selected companion (v4.5, lib/mascot.dart)
 
   // ---- progress ----
   int xp = 0;
@@ -301,6 +303,45 @@ class AppState extends ChangeNotifier {
   Map<String, Vocab> vocabById(Course course) =>
       {for (final v in course.allVocab) v.id: v};
 
+  // ================= v4.5: companion (Rafiq & Friends) =================
+
+  /// Consecutive fully-missed days ending today (0 = active today).
+  int get mascotMissedDays {
+    final last = lastActiveDay;
+    if (last == null || last == todayKey()) return 0;
+    final t = DateTime.tryParse(todayKey());
+    final l = DateTime.tryParse(last);
+    if (t == null || l == null) return 0;
+    final d = t.difference(l).inDays;
+    return d < 0 ? 0 : d;
+  }
+
+  /// Evidence snapshot the companion engine reads (lib/mascot.dart).
+  MascotFacts get mascotFacts => MascotFacts(
+        xp: xp,
+        streak: streak,
+        lessons: lessonsCompleted,
+        level: level,
+        accuracy: accuracyPct,
+        missedDays: mascotMissedDays,
+      );
+
+  bool isMascotUnlocked(String id) {
+    final c = mascotById(id);
+    return c.missingRequirement(mascotFacts) == null;
+  }
+
+  /// Selects a companion. Locked or unknown ids are ignored (no-op) —
+  /// the UI only offers unlocked ones, this guard is the second lock.
+  void selectMascot(String id) {
+    if (!isMascotUnlocked(id)) return;
+    final resolved = mascotById(id).id;
+    if (mascotId == resolved) return;
+    mascotId = resolved;
+    scheduleSave();
+    notifyListeners();
+  }
+
   /// Words the learner struggles with most (for the practice mode).
   List<String> get weakestWordIds {
     final entries = wordMistakes.entries.toList()
@@ -554,6 +595,7 @@ class AppState extends ChangeNotifier {
     hourCorrect = List<int>.filled(24, 0);
     answerLog = {};
     favorites = {};
+    mascotId = 'rafiq';
     pendingBadges.clear();
     await save();
     notifyListeners();
@@ -592,6 +634,7 @@ class AppState extends ChangeNotifier {
           'answerLog': answerLog,
         },
         'favorites': favorites,
+        'mascot': mascotId,
         'settings': {
           'darkMode': darkMode,
           'reduceMotion': reduceMotion,
@@ -683,6 +726,9 @@ class AppState extends ChangeNotifier {
       }
       favorites = ((p['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(
           k as String, ((v as List?) ?? []).map((e) => e as String).toList()));
+      // v4.5: companion — only ids from the cast are accepted.
+      final m = p['mascot'];
+      if (m is String && mascotCast.any((c) => c.id == m)) mascotId = m;
       if (s is Map) {
         darkMode = (s['darkMode'] as bool?) ?? darkMode;
         reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;

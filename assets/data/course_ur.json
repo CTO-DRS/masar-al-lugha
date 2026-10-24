@@ -5402,6 +5402,606 @@
      ]
     }
    ]
+  },
+  {
+   "id": "ur_u22",
+   "color": "#FF9600",
+   "titleAr": "الشعر والمحاورات",
+   "titleEn": "Poetry & Idioms",
+   "cefr": "B2",
+   "lessons": [
+    {
+     "id": "ur_u22_l1",
+     "titleAr": "عالم الشعر",
+     "titleEn": "The world of poetry",
+     "vocab": [
+      {
+       "id": "ur_shairi",
+       "target": "شاعری",
+       "translationAr": "الشعر فنّ النظم",
+       "phonetic": "شائری",
+       "emoji": "🖋️",
+       "exampleTarget": "شاعری دل کی زبان ہے۔",
+       "exampleAr": "الشعر لسان القلب."
+      },
+      {
+       "id": "ur_rubaai",
+       "target": "رباعی",
+       "translationAr": "الرباعية (أربع أسطر)",
+       "phonetic": "رباعی",
+       "emoji": "🧿",
+       "exampleTarget": "خیام کی رباعیاں مشہور ہیں۔",
+       "exampleAr": "رباعيات خیام مشهورة."
+      },
+      {
+       "id": "ur_ghazal",
+       "target": "غزل",
+       "translationAr": "الغزل (شكل شعري)",
+       "phonetic": "غزل",
+       "emoji": "🌙",
+       "exampleTarget": "غالب کے غزل مشہور ہیں۔",
+       "exampleAr": "أغنيات غالب مشهورة."
+      },
+      {
+       "id": "ur_nazm",
+       "target": "نظم",
+       "translationAr": "القصيدة المنظومة",
+       "phonetic": "نظم",
+       "emoji": "📖",
+       "exampleTarget": "اقبال نے یہ نظم لکھی۔",
+       "exampleAr": "كتب إقبال هذه القصيدة."
+      },
+      {
+       "id": "ur_qafiya",
+       "target": "قافیہ",
+       "translationAr": "القافية",
+       "phonetic": "قافیہ",
+       "emoji": "🔗",
+       "exampleTarget": "ہر شعر کا قافیہ مضبوط ہے۔",
+       "exampleAr": "قافية كل بيت متينة."
+      },
+      {
+       "id": "ur_radiya",
+       "target": "ردیف",
+       "translationAr": "الردف الكلمة المكررة بعد القافية",
+       "phonetic": "ردیف",
+       "emoji": "♻️",
+       "exampleTarget": "ردیف غزل کی خوبصورتی بڑھاتی ہے۔",
+       "exampleAr": "تزيد الردف من جمال الغزل."
+      },
+      {
+       "id": "ur_misra",
+       "target": "مصرعہ",
+       "translationAr": "سطر من بيت الشعر",
+       "phonetic": "مصرعہ",
+       "emoji": "➖",
+       "exampleTarget": "پہلا مصرعہ یاد ہے۔",
+       "exampleAr": "أتذكر السطر الأول."
+      },
+      {
+       "id": "ur_deewan",
+       "target": "دیوان",
+       "translationAr": "الديوان مجموعة أعمال الشاعر",
+       "phonetic": "دیوان",
+       "emoji": "📚",
+       "exampleTarget": "میں نے پورا دیوان پڑھا۔",
+       "exampleAr": "قرأت الديوان كاملاً."
+      },
+      {
+       "id": "ur_mashq",
+       "target": "مشق",
+       "translationAr": "التمرين والممارسة",
+       "phonetic": "مَشق",
+       "emoji": "🔁",
+       "exampleTarget": "مشق سے ہنر نکھرتا ہے۔",
+       "exampleAr": "بالممارسة يصقل المهار."
+      },
+      {
+       "id": "ur_khwaab",
+       "target": "خواب",
+       "translationAr": "الحلم",
+       "phonetic": "خواب",
+       "emoji": "💭",
+       "exampleTarget": "اس نظم میں خوابوں کا ذکر ہے۔",
+       "exampleAr": "في هذه القصيدة ذكر للأحلام."
+      }
+     ]
+    },
+    {
+     "id": "ur_u22_l2",
+     "titleAr": "محاورات شائعة",
+     "titleEn": "Common idioms",
+     "vocab": [
+      {
+       "id": "ur_munh_paani",
+       "target": "منہ میں پانی آنا",
+       "translationAr": "يسيل لعابه من الشهية",
+       "phonetic": "منہ میں پانی آنا",
+       "emoji": "🤤",
+       "exampleTarget": "بریاانی کا نام سنتے ہی منہ میں پانی آ گیا۔",
+       "exampleAr": "بمجرد سماع اسم البرياني سال لعابه."
+      },
+      {
+       "id": "ur_haath_phool",
+       "target": "ہاتھ پاؤں پھول جانا",
+       "translationAr": "يهتزّ من الخوف فيرتبك",
+       "phonetic": "ہاتھ پاؤں پھول جانا",
+       "emoji": "😨",
+       "exampleTarget": "امتحان کا نام سنتے ہی ہاتھ پاؤں پھول گئے۔",
+       "exampleAr": "لم يسمع اسم الامتحان حتى ارتبك."
+      },
+      {
+       "id": "ur_sar_charhana",
+       "target": "سر پر چڑھانا",
+       "translationAr": "يطبع على رأسه ويطغى",
+       "phonetic": "سر پر چڑھانا",
+       "emoji": "🐒",
+       "exampleTarget": "بہت لاڈ دینے سے بچہ سر پر چڑھ گیا۔",
+       "exampleAr": "بكثرة التدليل طبع الطفل على الرأس."
+      },
+      {
+       "id": "ur_dil_pathar",
+       "target": "دل پر پتھر رکھنا",
+       "translationAr": "يقمع مشاعره ويصبر",
+       "phonetic": "دل پر پتھر رکھنا",
+       "emoji": "🪨",
+       "exampleTarget": "اس نے دل پر پتھر رکھ کر الوداع کہا۔",
+       "exampleAr": "وضع حجراً على قلبه وقال وداعاً."
+      },
+      {
+       "id": "ur_tal_mtol",
+       "target": "ٹال مٹول کرنا",
+       "translationAr": "يمعطي ويتهرّب بالأعذار",
+       "phonetic": "ٹال مٹول کرنا",
+       "emoji": "🌀",
+       "exampleTarget": "اس نے کام سے ٹال مٹول کر دیا۔",
+       "exampleAr": "تهرّب من العمل بالأعذار."
+      },
+      {
+       "id": "ur_dil_hi_dil",
+       "target": "دل ہی دل میں",
+       "translationAr": "في خاطره باطناً",
+       "phonetic": "دل ہی دل میں",
+       "emoji": "🫀",
+       "exampleTarget": "وہ دل ہی دل میں شکستہ تھا۔",
+       "exampleAr": "كان مجروحاً في خاطره باطناً."
+      },
+      {
+       "id": "ur_haath_phailana",
+       "target": "ہاتھ پھیلانا",
+       "translationAr": "يمدّ يده سائلاً",
+       "phonetic": "ہاتھ پھیلانا",
+       "emoji": "🖐️",
+       "exampleTarget": "غریب کو ہاتھ نہیں پھیلانا پڑا۔",
+       "exampleAr": "لم يمدّ الفقير يده سائلاً."
+      },
+      {
+       "id": "ur_munh_dikhana",
+       "target": "منہ دکھانا",
+       "translationAr": "يظهر أمام الناس بعد عيب",
+       "phonetic": "منہ دکھانا",
+       "emoji": "🙈",
+       "exampleTarget": "شکست کے بعد منہ کیسے دکھاؤں؟",
+       "exampleAr": "كيف أظهر أمام الناس بعد الهزيمة؟"
+      },
+      {
+       "id": "ur_batein_banana",
+       "target": "باتیں بنانا",
+       "translationAr": "يهرع بالأعذار",
+       "phonetic": "باتیں بنانا",
+       "emoji": "🗣️",
+       "exampleTarget": "وہ ہر بار نئی باتیں بناتا ہے۔",
+       "exampleAr": "يخترع في كل مرة أعذاراً جديدة."
+      },
+      {
+       "id": "ur_dil_chahna",
+       "target": "دل چاہنا",
+       "translationAr": "تشتهي نفسه",
+       "phonetic": "دل چاہنا",
+       "emoji": "💗",
+       "exampleTarget": "دل چاہتا ہے کہ گھر جاؤں۔",
+       "exampleAr": "تشتهي نفسي أن أعود للبيت."
+      }
+     ]
+    },
+    {
+     "id": "ur_u22_l3",
+     "titleAr": "الفكر والثقافة",
+     "titleEn": "Thought & culture",
+     "vocab": [
+      {
+       "id": "ur_fikr",
+       "target": "فکر",
+       "translationAr": "الفكر والتفكير",
+       "phonetic": "فکر",
+       "emoji": "🧠",
+       "exampleTarget": "بڑی فکر کی بات ہے۔",
+       "exampleAr": "أمر يستوجب تفكيراً."
+      },
+      {
+       "id": "ur_takhleeq",
+       "target": "تخلیق",
+       "translationAr": "الابتكار والتخليق",
+       "phonetic": "تخلیق",
+       "emoji": "✨",
+       "exampleTarget": "فنّ کار کی تخلیق بےمثل ہے۔",
+       "exampleAr": "ابتكار الفنان لا يُضاهى."
+      },
+      {
+       "id": "ur_adab",
+       "target": "ادب",
+       "translationAr": "الأدب",
+       "phonetic": "اَدب",
+       "emoji": "📚",
+       "exampleTarget": "ادب معاشرت کو سکھاتا ہے۔",
+       "exampleAr": "يعلّم الأدب آداب العيش."
+      },
+      {
+       "id": "ur_tahzeeb",
+       "target": "تہذیب",
+       "translationAr": "الحضارة والتهذيب",
+       "phonetic": "تہذیب",
+       "emoji": "🏛️",
+       "exampleTarget": "سندھ کی تہذیب پرانی ہے۔",
+       "exampleAr": "حضارة السند قديمة."
+      },
+      {
+       "id": "ur_riwayat",
+       "target": "روایت",
+       "translationAr": "التقليد والعرف الموروث",
+       "phonetic": "روایت",
+       "emoji": "🏺",
+       "exampleTarget": "ہر گاؤں کی اپنی روایت ہے۔",
+       "exampleAr": "لكل قرية عادتها الموروثة."
+      },
+      {
+       "id": "ur_shinakht",
+       "target": "شناخت",
+       "translationAr": "الهوية والمعرفة",
+       "phonetic": "شناخت",
+       "emoji": "🪪",
+       "exampleTarget": "زبان قوم کی شناخت ہے۔",
+       "exampleAr": "اللغة هوية الأمة."
+      },
+      {
+       "id": "ur_virsa",
+       "target": "ورثہ",
+       "translationAr": "الإرث الثقافي",
+       "phonetic": "ورثہ",
+       "emoji": "🕌",
+       "exampleTarget": "ہماری ثقافتی ورثہ محفوظ رہے۔",
+       "exampleAr": "لتبقى إرثنا الثقافي محفوظاً."
+      },
+      {
+       "id": "ur_kamaal",
+       "target": "کمال",
+       "translationAr": "الإتقان والكمال",
+       "phonetic": "کمال",
+       "emoji": "🏅",
+       "exampleTarget": "اس فن میں اس نے کمال کر دیا۔",
+       "exampleAr": "بلغ في هذا الفن الكمال."
+      },
+      {
+       "id": "ur_jazba",
+       "target": "جذبہ",
+       "translationAr": "الشعور الجياش",
+       "phonetic": "جذبہ",
+       "emoji": "🔥",
+       "exampleTarget": "جذبے کے بغیر کامیابی نہیں۔",
+       "exampleAr": "بلا شعور جياش لا نجاح."
+      },
+      {
+       "id": "ur_ehsaas",
+       "target": "احساس",
+       "translationAr": "الإحساس والشعور",
+       "phonetic": "احساس",
+       "emoji": "💛",
+       "exampleTarget": "اس بات کا احساس دل میں رہا۔",
+       "exampleAr": "بقي إحساس ذلك في القلب."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u23",
+   "color": "#1CB0F6",
+   "titleAr": "لغة الأدب",
+   "titleEn": "The literary language",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "ur_u23_l1",
+     "titleAr": "صفات أدبية",
+     "titleEn": "Literary adjectives",
+     "vocab": [
+      {
+       "id": "ur_nayab",
+       "target": "نایاب",
+       "translationAr": "نادر ثمين",
+       "phonetic": "نایاب",
+       "emoji": "💎",
+       "exampleTarget": "نایاب جواہر مہنگے ہوتے ہیں۔",
+       "exampleAr": "الجواهر النادرة غالية."
+      },
+      {
+       "id": "ur_gehra",
+       "target": "گہرا",
+       "translationAr": "عميق",
+       "phonetic": "گہرا",
+       "emoji": "🌊",
+       "exampleTarget": "اس کے الفاظ کا مطلب گہرا ہے۔",
+       "exampleAr": "معنى كلماته عميق."
+      },
+      {
+       "id": "ur_lajawab",
+       "target": "لاجواب",
+       "translationAr": "فريد لا مثيل له",
+       "phonetic": "لاجواب",
+       "emoji": "👑",
+       "exampleTarget": "محفل میں اس کا انداز لاجواب تھا۔",
+       "exampleAr": "كان أسلوبه في المجلس فريداً."
+      },
+      {
+       "id": "ur_dilkash",
+       "target": "دلکش",
+       "translationAr": "آسر للقلب جاذب",
+       "phonetic": "دلکش",
+       "emoji": "🌸",
+       "exampleTarget": "وادی کا منظر بہت دلکش تھا۔",
+       "exampleAr": "منظر الوادي جاذب جداً."
+      },
+      {
+       "id": "ur_rohani",
+       "target": "روحانی",
+       "translationAr": "روحاني غير مادي",
+       "phonetic": "روحانی",
+       "emoji": "🕊️",
+       "exampleTarget": "صوفیاء کی شاعری روحانی ہے۔",
+       "exampleAr": "شعر الصوفية روحاني."
+      },
+      {
+       "id": "ur_mas-hoor-kun",
+       "target": "مسحور کن",
+       "translationAr": "ساحر يُسحر الناظر",
+       "phonetic": "مسحور کن",
+       "emoji": "🪄",
+       "exampleTarget": "اس کی آواز مسحور کن ہے۔",
+       "exampleAr": "صوته ساحر."
+      },
+      {
+       "id": "ur_bemisal",
+       "target": "بےمثل",
+       "translationAr": "بلا مثال",
+       "phonetic": "بےمثل",
+       "emoji": "⭐",
+       "exampleTarget": "علامہ اقبال کی شاعری بےمثل ہے۔",
+       "exampleAr": "شعر إقبال بلا مثال."
+      },
+      {
+       "id": "ur_purasar-rar",
+       "target": "پُراسرار",
+       "translationAr": "مليء بالغموض",
+       "phonetic": "پُراسرار",
+       "emoji": "🌫️",
+       "exampleTarget": "کہانی کا مرکزی کردار پُراسرار ہے۔",
+       "exampleAr": "شخصية القصة الرئيسية مليئة بالغموض."
+      },
+      {
+       "id": "ur_shandaar",
+       "target": "شاندار",
+       "translationAr": "بديع مهيب",
+       "phonetic": "شاندار",
+       "emoji": "🎆",
+       "exampleTarget": "محفل کی سجاوٹ شاندار تھی۔",
+       "exampleAr": "كانت زينة الحفل مهيبة."
+      },
+      {
+       "id": "ur_baleegh",
+       "target": "بلیغ",
+       "translationAr": "بليغ حاضر الجواب",
+       "phonetic": "بلیغ",
+       "emoji": "🎯",
+       "exampleTarget": "خطیب کا کلام بلیغ تھا۔",
+       "exampleAr": "كان كلام الخطيب بليغاً."
+      }
+     ]
+    },
+    {
+     "id": "ur_u23_l2",
+     "titleAr": "أفعال التعبير الأدبي",
+     "titleEn": "Literary verbs",
+     "vocab": [
+      {
+       "id": "ur_bayan_karna",
+       "target": "بیان کرنا",
+       "translationAr": "يروي ويبيّن",
+       "phonetic": "بیان کرنا",
+       "emoji": "🎙️",
+       "exampleTarget": "مصنف نے پوری کہانی بیان کی۔",
+       "exampleAr": "روى الكاتب القصة كاملة."
+      },
+      {
+       "id": "ur_ujagar_karna",
+       "target": "اجاگر کرنا",
+       "translationAr": "يُظهر ويبرز الحقيقة",
+       "phonetic": "اجاگر کرنا",
+       "emoji": "💡",
+       "exampleTarget": "مضمون نے سچ اجاگر کیا۔",
+       "exampleAr": "أبرز المقال الحقيقة."
+      },
+      {
+       "id": "ur_numaya_karna",
+       "target": "نمایاں کرنا",
+       "translationAr": "يُبرز ويجعله بارزاً",
+       "phonetic": "نمایاں کرنا",
+       "emoji": "🔍",
+       "exampleTarget": "رپورٹ مسئلے کو نمایاں کرتی ہے۔",
+       "exampleAr": "تُبرز التقرير المشكلة."
+      },
+      {
+       "id": "ur_mansoob_karna",
+       "target": "منسوب کرنا",
+       "translationAr": "ينسب الشيء لصاحبه",
+       "phonetic": "منسوب کرنا",
+       "emoji": "🏷️",
+       "exampleTarget": "یہ قول غالب سے منسوب ہے۔",
+       "exampleAr": "هذا القول منسوب لغالب."
+      },
+      {
+       "id": "ur_roshan-as_karna",
+       "target": "روشناس کرنا",
+       "translationAr": "يُعرّف ويُقرب بين",
+       "phonetic": "روشناس کرنا",
+       "emoji": "🤝",
+       "exampleTarget": "استاد نے طلبہ کو ادب سے روشناس کروایا۔",
+       "exampleAr": "عرّف المدرّس الطلاب بالأدب."
+      },
+      {
+       "id": "ur_maskhar_karna",
+       "target": "حیران کرنا",
+       "translationAr": "يُذهل ويُدهش الآخرين",
+       "phonetic": "حیران کرنا",
+       "emoji": "😲",
+       "exampleTarget": "اس کے جواب نے سب کو حیران کر دیا۔",
+       "exampleAr": "أذهل جوابُه الجميع."
+      },
+      {
+       "id": "ur_dil_moh_lena",
+       "target": "دل موہ لینا",
+       "translationAr": "يسحر القلب ويسلب عقل",
+       "phonetic": "دل موہ لینا",
+       "emoji": "💘",
+       "exampleTarget": "وہ باتیں کر کے دل موہ لیتا ہے۔",
+       "exampleAr": "يكسب القلوب بكلامه."
+      },
+      {
+       "id": "ur_rang_bharna",
+       "target": "رنگ بھرنا",
+       "translationAr": "يضفي الحياة والحيوية",
+       "phonetic": "رنگ بھرنا",
+       "emoji": "🎨",
+       "exampleTarget": "اس گیت نے محفل میں رنگ بھر دیا۔",
+       "exampleAr": "أضافت تلك الأغنية حيوية للمجلس."
+      },
+      {
+       "id": "ur_jagmagana",
+       "target": "جگمگانا",
+       "translationAr": "يتلألئ",
+       "phonetic": "جگمگانا",
+       "emoji": "🌟",
+       "exampleTarget": "آسمان ستاروں سے جگمگا رہا ہے۔",
+       "exampleAr": "يتلألئ السماء بالنجوم."
+      },
+      {
+       "id": "ur_goonjna",
+       "target": "گونجنا",
+       "translationAr": "يصدح ويرنّ في المكان",
+       "phonetic": "گونجنا",
+       "emoji": "📢",
+       "exampleTarget": "وادی میں آواز گونجتی ہے۔",
+       "exampleAr": "يرنّ الصدى في الوادي."
+      }
+     ]
+    },
+    {
+     "id": "ur_u23_l3",
+     "titleAr": "عناصر النص",
+     "titleEn": "Elements of a text",
+     "vocab": [
+      {
+       "id": "ur_kirdar",
+       "target": "کردار",
+       "translationAr": "الشخصية في القصة",
+       "phonetic": "کردار",
+       "emoji": "🧑‍🎭",
+       "exampleTarget": "اس کہانی کا ہر کردار زندہ ہے۔",
+       "exampleAr": "كل شخصية في هذه القصة حية."
+      },
+      {
+       "id": "ur_mukalma",
+       "target": "مکالمہ",
+       "translationAr": "الحوار",
+       "phonetic": "مکالمہ",
+       "emoji": "💬",
+       "exampleTarget": "ناول کے مکالمے دلچسپ ہیں۔",
+       "exampleAr": "حوار الرواية مشوق."
+      },
+      {
+       "id": "ur_jhalak",
+       "target": "جھلک",
+       "translationAr": "البرق والميض من وراء الحجاب",
+       "phonetic": "جھلک",
+       "emoji": "🌈",
+       "exampleTarget": "دور پہاڑوں کی جھلک دکھائی دی۔",
+       "exampleAr": "لمحت منظر الجبال البعيدة."
+      },
+      {
+       "id": "ur_pas-manzar",
+       "target": "پس منظر",
+       "translationAr": "الخلفية والسياق",
+       "phonetic": "پس منظر",
+       "emoji": "🏞️",
+       "exampleTarget": "کہانی کا پس منظر قدیم لاہور ہے۔",
+       "exampleAr": "خلفية القصة لاهور القديمة."
+      },
+      {
+       "id": "ur_unwaan",
+       "target": "عنوان",
+       "translationAr": "العنوان",
+       "phonetic": "عنوان",
+       "emoji": "🔖",
+       "exampleTarget": "اس نے دلچسپ عنوان چنا۔",
+       "exampleAr": "اختار عنواناً مشوقاً."
+      },
+      {
+       "id": "ur_mauzu",
+       "target": "موضوع",
+       "translationAr": "الموضوع والمضمون",
+       "phonetic": "موضوع",
+       "emoji": "🧵",
+       "exampleTarget": "اس مضمون کا موضوع وقت ہے۔",
+       "exampleAr": "موضوع هذا المقال هو الزمن."
+      },
+      {
+       "id": "ur_khulasa",
+       "target": "خلاصہ",
+       "translationAr": "الملخص",
+       "phonetic": "خلاصہ",
+       "emoji": "📝",
+       "exampleTarget": "سبق کا خلاصہ لکھو۔",
+       "exampleAr": "اكتب ملخص الدرس."
+      },
+      {
+       "id": "ur_tamheed",
+       "target": "تمہید",
+       "translationAr": "التمهيد والمقدمة",
+       "phonetic": "تمہید",
+       "emoji": "🚪",
+       "exampleTarget": "کتاب کی تمہید دلچسپ ہے۔",
+       "exampleAr": "تمهيد الكتاب مشوقة."
+      },
+      {
+       "id": "ur_anjaam",
+       "target": "انجام",
+       "translationAr": "العاقبة والنهاية",
+       "phonetic": "انجام",
+       "emoji": "🎬",
+       "exampleTarget": "محنت کا انجام اچھا ہوتا ہے۔",
+       "exampleAr": "عاقبة الجهد طيبة."
+      },
+      {
+       "id": "ur_khitab",
+       "target": "خطاب",
+       "translationAr": "الخطاب والبيان أمام الجمهور",
+       "phonetic": "خطاب",
+       "emoji": "🗼",
+       "exampleTarget": "ان کا خطاب دل جیت گیا۔",
+       "exampleAr": "أسر خطابُه القلوب."
+      }
+     ]
+    }
+   ]
   }
  ]
 }

@@ -1,4 +1,4 @@
-# CONTENT AUDIT — course_en / course_ur / course_fr (v4.2 baseline)
+# CONTENT AUDIT — course_en / course_ur / course_fr (v4.5 baseline)
 
 **Validator:** `scripts/validate_content.py` (runs in CI from v4.0 — exit 1 on any fatal problem; since v4.2 it also enforces valid + monotonic CEFR tags)
 
@@ -6,10 +6,10 @@
 
 | Course | Units | Lessons | Words | CEFR ladder | TTS lang |
 |---|---|---|---|---|---|
-| English | 52 | 204 | 2208 | A1→A2→B1→B2→C1 | en-US |
-| Urdu | 21 | 67 | 619 | A1→A2→B1→B2 | ur-PK |
-| French | 21 | 63 | 711 | A1→A2→B1→B2 | fr-FR |
-| **Total** | **94** | **334** | **3538** | | |
+| English | 54 | 210 | 2268 | A1→A2→B1→B2→C1 | en-US |
+| Urdu | 23 | 73 | 679 | A1→A2→B1→B2→C1 | ur-PK |
+| French | 23 | 69 | 771 | A1→A2→B1→B2→C1 | fr-FR |
+| **Total** | **100** | **352** | **3718** | | |
 
 ## v4.2 expansion (ROADMAP items 1+2)
 
@@ -100,3 +100,26 @@ versions; v4.0 pads from a real global word reserve instead.
 
 v1–v2 audit history: some words have no emoji by nature (abstract words). The
 generator already degrades to text exercises; picture rounds remain optional garnish.
+
+## v4.5 expansion (companion wave)
+
+- **EN u53–u54** (3 lessons × 10 words each, +60, all C1): Idioms &
+  Expressions (fresh idioms, pre-checked against the v4.2 u50 idiom set —
+  no target/id overlap), Nuance & Register (formal verbs, precise
+  adjectives, academic connectors). Every item carries Arabic
+  transliteration + unique emoji + example sentence pair.
+- **FR u22–u23** (3 × 10, +60): Médias & Débats (B2) and Littérature &
+  Nuances (C1) — media nouns, debate verbs, literary terms, hint/clarify
+  verbs, poetic vocabulary.
+- **UR u22–u23** (3 × 10, +60): شاعری اور محاورے (B2) — poetry terms and
+  common idioms — and زبانِ ادب (C1) — literary adjectives/verbs and
+  text-element nouns. Urdu-script targets with Arabic-script pronunciation
+  aids; legacy Urdu-text id shapes untouched (append-only rule respected).
+- **Authoring pipeline**: content shipped as persisted, re-runnable
+  generators `scripts/content_v45_{en,fr,ur}.py` (pre-checked every target
+  AND id against the live corpus before append; fixed 2 EN id collisions,
+  1 FR mixed-script phonetic, 4 UR target/id collisions caught pre-flight).
+- **Validation**: `validate_content.py` → PASS (0 fatal), CEFR ladders now
+  end at C1 for all three courses; `test/content_test.dart` counts updated
+  (100 units / 352 lessons / 3718 words) and the append-only tail test now
+  pins u53–u54 / u22–u23 with the v4.2 tail intact.

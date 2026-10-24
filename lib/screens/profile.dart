@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../mascot.dart';
 import '../models.dart';
 import '../scope.dart';
 import '../theme.dart';
@@ -49,7 +50,10 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  const Mascot(size: 76, mood: MascotMood.happy),
+                  Mascot(
+                      size: 76,
+                      mood: MascotMood.happy,
+                      characterId: st.mascotId),
                   const SizedBox(width: 14),
                   Expanded(
                     child: Column(
@@ -82,6 +86,9 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 16),
+            // v4.5: companion card — chosen friend, rotating tips, picker.
+            const _CompanionCard(),
             const SizedBox(height: 16),
             // stats grid
             Padding(
@@ -624,6 +631,188 @@ class _WeeklyChart extends StatelessWidget {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+// v4.5 — companion card: the chosen friend speaks (comeback or rotating
+// study tip), plus the full cast picker with evidence-based unlocks.
+class _CompanionCard extends StatefulWidget {
+  const _CompanionCard();
+
+  @override
+  State<_CompanionCard> createState() => _CompanionCardState();
+}
+
+class _CompanionCardState extends State<_CompanionCard> {
+  int _tipSalt = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final st = AppScope.of(context);
+    String tr(String k) => context.tr(k);
+
+    // Comeback beats idle tips: >= 3 fully-missed days triggers the
+    // welcome-back moment (evidence-gated, never guilt-tripping).
+    final comeback = st.mascotMissedDays >= 3;
+    final event = comeback ? MascotEvent.comeback : MascotEvent.idle;
+    final tip = MascotEngine.lineFor(event, st.mascotFacts, st.uiLocale,
+        salt: _tipSalt + (comeback ? 0 : AppState.todayKey().hashCode % 97));
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: context.card,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: context.line, width: 2),
+        boxShadow: [
+          BoxShadow(
+              color: context.line, offset: const Offset(0, 4), blurRadius: 0),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.emoji_emotions, color: AppColors.yellow, size: 20),
+              const SizedBox(width: 8),
+              Text(tr('companionCard'),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                      color: context.bodyText)),
+              const Spacer(),
+              Text(mascotById(st.mascotId).name(st.uiLocale),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.green,
+                      fontSize: 13)),
+            ],
+          ),
+          const SizedBox(height: 12),
+          GestureDetector(
+            onTap: () => setState(() => _tipSalt++),
+            child: MascotBubble(
+              characterId: st.mascotId,
+              mood: comeback ? MascotMood.happy : MascotMood.neutral,
+              text: tip,
+              size: 64,
+              animate: !st.reduceMotion,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Center(
+            child: Text(
+              tr('companionSub'),
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12, color: context.mutedText),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(tr('companionChoose'),
+              style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 13,
+                  color: context.mutedText)),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 148,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: mascotCast.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 10),
+              itemBuilder: (_, i) => _tile(context, mascotCast[i], st, tr),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _tile(BuildContext context, MascotCharacter c, AppState st,
+      String Function(String) tr) {
+    final unlocked = st.isMascotUnlocked(c.id);
+    final selected = st.mascotId == c.id;
+    final req = c.missingRequirement(st.mascotFacts);
+
+    String hint;
+    if (selected) {
+      hint = tr('mascotSelected');
+    } else if (!unlocked) {
+      final (kind, amount) = req!;
+      hint = switch (kind) {
+        'xp' => context.trF('unlockXp', {'n': '$amount'}),
+        'streak' => context.trF('unlockStreak', {'n': '$amount'}),
+        _ => context.trF('unlockLessons', {'n': '$amount'}),
+      };
+    } else {
+      hint = tr('mascotTapSelect');
+    }
+
+    return GestureDetector(
+      onTap: unlocked ? () => st.selectMascot(c.id) : null,
+      child: Container(
+        width: 112,
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.greenLight : context.softBg,
+          border: Border.all(
+              color: selected ? AppColors.green : context.line, width: 2),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Mascot(
+                  size: 46,
+                  mood: selected
+                      ? MascotMood.celebrate
+                      : (unlocked ? MascotMood.happy : MascotMood.neutral),
+                  characterId: c.id,
+                ),
+                if (!unlocked)
+                  Positioned(
+                    top: -4,
+                    right: -4,
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                        color: AppColors.inkLight,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.lock, size: 10, color: Colors.white),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(c.name(st.uiLocale),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 13,
+                    color: context.bodyText)),
+            const SizedBox(height: 3),
+            Text(
+              hint,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: 10,
+                  height: 1.25,
+                  fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
+                  color: selected ? AppColors.greenDark : context.mutedText),
+            ),
+          ],
+        ),
       ),
     );
   }

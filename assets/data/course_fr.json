@@ -6063,6 +6063,606 @@
      ]
     }
    ]
+  },
+  {
+   "id": "fr_u22",
+   "color": "#FFC800",
+   "titleAr": "الإعلام والنقاشات",
+   "titleEn": "Media & Debates",
+   "cefr": "B2",
+   "lessons": [
+    {
+     "id": "fr_u22_l1",
+     "titleAr": "عالم الإعلام",
+     "titleEn": "The media world",
+     "vocab": [
+      {
+       "id": "fr_les_medias",
+       "target": "les médias",
+       "translationAr": "وسائل الإعلام",
+       "phonetic": "لي ميديا",
+       "emoji": "📺",
+       "exampleTarget": "Les médias suivent l'événement de près.",
+       "exampleAr": "وسائل الإعلام تتابع الحدث عن قرب."
+      },
+      {
+       "id": "fr_le_presentateur",
+       "target": "le présentateur",
+       "translationAr": "المذيع مقدّم البرنامج",
+       "phonetic": "لبريزانتاتور",
+       "emoji": "🎤",
+       "exampleTarget": "Le présentateur annonce les résultats.",
+       "exampleAr": "يعلن المذيع النتائج."
+      },
+      {
+       "id": "fr_une_source",
+       "target": "une source",
+       "translationAr": "مصدر (خبر)",
+       "phonetic": "أن سورس",
+       "emoji": "🔎",
+       "exampleTarget": "Le journal cite une source fiable.",
+       "exampleAr": "تستشهد الجريدة بمصدر موثوق."
+      },
+      {
+       "id": "fr_actualite",
+       "target": "l'actualité",
+       "translationAr": "الأخبار والمستجدات",
+       "phonetic": "لاكتواليتي",
+       "emoji": "🗞️",
+       "exampleTarget": "L'actualité change chaque heure.",
+       "exampleAr": "تتغير الأخبار كل ساعة."
+      },
+      {
+       "id": "fr_un_sondage",
+       "target": "un sondage",
+       "translationAr": "استطلاع رأي",
+       "phonetic": "أن سون داج",
+       "emoji": "📊",
+       "exampleTarget": "Le sondage surprend les experts.",
+       "exampleAr": "يُفاجئ استطلاع الرأي الخبراء."
+      },
+      {
+       "id": "fr_reportage",
+       "target": "un reportage",
+       "translationAr": "تقرير صحفي مصوّر",
+       "phonetic": "أن ريبورتاج",
+       "emoji": "🎥",
+       "exampleTarget": "Son reportage a gagné un prix.",
+       "exampleAr": "فاز تقريره بجائزة."
+      },
+      {
+       "id": "fr_propagande",
+       "target": "la propagande",
+       "translationAr": "الدعاية المضللة",
+       "phonetic": "لا بروباغاند",
+       "emoji": "📢",
+       "exampleTarget": "La propagande répand des mensonges.",
+       "exampleAr": "تنشر الدعاية الأكاذيب."
+      },
+      {
+       "id": "fr_fausses_nouvelles",
+       "target": "les fausses nouvelles",
+       "translationAr": "الأخبار الزائفة",
+       "phonetic": "لي فوس نوڤيل",
+       "emoji": "⚠️",
+       "exampleTarget": "Ne partagez pas les fausses nouvelles.",
+       "exampleAr": "لا تشاركوا الأخبار الزائفة."
+      },
+      {
+       "id": "fr_un_scoop",
+       "target": "un scoop",
+       "translationAr": "خبر حصري مُثير",
+       "phonetic": "أن سكوب",
+       "emoji": "🚨",
+       "exampleTarget": "Le journaliste a décroché un scoop.",
+       "exampleAr": "حصل الصحفي على خبر حصري."
+      },
+      {
+       "id": "fr_entretien",
+       "target": "un entretien",
+       "translationAr": "مقابلة (صحفية/رسمية)",
+       "phonetic": "أن أونتروتيان",
+       "emoji": "🗓️",
+       "exampleTarget": "L'entretien dure trente minutes.",
+       "exampleAr": "تدوم المقابلة ثلاثين دقيقة."
+      }
+     ]
+    },
+    {
+     "id": "fr_u22_l2",
+     "titleAr": "أفعال النقاش",
+     "titleEn": "Debate verbs",
+     "vocab": [
+      {
+       "id": "fr_affirmer",
+       "target": "affirmer",
+       "translationAr": "يجزم ويؤكد",
+       "phonetic": "أفيرمي",
+       "emoji": "✅",
+       "exampleTarget": "Il affirme son innocence.",
+       "exampleAr": "يجزم براءته."
+      },
+      {
+       "id": "fr_nier",
+       "target": "nier",
+       "translationAr": "ينكر",
+       "phonetic": "نييه",
+       "emoji": "🚫",
+       "exampleTarget": "Elle nie avoir vu la lettre.",
+       "exampleAr": "تنكر أنها رأت الرسالة."
+      },
+      {
+       "id": "fr_convaincre",
+       "target": "convaincre",
+       "translationAr": "يقنع",
+       "phonetic": "كونفانكر",
+       "emoji": "🧠",
+       "exampleTarget": "Il a convaincu tout le jury.",
+       "exampleAr": "أقنع لجنة التحكيم بأكملها."
+      },
+      {
+       "id": "fr_persuader",
+       "target": "persuader",
+       "translationAr": "يُغرِ ويقنع بالحجة",
+       "phonetic": "بيرسوادي",
+       "emoji": "🤝",
+       "exampleTarget": "Elle persuade ses collègues facilement.",
+       "exampleAr": "تقنع زملاءها بسهولة."
+      },
+      {
+       "id": "fr_soutenir",
+       "target": "soutenir",
+       "translationAr": "يدعم ويؤيّد",
+       "phonetic": "سوتونير",
+       "emoji": "🛡️",
+       "exampleTarget": "Je soutiens cette proposition.",
+       "exampleAr": "أؤيد هذا الاقتراح."
+      },
+      {
+       "id": "fr_contredire",
+       "target": "contredire",
+       "translationAr": "يعارض ويناقض",
+       "phonetic": "كونتردير",
+       "emoji": "↔️",
+       "exampleTarget": "Les chiffres contredisent son récit.",
+       "exampleAr": "تناقض الأرقام روايته."
+      },
+      {
+       "id": "fr_critiquer",
+       "target": "critiquer",
+       "translationAr": "ينقد",
+       "phonetic": "كريتيكيه",
+       "emoji": "🖊️",
+       "exampleTarget": "Il critique la politique sans agressivité.",
+       "exampleAr": "ينقد السياسة دون عدوانية."
+      },
+      {
+       "id": "fr_approuver",
+       "target": "approuver",
+       "translationAr": "يوافق ويرضى",
+       "phonetic": "أبروڤيه",
+       "emoji": "👍",
+       "exampleTarget": "Le comité approuve le projet.",
+       "exampleAr": "توافق اللجنة على المشروع."
+      },
+      {
+       "id": "fr_desapprouver",
+       "target": "désapprouver",
+       "translationAr": "يرفض ولا يوافق",
+       "phonetic": "ديزابروڤيه",
+       "emoji": "👎",
+       "exampleTarget": "Mes parents désapprouvent cette idée.",
+       "exampleAr": "يرفض والداي هذه الفكرة."
+      },
+      {
+       "id": "fr_nuancer",
+       "target": "nuancer",
+       "translationAr": "يضبط الكلام بفروق دقيقة",
+       "phonetic": "نوانسيه",
+       "emoji": "🎚️",
+       "exampleTarget": "Elle nuance ses propos avec prudence.",
+       "exampleAr": "تضبط كلامها بفروق دقيقة وحذر."
+      }
+     ]
+    },
+    {
+     "id": "fr_u22_l3",
+     "titleAr": "حول المشهد الإعلامي",
+     "titleEn": "Around the media scene",
+     "vocab": [
+      {
+       "id": "fr_telespectateur",
+       "target": "le téléspectateur",
+       "translationAr": "المشاهد التلفزيوني",
+       "phonetic": "لتيليزبيكتاتور",
+       "emoji": "🛋️",
+       "exampleTarget": "Le téléspectateur choisit ses chaînes.",
+       "exampleAr": "يختار المشاهد قنواته."
+      },
+      {
+       "id": "fr_un_article",
+       "target": "un article",
+       "translationAr": "مقال صحفي",
+       "phonetic": "أن أرتيكل",
+       "emoji": "📄",
+       "exampleTarget": "Son article a déclenché un débat.",
+       "exampleAr": "أثار مقاله نقاشاً."
+      },
+      {
+       "id": "fr_desinformation",
+       "target": "la désinformation",
+       "translationAr": "التضليل ونشر الأخبار الكاذبة",
+       "phonetic": "لا ديزنفورماسيون",
+       "emoji": "🎭",
+       "exampleTarget": "La désinformation se propage vite.",
+       "exampleAr": "ينتشر التضليل بسرعة."
+      },
+      {
+       "id": "fr_une_chaine",
+       "target": "une chaîne",
+       "translationAr": "قناة تلفزيونية",
+       "phonetic": "أن شين",
+       "emoji": "📡",
+       "exampleTarget": "Cette chaîne diffuse les matchs.",
+       "exampleAr": "تبثّ هذه القناة المباريات."
+      },
+      {
+       "id": "fr_abonnement",
+       "target": "un abonnement",
+       "translationAr": "اشتراك",
+       "phonetic": "أن أبونمان",
+       "emoji": "🎫",
+       "exampleTarget": "Il a résilié son abonnement.",
+       "exampleAr": "ألغى اشتراكه."
+      },
+      {
+       "id": "fr_l_antenne",
+       "target": "l'antenne",
+       "translationAr": "البثّ المباشر للقناة",
+       "phonetic": "لانتان",
+       "emoji": "📶",
+       "exampleTarget": "L'émission revient à l'antenne à 20h.",
+       "exampleAr": "يعود البرنامج للبث في الثامنة."
+      },
+      {
+       "id": "fr_kiosque",
+       "target": "le kiosque",
+       "translationAr": "كشك بيع الصحف",
+       "phonetic": "لكيوسك",
+       "emoji": "🏪",
+       "exampleTarget": "Il achète son journal au kiosque.",
+       "exampleAr": "يشتري جريدته من الكشك."
+      },
+      {
+       "id": "fr_slogan",
+       "target": "le slogan",
+       "translationAr": "الشعار الترويجي",
+       "phonetic": "لسلوغان",
+       "emoji": "🪧",
+       "exampleTarget": "Le slogan est court et mémorable.",
+       "exampleAr": "الشعار قصير وسهل التذكر."
+      },
+      {
+       "id": "fr_opinion_publique",
+       "target": "l'opinion publique",
+       "translationAr": "الرأي العام",
+       "phonetic": "لوبينيون بوبليك",
+       "emoji": "🗳️",
+       "exampleTarget": "L'opinion publique évolue lentement.",
+       "exampleAr": "يتغير الرأي العام ببطء."
+      },
+      {
+       "id": "fr_le_plateau",
+       "target": "le plateau",
+       "translationAr": "استوديو التصوير",
+       "phonetic": "لبلاتو",
+       "emoji": "🎬",
+       "exampleTarget": "Le plateau est prêt pour le direct.",
+       "exampleAr": "الاستوديو جاهز للبث المباشر."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u23",
+   "color": "#FF9600",
+   "titleAr": "الأدب والفروق الدقيقة",
+   "titleEn": "Literature & Nuances",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "fr_u23_l1",
+     "titleAr": "مصطلحات الأدب",
+     "titleEn": "Literary terms",
+     "vocab": [
+      {
+       "id": "fr_un_roman",
+       "target": "un roman",
+       "translationAr": "رواية",
+       "phonetic": "أن رومان",
+       "emoji": "📕",
+       "exampleTarget": "Ce roman se passe à Alger.",
+       "exampleAr": "تدور أحداث هذه الرواية في الجزائر."
+      },
+      {
+       "id": "fr_une_nouvelle",
+       "target": "une nouvelle",
+       "translationAr": "قصة قصيرة",
+       "phonetic": "أن نوڤيل",
+       "emoji": "📗",
+       "exampleTarget": "Elle publie une nouvelle chaque mois.",
+       "exampleAr": "تنشر قصة قصيرة كل شهر."
+      },
+      {
+       "id": "fr_la_poesie",
+       "target": "la poésie",
+       "translationAr": "الشعر",
+       "phonetic": "لا بويزي",
+       "emoji": "🪶",
+       "exampleTarget": "La poésie cache des sens profonds.",
+       "exampleAr": "يخفي الشعر معانٍ عميقة."
+      },
+      {
+       "id": "fr_un_vers",
+       "target": "un vers",
+       "translationAr": "بيت شعري (سطر)",
+       "phonetic": "أن ڤير",
+       "emoji": "📏",
+       "exampleTarget": "Il récite un vers par cœur.",
+       "exampleAr": "يتلو بيتاً من الشعر عن ظهر قلب."
+      },
+      {
+       "id": "fr_l_intrigue",
+       "target": "l'intrigue",
+       "translationAr": "حبكة القصة",
+       "phonetic": "لانتريغ",
+       "emoji": "🧩",
+       "exampleTarget": "L'intrigue se complique au chapitre trois.",
+       "exampleAr": "تتعقد الحبكة في الفصل الثالث."
+      },
+      {
+       "id": "fr_narrateur",
+       "target": "le narrateur",
+       "translationAr": "الراوي",
+       "phonetic": "لناراتور",
+       "emoji": "🗣️",
+       "exampleTarget": "Le narrateur raconte son enfance.",
+       "exampleAr": "يحكي الراوي طفولته."
+      },
+      {
+       "id": "fr_un_chapitre",
+       "target": "un chapitre",
+       "translationAr": "فصل من كتاب",
+       "phonetic": "أن شابيتر",
+       "emoji": "📑",
+       "exampleTarget": "Je lis un chapitre chaque soir.",
+       "exampleAr": "أقرأ فصلاً كل مساء."
+      },
+      {
+       "id": "fr_denouement",
+       "target": "le dénouement",
+       "translationAr": "خاتمة القصة وحلّها",
+       "phonetic": "لودِنومان",
+       "emoji": "🎯",
+       "exampleTarget": "Le dénouement surprend le lecteur.",
+       "exampleAr": "تُفاجئ الخاتمة القارئ."
+      },
+      {
+       "id": "fr_l_heroine",
+       "target": "l'héroïne",
+       "translationAr": "بطلة الرواية",
+       "phonetic": "ليروين",
+       "emoji": "🦸",
+       "exampleTarget": "L'héroïne surmonte tous les obstacles.",
+       "exampleAr": "تتغلب البطلة على كل العقبات."
+      },
+      {
+       "id": "fr_la_strophe",
+       "target": "la strophe",
+       "translationAr": "مقطع من قصيدة",
+       "phonetic": "لا ستروف",
+       "emoji": "🎼",
+       "exampleTarget": "La dernière strophe est triste.",
+       "exampleAr": "المقطع الأخير حزين."
+      }
+     ]
+    },
+    {
+     "id": "fr_u23_l2",
+     "titleAr": "أفعال التلميح والتوضيح",
+     "titleEn": "Hint & clarify verbs",
+     "vocab": [
+      {
+       "id": "fr_evoquer",
+       "target": "évoquer",
+       "translationAr": "يستحضر ويشير إلى",
+       "phonetic": "يڤوكيه",
+       "emoji": "💭",
+       "exampleTarget": "Ce parfum évoque mon enfance.",
+       "exampleAr": "يستحضر هذا العطر طفولتي."
+      },
+      {
+       "id": "fr_suggerer",
+       "target": "suggérer",
+       "translationAr": "يلوّح ويقترح بخفة",
+       "phonetic": "سوژهيه",
+       "emoji": "💡",
+       "exampleTarget": "Il suggère une autre lecture du texte.",
+       "exampleAr": "يلوّح بقراءة أخرى للنص."
+      },
+      {
+       "id": "fr_souligner",
+       "target": "souligner",
+       "translationAr": "يؤكد ويبرز",
+       "phonetic": "سولينييه",
+       "emoji": "🖍️",
+       "exampleTarget": "Elle souligne l'importance du détail.",
+       "exampleAr": "تؤكد أهمية التفصيل."
+      },
+      {
+       "id": "fr_sous_entendre",
+       "target": "sous-entendre",
+       "translationAr": "يعني ضمنياً دون تصريح",
+       "phonetic": "سوزاأنطاندُر",
+       "emoji": "🤫",
+       "exampleTarget": "Sa lettre sous-entend un départ.",
+       "exampleAr": "تلويح رسالته ضمنياً برحيل."
+      },
+      {
+       "id": "fr_esquisser",
+       "target": "esquisser",
+       "translationAr": "يرسم خطوطاً أولى ويبسط",
+       "phonetic": "أسكيسيه",
+       "emoji": "✏️",
+       "exampleTarget": "Il esquisse un sourire.",
+       "exampleAr": "يرسم ابتسامة خفيفة."
+      },
+      {
+       "id": "fr_reveLER",
+       "target": "révéler",
+       "translationAr": "يكشف ويجلي",
+       "phonetic": "ريڤيليه",
+       "emoji": "🔓",
+       "exampleTarget": "Le document révèle la vérité.",
+       "exampleAr": "يكشف المستند الحقيقة."
+      },
+      {
+       "id": "fr_glisser",
+       "target": "glisser",
+       "translationAr": "يدسّ كلمة بغير تصريح",
+       "phonetic": "غليسيه",
+       "emoji": "🍃",
+       "exampleTarget": "Elle glisse une remarque en passant.",
+       "exampleAr": "تدسّ ملاحظة عابرة."
+      },
+      {
+       "id": "fr_insinuer",
+       "target": "insinuer",
+       "translationAr": "يطعن بتلميح",
+       "phonetic": "انسينويه",
+       "emoji": "🐍",
+       "exampleTarget": "Il insinue que le rapport est faux.",
+       "exampleAr": "يطعن بتلميح في صحة التقرير."
+      },
+      {
+       "id": "fr_elucider",
+       "target": "élucider",
+       "translationAr": "يوضّح ويحلّ غموضاً",
+       "phonetic": "يلوسيديه",
+       "emoji": "🔦",
+       "exampleTarget": "La police élucide l'affaire.",
+       "exampleAr": "تحلّ الشرطة غموض القضية."
+      },
+      {
+       "id": "fr_preciser",
+       "target": "préciser",
+       "translationAr": "يحدّد ويوضّح بدقة",
+       "phonetic": "بريسيزيه",
+       "emoji": "📌",
+       "exampleTarget": "Il précise sa pensée en deux mots.",
+       "exampleAr": "يحدّد فكرته بكلمتين."
+      }
+     ]
+    },
+    {
+     "id": "fr_u23_l3",
+     "titleAr": "مفردات شعرية",
+     "titleEn": "Poetic vocabulary",
+     "vocab": [
+      {
+       "id": "fr_le_regard",
+       "target": "le regard",
+       "translationAr": "النظرة",
+       "phonetic": "لروجار",
+       "emoji": "👁️",
+       "exampleTarget": "Son regard exprime la joie.",
+       "exampleAr": "تعبر نظراته عن الفرح."
+      },
+      {
+       "id": "fr_l_ame",
+       "target": "l'âme",
+       "translationAr": "الروح والنفس",
+       "phonetic": "لام",
+       "emoji": "🕊️",
+       "exampleTarget": "La musique parle à l'âme.",
+       "exampleAr": "تخاطب الموسيقى الروح."
+      },
+      {
+       "id": "fr_le_destin",
+       "target": "le destin",
+       "translationAr": "المصير والقدر",
+       "phonetic": "لودستين",
+       "emoji": "🧵",
+       "exampleTarget": "Le destin change en un instant.",
+       "exampleAr": "يتغير المصير في لحظة."
+      },
+      {
+       "id": "fr_la_memoire",
+       "target": "la mémoire",
+       "translationAr": "الذاكرة والذكرى",
+       "phonetic": "لاميموار",
+       "emoji": "🏛️",
+       "exampleTarget": "La mémoire garde les beaux jours.",
+       "exampleAr": "تحفظ الذاكرة الأيام الجميلة."
+      },
+      {
+       "id": "fr_l_ombre",
+       "target": "l'ombre",
+       "translationAr": "الظل",
+       "phonetic": "لومبر",
+       "emoji": "🌒",
+       "exampleTarget": "Il s'assoit à l'ombre du vieux mur.",
+       "exampleAr": "يجلس في ظل الجدار القديم."
+      },
+      {
+       "id": "fr_la_lumiere",
+       "target": "la lumière",
+       "translationAr": "النور والضوء",
+       "phonetic": "لاميوزيار",
+       "emoji": "🔆",
+       "exampleTarget": "La lumière traverse les rideaux.",
+       "exampleAr": "يتخلل النور الستائر."
+      },
+      {
+       "id": "fr_l_essence",
+       "target": "l'essence",
+       "translationAr": "الجوهر المكشوف",
+       "phonetic": "ليسانس",
+       "emoji": "💎",
+       "exampleTarget": "L'essence du texte est l'espoir.",
+       "exampleAr": "جوهر النص هو الأمل."
+      },
+      {
+       "id": "fr_l_imagination",
+       "target": "l'imagination",
+       "translationAr": "الخيال",
+       "phonetic": "ليماجيناسيون",
+       "emoji": "🌈",
+       "exampleTarget": "L'imagination crée des mondes.",
+       "exampleAr": "يخلق الخيال عوالم."
+      },
+      {
+       "id": "fr_un_lecteur",
+       "target": "un lecteur",
+       "translationAr": "قارئ",
+       "phonetic": "أن لوكتور",
+       "emoji": "👓",
+       "exampleTarget": "Le lecteur devine la fin.",
+       "exampleAr": "يستنتج القارئ النهاية."
+      },
+      {
+       "id": "fr_traduction",
+       "target": "la traduction",
+       "translationAr": "الترجمة",
+       "phonetic": "لا ترادوكسيون",
+       "emoji": "🌐",
+       "exampleTarget": "La traduction fidèle est rare.",
+       "exampleAr": "الترجمة الأمينة نادرة."
+      }
+     ]
+    }
+   ]
   }
  ]
 }

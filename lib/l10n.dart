@@ -159,7 +159,17 @@ class L {
       'aboutEngine':
           'محرك التكرار المتباعد مستوحى من SM-2/FSRS مع خطوات تعلّم وفواصل متكيفة.',
       // v4.1
-      'version': 'الإصدار 4.4.0',
+      // v4.5 — companion (Rafiq & Friends)
+      'companionCard': 'الرفيق الرقمي',
+      'companionSub': 'يحتفل معك، ويشجعك بعد كل درس — انقر عليه ليحدثك',
+      'companionChoose': 'اختر رفيقك',
+      'mascotLocked': 'مقفل',
+      'unlockXp': 'افتح عند {n} XP',
+      'unlockStreak': 'افتح بسلسلة {n} يوم',
+      'unlockLessons': 'افتح بعد {n} درس',
+      'mascotSelected': 'مختار',
+      'mascotTapSelect': 'انقر للاختيار',
+      'version': 'الإصدار 4.5.0',
       'weakPracticeTitle': 'تدريب الكلمات الصعبة',
       'weakPracticeHint': 'اقرأ الكلمة ثم اقلب البطاقة وقيّم نفسك بصدق',
       'practiceDone': 'أنهيت جلسة التدريب!',
@@ -387,7 +397,18 @@ class L {
       'aboutEngine':
           'The spaced-repetition engine is inspired by SM-2/FSRS with learning steps and adaptive intervals.',
       // v4.1
-      'version': 'Version 4.4.0',
+      // v4.5 — companion (Rafiq & Friends)
+      'companionCard': 'Learning companion',
+      'companionSub':
+          'Celebrates your wins and cheers you on — tap for a nudge',
+      'companionChoose': 'Choose your companion',
+      'mascotLocked': 'Locked',
+      'unlockXp': 'Unlocks at {n} XP',
+      'unlockStreak': 'Unlocks with a {n}-day streak',
+      'unlockLessons': 'Unlocks after {n} lessons',
+      'mascotSelected': 'Selected',
+      'mascotTapSelect': 'Tap to select',
+      'version': 'Version 4.5.0',
       'weakPracticeTitle': 'Tough-words practice',
       'weakPracticeHint':
           'Read the word, flip the card, rate yourself honestly',

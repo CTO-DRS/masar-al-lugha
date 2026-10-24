@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../exercise_gen.dart';
+import '../mascot.dart';
 import '../models.dart';
 import '../scope.dart';
 import '../theme.dart';
@@ -1062,6 +1063,13 @@ class _LessonScreenState extends State<LessonScreen> {
 
   void _showComplete(String Function(String) tr) {
     final st = AppScope.of(context);
+    // v4.5: capture pre-lesson evidence so the companion can celebrate
+    // level-ups and fresh streak milestones on the result screen.
+    final levelBefore = st.level;
+    final streakBefore = st.streak;
+    final accuracy = correctCount + mistakes > 0
+        ? (correctCount * 100 / (correctCount + mistakes)).round()
+        : 100;
     final xpEarned = 10 + (mistakes == 0 ? 5 : 0) + correctCount;
     st.addXp(xpEarned);
     st.completeLesson(
@@ -1074,14 +1082,20 @@ class _LessonScreenState extends State<LessonScreen> {
     st.applyLessonResults(wordResults);
     AppScope.ttsOf(context).stop();
 
+    final mascotEvent = MascotEngine.resultEvent(
+      lessonQuality:
+          MascotEngine.lessonEvent(perfect: mistakes == 0, accuracy: accuracy),
+      leveledUp: st.level > levelBefore,
+      streakBefore: streakBefore,
+      streakAfter: st.streak,
+    );
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (_) => LessonResultScreen(
         lesson: widget.lesson,
         xpEarned: xpEarned,
-        accuracy: correctCount + mistakes > 0
-            ? (correctCount * 100 / (correctCount + mistakes)).round()
-            : 100,
+        accuracy: accuracy,
         perfect: mistakes == 0,
+        mascotEvent: mascotEvent,
       ),
     ));
   }
@@ -1131,12 +1145,17 @@ class LessonResultScreen extends StatefulWidget {
   final int accuracy;
   final bool perfect;
 
+  /// v4.5: which companion moment this result represents (streak
+  /// milestone / level-up / lesson quality), computed in _showComplete.
+  final MascotEvent mascotEvent;
+
   const LessonResultScreen({
     super.key,
     required this.lesson,
     required this.xpEarned,
     required this.accuracy,
     required this.perfect,
+    this.mascotEvent = MascotEvent.lessonGreat,
   });
 
   @override
@@ -1160,6 +1179,12 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
   @override
   Widget build(BuildContext context) {
     String tr(String k) => context.tr(k);
+    final st = AppScope.of(context);
+    // v4.5: companion speaks the moment — line rotates per lesson count.
+    final bubbleText = MascotEngine.lineFor(
+        widget.mascotEvent, st.mascotFacts, st.uiLocale,
+        salt: st.lessonsCompleted);
+    final mood = MascotEngine.moodFor(widget.mascotEvent);
     return Scaffold(
       backgroundColor: context.pageBg,
       body: SafeArea(
@@ -1170,8 +1195,8 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
               child: Column(
                 children: [
                   const Spacer(),
-                  const Mascot(size: 150, mood: MascotMood.celebrate),
-                  const SizedBox(height: 24),
+                  Mascot(size: 120, mood: mood, characterId: st.mascotId),
+                  const SizedBox(height: 18),
                   Text(
                     tr('lessonComplete'),
                     textAlign: TextAlign.center,
@@ -1187,6 +1212,14 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
                           fontSize: 16),
                     ),
                   ],
+                  const SizedBox(height: 14),
+                  MascotBubble(
+                    characterId: st.mascotId,
+                    mood: mood,
+                    text: bubbleText,
+                    showAvatar: false,
+                    animate: !st.reduceMotion,
+                  ),
                   const SizedBox(height: 30),
                   Row(
                     children: [
@@ -1320,6 +1353,11 @@ class LessonFailedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String tr(String k) => context.tr(k);
+    // v4.5: the chosen companion speaks comfort (never shame).
+    final st = AppScope.of(context);
+    final bubbleText = MascotEngine.lineFor(
+        MascotEvent.lessonFailed, st.mascotFacts, st.uiLocale,
+        salt: st.lessonsCompleted);
     return Scaffold(
       backgroundColor: context.pageBg,
       body: SafeArea(
@@ -1328,8 +1366,8 @@ class LessonFailedScreen extends StatelessWidget {
           child: Column(
             children: [
               const Spacer(),
-              const Mascot(size: 150, mood: MascotMood.sad),
-              const SizedBox(height: 24),
+              Mascot(size: 120, mood: MascotMood.sad, characterId: st.mascotId),
+              const SizedBox(height: 18),
               Text(
                 tr('lessonFailed'),
                 textAlign: TextAlign.center,
@@ -1340,6 +1378,14 @@ class LessonFailedScreen extends StatelessWidget {
                 tr('heartsEmpty'),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: context.mutedText, fontSize: 15),
+              ),
+              const SizedBox(height: 14),
+              MascotBubble(
+                characterId: st.mascotId,
+                mood: MascotMood.sad,
+                text: bubbleText,
+                showAvatar: false,
+                animate: !st.reduceMotion,
               ),
               const Spacer(),
               ChunkyButton(

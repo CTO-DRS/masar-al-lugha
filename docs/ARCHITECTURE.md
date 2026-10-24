@@ -143,6 +143,35 @@ through the engine. The engine has no dependency on Flutter, widgets, or
 l10n, so `test/insights_test.dart` exercises it as pure Dart with injected
 `DateTime` anchors.
 
+### 4b. Companion engine (v4.5)
+
+`lib/mascot.dart` follows the same rules as the insights layer — Flutter-free,
+offline, evidence-gated, explainable:
+
+- **Unlocks store nothing.** The five companions gate on facts the profile
+  already tracks (`xp`, `streak`, `lessonsCompleted`); `missingRequirement`
+  reports the strictest remaining gate and `selectMascot` no-ops on locked
+  or unknown ids (the UI hint is the first lock, the state method is the
+  second).
+- **Deterministic variety.** Lines are picked by `salt % bank.length` — the
+  UI passes lesson counts / day hashes, so output is stable under widget
+  tests yet rotates across sessions. Placeholder vocabulary is closed
+  ({s} streak, {lvl} level, {p} accuracy, {m} missed days) and
+  `test/mascot_test.dart` enforces ar/en parity, emptiness and {m}-only-
+  in-comeback over the public catalog.
+- **Evidence-gated moments.** Streak milestones fire only on a fresh
+  {3,7,14,30,60,100} crossing; comeback lines need >= 3 fully-missed days;
+  result priority is milestone > level-up > lesson quality. Comfort lines
+  replace blame on the failed screen by construction.
+- **Additive persistence.** `mascotId` rides the schema-v2 payload under
+  `mascot`; load and import both validate against the cast and fall back
+  to `rafiq`; export/import and `resetAll` handle it symmetrically.
+
+Rendering lives in `lib/widgets/mascot.dart` (palettes + ear accessories per
+character behind the stable `Mascot` API; `MascotBubble` with reduce-motion-
+aware entrance). Wiring: LessonResultScreen, LessonFailedScreen, Profile
+companion card.
+
 ## 5. Content pipeline
 
 Python generators (append-only IDs) → `assets/data/*.json` → validated by

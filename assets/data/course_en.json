@@ -18079,6 +18079,606 @@
      ]
     }
    ]
+  },
+  {
+   "id": "en_u53",
+   "color": "#1CB0F6",
+   "titleAr": "التعبيرات الاصطلاحية",
+   "titleEn": "Idioms & Expressions",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "en_u53_l1",
+     "titleAr": "تعبيرات الحياة اليومية",
+     "titleEn": "Everyday idioms",
+     "vocab": [
+      {
+       "id": "en_blessing_disguise",
+       "target": "A blessing in disguise",
+       "translationAr": "نعمة مقنّعة في صورة سيئة",
+       "phonetic": "أ بليسِنغ إن دِسغايز",
+       "emoji": "🍀",
+       "exampleTarget": "Losing that job was a blessing in disguise.",
+       "exampleAr": "كانت خسارة تلك الوظيفة نعمة مقنّعة."
+      },
+      {
+       "id": "en_burn_midnight_oil",
+       "target": "Burn the midnight oil",
+       "translationAr": "يسهر متأثراً يعمل أو يدرس",
+       "phonetic": "برن ذ ميدنايت أويل",
+       "emoji": "🕯️",
+       "exampleTarget": "She burned the midnight oil before finals.",
+       "exampleAr": "سهرة متأثرة قبل الامتحانات النهائية."
+      },
+      {
+       "id": "en_on_the_mend",
+       "target": "On the mend",
+       "translationAr": "في طريقه للتحسّن والشفاء",
+       "phonetic": "أون ذ مِند",
+       "emoji": "🩹",
+       "exampleTarget": "After rest, he is on the mend.",
+       "exampleAr": "بعد الراحة صار في طريقه للتحسن."
+      },
+      {
+       "id": "en_blue_moon",
+       "target": "Once in a blue moon",
+       "translationAr": "نادراً جداً",
+       "phonetic": "وانس إن أ بلو مون",
+       "emoji": "🌙",
+       "exampleTarget": "We meet once in a blue moon.",
+       "exampleAr": "نتقابل نادراً جداً."
+      },
+      {
+       "id": "en_cat_out_of_bag",
+       "target": "Let the cat out of the bag",
+       "translationAr": "يفشي السر دون قصد",
+       "phonetic": "ليت ذ كات أوت أوف ذ باغ",
+       "emoji": "🐱",
+       "exampleTarget": "He let the cat out of the bag early.",
+       "exampleAr": "فشى السر مبكراً دون قصد."
+      },
+      {
+       "id": "en_arm_and_leg",
+       "target": "Cost an arm and a leg",
+       "translationAr": "غالٍ جداً",
+       "phonetic": "كوست أن آرم اند أ ليغ",
+       "emoji": "💰",
+       "exampleTarget": "That car cost an arm and a leg.",
+       "exampleAr": "تلك السيارة كلّفت ثروة."
+      },
+      {
+       "id": "en_walk_in_park",
+       "target": "A walk in the park",
+       "translationAr": "مهمة في غاية السهولة",
+       "phonetic": "أ ووك إن ذ بارك",
+       "emoji": "🌳",
+       "exampleTarget": "The test was a walk in the park.",
+       "exampleAr": "كان الاختبار في غاية السهولة."
+      },
+      {
+       "id": "en_cloud_nine",
+       "target": "On cloud nine",
+       "translationAr": "في قمة السعادة",
+       "phonetic": "أون كلاود ناين",
+       "emoji": "☁️",
+       "exampleTarget": "She was on cloud nine after the win.",
+       "exampleAr": "كانت في قمة السعادة بعد الفوز."
+      },
+      {
+       "id": "en_face_the_music",
+       "target": "Face the music",
+       "translationAr": "يواجه عواقب أفعاله بشجاعة",
+       "phonetic": "فيس ذ ميوزيك",
+       "emoji": "🎺",
+       "exampleTarget": "He had to face the music at home.",
+       "exampleAr": "كان عليه مواجهة العواقب في البيت."
+      },
+      {
+       "id": "en_cold_feet",
+       "target": "Get cold feet",
+       "translationAr": "يفقد جرأته في اللحظة الأخيرة",
+       "phonetic": "غِت كولد فيت",
+       "emoji": "🥶",
+       "exampleTarget": "She got cold feet before the speech.",
+       "exampleAr": "فقدت جرأتها قبل الخطاب مباشرة."
+      }
+     ]
+    },
+    {
+     "id": "en_u53_l2",
+     "titleAr": "تعبيرات العمل والنجاح",
+     "titleEn": "Work & success idioms",
+     "vocab": [
+      {
+       "id": "en_climb_ladder",
+       "target": "Climb the ladder",
+       "translationAr": "يصعد السلطة الوظيفية",
+       "phonetic": "كلايم ذ لادِر",
+       "emoji": "🪜",
+       "exampleTarget": "She is climbing the ladder quickly.",
+       "exampleAr": "هي تصعد السلطة الوظيفية بسرعة."
+      },
+      {
+       "id": "en_outside_box",
+       "target": "Think outside the box",
+       "translationAr": "يفكر خارج الصندوق",
+       "phonetic": "ثينك أوتسايد ذ بوكس",
+       "emoji": "📦",
+       "exampleTarget": "Good designers think outside the box.",
+       "exampleAr": "المصممون الجيدون يفكرون خارج الصندوق."
+      },
+      {
+       "id": "en_ball_rolling",
+       "target": "Get the ball rolling",
+       "translationAr": "يبدأ العمل ويحرّك الأمور",
+       "phonetic": "غِت ذ بول رولينغ",
+       "emoji": "⚽",
+       "exampleTarget": "Let us get the ball rolling.",
+       "exampleAr": "لنبدأ العمل ونحرّك الأمور."
+      },
+      {
+       "id": "en_square_one",
+       "target": "Back to square one",
+       "translationAr": "يعود لنقطة الصفر",
+       "phonetic": "باك تو سكوير وان",
+       "emoji": "↩️",
+       "exampleTarget": "The plan failed; we are back to square one.",
+       "exampleAr": "فشلت الخطة؛ عدنا لنقطة الصفر."
+      },
+      {
+       "id": "en_cut_corners",
+       "target": "Cut corners",
+       "translationAr": "يختصر الجودة ليوفّر",
+       "phonetic": "كات كورنِرز",
+       "emoji": "✂️",
+       "exampleTarget": "Never cut corners on safety.",
+       "exampleAr": "لا تختصر أبداً في السلامة."
+      },
+      {
+       "id": "en_extra_mile",
+       "target": "Go the extra mile",
+       "translationAr": "يبذل جهدًا إضافيًا",
+       "phonetic": "غو ذ إكسترا مايل",
+       "emoji": "🏃",
+       "exampleTarget": "Our team goes the extra mile.",
+       "exampleAr": "فريقنا يبذل جهداً إضافياً."
+      },
+      {
+       "id": "en_raise_bar",
+       "target": "Raise the bar",
+       "translationAr": "يرفع سقف التوقعات",
+       "phonetic": "ريز ذ بار",
+       "emoji": "📈",
+       "exampleTarget": "Her last book raised the bar.",
+       "exampleAr": "رفع كتابها الأخير سقف التوقعات."
+      },
+      {
+       "id": "en_touch_base",
+       "target": "Touch base",
+       "translationAr": "يتواصل سريعاً للمتابعة",
+       "phonetic": "تش بايس",
+       "emoji": "🤝",
+       "exampleTarget": "Let us touch base on Monday.",
+       "exampleAr": "لنتواصل للمتابعة يوم الاثنين."
+      },
+      {
+       "id": "en_in_pipeline",
+       "target": "In the pipeline",
+       "translationAr": "قيد الإعداد",
+       "phonetic": "إن ذ بايبلاين",
+       "emoji": "🚧",
+       "exampleTarget": "Two new courses are in the pipeline.",
+       "exampleAr": "دورتان جديدتان قيد الإعداد."
+      },
+      {
+       "id": "en_strike_balance",
+       "target": "Strike a balance",
+       "translationAr": "يحقق التوازن",
+       "phonetic": "ستريك أ بالانس",
+       "emoji": "⚖️",
+       "exampleTarget": "Try to strike a balance between work and rest.",
+       "exampleAr": "حاول أن تحقق التوازن بين العمل والراحة."
+      }
+     ]
+    },
+    {
+     "id": "en_u53_l3",
+     "titleAr": "تعبيرات المشاعر والمواقف",
+     "titleEn": "Feelings & situations",
+     "vocab": [
+      {
+       "id": "en_head_over_heels",
+       "target": "Head over heels",
+       "translationAr": "غارق في الحب تماماً",
+       "phonetic": "هيد أوفر هيلز",
+       "emoji": "💘",
+       "exampleTarget": "They are head over heels in love.",
+       "exampleAr": "هما غارقان في الحب تماماً."
+      },
+      {
+       "id": "en_feeling_blue",
+       "target": "Feeling blue",
+       "translationAr": "حزين الكبد",
+       "phonetic": "فيلينغ بلو",
+       "emoji": "💧",
+       "exampleTarget": "Rainy days make me feel blue.",
+       "exampleAr": "أيام المطر تجعلني حزيناً."
+      },
+      {
+       "id": "en_pull_together",
+       "target": "Pull yourself together",
+       "translationAr": "يستعيد أعصابه وينضبط",
+       "phonetic": "بول يورسِلف توغِذَر",
+       "emoji": "🧘",
+       "exampleTarget": "Pull yourself together; it is almost done.",
+       "exampleAr": "استعد أعصابك؛ لقد أوشكت على الانتهاء."
+      },
+      {
+       "id": "en_on_edge",
+       "target": "On edge",
+       "translationAr": "متوتر ومقلق",
+       "phonetic": "أون إدج",
+       "emoji": "😰",
+       "exampleTarget": "The exam results put me on edge.",
+       "exampleAr": "نتائج الامتحان جعلتني متوتراً."
+      },
+      {
+       "id": "en_give_hand",
+       "target": "Give someone a hand",
+       "translationAr": "يساعد شخصاً",
+       "phonetic": "غِف سَموان أ هاند",
+       "emoji": "🖐️",
+       "exampleTarget": "Can you give me a hand with these boxes?",
+       "exampleAr": "أيمكنك مساعدتي مع هذه الصناديق؟"
+      },
+      {
+       "id": "en_blink_of_eye",
+       "target": "In the blink of an eye",
+       "translationAr": "في لمح البصر",
+       "phonetic": "إن ذ بلينك أوف أن آي",
+       "emoji": "⚡",
+       "exampleTarget": "The summer passed in the blink of an eye.",
+       "exampleAr": "مرّ الصيف في لمح البصر."
+      },
+      {
+       "id": "en_eye_to_eye",
+       "target": "See eye to eye",
+       "translationAr": "يتفقان في الرأي",
+       "phonetic": "سي آي تو آي",
+       "emoji": "👀",
+       "exampleTarget": "We finally see eye to eye.",
+       "exampleAr": "أخيراً اتفقنا في الرأي."
+      },
+      {
+       "id": "en_twist_arm",
+       "target": "Twist someone's arm",
+       "translationAr": "يضغط على شخص لإقناعه",
+       "phonetic": "توِست سَموانز آرم",
+       "emoji": "💪",
+       "exampleTarget": "I did not need to twist his arm.",
+       "exampleAr": "لم أحتج أن أضغط عليه ليقتنع."
+      },
+      {
+       "id": "en_break_a_leg",
+       "target": "Break a leg",
+       "translationAr": "بالتوفيق (تشجيع قبل الأداء)",
+       "phonetic": "بريك أ ليغ",
+       "emoji": "🎭",
+       "exampleTarget": "Break a leg in your presentation today!",
+       "exampleAr": "بالتوفيق في عرضك اليوم!"
+      },
+      {
+       "id": "en_change_mind",
+       "target": "Change your mind",
+       "translationAr": "يغيّر رأيه",
+       "phonetic": "تشينج يور مايند",
+       "emoji": "🔄",
+       "exampleTarget": "She changed her mind about the trip.",
+       "exampleAr": "غيّرت رأيها بشأن الرحلة."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u54",
+   "color": "#CE82FF",
+   "titleAr": "الفروق الدقيقة والسجلات",
+   "titleEn": "Nuance & Register",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "en_u54_l1",
+     "titleAr": "أفعال رسمية",
+     "titleEn": "Formal verbs",
+     "vocab": [
+      {
+       "id": "en_obtain",
+       "target": "Obtain",
+       "translationAr": "يحصل على (رسمي)",
+       "phonetic": "أوبتين",
+       "emoji": "📥",
+       "exampleTarget": "You must obtain a permit first.",
+       "exampleAr": "عليك الحصول على تصريح أولاً."
+      },
+      {
+       "id": "en_purchase",
+       "target": "Purchase",
+       "translationAr": "يشتري (رسمي)",
+       "phonetic": "بورتشِس",
+       "emoji": "🛒",
+       "exampleTarget": "Customers can purchase tickets online.",
+       "exampleAr": "يمكن للزبائن شراء التذاكر عبر الإنترنت."
+      },
+      {
+       "id": "en_assist",
+       "target": "Assist",
+       "translationAr": "يعين ويساعد (رسمي)",
+       "phonetic": "أسِست",
+       "emoji": "🤲",
+       "exampleTarget": "Staff will assist you promptly.",
+       "exampleAr": "سيوظف الموظفون مساعدتك فوراً."
+      },
+      {
+       "id": "en_inquire",
+       "target": "Inquire",
+       "translationAr": "يستفسر (رسمي)",
+       "phonetic": "إنكواير",
+       "emoji": "❓",
+       "exampleTarget": "She inquired about the schedule.",
+       "exampleAr": "استفسرت عن الجدول."
+      },
+      {
+       "id": "en_commence",
+       "target": "Commence",
+       "translationAr": "يبدأ (رسمي)",
+       "phonetic": "كومِنس",
+       "emoji": "🎬",
+       "exampleTarget": "The ceremony will commence at nine.",
+       "exampleAr": "سيبدأ الحفل في التاسعة."
+      },
+      {
+       "id": "en_require",
+       "target": "Require",
+       "translationAr": "يستلزم ويقتضي",
+       "phonetic": "ريكواير",
+       "emoji": "📋",
+       "exampleTarget": "The job requires patience.",
+       "exampleAr": "تستلزم الوظيفة صبراً."
+      },
+      {
+       "id": "en_provide",
+       "target": "Provide",
+       "translationAr": "يوفّر ويقدّم",
+       "phonetic": "بروفايد",
+       "emoji": "🎁",
+       "exampleTarget": "The hotel provides free breakfast.",
+       "exampleAr": "يوفّر الفندق فطوراً مجانياً."
+      },
+      {
+       "id": "en_attempt",
+       "target": "Attempt",
+       "translationAr": "يحاول (محاولة جادة)",
+       "phonetic": "أتَمبت",
+       "emoji": "🎯",
+       "exampleTarget": "They attempted the summit twice.",
+       "exampleAr": "حاولوا الوصول للقمة مرتين."
+      },
+      {
+       "id": "en_inform",
+       "target": "Inform",
+       "translationAr": "يُعلم ويبلّغ",
+       "phonetic": "إنفورم",
+       "emoji": "📢",
+       "exampleTarget": "Please inform us of any delays.",
+       "exampleAr": "أعلمنا من فضلك عن أي تأخير."
+      },
+      {
+       "id": "en_acknowledge",
+       "target": "Acknowledge",
+       "translationAr": "يعترف ويقرّ بـ",
+       "phonetic": "أكنولِدج",
+       "emoji": "🙋",
+       "exampleTarget": "He acknowledged his mistake openly.",
+       "exampleAr": "اعترف بخطئه علناً."
+      }
+     ]
+    },
+    {
+     "id": "en_u54_l2",
+     "titleAr": "صفات دقيقة",
+     "titleEn": "Precise adjectives",
+     "vocab": [
+      {
+       "id": "en_meticulous",
+       "target": "Meticulous",
+       "translationAr": "دقيق الحرفية شديد الانتباه",
+       "phonetic": "مِتيكيولِس",
+       "emoji": "🔍",
+       "exampleTarget": "She keeps meticulous notes.",
+       "exampleAr": "تحتفظ بملاحظات دقيقة جداً."
+      },
+      {
+       "id": "en_reluctant",
+       "target": "Reluctant",
+       "translationAr": "متردّد غير راغب",
+       "phonetic": "رِلاكتِنت",
+       "emoji": "🙅",
+       "exampleTarget": "He was reluctant to leave.",
+       "exampleAr": "كان متردداً في المغادرة."
+      },
+      {
+       "id": "en_intrigued",
+       "target": "Intrigued",
+       "translationAr": "منجذب بحيرة وتشويق",
+       "phonetic": "إنتريغد",
+       "emoji": "🤩",
+       "exampleTarget": "I am intrigued by the idea.",
+       "exampleAr": "الفكرة تشوّقني فعلاً."
+      },
+      {
+       "id": "en_overwhelmed",
+       "target": "Overwhelmed",
+       "translationAr": "مرهق بسبب الإغراق",
+       "phonetic": "أوفَرويلمد",
+       "emoji": "🌊",
+       "exampleTarget": "She felt overwhelmed by emails.",
+       "exampleAr": "شعرت بالإغراق بسبب رسائل البريد."
+      },
+      {
+       "id": "en_skeptical",
+       "target": "Skeptical",
+       "translationAr": "شكّاك متحفّظ",
+       "phonetic": "سكِبتِكال",
+       "emoji": "🧐",
+       "exampleTarget": "I am skeptical of quick fixes.",
+       "exampleAr": "أشكّك في الحلول السريعة."
+      },
+      {
+       "id": "en_relieved",
+       "target": "Relieved",
+       "translationAr": "مرتاح بعد قلق",
+       "phonetic": "رِليفد",
+       "emoji": "😮‍💨",
+       "exampleTarget": "We were relieved to hear the news.",
+       "exampleAr": "ارتاحنا عندما سمعنا الخبر."
+      },
+      {
+       "id": "en_frustrated",
+       "target": "Frustrated",
+       "translationAr": "محبَط متعِب",
+       "phonetic": "فرَستريتد",
+       "emoji": "😫",
+       "exampleTarget": "He got frustrated with the delay.",
+       "exampleAr": "أصيب بالإحباط بسبب التأخير."
+      },
+      {
+       "id": "en_ambitious",
+       "target": "Ambitious",
+       "translationAr": "طموح",
+       "phonetic": "آمبِشِس",
+       "emoji": "🏔️",
+       "exampleTarget": "She is an ambitious engineer.",
+       "exampleAr": "هي مهندسة طموحة."
+      },
+      {
+       "id": "en_diligent",
+       "target": "Diligent",
+       "translationAr": "مجتهد مثابر في عمله",
+       "phonetic": "دِلجِنت",
+       "emoji": "🐜",
+       "exampleTarget": "Diligent students review daily.",
+       "exampleAr": "الطلاب المجتهدون يراجعون يومياً."
+      },
+      {
+       "id": "en_assertive",
+       "target": "Assertive",
+       "translationAr": "حازم واثق بثقة هادئة",
+       "phonetic": "أسيرتِف",
+       "emoji": "🗣️",
+       "exampleTarget": "Be assertive, not aggressive.",
+       "exampleAr": "كن حازماً لا عدوانياً."
+      }
+     ]
+    },
+    {
+     "id": "en_u54_l3",
+     "titleAr": "أدوات الربط الأكاديمية",
+     "titleEn": "Academic connectors",
+     "vocab": [
+      {
+       "id": "en_nevertheless",
+       "target": "Nevertheless",
+       "translationAr": "مع ذلك",
+       "phonetic": "نِفَرذِلِس",
+       "emoji": "🔁",
+       "exampleTarget": "It was risky; nevertheless, we tried.",
+       "exampleAr": "كان الأمر مجازفة؛ ومع ذلك حاولنا."
+      },
+      {
+       "id": "en_consequently",
+       "target": "Consequently",
+       "translationAr": "بالنتيجة لذلك",
+       "phonetic": "كونسِكونتلي",
+       "emoji": "➡️",
+       "exampleTarget": "Prices rose; consequently, sales fell.",
+       "exampleAr": "ارتفعت الأسعار؛ وبذلك انخفضت المبيعات."
+      },
+      {
+       "id": "en_furthermore",
+       "target": "Furthermore",
+       "translationAr": "علاوة على ذلك",
+       "phonetic": "فَرذَرمور",
+       "emoji": "➕",
+       "exampleTarget": "Furthermore, the data is verified.",
+       "exampleAr": "علاوة على ذلك، البيانات موثّقة."
+      },
+      {
+       "id": "en_in_contrast",
+       "target": "In contrast",
+       "translationAr": "في المقابل",
+       "phonetic": "إن كونتراست",
+       "emoji": "🔀",
+       "exampleTarget": "In contrast, rural areas stayed quiet.",
+       "exampleAr": "في المقابل، بقت المناطق الريفية هادئة."
+      },
+      {
+       "id": "en_accordingly",
+       "target": "Accordingly",
+       "translationAr": "وبناءً عليه",
+       "phonetic": "أكوردينغلي",
+       "emoji": "📌",
+       "exampleTarget": "The plan was adjusted accordingly.",
+       "exampleAr": "عُدّلت الخطة بناءً على ذلك."
+      },
+      {
+       "id": "en_whereas",
+       "target": "Whereas",
+       "translationAr": "بينما في حين أن",
+       "phonetic": "وِيرآز",
+       "emoji": "⚖️",
+       "exampleTarget": "He walks, whereas she cycles.",
+       "exampleAr": "هو يمشي، بينما هي تركب الدراجة."
+      },
+      {
+       "id": "en_albeit",
+       "target": "Albeit",
+       "translationAr": "وإن كان",
+       "phonetic": "أولبيِت",
+       "emoji": "🎭",
+       "exampleTarget": "A quiet, albeit tense, meeting.",
+       "exampleAr": "اجتماع هادئ، وإن كان متوتراً."
+      },
+      {
+       "id": "en_hence",
+       "target": "Hence",
+       "translationAr": "ومن ثم",
+       "phonetic": "هِنس",
+       "emoji": "🧭",
+       "exampleTarget": "The road was flooded; hence the delay.",
+       "exampleAr": "كان الطريق مغموراً؛ ومن ثم التأخير."
+      },
+      {
+       "id": "en_moreover",
+       "target": "Moreover",
+       "translationAr": "فضلاً عن ذلك",
+       "phonetic": "موروفر",
+       "emoji": "🏗️",
+       "exampleTarget": "Moreover, the cost is lower.",
+       "exampleAr": "فضلاً عن ذلك، التكلفة أقل."
+      },
+      {
+       "id": "en_thus",
+       "target": "Thus",
+       "translationAr": "وهكذا",
+       "phonetic": "ذَس",
+       "emoji": "✅",
+       "exampleTarget": "Thus the problem was solved.",
+       "exampleAr": "وهكذا حُلّت المشكلة."
+      }
+     ]
+    }
+   ]
   }
  ]
 }

@@ -11,6 +11,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_state.dart';
+import 'mascot.dart';
 import 'models.dart';
 
 class ProfileStore {
@@ -93,6 +94,12 @@ class ProfileStore {
         s.favorites = ((j['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(
             k as String,
             ((v as List?) ?? []).map((e) => e as String).toList()));
+        // v4.5 companion (additive, null-safe for old payloads).
+        // Unknown ids fall back to the default companion.
+        final m = j['mascot'];
+        if (m is String && mascotCast.any((c) => c.id == m)) {
+          s.mascotId = m;
+        }
         final settings = j['settings'];
         if (settings is Map) {
           s.darkMode = (settings['darkMode'] as bool?) ?? s.darkMode;
@@ -149,6 +156,7 @@ class ProfileStore {
         'answerLog': s.answerLog,
       },
       'favorites': s.favorites,
+      'mascot': s.mascotId,
       'settings': {
         'darkMode': s.darkMode,
         'reduceMotion': s.reduceMotion,

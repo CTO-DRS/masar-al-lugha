@@ -184,3 +184,28 @@ limitations: hour-bucket accuracy needs ≥8 answers per hour before a
 best-time tip appears; goal derivation uses the *current* goal against
 historical XP (documented approximation); confusion capture is lesson-only
 (flashcard self-ratings deliberately excluded to keep the signal honest).
+
+## 10. v4.5 increment (companion wave — ROADMAP v4.5)
+
+Scope: the interactive character system ("Rafiq & Friends") plus +180 CEFR
+words. No new dependencies, no network, no permissions; storage stays
+schema-v2 with one additive null-safe key (`mascot`), so v4.4 payloads load
+unchanged and old builds ignore the key (forward-compatible both ways).
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Companion engine | 5 characters with evidence-based unlocks (Rafiq default; Farah 500 XP; Nur 7-day streak; Zayd 50 lessons; Salma 1500 XP) — `missingRequirement` reports the strictest remaining gate; 9 event types × 6 bilingual lines (54 lines, 108 strings); `MascotEngine.lessonEvent` (perfect ≥100 / great ≥80 / good ≥50 / struggled), `resultEvent` (fresh streak milestone > level-up > lesson quality), `isMilestone` = {3,7,14,30,60,100}, `lineFor` deterministic salt rotation, `fill` with closed placeholder set {s},{lvl},{p},{m}. | `lib/mascot.dart` (new) | `test/mascot_test.dart`: 18 engine/cast/catalog tests incl. parity, placeholder whitelist, {m}-only-comeback, rotation cycling, locale switch, priority rules |
+| Companion widgets | Per-character palettes + ear accessories (owl tufts / crest / cat / fox / bunny) behind the unchanged `Mascot` API (default `rafiq`, `MascotMood` re-exported — zero pre-4.5 call-site churn); new `MascotBubble` with reduce-motion-aware entrance + `showAvatar:false` variant. Fixed a real bug pre-commit: `RotationTransition(turns: Offset(...))` misuse → `Transform.rotate`. | `lib/widgets/mascot.dart` | Widget tests: every character × every mood renders exception-free; bubble with/without avatar |
+| State & persistence | `mascotId` field + `mascotMissedDays` (date-parse safe) + `mascotFacts` + `isMascotUnlocked` + `selectMascot` (no-op on locked/unknown); ProfileStore load/save carry `mascot` additively; import validates against the cast (tampered ids dropped); export carries it; `resetAll` restores rafiq. | `lib/app_state.dart`, `lib/profile_store.dart` | AppState tests: locked-selection no-op, unlock at gate, persistence round-trip, missed-days math, facts mirroring, export/import carry, tampered-id drop |
+| Lesson surfaces | `_showComplete` now captures pre-lesson level/streak and passes the computed `MascotEvent` to the result screen (streak-milestone/level-up/perfect/great/good/struggled moments); failed screen gets the comfort moment. Both render the chosen companion + its line. | `lib/screens/lesson_screen.dart` | 104/104 suite; result screen default param keeps old constructor calls compiling |
+| Profile companion card | Comeback bubble after ≥3 fully-missed days (evidence-gated), tap-to-rotate idle tips, full cast picker: selected state, lock badges, localized unlock hints via `trF` (`unlockXp`/`unlockStreak`/`unlockLessons`). | `lib/screens/profile.dart` | Analyze clean; RTL-safe; dark-mode via theme-context colors |
+| l10n & version | 11 new ar/en keys (companion card, choose, locked, unlock hints, selected) — 218 keys per locale, no duplicates; `version` strings → 4.5.0; pubspec `4.5.0+13`. | `lib/l10n.dart`, `pubspec.yaml` | Duplicate-key scan clean (analyzer) |
+| Content +180 | EN u53–u54 (C1): Idioms & Expressions (pre-checked against the v4.2 idiom set — 14 target/id collisions caught and replaced pre-flight), Nuance & Register. FR u22–u23: Médias & Débats (B2), Littérature & Nuances (C1) — 11 collisions replaced. UR u22–u23: شاعری اور محاورے (B2), زبانِ ادب (C1) — 4 collisions replaced pre-run. Generators persisted (`scripts/content_v45_{en,fr,ur}.py`), UR legacy id shapes untouched. | `assets/data/course_{en,fr,ur}.json`, `scripts/content_v45_*.py` | `validate_content.py` PASS (0 fatal); `test/content_test.dart` updated: 100 units / 352 lessons / 3718 words, tail ids u53–u54 / u22–u23, all ladders reach C1 |
+
+Test count 72 → **104** (+32: 18 engine + 6 AppState integration + 8 widget).
+Gates at commit time: `validate_content.py` PASS 0 fatal · `dart format`
+clean (Flutter 3.47.7 = CI pin) · `flutter analyze` No issues ·
+`flutter test` 104/104. Known limits: lines are in-code (not assets) by
+design — tests compile-check them; mascot widget smoke tests cover
+rendering, not full-screen flows (existing screens already covered); UR
+phonetics are approximations for Arabic readers (noted in CONTENT_AUDIT).

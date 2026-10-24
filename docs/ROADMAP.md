@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.4.0+12** — see docs/PROJECT_AUDIT.md §9 for the v4.4
+**Current release: v4.5.0+13** — see docs/PROJECT_AUDIT.md §10 for the v4.5
 increment with file/test evidence.
 
 ## Where we are
@@ -19,6 +19,7 @@ increment with file/test evidence.
 | **v4.2** | **Curriculum depth: EN 52 units (+192 words: phrasal verbs, idioms, business, academic C1), FR/UR 21 units each (+360 words), formal monotonic CEFR ladder A1→C1 on every unit (validator- + test-enforced), CEFR pill on unit banners, `test/content_test.dart` asset tests — 3538 words / 94 units / 334 lessons** |
 | v4.3 | Lesson styles on the same corpus: **sentence-mining** (cloze-first: fill-blank on real sentences → sentence building → listen-and-pick-the-sentence) and **audio-first** (TTS-led: hear→word / hear→meaning pass, audio sentence building, listen rounds) with a lesson-style bottom sheet in the learn path — 49 tests |
 | v4.4 | **Local intelligence + favorites: on-device insights engine (accuracy trend, best study hour, confusion pairs, smart daily-goal suggestion, review forecast, rule-based tutor tips), Learning Insights screen, confusion capture inside lessons with pair practice, favorites (star in dictionary + dedicated flashcards deck), new launcher icon — 72 tests** |
+| v4.5 | **Companion wave: Rafiq & Friends — interactive character system (5 evidence-unlocked companions, 9 event types, 54 bilingual encouragement lines with anti-repeat rotation), speech-bubble moments on lesson result/failed screens, companion picker card in Profile, +180 CEFR words (EN idioms & nuance C1, FR/UR B2→C1) — 104 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -63,6 +64,37 @@ increment with file/test evidence.
 6. ✅ **New launcher icon** — generated "language path" emblem (winding path
    to a star + A/ع speech bubbles on the brand green gradient), full-bleed
    square + round variants at all 5 mipmap densities (scripts/apply_app_icon.py).
+
+## v4.5 — companion wave (SHIPPED)
+
+1. ✅ **Companion engine (`lib/mascot.dart`)** — Flutter-free, offline,
+   deterministic: 5 characters (Rafiq the owl — default; Farah — 500 XP;
+   Nur — 7-day streak; Zayd — 50 lessons; Salma — 1500 XP) unlocked by
+   evidence the profile already tracks (no new stored state); 9 event
+   types (perfect/great/good/struggled/failed/streak-milestone/level-up/
+   comeback/idle) with 54 bilingual lines; placeholders {s}/{lvl}/{p}/{m}
+   only, test-enforced; deterministic salt-based rotation (no randomness,
+   widget-test stable); result-event priority: fresh streak milestone >
+   level up > lesson quality.
+2. ✅ **Character rendering (`lib/widgets/mascot.dart`)** — shape-drawn
+   companions get per-character palettes + ear accessories (owl tufts,
+   crest, cat/fox triangles, bunny ears) behind a stable API (`Mascot`
+   defaults to rafiq; `MascotMood` re-exported — pre-4.5 call sites keep
+   compiling); new `MascotBubble` (speech bubble, entrance animation
+   gated by reduce-motion, `showAvatar: false` for screens that already
+   render the big companion).
+3. ✅ **Three wired surfaces** — LessonResultScreen (companion celebrates
+   the computed moment: streak milestone / level-up / lesson quality),
+   LessonFailedScreen (comfort, never shame), Profile (companion card:
+   comeback bubble after ≥ 3 missed days, tap-to-rotate study tips, full
+   cast picker with lock badges + localized unlock hints).
+4. ✅ **Persistence** — `mascotId` rides the schema-v2 payload additively
+   (`mascot` key); load/import validate against the cast and fall back to
+   rafiq on garbage; export/import carry the choice; `resetAll` clears.
+5. ✅ **Content +180** — EN u53–u54 (C1 idioms & nuance/register), FR
+   u22–u23 (B2 media/debates, C1 literature), UR u22–u23 (B2 poetry &
+   idioms, C1 literary language) — corpus now 100 units / 352 lessons /
+   3718 words, all ladders reach C1; generators persisted in scripts/.
 
 ## v5.0 — platform growth
 
