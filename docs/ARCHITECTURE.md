@@ -95,24 +95,37 @@ mode-agnostic: every style ends through the same `completeLesson` +
 `applyLessonResults` path, so a sentence-mining or audio session counts
 exactly like a classic one.
 
-- **classic** — the unchanged v2.0 mixed drill set (mcq/reverse/listen/build +
-  picture, fill-blank, true-false rounds + match boss, capped at 14).
+- **classic** — the mixed v2.0 drill set (mcq/reverse/listen/build +
+  picture, fill-blank, true-false rounds, one v4.6 dictation round + match
+  boss, capped at 14).
 - **sentences** (cloze-first) — up to 6 fill-blank rounds on real example
   sentences → up to 4 sentence-arrange builds (3–8 tiles) → up to 4
-  listen-and-pick-the-sentence rounds → thin lessons (<5 exercises) are
-  topped up with classic reverse/mcq drills → words-only match boss. The
-  guarantee is *playability on any lesson*: no sentence material still yields
-  a valid drill plan (test-enforced).
+  listen-and-pick-the-sentence rounds → one v4.6 dictation (type the
+  sentence you just mined) → up to 2 v4.6 listening-comprehension rounds
+  (hear the sentence → pick its Arabic meaning) → thin lessons (<5
+  exercises) are topped up with classic reverse/mcq drills → words-only
+  match boss. The guarantee is *playability on any lesson*: no sentence
+  material still yields a valid drill plan (test-enforced).
 - **audio** (TTS-led) — an ears-first pass over the whole lesson (hear→pick
   the written word / hear→pick the Arabic meaning, alternating) → up to 3
-  audio sentence builds (sentence auto-spoken, replay button on the card) →
-  a whole-sentence listen round → tap-to-hear match boss. Invariant
-  (test-enforced): every exercise except the boss carries non-empty
-  `audioText`, i.e. nothing in an audio lesson is read-first.
+  audio sentence builds (sentence auto-spoken, replay button on the card)
+  → up to 2 v4.6 dictations (hear → type) → a whole-sentence listen round
+  → one v4.6 listening-comprehension round → tap-to-hear match boss.
+  Invariant (test-enforced): every exercise except the boss carries
+  non-empty `audioText`, i.e. nothing in an audio lesson is read-first.
+
+v4.6 typed-answer contract: `ExerciseGen.normalizeTyped` is the single
+grading gate for dictation — case-insensitive, unicode-aware
+punctuation/symbol stripping, whitespace collapsing, Arabic tashkeel +
+tatweel stripping. The Arabic meaning rides in `hint`; a wrong attempt
+that exactly spells another known word (normalized) feeds the confusion
+engine. `listenComp` offers exactly 4 unique real meanings, and lessons
+too poor to supply them silently skip the type (graceful degradation).
 
 UI seam: long listen options (sentences) switch the option grid to full-width
 rows; listen captions are variant-accurate (`listenAndChoose` /
-`listenMeaning` / `listenSentence`); retries re-enter with the same style.
+`listenMeaning` / `listenSentence` / `listenUnderstand`); retries re-enter
+with the same style.
 
 ## 4. Local intelligence layer (v4.4)
 

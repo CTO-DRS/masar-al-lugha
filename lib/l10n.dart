@@ -169,7 +169,7 @@ class L {
       'unlockLessons': 'افتح بعد {n} درس',
       'mascotSelected': 'مختار',
       'mascotTapSelect': 'انقر للاختيار',
-      'version': 'الإصدار 4.5.0',
+      'version': 'الإصدار 4.6.0',
       'weakPracticeTitle': 'تدريب الكلمات الصعبة',
       'weakPracticeHint': 'اقرأ الكلمة ثم اقلب البطاقة وقيّم نفسك بصدق',
       'practiceDone': 'أنهيت جلسة التدريب!',
@@ -194,6 +194,9 @@ class L {
       'replayAudio': 'إعادة الاستماع',
       'listenSentence': 'استمع واختر الجملة الصحيحة',
       'listenMeaning': 'استمع واختر المعنى الصحيح',
+      'typeWhatYouHear': 'استمع واكتب ما تسمعه',
+      'typeHere': 'اكتب هنا…',
+      'listenUnderstand': 'استمع واختر معنى الجملة',
       'audioBuild': 'استمع ثم رتّب الكلمات',
       // v4.4 — local intelligence (insights) + favorites
       'insightsTitle': 'رؤى التعلّم',
@@ -408,7 +411,7 @@ class L {
       'unlockLessons': 'Unlocks after {n} lessons',
       'mascotSelected': 'Selected',
       'mascotTapSelect': 'Tap to select',
-      'version': 'Version 4.5.0',
+      'version': 'Version 4.6.0',
       'weakPracticeTitle': 'Tough-words practice',
       'weakPracticeHint':
           'Read the word, flip the card, rate yourself honestly',
@@ -434,6 +437,9 @@ class L {
       'replayAudio': 'Replay audio',
       'listenSentence': 'Listen and choose the right sentence',
       'listenMeaning': 'Listen and choose the correct meaning',
+      'typeWhatYouHear': 'Type what you hear',
+      'typeHere': 'Type here…',
+      'listenUnderstand': 'Listen and choose the sentence meaning',
       'audioBuild': 'Listen, then arrange the words',
       // v4.4 — local intelligence (insights) + favorites
       'insightsTitle': 'Learning insights',

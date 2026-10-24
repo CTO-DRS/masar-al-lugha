@@ -83,6 +83,18 @@ void main() {
           expect(e.matchLeft.length, greaterThanOrEqualTo(4));
           expect(e.matchRight.length, e.matchLeft.length);
           break;
+        case ExerciseType.dictation:
+          // v4.6: typed, not picked — audio carries the answer.
+          expect(e.audioText, e.answer);
+          expect(e.options, isEmpty);
+          expect(e.hint, isNotEmpty);
+          break;
+        case ExerciseType.listenComp:
+          // v4.6: hear the sentence -> pick the meaning.
+          expect(e.options.length, 4);
+          expect(e.options.contains(e.answer), isTrue);
+          expect(e.audioText, isNotEmpty);
+          break;
       }
     }
   });

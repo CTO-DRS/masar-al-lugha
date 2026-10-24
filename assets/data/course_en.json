@@ -18679,6 +18679,606 @@
      ]
     }
    ]
+  },
+  {
+   "id": "en_u55",
+   "color": "#0EA5E9",
+   "titleAr": "الأعمال والاقتصاد",
+   "titleEn": "Business & Economics",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "en_u55_l1",
+     "titleAr": "الصفقات والاتفاقات",
+     "titleEn": "Deals & agreements",
+     "vocab": [
+      {
+       "id": "en_vendor",
+       "target": "Vendor",
+       "translationAr": "مورّد",
+       "phonetic": "فيندور",
+       "emoji": "🏪",
+       "exampleTarget": "Our vendor ships every Monday.",
+       "exampleAr": "يشحن مورّدنا كل اثنين."
+      },
+      {
+       "id": "en_stakeholder",
+       "target": "Stakeholder",
+       "translationAr": "صاحب مصلحة",
+       "phonetic": "ستيكهولدِر",
+       "emoji": "👥",
+       "exampleTarget": "Every stakeholder signed the charter.",
+       "exampleAr": "وقّع كل صاحب مصلحة على الميثاق."
+      },
+      {
+       "id": "en_quota",
+       "target": "Quota",
+       "translationAr": "حصة مستهدفة",
+       "phonetic": "كووتا",
+       "emoji": "🎯",
+       "exampleTarget": "The team hit its quota early.",
+       "exampleAr": "حقق الفريق حصته مبكراً."
+      },
+      {
+       "id": "en_merger",
+       "target": "Merger",
+       "translationAr": "اندماج شركات",
+       "phonetic": "مَرجَر",
+       "emoji": "🤝",
+       "exampleTarget": "The merger created a giant.",
+       "exampleAr": "أنشأ الاندماج عملاقاً."
+      },
+      {
+       "id": "en_consensus",
+       "target": "Consensus",
+       "translationAr": "توافق في الرأي",
+       "phonetic": "كونسِنسِس",
+       "emoji": "🧩",
+       "exampleTarget": "After hours, we reached a consensus.",
+       "exampleAr": "بعد ساعات وصلنا إلى توافق."
+      },
+      {
+       "id": "en_compromise",
+       "target": "Compromise",
+       "translationAr": "حل وسط",
+       "phonetic": "كومبرمايز",
+       "emoji": "⚖️",
+       "exampleTarget": "A compromise saved the deal.",
+       "exampleAr": "أنقذ الحل الوسط الصفقة."
+      },
+      {
+       "id": "en_agreement",
+       "target": "Agreement",
+       "translationAr": "اتفاق",
+       "phonetic": "أغرِيمِنت",
+       "emoji": "📜",
+       "exampleTarget": "We shook hands on the agreement.",
+       "exampleAr": "تصافحنا على الاتفاق."
+      },
+      {
+       "id": "en_leverage",
+       "target": "Leverage",
+       "translationAr": "ورقة نفوذ",
+       "phonetic": "ليفِرِدج",
+       "emoji": "🎚️",
+       "exampleTarget": "We used our data as leverage.",
+       "exampleAr": "استخدمنا بياناتنا ورقة نفوذ."
+      },
+      {
+       "id": "en_concession",
+       "target": "Concession",
+       "translationAr": "تنازل",
+       "phonetic": "كونسِشن",
+       "emoji": "🤲",
+       "exampleTarget": "Her final concession ended the deadlock.",
+       "exampleAr": "أنهى تنازلها الأخير الجمود."
+      },
+      {
+       "id": "en_follow_up",
+       "target": "Follow up",
+       "translationAr": "يتابع الأمر",
+       "phonetic": "فولو أَب",
+       "emoji": "📞",
+       "exampleTarget": "I will follow up next week.",
+       "exampleAr": "سأتابع الأمر الأسبوع القادم."
+      }
+     ]
+    },
+    {
+     "id": "en_u55_l2",
+     "titleAr": "الأسواق والاقتصاد",
+     "titleEn": "Markets & economy",
+     "vocab": [
+      {
+       "id": "en_tariff",
+       "target": "Tariff",
+       "translationAr": "تعريفة جمركية",
+       "phonetic": "تاريف",
+       "emoji": "🚢",
+       "exampleTarget": "The tariff raised import prices.",
+       "exampleAr": "رفعت التعريفة الجمركية أسعار الواردات."
+      },
+      {
+       "id": "en_downturn",
+       "target": "Downturn",
+       "translationAr": "تراجع اقتصادي",
+       "phonetic": "داونترن",
+       "emoji": "📉",
+       "exampleTarget": "The downturn lasted two years.",
+       "exampleAr": "استمر التراجع الاقتصادي سنتين."
+      },
+      {
+       "id": "en_audit",
+       "target": "Audit",
+       "translationAr": "تدقيق حسابات",
+       "phonetic": "أودِت",
+       "emoji": "🧾",
+       "exampleTarget": "The audit found no errors.",
+       "exampleAr": "لم يجد التدقيق أي أخطاء."
+      },
+      {
+       "id": "en_outsource",
+       "target": "Outsource",
+       "translationAr": "يُعهد للخارج",
+       "phonetic": "أوتسورس",
+       "emoji": "🌍",
+       "exampleTarget": "They outsource the design work.",
+       "exampleAr": "يُعهدون بعمل التصميم لجهة خارجية."
+      },
+      {
+       "id": "en_monopoly",
+       "target": "Monopoly",
+       "translationAr": "احتكار",
+       "phonetic": "منوبولي",
+       "emoji": "🏰",
+       "exampleTarget": "That company holds a monopoly.",
+       "exampleAr": "تحتفظ تلك الشركة باحتكار."
+      },
+      {
+       "id": "en_subsidy",
+       "target": "Subsidy",
+       "translationAr": "دعم حكومي",
+       "phonetic": "سَبسِدي",
+       "emoji": "🏦",
+       "exampleTarget": "Farmers rely on the subsidy.",
+       "exampleAr": "يعتمد المزارعون على الدعم الحكومي."
+      },
+      {
+       "id": "en_volatility",
+       "target": "Volatility",
+       "translationAr": "تقلب حاد",
+       "phonetic": "فولاتيليتي",
+       "emoji": "🌊",
+       "exampleTarget": "Market volatility worried investors.",
+       "exampleAr": "أقلق تقلب السوق المستثمرين."
+      },
+      {
+       "id": "en_forecast",
+       "target": "Forecast",
+       "translationAr": "توقّع مالي",
+       "phonetic": "فوركاست",
+       "emoji": "🔮",
+       "exampleTarget": "The forecast predicts slower growth.",
+       "exampleAr": "يتوقع التنبؤ نمواً أبطأ."
+      },
+      {
+       "id": "en_surplus",
+       "target": "Surplus",
+       "translationAr": "فائض",
+       "phonetic": "سَرفَس",
+       "emoji": "📈",
+       "exampleTarget": "The country runs a trade surplus.",
+       "exampleAr": "تحقق الدولة فائضاً تجارياً."
+      },
+      {
+       "id": "en_bankruptcy",
+       "target": "Bankruptcy",
+       "translationAr": "إفلاس",
+       "phonetic": "بانكروبتسي",
+       "emoji": "💳",
+       "exampleTarget": "Two chains filed for bankruptcy.",
+       "exampleAr": "أعلنت سلسلتان إفلاسهما."
+      }
+     ]
+    },
+    {
+     "id": "en_u55_l3",
+     "titleAr": "ثقافة مكان العمل",
+     "titleEn": "Workplace culture",
+     "vocab": [
+      {
+       "id": "en_internship",
+       "target": "Internship",
+       "translationAr": "تدريب مهني",
+       "phonetic": "إنترنشِب",
+       "emoji": "🎓",
+       "exampleTarget": "She landed an internship in Berlin.",
+       "exampleAr": "حصلت على تدريب مهني في برلين."
+      },
+      {
+       "id": "en_performance",
+       "target": "Performance",
+       "translationAr": "أداء وظيفي",
+       "phonetic": "بيرفورمنس",
+       "emoji": "⭐",
+       "exampleTarget": "Her performance impressed the board.",
+       "exampleAr": "أثار أداؤها إعجاب المجلس."
+      },
+      {
+       "id": "en_workflow",
+       "target": "Workflow",
+       "translationAr": "سير العمل",
+       "phonetic": "ووركفلو",
+       "emoji": "🔄",
+       "exampleTarget": "The new workflow saves hours.",
+       "exampleAr": "يوفر سير العمل الجديد ساعات."
+      },
+      {
+       "id": "en_executive",
+       "target": "Executive",
+       "translationAr": "تنفيذي",
+       "phonetic": "إغزيكيتيف",
+       "emoji": "👔",
+       "exampleTarget": "The executive approved the budget.",
+       "exampleAr": "وافق التنفيذي على الميزانية."
+      },
+      {
+       "id": "en_feedback",
+       "target": "Feedback",
+       "translationAr": "تغذية راجعة",
+       "phonetic": "فيدباك",
+       "emoji": "💬",
+       "exampleTarget": "Honest feedback improves the team.",
+       "exampleAr": "صدق التغذية الراجعة يطوّر الفريق."
+      },
+      {
+       "id": "en_burnout",
+       "target": "Burnout",
+       "translationAr": "احتراق وظيفي",
+       "phonetic": "بَرناوت",
+       "emoji": "🔥",
+       "exampleTarget": "Burnout creeps in silently.",
+       "exampleAr": "يتسلل الاحتراق الوظيفي بصمت."
+      },
+      {
+       "id": "en_remote_work",
+       "target": "Remote work",
+       "translationAr": "عمل عن بُعد",
+       "phonetic": "ريموت وورك",
+       "emoji": "🏠",
+       "exampleTarget": "Remote work suits focused people.",
+       "exampleAr": "يناسب العمل عن بُعد الأشخاص المركّزين."
+      },
+      {
+       "id": "en_flexibility",
+       "target": "Flexibility",
+       "translationAr": "مرونة",
+       "phonetic": "فليكسِبيليتي",
+       "emoji": "🤸",
+       "exampleTarget": "Flexibility keeps parents employed.",
+       "exampleAr": "المرونة تُبقي الآباء في وظائفهم."
+      },
+      {
+       "id": "en_mentor",
+       "target": "Mentor",
+       "translationAr": "مرشد مهني",
+       "phonetic": "منتور",
+       "emoji": "🧭",
+       "exampleTarget": "A mentor changed my career.",
+       "exampleAr": "غيّر مرشدٌ مهني مسيرتي."
+      },
+      {
+       "id": "en_resignation",
+       "target": "Resignation",
+       "translationAr": "استقالة",
+       "phonetic": "ريزِغنيشن",
+       "emoji": "📤",
+       "exampleTarget": "His resignation surprised everyone.",
+       "exampleAr": "فاجأت استقالته الجميع."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "en_u56",
+   "color": "#7C3AED",
+   "titleAr": "الحجة والإقناع",
+   "titleEn": "Argument & Persuasion",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "en_u56_l1",
+     "titleAr": "أدوات الربط في الحوار",
+     "titleEn": "Discourse connectors",
+     "vocab": [
+      {
+       "id": "en_however",
+       "target": "However",
+       "translationAr": "غير أنّ",
+       "phonetic": "هاوإيفِر",
+       "emoji": "🔄",
+       "exampleTarget": "However, the results differ.",
+       "exampleAr": "غير أن النتائج تختلف."
+      },
+      {
+       "id": "en_therefore",
+       "target": "Therefore",
+       "translationAr": "ومن ثمّ",
+       "phonetic": "ذيرفور",
+       "emoji": "🎯",
+       "exampleTarget": "Therefore, we must act now.",
+       "exampleAr": "ومن ثم علينا التحرك الآن."
+      },
+      {
+       "id": "en_in_addition",
+       "target": "In addition",
+       "translationAr": "إضافة إلى ذلك",
+       "phonetic": "إن أديشن",
+       "emoji": "➕",
+       "exampleTarget": "In addition, costs dropped.",
+       "exampleAr": "إضافة إلى ذلك انخفضت التكاليف."
+      },
+      {
+       "id": "en_for_instance",
+       "target": "For instance",
+       "translationAr": "على سبيل المثال",
+       "phonetic": "فور إنستنس",
+       "emoji": "💡",
+       "exampleTarget": "For instance, look at Norway.",
+       "exampleAr": "على سبيل المثال انظر إلى النرويج."
+      },
+      {
+       "id": "en_other_hand",
+       "target": "On the other hand",
+       "translationAr": "من جهة أخرى",
+       "phonetic": "أون ذ أَذَر هاند",
+       "emoji": "🤹",
+       "exampleTarget": "On the other hand, risks remain.",
+       "exampleAr": "من جهة أخرى تبقى المخاطر."
+      },
+      {
+       "id": "en_as_result",
+       "target": "As a result",
+       "translationAr": "نتيجة لذلك",
+       "phonetic": "آز أ رِزَلت",
+       "emoji": "⚡",
+       "exampleTarget": "As a result, trust returned.",
+       "exampleAr": "نتيجة لذلك عادت الثقة."
+      },
+      {
+       "id": "en_in_summary",
+       "target": "In summary",
+       "translationAr": "خلاصة القول",
+       "phonetic": "إن سامري",
+       "emoji": "📝",
+       "exampleTarget": "In summary, the plan works.",
+       "exampleAr": "خلاصة القول أن الخطة تنجح."
+      },
+      {
+       "id": "en_admittedly",
+       "target": "Admittedly",
+       "translationAr": "يُعترف بذلك",
+       "phonetic": "أدمِتِدلي",
+       "emoji": "🎩",
+       "exampleTarget": "Admittedly, the data is limited.",
+       "exampleAr": "يُعترف بأن البيانات محدودة."
+      },
+      {
+       "id": "en_conversely",
+       "target": "Conversely",
+       "translationAr": "بالمقابل",
+       "phonetic": "كونفَرسلي",
+       "emoji": "🔁",
+       "exampleTarget": "Conversely, demand may rise.",
+       "exampleAr": "بالمقابل قد يرتفع الطلب."
+      },
+      {
+       "id": "en_in_conclusion",
+       "target": "In conclusion",
+       "translationAr": "في الختام",
+       "phonetic": "إن كونكلوشن",
+       "emoji": "🏁",
+       "exampleTarget": "In conclusion, we recommend patience.",
+       "exampleAr": "في الختام نوصي بالصبر."
+      }
+     ]
+    },
+    {
+     "id": "en_u56_l2",
+     "titleAr": "التدقيق والتقدير",
+     "titleEn": "Hedging & precision",
+     "vocab": [
+      {
+       "id": "en_roughly",
+       "target": "Roughly",
+       "translationAr": "تقريباً",
+       "phonetic": "رَفلي",
+       "emoji": "≈",
+       "exampleTarget": "Roughly sixty percent agreed.",
+       "exampleAr": "وافق نحو ستون بالمئة."
+      },
+      {
+       "id": "en_approximately",
+       "target": "Approximately",
+       "translationAr": "على نحو تقريبي",
+       "phonetic": "أبروكسِمِتلي",
+       "emoji": "📏",
+       "exampleTarget": "It costs approximately ten dollars.",
+       "exampleAr": "يكلف تقريباً عشرة دولارات."
+      },
+      {
+       "id": "en_likely",
+       "target": "Likely",
+       "translationAr": "مرجَّح",
+       "phonetic": "لايكلي",
+       "emoji": "🎲",
+       "exampleTarget": "Rain is likely tonight.",
+       "exampleAr": "يُرجَّح سقوط المطر الليلة."
+      },
+      {
+       "id": "en_somewhat",
+       "target": "Somewhat",
+       "translationAr": "إلى حدٍّ ما",
+       "phonetic": "سَموَت",
+       "emoji": "🔅",
+       "exampleTarget": "The findings are somewhat surprising.",
+       "exampleAr": "النتائج مدهشة إلى حدٍّ ما."
+      },
+      {
+       "id": "en_tends_to",
+       "target": "Tends to",
+       "translationAr": "يميل إلى",
+       "phonetic": "تِندز تو",
+       "emoji": "📊",
+       "exampleTarget": "Demand tends to drop in summer.",
+       "exampleAr": "يميل الطلب للانخفاض صيفاً."
+      },
+      {
+       "id": "en_on_average",
+       "target": "On average",
+       "translationAr": "في المتوسط",
+       "phonetic": "أون أفِرِدج",
+       "emoji": "⚖️",
+       "exampleTarget": "On average, users read ten minutes.",
+       "exampleAr": "في المتوسط يقرأ المستخدم عشر دقائق."
+      },
+      {
+       "id": "en_virtually",
+       "target": "Virtually",
+       "translationAr": "عملياً",
+       "phonetic": "فَرشوَلي",
+       "emoji": "🫥",
+       "exampleTarget": "Virtually all testers succeeded.",
+       "exampleAr": "عملياً نجح كل المختبرين."
+      },
+      {
+       "id": "en_marginally",
+       "target": "Marginally",
+       "translationAr": "بهامش ضئيل",
+       "phonetic": "مارجِنَلي",
+       "emoji": "🪶",
+       "exampleTarget": "Prices fell marginally last quarter.",
+       "exampleAr": "انخفضت الأسعار بهامش ضئيل الربع الماضي."
+      },
+      {
+       "id": "en_broadly",
+       "target": "Broadly",
+       "translationAr": "على نطاق واسع",
+       "phonetic": "برودلي",
+       "emoji": "🌐",
+       "exampleTarget": "Broadly, the theory holds.",
+       "exampleAr": "على نطاق واسع تنطبق النظرية."
+      },
+      {
+       "id": "en_strictly",
+       "target": "Strictly speaking",
+       "translationAr": "بدقة القول",
+       "phonetic": "ستريكتلي سبيكينغ",
+       "emoji": "🔬",
+       "exampleTarget": "Strictly speaking, that is an estimate.",
+       "exampleAr": "بدقة القول هذا تقدير."
+      }
+     ]
+    },
+    {
+     "id": "en_u56_l3",
+     "titleAr": "لغة الإقناع",
+     "titleEn": "Persuasive language",
+     "vocab": [
+      {
+       "id": "en_convince",
+       "target": "Convince",
+       "translationAr": "يُقنع",
+       "phonetic": "كونفِنس",
+       "emoji": "🎯",
+       "exampleTarget": "She convinced the whole committee.",
+       "exampleAr": "أقنعت اللجنة بأكملها."
+      },
+      {
+       "id": "en_persuade",
+       "target": "Persuade",
+       "translationAr": "يُقنع بالحجة",
+       "phonetic": "برسويد",
+       "emoji": "🧲",
+       "exampleTarget": "They persuaded voters with facts.",
+       "exampleAr": "أقنعوا الناخبين بالحقائق."
+      },
+      {
+       "id": "en_proof",
+       "target": "Proof",
+       "translationAr": "إثبات",
+       "phonetic": "بروف",
+       "emoji": "🔍",
+       "exampleTarget": "Keep every receipt as proof.",
+       "exampleAr": "احفظ كل إيصال كإثبات."
+      },
+      {
+       "id": "en_claim",
+       "target": "Claim",
+       "translationAr": "ادعاء",
+       "phonetic": "كلايم",
+       "emoji": "🗯️",
+       "exampleTarget": "His claim lacks any source.",
+       "exampleAr": "ادعاؤه يفتقر لأي مصدر."
+      },
+      {
+       "id": "en_counterargument",
+       "target": "Counterargument",
+       "translationAr": "حجة مضادة",
+       "phonetic": "كونتَرأرغيومِنت",
+       "emoji": "🔀",
+       "exampleTarget": "A strong counterargument emerged.",
+       "exampleAr": "برزت حجة مضادة قوية."
+      },
+      {
+       "id": "en_emphasize",
+       "target": "Emphasize",
+       "translationAr": "يؤكّد على",
+       "phonetic": "إمفَسايز",
+       "emoji": "🔆",
+       "exampleTarget": "Let me emphasize one point.",
+       "exampleAr": "دعني أؤكد على نقطة واحدة."
+      },
+      {
+       "id": "en_insight",
+       "target": "Insight",
+       "translationAr": "رؤية ثاقبة",
+       "phonetic": "إنسايت",
+       "emoji": "💡",
+       "exampleTarget": "Her insight explained the trend.",
+       "exampleAr": "فسّرت بصيرتها الاتجاه."
+      },
+      {
+       "id": "en_compelling",
+       "target": "Compelling",
+       "translationAr": "مقنع بقوة",
+       "phonetic": "كوميلينغ",
+       "emoji": "🧨",
+       "exampleTarget": "She made a compelling case.",
+       "exampleAr": "قدّمت حجة مقنعة بقوة."
+      },
+      {
+       "id": "en_bias",
+       "target": "Bias",
+       "translationAr": "انحياز",
+       "phonetic": "بايِس",
+       "emoji": "🎭",
+       "exampleTarget": "Watch for sampling bias.",
+       "exampleAr": "انتبه للانحياز في العينة."
+      },
+      {
+       "id": "en_standpoint",
+       "target": "Standpoint",
+       "translationAr": "وجهة نظر",
+       "phonetic": "ستاندبوينت",
+       "emoji": "📍",
+       "exampleTarget": "From a financial standpoint, it works.",
+       "exampleAr": "من الناحية المالية، الأمر ينجح."
+      }
+     ]
+    }
+   ]
   }
  ]
 }

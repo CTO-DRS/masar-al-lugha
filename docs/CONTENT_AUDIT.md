@@ -1,4 +1,4 @@
-# CONTENT AUDIT — course_en / course_ur / course_fr (v4.5 baseline)
+# CONTENT AUDIT — course_en / course_ur / course_fr (v4.6 baseline)
 
 **Validator:** `scripts/validate_content.py` (runs in CI from v4.0 — exit 1 on any fatal problem; since v4.2 it also enforces valid + monotonic CEFR tags)
 
@@ -6,10 +6,10 @@
 
 | Course | Units | Lessons | Words | CEFR ladder | TTS lang |
 |---|---|---|---|---|---|
-| English | 54 | 210 | 2268 | A1→A2→B1→B2→C1 | en-US |
-| Urdu | 23 | 73 | 679 | A1→A2→B1→B2→C1 | ur-PK |
-| French | 23 | 69 | 771 | A1→A2→B1→B2→C1 | fr-FR |
-| **Total** | **100** | **352** | **3718** | | |
+| English | 56 | 216 | 2328 | A1→A2→B1→B2→C1 | en-US |
+| Urdu | 25 | 79 | 739 | A1→A2→B1→B2→C1 | ur-PK |
+| French | 25 | 75 | 831 | A1→A2→B1→B2→C1 | fr-FR |
+| **Total** | **106** | **370** | **3898** | | |
 
 ## v4.2 expansion (ROADMAP items 1+2)
 
@@ -123,3 +123,31 @@ generator already degrades to text exercises; picture rounds remain optional gar
   end at C1 for all three courses; `test/content_test.dart` counts updated
   (100 units / 352 lessons / 3718 words) and the append-only tail test now
   pins u53–u54 / u22–u23 with the v4.2 tail intact.
+
+## v4.6 expansion (mastery wave)
+
+- **EN u55–u56** (3 lessons × 10 words each, +60, all C1): Business &
+  Economics (deals & agreements, markets & economy, workplace culture) and
+  Argument & Persuasion (discourse connectors, hedging & precision,
+  persuasive language). Both units feed the new dictation/listening-
+  comprehension rounds richly: every item carries an example sentence pair.
+- **FR u24–u25** (3 × 10, +60, B2→C1): Argumentation & Médias (opinion
+  markers, debate verbs, press nouns) and Monde professionnel (recruitment,
+  meetings & projects, career).
+- **UR u24–u25** (3 × 10, +60, B2→C1): صحافت اور میڈیا (news & reporting,
+  media & society, formal oratory) and دستیابی اور دفاتر (offices &
+  correspondence, law & justice, thought & reasoning). Urdu-script targets
+  with Arabic-script pronunciation aids; legacy Urdu id shapes untouched.
+- **Authoring pipeline**: persisted, re-runnable generators
+  `scripts/content_v46_{en,fr,ur}.py` with a hard pre-flight abort on any
+  vocab-id already present in the live corpus: 13 EN / 7 FR / 2 UR
+  collisions were caught and replaced before any write.
+- **Validation**: `validate_content.py` → PASS (0 fatal); all CEFR ladders
+  end at C1. `test/content_test.dart` counts updated (106 units / 370
+  lessons / 3898 words) and the append-only tail test now pins u55–u56
+  (en) / u24–u25 (fr, ur) with the v4.5 tail (u53–u54 / u22–u23) intact.
+- **Dictation/comprehension fit**: the new exercise types draw on
+  `exampleTarget`/example-Arabic pairs — every v4.5+v4.6 word ships with
+  them by authoring rule, so the newest 12 units are fully usable in all
+  three lesson styles.
+

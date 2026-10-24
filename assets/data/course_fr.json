@@ -6663,6 +6663,606 @@
      ]
     }
    ]
+  },
+  {
+   "id": "fr_u24",
+   "color": "#2563EB",
+   "titleAr": "الحجاج والإعلام",
+   "titleEn": "Argumentation & Médias",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "fr_u24_l1",
+     "titleAr": "التعبير عن الرأي",
+     "titleEn": "Exprimer son opinion",
+     "vocab": [
+      {
+       "id": "fr_selon_moi",
+       "target": "Selon moi",
+       "translationAr": "في رأيي",
+       "phonetic": "سُلون موا",
+       "emoji": "💭",
+       "exampleTarget": "Selon moi, ce choix est sage.",
+       "exampleAr": "في رأيي هذا اختيار حكيم."
+      },
+      {
+       "id": "fr_a_mon_avis",
+       "target": "À mon avis",
+       "translationAr": "برأيي",
+       "phonetic": "آ مون أفّي",
+       "emoji": "🗨️",
+       "exampleTarget": "À mon avis, il a raison.",
+       "exampleAr": "برأيي إنه محق."
+      },
+      {
+       "id": "fr_en_fait",
+       "target": "En fait",
+       "translationAr": "في الحقيقة",
+       "phonetic": "أون فِه",
+       "emoji": "🔎",
+       "exampleTarget": "En fait, tout a changé.",
+       "exampleAr": "في الحقيقة تغير كل شيء."
+      },
+      {
+       "id": "fr_toutefois",
+       "target": "Toutefois",
+       "translationAr": "ومع ذلك",
+       "phonetic": "توتفوا",
+       "emoji": "🔁",
+       "exampleTarget": "Toutefois, le risque demeure.",
+       "exampleAr": "ومع ذلك يبقى الخطر."
+      },
+      {
+       "id": "fr_neanmoins",
+       "target": "Néanmoins",
+       "translationAr": "بيد أن",
+       "phonetic": "نيّآنموان",
+       "emoji": "🎭",
+       "exampleTarget": "Néanmoins, nous avançons.",
+       "exampleAr": "بيد أننا نمضي قدماً."
+      },
+      {
+       "id": "fr_par_contre",
+       "target": "Par contre",
+       "translationAr": "في المقابل",
+       "phonetic": "بار كونتر",
+       "emoji": "🔀",
+       "exampleTarget": "Par contre, le prix monte.",
+       "exampleAr": "في المقابل يرتفع السعر."
+      },
+      {
+       "id": "fr_d_ailleurs",
+       "target": "D'ailleurs",
+       "translationAr": "علاوة على ذلك",
+       "phonetic": "دارير",
+       "emoji": "➕",
+       "exampleTarget": "D'ailleurs, il l'a dit lui-même.",
+       "exampleAr": "علاوة على ذلك قالها بنفسه."
+      },
+      {
+       "id": "fr_en_revanche",
+       "target": "En revanche",
+       "translationAr": "بالمقابل",
+       "phonetic": "أون رُفّانش",
+       "emoji": "⚖️",
+       "exampleTarget": "En revanche, la qualité baisse.",
+       "exampleAr": "بالمقابل تنخفض الجودة."
+      },
+      {
+       "id": "fr_autrement_dit",
+       "target": "Autrement dit",
+       "translationAr": "بعبارة أخرى",
+       "phonetic": "أوترمون دي",
+       "emoji": "♻️",
+       "exampleTarget": "Autrement dit, il faut choisir.",
+       "exampleAr": "بعبارة أخرى يجب أن نختار."
+      },
+      {
+       "id": "fr_en_somme",
+       "target": "En somme",
+       "translationAr": "خلاصة القول",
+       "phonetic": "أون سوم",
+       "emoji": "📝",
+       "exampleTarget": "En somme, l'expérience réussit.",
+       "exampleAr": "خلاصة القول التجربة تنجح."
+      }
+     ]
+    },
+    {
+     "id": "fr_u24_l2",
+     "titleAr": "فن النقاش",
+     "titleEn": "Débattre",
+     "vocab": [
+      {
+       "id": "fr_argument",
+       "target": "Un argument",
+       "translationAr": "حجة",
+       "phonetic": "أن أرغيومون",
+       "emoji": "🗡️",
+       "exampleTarget": "Son argument était solide.",
+       "exampleAr": "كانت حجته متينة."
+      },
+      {
+       "id": "fr_debattre",
+       "target": "Débattre",
+       "translationAr": "يجادل ويناقش",
+       "phonetic": "دِيباتر",
+       "emoji": "🥊",
+       "exampleTarget": "Nous débattrons la question demain.",
+       "exampleAr": "سنناقش المسألة غداً."
+      },
+      {
+       "id": "fr_refuter",
+       "target": "Réfuter",
+       "translationAr": "يدحّض",
+       "phonetic": "ريفيوتِه",
+       "emoji": "🛡️",
+       "exampleTarget": "Elle a réfuté chaque objection.",
+       "exampleAr": "دحضت كل اعتراض."
+      },
+      {
+       "id": "fr_appuyer",
+       "target": "Appuyer",
+       "translationAr": "يدعم ويؤيّد",
+       "phonetic": "أپوييه",
+       "emoji": "🤝",
+       "exampleTarget": "Je vais appuyer cette réforme.",
+       "exampleAr": "سأؤيد هذا الإصلاح."
+      },
+      {
+       "id": "fr_objecter",
+       "target": "Objecter",
+       "translationAr": "يعترض بحجة",
+       "phonetic": "أوبجكتِيه",
+       "emoji": "❌",
+       "exampleTarget": "Objectez-vous cette décision ?",
+       "exampleAr": "هل تعترض على هذا القرار؟"
+      },
+      {
+       "id": "fr_trancher",
+       "target": "Trancher",
+       "translationAr": "يحسم النقاش",
+       "phonetic": "ترانشيه",
+       "emoji": "🎯",
+       "exampleTarget": "Le débatteur a tranché la question.",
+       "exampleAr": "حسم المُناقش المسألة."
+      },
+      {
+       "id": "fr_point_de_vue",
+       "target": "Un point de vue",
+       "translationAr": "وجهة نظر",
+       "phonetic": "أن بوان دو فو",
+       "emoji": "👓",
+       "exampleTarget": "Partagez votre point de vue.",
+       "exampleAr": "شارك وجهة نظرك."
+      },
+      {
+       "id": "fr_relativiser",
+       "target": "Relativiser",
+       "translationAr": "يضع في النسب",
+       "phonetic": "رُولاتيفيزيه",
+       "emoji": "🎚️",
+       "exampleTarget": "Il faut relativiser ce jugement.",
+       "exampleAr": "يجب ضبط هذا الحكم في النسب."
+      },
+      {
+       "id": "fr_objection",
+       "target": "Une objection",
+       "translationAr": "اعتراض",
+       "phonetic": "أن أوبجكسيون",
+       "emoji": "✋",
+       "exampleTarget": "Avez-vous une objection ?",
+       "exampleAr": "هل لديك اعتراض؟"
+      },
+      {
+       "id": "fr_conclure",
+       "target": "Conclure",
+       "translationAr": "يخلص ويستنتج",
+       "phonetic": "كونكلير",
+       "emoji": "🏁",
+       "exampleTarget": "Concluons par un accord.",
+       "exampleAr": "لنخلص إلى اتفاق."
+      }
+     ]
+    },
+    {
+     "id": "fr_u24_l3",
+     "titleAr": "الصحافة والأخبار",
+     "titleEn": "Médias et actualité",
+     "vocab": [
+      {
+       "id": "fr_manchette",
+       "target": "Une manchette",
+       "translationAr": "عنوان رئيسي",
+       "phonetic": "أن مَنشيت",
+       "emoji": "📰",
+       "exampleTarget": "La manchette a choqué le pays.",
+       "exampleAr": "فاجأ العنوان الرئيسي البلاد."
+      },
+      {
+       "id": "fr_journaliste",
+       "target": "Un journaliste",
+       "translationAr": "صحفي",
+       "phonetic": "أن جورناليست",
+       "emoji": "🎤",
+       "exampleTarget": "Le journaliste a vérifié les faits.",
+       "exampleAr": "تحقق الصحفي من الوقائع."
+      },
+      {
+       "id": "fr_source",
+       "target": "Une source",
+       "translationAr": "مصدر",
+       "phonetic": "أن سُرس",
+       "emoji": "🕳️",
+       "exampleTarget": "Cite toujours ta source.",
+       "exampleAr": "اذكر مصدرك دائماً."
+      },
+      {
+       "id": "fr_couverture",
+       "target": "La couverture",
+       "translationAr": "تغطية إعلامية",
+       "phonetic": "لا كوفَرتير",
+       "emoji": "📡",
+       "exampleTarget": "La couverture était en direct.",
+       "exampleAr": "كانت التغطية مباشرة."
+      },
+      {
+       "id": "fr_faits",
+       "target": "Les faits",
+       "translationAr": "الوقائع",
+       "phonetic": "ليه فِه",
+       "emoji": "📌",
+       "exampleTarget": "Les faits parlent d'eux-mêmes.",
+       "exampleAr": "الوقائع تتحدث عن نفسها."
+      },
+      {
+       "id": "fr_rumeur",
+       "target": "Une rumeur",
+       "translationAr": "إشاعة",
+       "phonetic": "أن رُيمِر",
+       "emoji": "🌀",
+       "exampleTarget": "La rumeur s'est répandue vite.",
+       "exampleAr": "انتشرت الإشاعة بسرعة."
+      },
+      {
+       "id": "fr_sondage",
+       "target": "Un sondage",
+       "translationAr": "استطلاع رأي",
+       "phonetic": "أن سونداج",
+       "emoji": "📊",
+       "exampleTarget": "Le sondage prédit un changement.",
+       "exampleAr": "يتوقع الاستطلاع تحولاً."
+      },
+      {
+       "id": "fr_censure",
+       "target": "La censure",
+       "translationAr": "رقابة",
+       "phonetic": "لا سانسير",
+       "emoji": "🚫",
+       "exampleTarget": "La censure a gêné le débat.",
+       "exampleAr": "أعاقت الرقابة النقاش."
+      },
+      {
+       "id": "fr_interview",
+       "target": "Une interview",
+       "translationAr": "مقابلة صحفية",
+       "phonetic": "أن إنترڤيو",
+       "emoji": "🎬",
+       "exampleTarget": "Son interview a marqué les esprits.",
+       "exampleAr": "تركت مقابلته أثراً في الأذهان."
+      },
+      {
+       "id": "fr_depeche",
+       "target": "Une dépêche",
+       "translationAr": "نبأة إخبارية",
+       "phonetic": "أن دِيبيش",
+       "emoji": "🌍",
+       "exampleTarget": "La dépêche est arrivée à l'instant.",
+       "exampleAr": "وصلت النبأة الإخبارية للحظة."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fr_u25",
+   "color": "#9333EA",
+   "titleAr": "عالم العمل",
+   "titleEn": "Monde professionnel",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "fr_u25_l1",
+     "titleAr": "التوظيف والمقابلات",
+     "titleEn": "Recrutement",
+     "vocab": [
+      {
+       "id": "fr_embauche",
+       "target": "Une embauche",
+       "translationAr": "توظيف",
+       "phonetic": "أن أونبوش",
+       "emoji": "🪑",
+       "exampleTarget": "L'embauche a été rapide.",
+       "exampleAr": "كان التوظيف سريعاً."
+      },
+      {
+       "id": "fr_cv",
+       "target": "Un CV",
+       "translationAr": "سيرة ذاتية",
+       "phonetic": "أن سِي فِه",
+       "emoji": "📄",
+       "exampleTarget": "Mettez à jour votre CV.",
+       "exampleAr": "حدّث سيرتك الذاتية."
+      },
+      {
+       "id": "fr_candidature",
+       "target": "Une candidature",
+       "translationAr": "طلب وظيفة",
+       "phonetic": "أن كانديداتير",
+       "emoji": "📬",
+       "exampleTarget": "Ma candidature a été acceptée.",
+       "exampleAr": "قُبل طلبي للوظيفة."
+      },
+      {
+       "id": "fr_competence",
+       "target": "Une compétence",
+       "translationAr": "مهارة",
+       "phonetic": "أن كومبيطانس",
+       "emoji": "🛠️",
+       "exampleTarget": "Cette compétence est recherchée.",
+       "exampleAr": "هذه المهارة مطلوبة."
+      },
+      {
+       "id": "fr_experience",
+       "target": "L'expérience",
+       "translationAr": "خبرة",
+       "phonetic": "ليكسبيريونس",
+       "emoji": "🧭",
+       "exampleTarget": "L'expérience compte autant.",
+       "exampleAr": "الخبرة تُحسب أيضاً."
+      },
+      {
+       "id": "fr_recruter",
+       "target": "Recruter",
+       "translationAr": "يوظّف",
+       "phonetic": "روكرِوتِه",
+       "emoji": "🧲",
+       "exampleTarget": "L'équipe recrute trois ingénieurs.",
+       "exampleAr": "توظف الفريق ثلاثة مهندسين."
+      },
+      {
+       "id": "fr_salaire",
+       "target": "Un salaire",
+       "translationAr": "راتب",
+       "phonetic": "أن سالير",
+       "emoji": "💰",
+       "exampleTarget": "Le salaire est négociable.",
+       "exampleAr": "الراتب قابل للتفاوض."
+      },
+      {
+       "id": "fr_periode_essai",
+       "target": "Une période d'essai",
+       "translationAr": "فترة تجربة",
+       "phonetic": "أن بييريود دِسيه",
+       "emoji": "⏳",
+       "exampleTarget": "La période d'essai dure trois mois.",
+       "exampleAr": "تدوم فترة التجربة ثلاثة أشهر."
+      },
+      {
+       "id": "fr_poste",
+       "target": "Un poste",
+       "translationAr": "منصب",
+       "phonetic": "أن بوست",
+       "emoji": "🪧",
+       "exampleTarget": "Ce poste exige du voyage.",
+       "exampleAr": "يتطلب هذا المنصب سفراً."
+      },
+      {
+       "id": "fr_postuler",
+       "target": "Postuler",
+       "translationAr": "يتقدّم لوظيفة",
+       "phonetic": "بوستيوليه",
+       "emoji": "📨",
+       "exampleTarget": "Postulez avant vendredi.",
+       "exampleAr": "تقدّم قبل الجمعة."
+      }
+     ]
+    },
+    {
+     "id": "fr_u25_l2",
+     "titleAr": "الاجتماعات والمشاريع",
+     "titleEn": "Réunions et projets",
+     "vocab": [
+      {
+       "id": "fr_ordre_jour",
+       "target": "Un ordre du jour",
+       "translationAr": "جدول أعمال",
+       "phonetic": "أن أوردر دو جور",
+       "emoji": "📋",
+       "exampleTarget": "Voici l'ordre du jour.",
+       "exampleAr": "هذا جدول الأعمال."
+      },
+      {
+       "id": "fr_echeance",
+       "target": "Une échéance",
+       "translationAr": "موعد نهائي",
+       "phonetic": "أن إيشانس",
+       "emoji": "⏰",
+       "exampleTarget": "L'échéance approche vite.",
+       "exampleAr": "يقترب الموعد النهائي بسرعة."
+      },
+      {
+       "id": "fr_compte_rendu",
+       "target": "Un compte rendu",
+       "translationAr": "محضر اجتماع",
+       "phonetic": "أن كونت رونديو",
+       "emoji": "🖊️",
+       "exampleTarget": "Rédigez le compte rendu.",
+       "exampleAr": "اكتب محضر الاجتماع."
+      },
+      {
+       "id": "fr_deleguer",
+       "target": "Déléguer",
+       "translationAr": "يفوّض",
+       "phonetic": "دِليغيه",
+       "emoji": "🤲",
+       "exampleTarget": "Savoir déléguer est un art.",
+       "exampleAr": "معرفة التفويض فن."
+      },
+      {
+       "id": "fr_objectif",
+       "target": "Un objectif",
+       "translationAr": "هدف",
+       "phonetic": "أن أوبجكتيف",
+       "emoji": "🎯",
+       "exampleTarget": "L'objectif est clair.",
+       "exampleAr": "الهدف واضح."
+      },
+      {
+       "id": "fr_productivite",
+       "target": "La productivité",
+       "translationAr": "إنتاجية",
+       "phonetic": "لا برودكتيفيتيه",
+       "emoji": "⚙️",
+       "exampleTarget": "La productivité a augmenté.",
+       "exampleAr": "ارتفعت الإنتاجية."
+      },
+      {
+       "id": "fr_retard",
+       "target": "Un retard",
+       "translationAr": "تأخير",
+       "phonetic": "أن روطار",
+       "emoji": "🐢",
+       "exampleTarget": "Un retard de deux semaines.",
+       "exampleAr": "تأخير بأسبوعين."
+      },
+      {
+       "id": "fr_avancer",
+       "target": "Avancer",
+       "translationAr": "يتقدّم بالعمل",
+       "phonetic": "أفّانسيه",
+       "emoji": "🏗️",
+       "exampleTarget": "Le projet avance bien.",
+       "exampleAr": "يتقدم المشروع جيداً."
+      },
+      {
+       "id": "fr_reunion",
+       "target": "Une réunion",
+       "translationAr": "اجتماع",
+       "phonetic": "أن رييونيون",
+       "emoji": "🚪",
+       "exampleTarget": "La réunion commence à neuf heures.",
+       "exampleAr": "يبدأ الاجتماع في التاسعة."
+      },
+      {
+       "id": "fr_budget",
+       "target": "Un budget",
+       "translationAr": "ميزانية",
+       "phonetic": "أن بيوجيه",
+       "emoji": "🧮",
+       "exampleTarget": "Le budget a été approuvé.",
+       "exampleAr": "قُبلت الميزانية."
+      }
+     ]
+    },
+    {
+     "id": "fr_u25_l3",
+     "titleAr": "المسار المهني",
+     "titleEn": "Carrière",
+     "vocab": [
+      {
+       "id": "fr_promotion_fr",
+       "target": "Une promotion",
+       "translationAr": "ترقية",
+       "phonetic": "أن بروموسيون",
+       "emoji": "🚀",
+       "exampleTarget": "Elle mérite une promotion.",
+       "exampleAr": "إنها تستحق ترقية."
+      },
+      {
+       "id": "fr_echelon",
+       "target": "Un échelon",
+       "translationAr": "درجة وظيفية",
+       "phonetic": "أن إيشلون",
+       "emoji": "🪜",
+       "exampleTarget": "Il a gravi chaque échelon.",
+       "exampleAr": "صعد كل درجة وظيفية."
+      },
+      {
+       "id": "fr_reconversion",
+       "target": "La reconversion",
+       "translationAr": "تحول مهني",
+       "phonetic": "لا رُوكونفِرسيون",
+       "emoji": "🔄",
+       "exampleTarget": "Sa reconversion a réussi.",
+       "exampleAr": "نجح تحوله المهني."
+      },
+      {
+       "id": "fr_formation",
+       "target": "Une formation",
+       "translationAr": "تدريب وتكوين",
+       "phonetic": "أن فورماسيون",
+       "emoji": "🎓",
+       "exampleTarget": "Une formation est prévue en mai.",
+       "exampleAr": "تدريب مقرر في مايو."
+      },
+      {
+       "id": "fr_retraite",
+       "target": "La retraite",
+       "translationAr": "تقاعد",
+       "phonetic": "لا رُوترِيت",
+       "emoji": "🌅",
+       "exampleTarget": "Il part à la retraite en juin.",
+       "exampleAr": "يتقاعد في يونيو."
+      },
+      {
+       "id": "fr_concurrent",
+       "target": "Un concurrent",
+       "translationAr": "منافس",
+       "phonetic": "أن كونكورَون",
+       "emoji": "🏇",
+       "exampleTarget": "Un concurrent a ouvert à côté.",
+       "exampleAr": "افتتح منافسٌ بجوارنا."
+      },
+      {
+       "id": "fr_syndicat",
+       "target": "Un syndicat",
+       "translationAr": "نقابة عمالية",
+       "phonetic": "أن سانديكا",
+       "emoji": "✊",
+       "exampleTarget": "Le syndicat a négocié.",
+       "exampleAr": "تفاوضت النقابة."
+      },
+      {
+       "id": "fr_greve",
+       "target": "Une grève",
+       "translationAr": "إضراب",
+       "phonetic": "أن غريف",
+       "emoji": "✋",
+       "exampleTarget": "La grève a duré trois jours.",
+       "exampleAr": "استمر الإضراب ثلاثة أيام."
+      },
+      {
+       "id": "fr_entreprise",
+       "target": "Une entreprise",
+       "translationAr": "شركة",
+       "phonetic": "أن أونتربريز",
+       "emoji": "🏢",
+       "exampleTarget": "Son entreprise emploie cinquante personnes.",
+       "exampleAr": "توظف شركته خمسين شخصاً."
+      },
+      {
+       "id": "fr_dirigeant",
+       "target": "Un dirigeant",
+       "translationAr": "تنفيذي رئيسي",
+       "phonetic": "أن ديريجان",
+       "emoji": "👑",
+       "exampleTarget": "Le dirigeant a démissionné.",
+       "exampleAr": "استقال الرئيس التنفيذي."
+      }
+     ]
+    }
+   ]
   }
  ]
 }

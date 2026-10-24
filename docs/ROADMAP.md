@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.5.0+13** — see docs/PROJECT_AUDIT.md §10 for the v4.5
+**Current release: v4.6.0+14** — see docs/PROJECT_AUDIT.md §11 for the v4.6
 increment with file/test evidence.
 
 ## Where we are
@@ -20,6 +20,7 @@ increment with file/test evidence.
 | v4.3 | Lesson styles on the same corpus: **sentence-mining** (cloze-first: fill-blank on real sentences → sentence building → listen-and-pick-the-sentence) and **audio-first** (TTS-led: hear→word / hear→meaning pass, audio sentence building, listen rounds) with a lesson-style bottom sheet in the learn path — 49 tests |
 | v4.4 | **Local intelligence + favorites: on-device insights engine (accuracy trend, best study hour, confusion pairs, smart daily-goal suggestion, review forecast, rule-based tutor tips), Learning Insights screen, confusion capture inside lessons with pair practice, favorites (star in dictionary + dedicated flashcards deck), new launcher icon — 72 tests** |
 | v4.5 | **Companion wave: Rafiq & Friends — interactive character system (5 evidence-unlocked companions, 9 event types, 54 bilingual encouragement lines with anti-repeat rotation), speech-bubble moments on lesson result/failed screens, companion picker card in Profile, +180 CEFR words (EN idioms & nuance C1, FR/UR B2→C1) — 104 tests** |
+| v4.6 | **Mastery wave: two new exercise types — dictation (hear→type with tolerant grading: case/punctuation/diacritics/spacing) and listening comprehension (hear the sentence→pick its Arabic meaning), wired into all three lesson styles; confusion capture extended to typed answers; +180 words (EN business/economics + argument/persuasion C1, FR argumentation/médias + monde professionnel C1, UR صحافت/میڈیا + رسمی خطابت C1) — 106 units / 370 lessons / 3898 words, 118 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -95,6 +96,46 @@ increment with file/test evidence.
    u22–u23 (B2 media/debates, C1 literature), UR u22–u23 (B2 poetry &
    idioms, C1 literary language) — corpus now 100 units / 352 lessons /
    3718 words, all ladders reach C1; generators persisted in scripts/.
+
+## v4.6 — mastery wave (SHIPPED)
+
+1. ✅ **Dictation (`ExerciseType.dictation`)** — hear it → type it. The answer
+   is graded by `ExerciseGen.normalizeTyped`: case-insensitive, unicode-aware
+   punctuation/symbol stripping, whitespace collapsing, Arabic tashkeel +
+   tatweel stripping — so "Hello, World!", "hello world" and "مَدْرَسَةٌ" vs
+   "مدرسة" all compare equal (Flutter-free, test-enforced). Sentences 2–8
+   words dictate from `exampleTarget`/sentence targets; bare words 3–12
+   chars dictate as single words, so every lesson can afford a typing round.
+   Classic gets 1, audio-first up to 2, sentence-mining 1. The Arabic meaning
+   rides in `hint` so the learner knows WHAT to type; a replay button is the
+   core interaction. A wrong attempt that exactly spells another known word
+   (normalized) feeds the confusion engine ("their" for "there").
+2. ✅ **Listening comprehension (`ExerciseType.listenComp`)** — hear the whole
+   sentence → pick its Arabic meaning among 4 (correct + 3 real meanings from
+   the same lesson). Understanding, not just recognition: the heard text is
+   the target-language sentence, the options are Arabic meanings, and the
+   answer never equals the audio (test-enforced). Sentence-mining gets up to
+   2 rounds, audio-first 1; lessons too poor to supply 3 distinct distractor
+   meanings skip the type entirely (graceful degradation).
+3. ✅ **UI wiring** — `_dictationBody` (replay button + meaning hint +
+   TextField, `onChanged` gates the check button, field disabled after
+   answering, cleared on advance); `listenComp` reuses the listen option
+   grid with its own caption (`listenUnderstand`); `_speakIfNeeded`,
+   `_canCheck`, `_check` and the confusion switch all grew the new cases;
+   `onNext` resets the typed field. l10n +3 keys/locale (221).
+4. ✅ **Content +180** — EN u55–u56 (C1): Business & Economics (deals,
+   markets, workplace), Argument & Persuasion (connectors, hedging,
+   persuasive language). FR u24–u25 (B2→C1): Argumentation & Médias, Monde
+   professionnel. UR u24–u25 (B2→C1): صحافت اور میڈیا، رسمی خطابت + دستیابی
+   اور دفاتر + قانون. Generators persisted (`scripts/content_v46_{en,fr,ur}.py`)
+   with pre-flight id-collision abort — 13 EN / 7 FR / 2 UR collisions were
+   caught and replaced before any write. Corpus: **106 units / 370 lessons /
+   3898 words**, every ladder reaches C1.
+5. ✅ **Tests 104 → 118** (+14: `test/exercise_v46_test.dart` — normalizer
+   units incl. idempotence, dictation invariants per mode + bare-word
+   fallback + tolerant-grading round-trip, listenComp uniqueness/meaning
+   guards, and a corpus-wide sweep: first/middle/last lesson of all three
+   courses × all three modes keep the v4.6 invariants).
 
 ## v5.0 — platform growth
 

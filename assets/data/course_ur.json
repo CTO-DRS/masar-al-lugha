@@ -6002,6 +6002,606 @@
      ]
     }
    ]
+  },
+  {
+   "id": "ur_u24",
+   "color": "#059669",
+   "titleAr": "الصحافة والإعلام",
+   "titleEn": "صحافت اور میڈیا",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "ur_u24_l1",
+     "titleAr": "الأخبار والتحرير",
+     "titleEn": "خبریں اور رپورٹنگ",
+     "vocab": [
+      {
+       "id": "ur_sahafat",
+       "target": "صحافت",
+       "translationAr": "الصحافة",
+       "phonetic": "صَحافَت",
+       "emoji": "📰",
+       "exampleTarget": "صحافت جمہور کی آواز ہے۔",
+       "exampleAr": "الصحافة صوت الجمهور."
+      },
+      {
+       "id": "ur_report",
+       "target": "رپورٹ",
+       "translationAr": "تقرير إخبارية",
+       "phonetic": "رِپورٹ",
+       "emoji": "📝",
+       "exampleTarget": "اس رپورٹ نے سب کو ہلا دیا۔",
+       "exampleAr": "أذهل هذا التقرير الجميع."
+      },
+      {
+       "id": "ur_numainda",
+       "target": "نمائندہ",
+       "translationAr": "مراسل",
+       "phonetic": "نُمايِندَه",
+       "emoji": "🎤",
+       "exampleTarget": "نمائندہ نے براہ راست بات کی۔",
+       "exampleAr": "تحدث المراسل مباشرة."
+      },
+      {
+       "id": "ur_sarkhi",
+       "target": "سرخی",
+       "translationAr": "عنوان رئيسي",
+       "phonetic": "سَرخي",
+       "emoji": "🗞️",
+       "exampleTarget": "سرخی پر سرخی چھپی۔",
+       "exampleAr": "طُبع عنوانٌ رئيسي بعد آخر."
+      },
+      {
+       "id": "ur_idaria",
+       "target": "اداریہ",
+       "translationAr": "افتتاحية",
+       "phonetic": "إدارِيَه",
+       "emoji": "✒️",
+       "exampleTarget": "اداریہ معروضی رائے ہے۔",
+       "exampleAr": "الافتتاحية رأيٌ موضوعي."
+      },
+      {
+       "id": "ur_saboot",
+       "target": "ثبوت",
+       "translationAr": "دليل",
+       "phonetic": "ثَبوت",
+       "emoji": "🔍",
+       "exampleTarget": "ثبوت کے بغیر دعویٰ بے کار ہے۔",
+       "exampleAr": "الدعوى بلا دليل بلا قيمة."
+      },
+      {
+       "id": "ur_awami_rai",
+       "target": "عوامی رائے",
+       "translationAr": "الرأي العام",
+       "phonetic": "عَوامي رايِ",
+       "emoji": "📊",
+       "exampleTarget": "عوامی رائے بدل رہی ہے۔",
+       "exampleAr": "الرأي العام يتغير."
+      },
+      {
+       "id": "ur_nashir_karna",
+       "target": "نشر کرنا",
+       "translationAr": "ينشر",
+       "phonetic": "نَشر كَرنا",
+       "emoji": "📡",
+       "exampleTarget": "خبر رات کو نشر ہوئی۔",
+       "exampleAr": "نُشر الخبر ليلًا."
+      },
+      {
+       "id": "ur_musannif",
+       "target": "مصنف",
+       "translationAr": "كاتب مؤلف",
+       "phonetic": "مُصَنِّف",
+       "emoji": "✍️",
+       "exampleTarget": "مصنف نے تفصیل لکھی۔",
+       "exampleAr": "كتب الكاتب التفصيل."
+      },
+      {
+       "id": "ur_tanqid",
+       "target": "تنقید",
+       "translationAr": "نقد",
+       "phonetic": "تَنقيد",
+       "emoji": "🧨",
+       "exampleTarget": "تنقید کو شائستگی سے قبول کریں۔",
+       "exampleAr": "تقبَّل النقد بأدب."
+      }
+     ]
+    },
+    {
+     "id": "ur_u24_l2",
+     "titleAr": "الإعلام والمجتمع",
+     "titleEn": "میڈیا اور معاشرہ",
+     "vocab": [
+      {
+       "id": "ur_nashriyat",
+       "target": "نشریات",
+       "translationAr": "بث إعلامي",
+       "phonetic": "نَشريات",
+       "emoji": "📻",
+       "exampleTarget": "نشریات پر نئی پابندی ہے۔",
+       "exampleAr": "على البث قيود جديدة."
+      },
+      {
+       "id": "ur_raqabat",
+       "target": "رقابت",
+       "translationAr": "منافسة",
+       "phonetic": "رِقابَت",
+       "emoji": "🏁",
+       "exampleTarget": "چینلز میں رقابت بڑھی۔",
+       "exampleAr": "ازدادت المنافسة بين القنوات."
+      },
+      {
+       "id": "ur_faisla",
+       "target": "فیصلہ",
+       "translationAr": "قرار",
+       "phonetic": "فَيسلَه",
+       "emoji": "⚖️",
+       "exampleTarget": "عدالت نے فیصلہ سنایا۔",
+       "exampleAr": "أصدرت المحكمة قرارها."
+      },
+      {
+       "id": "ur_asar",
+       "target": "اثر",
+       "translationAr": "تأثير",
+       "phonetic": "أثَر",
+       "emoji": "🌊",
+       "exampleTarget": "میڈیا کا اثر گہرا ہے۔",
+       "exampleAr": "تأثير الإعلام عميق."
+      },
+      {
+       "id": "ur_shuhrat",
+       "target": "شہرت",
+       "translationAr": "شهرة",
+       "phonetic": "شُهرَت",
+       "emoji": "🌟",
+       "exampleTarget": "شہرت کی قیمت بھاری ہے۔",
+       "exampleAr": "ثمن الشهرة ثقيل."
+      },
+      {
+       "id": "ur_bharam",
+       "target": "بھرم",
+       "translationAr": "وهَم",
+       "phonetic": "بَهَرم",
+       "emoji": "🫧",
+       "exampleTarget": "یہ محض بھرم ہے۔",
+       "exampleAr": "هذا مجرد وهم."
+      },
+      {
+       "id": "ur_tahzib",
+       "target": "تہذیب",
+       "translationAr": "حضارة",
+       "phonetic": "تَهذيب",
+       "emoji": "🏛️",
+       "exampleTarget": "ہر تہذیب کی اپنی زبان ہے۔",
+       "exampleAr": "لكل حضارة لغتها."
+      },
+      {
+       "id": "ur_bunyad",
+       "target": "بنیاد",
+       "translationAr": "أساس",
+       "phonetic": "بُنياد",
+       "emoji": "🏺",
+       "exampleTarget": "بنیاد مضبوط ہو تو عمارت کھڑی رہتی ہے۔",
+       "exampleAr": "إذا كان الأساس متيناً بقيت العمارة واقفة."
+      },
+      {
+       "id": "ur_jadujahd",
+       "target": "جدوجہد",
+       "translationAr": "نضال",
+       "phonetic": "جِدوجِهَد",
+       "emoji": "🥾",
+       "exampleTarget": "جدوجہد کا لمبا سفر ہے۔",
+       "exampleAr": "نضالٌ طويل الطريق."
+      },
+      {
+       "id": "ur_kamyabi",
+       "target": "کامیابی",
+       "translationAr": "نجاح",
+       "phonetic": "كامْيابي",
+       "emoji": "🏆",
+       "exampleTarget": "کامیابی محنت کا پھل ہے۔",
+       "exampleAr": "النجاح ثمرة الجد."
+      }
+     ]
+    },
+    {
+     "id": "ur_u24_l3",
+     "titleAr": "الخطابة الرسمية",
+     "titleEn": "رسمی خطابت",
+     "vocab": [
+      {
+       "id": "ur_taqreeb",
+       "target": "تقریب",
+       "translationAr": "مناسبة حفل",
+       "phonetic": "تَقرِيب",
+       "emoji": "🎊",
+       "exampleTarget": "تقریب کا آغاز ہوا۔",
+       "exampleAr": "بدأت المناسبة."
+      },
+      {
+       "id": "ur_khutba",
+       "target": "خطاب",
+       "translationAr": "خطابة",
+       "phonetic": "خُطاب",
+       "emoji": "🎙️",
+       "exampleTarget": "ان کا خطاب یادگار تھا۔",
+       "exampleAr": "كانت خطبتهم خالدة."
+      },
+      {
+       "id": "ur_sameein",
+       "target": "سامعین",
+       "translationAr": "جمهور مستمع",
+       "phonetic": "سامِعين",
+       "emoji": "👂",
+       "exampleTarget": "سامعین خاموش بیٹھے تھے۔",
+       "exampleAr": "جلس المستمعون صامتين."
+      },
+      {
+       "id": "ur_taarufi",
+       "target": "تعارفی کلمات",
+       "translationAr": "كلمات افتتاحية",
+       "phonetic": "تعارُفي كَلمات",
+       "emoji": "🚪",
+       "exampleTarget": "تعارفی کلمات مختصر رکھیں۔",
+       "exampleAr": "اجعل الكلمات الافتتاحية موجزة."
+      },
+      {
+       "id": "ur_mukhtasar",
+       "target": "مختصر",
+       "translationAr": "موجز",
+       "phonetic": "مُختصَر",
+       "emoji": "🔹",
+       "exampleTarget": "پیغام مختصر تھا۔",
+       "exampleAr": "كانت الرسالة موجزة."
+      },
+      {
+       "id": "ur_muqarrar",
+       "target": "مقرر",
+       "translationAr": "متحدث",
+       "phonetic": "مُقرِّر",
+       "emoji": "🕴️",
+       "exampleTarget": "مقرر کا لہجہ موقر تھا۔",
+       "exampleAr": "كان نبرة المتحدث مهيبة."
+      },
+      {
+       "id": "ur_apeel",
+       "target": "اپیل",
+       "translationAr": "نداء عام",
+       "phonetic": "أپيل",
+       "emoji": "📢",
+       "exampleTarget": "اپیل پر لوگ جمع ہوئے۔",
+       "exampleAr": "اجتمع الناس بفضل النداء."
+      },
+      {
+       "id": "ur_hamdardi",
+       "target": "ہمدردی",
+       "translationAr": "تعاطف",
+       "phonetic": "هَمدَردي",
+       "emoji": "💚",
+       "exampleTarget": "ہمدردی کا جذبہ جگایا۔",
+       "exampleAr": "أثار مشاعر التعاطف."
+      },
+      {
+       "id": "ur_azm",
+       "target": "عزم",
+       "translationAr": "عزيمة صلبة",
+       "phonetic": "عَزم",
+       "emoji": "⛰️",
+       "exampleTarget": "عزم کو ٹوٹنے نہ دیا۔",
+       "exampleAr": "لم تدع العزيمة تنكسر."
+      },
+      {
+       "id": "ur_khiraj_tahseen",
+       "target": "خراجِ تحسین",
+       "translationAr": "تكريم وتقدير",
+       "phonetic": "خِراجِ تَحسين",
+       "emoji": "🎗️",
+       "exampleTarget": "انہیں خراجِ تحسین دیا گیا۔",
+       "exampleAr": "أُكرّموا بتقدير."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ur_u25",
+   "color": "#D97706",
+   "titleAr": "اللغة الرسمية والبيروقراطية",
+   "titleEn": "دستیابی اور دفاتر",
+   "cefr": "C1",
+   "lessons": [
+    {
+     "id": "ur_u25_l1",
+     "titleAr": "الدوائر والمراسلات",
+     "titleEn": "دفاتر اور خط و کتابت",
+     "vocab": [
+      {
+       "id": "ur_daftar",
+       "target": "دفتر",
+       "translationAr": "مكتب",
+       "phonetic": "دَفتَر",
+       "emoji": "🏬",
+       "exampleTarget": "دفتر صبح نو بجے کھلتا ہے۔",
+       "exampleAr": "يفتح المكتب في التاسعة صباحاً."
+      },
+      {
+       "id": "ur_darkhwast",
+       "target": "درخواست",
+       "translationAr": "طلب رسمي",
+       "phonetic": "دَرخواست",
+       "emoji": "📨",
+       "exampleTarget": "درخواست جمع کروا دی۔",
+       "exampleAr": "قدّم الطلب الرسمي."
+      },
+      {
+       "id": "ur_hawala",
+       "target": "حوالہ",
+       "translationAr": "إحالة مرجعية",
+       "phonetic": "حَوالَه",
+       "emoji": "🔗",
+       "exampleTarget": "حوالہ نمبر لکھ لیں۔",
+       "exampleAr": "سجّل رقم الإحالة."
+      },
+      {
+       "id": "ur_munshi",
+       "target": "منشی",
+       "translationAr": "كاتب إداري",
+       "phonetic": "مُنشِي",
+       "emoji": "🖋️",
+       "exampleTarget": "منشی نے خط تیار کیا۔",
+       "exampleAr": "أعدّ الكاتب الإداري الرسالة."
+      },
+      {
+       "id": "ur_ijazat_nama",
+       "target": "اجازت نامہ",
+       "translationAr": "رخصة/تصريح",
+       "phonetic": "إجازَت نامَه",
+       "emoji": "🎫",
+       "exampleTarget": "اجازت نامہ دستخط کے بعد جاری ہوا۔",
+       "exampleAr": "صدر التصريح بعد التوقيع."
+      },
+      {
+       "id": "ur_talab",
+       "target": "طلب",
+       "translationAr": "استدعاء",
+       "phonetic": "تَلَب",
+       "emoji": "📖",
+       "exampleTarget": "کتب پر طلب عائد ہے۔",
+       "exampleAr": "على الكتب طلبٌ مستحق."
+      },
+      {
+       "id": "ur_husool",
+       "target": "حصول",
+       "translationAr": "تحصيل",
+       "phonetic": "حُصول",
+       "emoji": "📥",
+       "exampleTarget": "حصول تعلیم لازم ہے۔",
+       "exampleAr": "تحصيل العلم واجب."
+      },
+      {
+       "id": "ur_paigham",
+       "target": "پیغام",
+       "translationAr": "رسالة",
+       "phonetic": "پيغام",
+       "emoji": "✉️",
+       "exampleTarget": "پیغام واضح تھا۔",
+       "exampleAr": "كانت الرسالة واضحة."
+      },
+      {
+       "id": "ur_ravayya",
+       "target": "رویہ",
+       "translationAr": "سلوك وموقف",
+       "phonetic": "رَوَييَه",
+       "emoji": "🪞",
+       "exampleTarget": "اس کا رویہ نرم ہے۔",
+       "exampleAr": "سلوكه لين."
+      },
+      {
+       "id": "ur_quvvat",
+       "target": "قوت",
+       "translationAr": "قوة",
+       "phonetic": "قُوَّت",
+       "emoji": "💪",
+       "exampleTarget": "علم قوت ہے۔",
+       "exampleAr": "العلم قوة."
+      }
+     ]
+    },
+    {
+     "id": "ur_u25_l2",
+     "titleAr": "القانون والعدل",
+     "titleEn": "قانون اور انصاف",
+     "vocab": [
+      {
+       "id": "ur_adalat",
+       "target": "عدالت",
+       "translationAr": "محكمة",
+       "phonetic": "عَدادَت",
+       "emoji": "🏛️",
+       "exampleTarget": "عدالت کا دروازہ سب کے لیے کھلا ہے۔",
+       "exampleAr": "باب المحكمة مفتوح للجميع."
+      },
+      {
+       "id": "ur_wakeel",
+       "target": "وکیل",
+       "translationAr": "محامٍ",
+       "phonetic": "وَكيل",
+       "emoji": "👔",
+       "exampleTarget": "وکیل نے دلائل دیے۔",
+       "exampleAr": "قدّم المحامي مرافعاته."
+      },
+      {
+       "id": "ur_gawah",
+       "target": "گواہ",
+       "translationAr": "شاهد",
+       "phonetic": "گواه",
+       "emoji": "👀",
+       "exampleTarget": "گواہ نے سچ بتایا۔",
+       "exampleAr": "صدق الشاهد في شهادته."
+      },
+      {
+       "id": "ur_saboot_adli",
+       "target": "عدالتی ثبوت",
+       "translationAr": "دليل قضائي",
+       "phonetic": "عَدالتي ثَبوت",
+       "emoji": "🗂️",
+       "exampleTarget": "عدالتی ثبوت مکمل تھے۔",
+       "exampleAr": "كانت الأدلة القضائية مكتملة."
+      },
+      {
+       "id": "ur_hukm",
+       "target": "حکم",
+       "translationAr": "حكم قضائي",
+       "phonetic": "حُكم",
+       "emoji": "📜",
+       "exampleTarget": "حکم پر دستخط ہوئے۔",
+       "exampleAr": "وُقّع الحكم."
+      },
+      {
+       "id": "ur_haq",
+       "target": "حق",
+       "translationAr": "حق",
+       "phonetic": "حَق",
+       "emoji": "🛡️",
+       "exampleTarget": "ہر شہری کا حق ہے۔",
+       "exampleAr": "لكل مواطن حقه."
+      },
+      {
+       "id": "ur_insaaf",
+       "target": "انصاف",
+       "translationAr": "عدل",
+       "phonetic": "إنصاف",
+       "emoji": "⚖️",
+       "exampleTarget": "انصاف کبھی دیر نہیں کرنا چاہیے۔",
+       "exampleAr": "لا ينبغي أن يتأخر العدل أبداً."
+      },
+      {
+       "id": "ur_mujrim",
+       "target": "مجرم",
+       "translationAr": "مجرم",
+       "phonetic": "مُجرِم",
+       "emoji": "⛓️",
+       "exampleTarget": "مجرم کو سزا ملی۔",
+       "exampleAr": "نال المجرم عقوبته."
+      },
+      {
+       "id": "ur_rihay",
+       "target": "رہائی",
+       "translationAr": "إطلاق سراح",
+       "phonetic": "رِهائي",
+       "emoji": "🕊️",
+       "exampleTarget": "رہائی کا حکم جاری ہوا۔",
+       "exampleAr": "صدر أمر الإطلاق."
+      },
+      {
+       "id": "ur_adaalat_ikhlaq",
+       "target": "اخلاق",
+       "translationAr": "أخلاق",
+       "phonetic": "أخلاق",
+       "emoji": "🌱",
+       "exampleTarget": "اخلاق ہی اصل دولت ہے۔",
+       "exampleAr": "الأخلاق هي الثروة الحقيقية."
+      }
+     ]
+    },
+    {
+     "id": "ur_u25_l3",
+     "titleAr": "الفكر والاستدلال",
+     "titleEn": "فکر اور استدلال",
+     "vocab": [
+      {
+       "id": "ur_tasawwur",
+       "target": "تصور",
+       "translationAr": "تصور مفهوم",
+       "phonetic": "تَصَوُّر",
+       "emoji": "💭",
+       "exampleTarget": "یہ تصور نہایت واضح ہے۔",
+       "exampleAr": "هذا المفهوم واضح تماماً."
+      },
+      {
+       "id": "ur_daleel",
+       "target": "دلیل",
+       "translationAr": "برهان",
+       "phonetic": "دَليل",
+       "emoji": "🧠",
+       "exampleTarget": "دلیل کے بغیر بات نہ کرو۔",
+       "exampleAr": "لا تتكلم بلا برهان."
+      },
+      {
+       "id": "ur_natija",
+       "target": "نتیجہ",
+       "translationAr": "نتيجة",
+       "phonetic": "نَتِيجَه",
+       "emoji": "🎓",
+       "exampleTarget": "نتیجہ حوصلہ افزا ہے۔",
+       "exampleAr": "النتيجة مشجعة."
+      },
+      {
+       "id": "ur_farq",
+       "target": "فرق",
+       "translationAr": "فرق",
+       "phonetic": "فَرق",
+       "emoji": "↔️",
+       "exampleTarget": "دونوں میں بڑا فرق ہے۔",
+       "exampleAr": "بينهما فرق كبير."
+      },
+      {
+       "id": "ur_misaal",
+       "target": "مثال",
+       "translationAr": "مثال",
+       "phonetic": "مِثال",
+       "emoji": "🧩",
+       "exampleTarget": "ایک مثال سے بات واضح ہو گئی۔",
+       "exampleAr": "وضحت المسألة بمثال واحد."
+      },
+      {
+       "id": "ur_mantiq",
+       "target": "منطق",
+       "translationAr": "منطق",
+       "phonetic": "مَنطِق",
+       "emoji": "🧮",
+       "exampleTarget": "منطق کے مطابق جواب دو۔",
+       "exampleAr": "أجب وفق المنطق."
+      },
+      {
+       "id": "ur_tajurba",
+       "target": "تجربہ",
+       "translationAr": "تجربة",
+       "phonetic": "تَجرِبَه",
+       "emoji": "⚗️",
+       "exampleTarget": "تجربہ اچھا استاد ہے۔",
+       "exampleAr": "التجربة معلم جيد."
+      },
+      {
+       "id": "ur_gehrai",
+       "target": "گہرائی",
+       "translationAr": "عمق",
+       "phonetic": "گَهرائي",
+       "emoji": "🕳️",
+       "exampleTarget": "موضوع کی گہرائی میں جاؤ۔",
+       "exampleAr": "تعمّق في الموضوع."
+      },
+      {
+       "id": "ur_khulasa_zawiya",
+       "target": "زاویہ",
+       "translationAr": "زاوية منظور",
+       "phonetic": "زاويَه",
+       "emoji": "📐",
+       "exampleTarget": "ہر صحافی کا اپنا زاویہ ہوتا ہے۔",
+       "exampleAr": "لكل صحفي زاويته الخاصة."
+      },
+      {
+       "id": "ur_quwwat_e_qiyas",
+       "target": "قیاس",
+       "translationAr": "استنباط بالقياس",
+       "phonetic": "قياس",
+       "emoji": "🧷",
+       "exampleTarget": "قیاس سے نیا مسئلہ حل ہوا۔",
+       "exampleAr": "حُلّت المسألة الجديدة بالقياس."
+      }
+     ]
+    }
+   ]
   }
  ]
 }

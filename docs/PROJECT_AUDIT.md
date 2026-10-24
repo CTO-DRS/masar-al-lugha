@@ -209,3 +209,24 @@ clean (Flutter 3.47.7 = CI pin) · `flutter analyze` No issues ·
 design — tests compile-check them; mascot widget smoke tests cover
 rendering, not full-screen flows (existing screens already covered); UR
 phonetics are approximations for Arabic readers (noted in CONTENT_AUDIT).
+
+## 11. v4.6 increment (mastery wave — ROADMAP v4.6)
+
+Scope: two new exercise types (dictation + listening comprehension) and
++180 CEFR words. No new dependencies, no network, no permissions, no
+schema change (exercise types live in the generator, not storage).
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Tolerant grading | `ExerciseGen.normalizeTyped`: lowercase, unicode-aware `\p{P}\p{S}` stripping, whitespace collapse, Arabic tashkeel (U+064B–U+065F) + superscript alef + tatweel stripping. Flutter-free single source of truth for typed answers. | `lib/exercise_gen.dart` | 5 normalizer tests incl. idempotence and Arabic-diacritics parity |
+| Dictation type | `ExerciseType.dictation` — audioText == answer, options/tiles empty, Arabic meaning in `hint`; sentences 2–8 words via sentence/example targets, bare words 3–12 chars as fallback (so every lesson gets a typing round). Classic 1, audio-first up to 2, sentence-mining 1. `_make` degrades to mcq if ever dispatched directly. | `lib/models.dart`, `lib/exercise_gen.dart` | Dictation tests: per-mode counts, bare-lesson fallback, tolerant-variant round-trip grades equal |
+| Listening comprehension | `ExerciseType.listenComp` — hear the target-language sentence, pick the Arabic meaning among exactly 4 unique real lesson meanings; answer never equals audioText; skipped entirely when the lesson cannot supply 3 distinct distractor meanings (graceful degradation). Sentence-mining up to 2, audio-first 1. | `lib/exercise_gen.dart` | listenComp tests: option count/uniqueness/containment, Arabic-script option check, bare-lesson absence |
+| Lesson UI | `_dictationBody`: replay speaker (auto-speaks on entry), meaning hint, TextField with `onChanged`-gated check button, disabled after answering, cleared on advance; `listenComp` reuses the listen grid with its own caption; `_speakIfNeeded`/`_canCheck`/`_check` extended; confusion capture for typed answers via whole-course normalized target map (`_idByNormTarget`). | `lib/screens/lesson_screen.dart` | Analyzer clean; full suite green; widget_test switch grew dictation/listenComp cases |
+| l10n & version | +3 keys/locale (`typeWhatYouHear`, `typeHere`, `listenUnderstand`) → 221 per locale; `version` strings → 4.6.0; pubspec `4.6.0+14`. | `lib/l10n.dart`, `pubspec.yaml` | No duplicate keys (analyzer) |
+| Content +180 | EN u55–u56 (C1 business/economics + argument/persuasion), FR u24–u25 (argumentation/médias + monde professionnel), UR u24–u25 (صحافت/میڈیا + رسمی خطابت/دفاتر/قانون/فکر). Corpus 100→**106 units**, 352→**370 lessons**, 3718→**3898 words**; all ladders reach C1. Generators persisted with hard pre-flight id-collision abort (13 EN / 7 FR / 2 UR caught pre-write). | `assets/data/course_{en,fr,ur}.json`, `scripts/content_v46_*.py` | `validate_content.py` PASS 0 fatal; content_test counts + append-only tail re-pinned (v4.5 tail intact) |
+
+Test count 104 → **118** (+14: `test/exercise_v46_test.dart` — 5 normalizer,
+4 dictation, 3 comprehension, 2 corpus-wide sweep across first/middle/last
+lessons of all three courses × all three modes).
+Gates at commit time: `validate_content.py` PASS 0 fatal · `dart format`
+clean · `flutter analyze` No issues · `flutter test` 118/118.

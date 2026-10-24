@@ -90,6 +90,26 @@ class ExerciseGen {
       listens++;
     }
 
+    // 3b) v4.6 dictation (1): hear the sentence -> type it. Arrange-then-type
+    // deepens the mining loop without lengthening the lesson.
+    for (final v in candidates) {
+      final d = _makeDictation(v, pool);
+      if (d == null) continue;
+      exercises.add(d);
+      break;
+    }
+
+    // 3c) v4.6 listening comprehension (up to 2): hear the sentence ->
+    // pick its Arabic meaning (understanding, not just recognition).
+    var comps = 0;
+    for (final v in candidates) {
+      if (comps >= 2) break;
+      final c = _makeListenComp(v, pool);
+      if (c == null) continue;
+      exercises.add(c);
+      comps++;
+    }
+
     // 4) Thin material → top up with classic drills so the lesson is playable.
     if (exercises.length < 5) {
       final covered = exercises.map((e) => e.vocab.id).toSet();
@@ -168,6 +188,18 @@ class ExerciseGen {
       builds++;
     }
 
+    // 2b) v4.6 dictation (up to 2): hear it -> type it. The typing step of
+    // an audio lesson — sound first, then spelling it out. Scans the whole
+    // pool so bare-word lessons get one too.
+    var dict = 0;
+    for (final v in pool) {
+      if (dict >= 2) break;
+      final d = _makeDictation(v, pool);
+      if (d == null) continue;
+      exercises.add(d);
+      dict++;
+    }
+
     // 3) Hear the whole sentence -> pick it among the lesson's sentences.
     final sentences = candidates.where((v) => v.isSentence).toList()
       ..shuffle(_rng);
@@ -188,6 +220,14 @@ class ExerciseGen {
         vocab: v,
         audioText: v.target,
       ));
+    }
+
+    // 3b) v4.6 listening comprehension (1): hear the sentence -> its meaning.
+    for (final v in candidates) {
+      final c = _makeListenComp(v, pool);
+      if (c == null) continue;
+      exercises.add(c);
+      break;
     }
 
     // Boss: matching pairs with tap-to-hear on the target column.
@@ -295,6 +335,16 @@ class ExerciseGen {
       tfAdded++;
     }
 
+    // --- v4.6 dictation round (1): hear -> type ---
+    // Every lesson can afford one dictation: sentence, example or bare
+    // word — _makeDictation filters, so scan the whole pool.
+    for (final v in pool) {
+      final d = _makeDictation(v, pool);
+      if (d == null) continue;
+      exercises.add(d);
+      break;
+    }
+
     // Boss round: matching pairs.
     _addMatchBoss(exercises, pool);
 
@@ -332,6 +382,97 @@ class ExerciseGen {
         exercises.where((e) => e != matchEx).take(maxLen - 1).toList();
     trimmed.add(matchEx);
     return trimmed;
+  }
+
+  // ================= v4.6 typed + comprehension helpers =================
+
+  /// Tolerant normalization for typed answers (dictation). Case-insensitive,
+  /// punctuation/symbol-insensitive, whitespace-collapsing, and strips Arabic
+  /// diacritics (tashkeel) + tatweel — so "Hello, World!", "hello world" and
+  /// "مَدْرَسَةٌ" vs "مدرسة" all compare equal. Flutter-free, test-enforced.
+  static String normalizeTyped(String s) {
+    var t = s.trim().toLowerCase();
+    // Arabic diacritics (fathatan..sukun), superscript alef, tatweel.
+    t = t.replaceAll(RegExp(r'[\u064B-\u065F\u0670\u0640]'), '');
+    // Punctuation & symbols -> spaces (unicode-aware), then collapse.
+    t = t.replaceAll(RegExp(r'[\p{P}\p{S}]', unicode: true), ' ');
+    t = t.replaceAll(RegExp(r'\s+'), ' ').trim();
+    return t;
+  }
+
+  /// v4.6 — dictation: hear it, type it. Sentence dictation for lessons with
+  /// sentence material, single-word dictation for bare words. The Arabic
+  /// meaning rides in [Exercise.hint] so the learner knows WHAT to type.
+  static Exercise? _makeDictation(Vocab v, List<Vocab> pool) {
+    String target;
+    String meaning;
+    if (v.isSentence) {
+      final n = v.target.trim().split(RegExp(r'\s+')).length;
+      if (n < 2 || n > 8) return null;
+      target = v.target;
+      meaning = v.translationAr;
+    } else if ((v.exampleTarget ?? '').trim().isNotEmpty) {
+      final ex = v.exampleTarget!.trim();
+      final n = ex.split(RegExp(r'\s+')).length;
+      if (n < 2 || n > 8) return null;
+      target = ex;
+      meaning = v.exampleAr ?? v.translationAr;
+    } else {
+      final t = v.target.trim();
+      if (t.length < 3 || t.length > 12) return null;
+      target = t;
+      meaning = v.translationAr;
+    }
+    return Exercise(
+      type: ExerciseType.dictation,
+      prompt: '',
+      answer: target,
+      vocab: v,
+      audioText: target,
+      hint: meaning,
+    );
+  }
+
+  /// v4.6 — listening comprehension: hear the whole sentence, choose the
+  /// Arabic meaning. Distractors are other sentence/example meanings from
+  /// the same lesson; skipped entirely in lessons too poor to supply them.
+  static Exercise? _makeListenComp(Vocab v, List<Vocab> pool) {
+    final String audio;
+    final String correct;
+    if (v.isSentence) {
+      audio = v.target;
+      correct = v.translationAr;
+    } else {
+      final ex = (v.exampleTarget ?? '').trim();
+      final ar = (v.exampleAr ?? '').trim();
+      if (ex.isEmpty || ar.isEmpty) return null;
+      audio = ex;
+      correct = ar;
+    }
+    final candidates = <String>{};
+    for (final p in pool) {
+      if (p == v) continue;
+      if (p.isSentence) {
+        candidates.add(p.translationAr);
+      } else {
+        final ar = (p.exampleAr ?? '').trim();
+        if (ar.isNotEmpty) candidates.add(ar);
+      }
+    }
+    candidates
+      ..remove(correct)
+      ..removeWhere((s) => s.trim().isEmpty);
+    if (candidates.length < 3) return null; // need 3 distinct distractors
+    final picked = candidates.toList()..shuffle(_rng);
+    final opts = <String>[correct, ...picked.take(3)]..shuffle(_rng);
+    return Exercise(
+      type: ExerciseType.listenComp,
+      prompt: '',
+      answer: correct,
+      options: opts,
+      vocab: v,
+      audioText: audio,
+    );
   }
 
   // ================= helpers =================
@@ -540,6 +681,21 @@ class ExerciseGen {
           answer: '',
           vocab: v,
           audioText: '',
+        );
+      case ExerciseType.dictation:
+      case ExerciseType.listenComp:
+        // v4.6: never dispatched through _make (built by their own makers
+        // with plan-level guards); if a caller ever does, degrade to a
+        // plain mcq round instead of producing a broken exercise.
+        return Exercise(
+          type: ExerciseType.mcq,
+          prompt: v.target,
+          answer: v.translationAr,
+          options: _distractors(
+              correct: v.translationAr,
+              pool: pool.map((e) => e.translationAr).toList()),
+          vocab: v,
+          audioText: v.target,
         );
     }
   }

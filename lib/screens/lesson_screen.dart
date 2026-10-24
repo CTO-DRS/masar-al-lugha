@@ -68,6 +68,32 @@ class _LessonScreenState extends State<LessonScreen> {
   String? matchSelRight;
   bool matchError = false;
 
+  // v4.6 dictation: typed answer state.
+  final TextEditingController _typed = TextEditingController();
+
+  // v4.6: normalized target -> vocabId over the whole course, so a wrong
+  // dictation attempt that exactly spells another known word still feeds
+  // the confusion engine ("their" typed for "there").
+  Map<String, String>? _idByNormTargetCache;
+  Map<String, String> get _idByNormTarget {
+    var m = _idByNormTargetCache;
+    if (m == null) {
+      m = {};
+      for (final v in AppScope.of(context).course.allVocab) {
+        final n = ExerciseGen.normalizeTyped(v.target);
+        if (n.isNotEmpty) m.putIfAbsent(n, () => v.id);
+      }
+      _idByNormTargetCache = m;
+    }
+    return m;
+  }
+
+  @override
+  void dispose() {
+    _typed.dispose();
+    super.dispose();
+  }
+
   bool get isLast => index >= exercises.length - 1;
   Exercise get ex => exercises[index];
 
@@ -88,6 +114,8 @@ class _LessonScreenState extends State<LessonScreen> {
       case ExerciseType.wordToPic:
       case ExerciseType.picToWord:
       case ExerciseType.truefalse:
+      case ExerciseType.dictation: // v4.6: the audio IS the prompt
+      case ExerciseType.listenComp: // v4.6: the audio IS the prompt
         final tts = AppScope.ttsOf(context);
         tts
             .setLanguage(AppScope.of(context).course.ttsLang)
@@ -181,6 +209,10 @@ class _LessonScreenState extends State<LessonScreen> {
         return _fillBody(tr);
       case ExerciseType.truefalse:
         return _tfBody(tr);
+      case ExerciseType.dictation:
+        return _dictationBody(tr);
+      case ExerciseType.listenComp:
+        return _mcqBody(tr, isListen: true);
     }
   }
 
@@ -188,6 +220,8 @@ class _LessonScreenState extends State<LessonScreen> {
   /// (classic), Arabic-meaning options (audio mode) and whole-sentence
   /// options (sentence-mining / audio mode).
   String _listenTitle(String Function(String) tr) {
+    // v4.6: comprehension asks for the meaning, not the sentence itself.
+    if (ex.type == ExerciseType.listenComp) return tr('listenUnderstand');
     if (ex.answer == ex.vocab.translationAr &&
         ex.vocab.translationAr.isNotEmpty) {
       return tr('listenMeaning');
@@ -719,6 +753,88 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
+  // ---- v4.6 dictation: hear it -> type it ----
+  Widget _dictationBody(String Function(String) tr) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Mascot(size: 56, mood: MascotMood.happy),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(tr('typeWhatYouHear'),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          // Replay button — the core interaction of dictation.
+          GestureDetector(
+            onTap: () {
+              final tts = AppScope.ttsOf(context);
+              tts
+                  .setLanguage(AppScope.of(context).course.ttsLang)
+                  .then((_) => tts.speak(ex.audioText));
+            },
+            child: Container(
+              width: 96,
+              height: 96,
+              decoration: BoxDecoration(
+                color: AppColors.blue,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                      color: AppColors.blueDark,
+                      offset: Offset(0, 5),
+                      blurRadius: 0),
+                ],
+              ),
+              child: const Icon(Icons.volume_up, color: Colors.white, size: 46),
+            ),
+          ),
+          const SizedBox(height: 10),
+          // The meaning — the learner must know WHAT to type.
+          if (ex.hint != null)
+            Text(ex.hint!,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: context.mutedText, fontSize: 15)),
+          const SizedBox(height: 14),
+          TextField(
+            controller: _typed,
+            enabled: !answered,
+            textInputAction: TextInputAction.done,
+            onChanged: (_) => setState(() {}),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+            decoration: InputDecoration(
+              hintText: tr('typeHere'),
+              filled: true,
+              fillColor: context.card,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: context.line, width: 2),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(color: AppColors.blue, width: 2),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: context.line, width: 2),
+              ),
+            ),
+          ),
+          const Spacer(),
+        ],
+      ),
+    );
+  }
+
   Widget _matchBody(String Function(String) tr) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -905,7 +1021,10 @@ class _LessonScreenState extends State<LessonScreen> {
       case ExerciseType.wordToPic:
       case ExerciseType.fillblank:
       case ExerciseType.truefalse:
+      case ExerciseType.listenComp: // v4.6: option pick
         return selected != null;
+      case ExerciseType.dictation: // v4.6: something typed
+        return _typed.text.trim().isNotEmpty;
       case ExerciseType.build:
         return placed.length == ex.tiles.length;
       case ExerciseType.match:
@@ -927,6 +1046,11 @@ class _LessonScreenState extends State<LessonScreen> {
       userAnswer = selected != null ? ex.options[selected!] : '';
       String norm(String s) => s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
       wasCorrect = norm(userAnswer) == norm(ex.answer);
+    } else if (ex.type == ExerciseType.dictation) {
+      // v4.6: tolerant compare — case / punctuation / diacritics / spacing.
+      userAnswer = _typed.text;
+      wasCorrect = ExerciseGen.normalizeTyped(userAnswer) ==
+          ExerciseGen.normalizeTyped(ex.answer);
     } else {
       userAnswer = selected != null ? ex.options[selected!] : '';
       wasCorrect = userAnswer == ex.answer;
@@ -948,6 +1072,7 @@ class _LessonScreenState extends State<LessonScreen> {
             case ExerciseType.listen:
             case ExerciseType.picToWord:
             case ExerciseType.fillblank:
+            case ExerciseType.listenComp: // v4.6: options are real meanings
               final other = _idByText[ex.options[selected!]];
               if (other != null && other != ex.vocab.id) {
                 st.recordConfusion(ex.vocab.id, other);
@@ -955,6 +1080,14 @@ class _LessonScreenState extends State<LessonScreen> {
               break;
             default:
               break; // build/match/truefalse/wordToPic: no text option
+          }
+        } else if (ex.type == ExerciseType.dictation) {
+          // v4.6: a misheard dictation that exactly spells another known
+          // word is a true confusion pair ("their" for "there").
+          final other =
+              _idByNormTarget[ExerciseGen.normalizeTyped(_typed.text)];
+          if (other != null && other != ex.vocab.id) {
+            st.recordConfusion(ex.vocab.id, other);
           }
         }
       }
@@ -1049,6 +1182,7 @@ class _LessonScreenState extends State<LessonScreen> {
       matchSelLeft = null;
       matchSelRight = null;
       matchError = false;
+      _typed.clear(); // v4.6: fresh field for the next dictation
     });
     _speakIfNeeded();
   }
