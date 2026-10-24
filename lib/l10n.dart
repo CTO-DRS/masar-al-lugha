@@ -159,7 +159,7 @@ class L {
       'aboutEngine':
           'محرك التكرار المتباعد مستوحى من SM-2/FSRS مع خطوات تعلّم وفواصل متكيفة.',
       // v4.1
-      'version': 'الإصدار 4.3.0',
+      'version': 'الإصدار 4.4.0',
       'weakPracticeTitle': 'تدريب الكلمات الصعبة',
       'weakPracticeHint': 'اقرأ الكلمة ثم اقلب البطاقة وقيّم نفسك بصدق',
       'practiceDone': 'أنهيت جلسة التدريب!',
@@ -185,6 +185,50 @@ class L {
       'listenSentence': 'استمع واختر الجملة الصحيحة',
       'listenMeaning': 'استمع واختر المعنى الصحيح',
       'audioBuild': 'استمع ثم رتّب الكلمات',
+      // v4.4 — local intelligence (insights) + favorites
+      'insightsTitle': 'رؤى التعلّم',
+      'insightsPrivacy':
+          'ذكاء محلي بالكامل: كل رؤية تُحسب على جهازك من سجل تقدّمك — بلا شبكة ولا حسابات.',
+      'noInsightsYet':
+          'لا توجد بيانات كافية بعد — أكمل درساً أو جلسة مراجعة وستُبنى رؤيتك تلقائياً.',
+      'insightsTrend': 'دقتك آخر 7 أيام',
+      'noAnswersLogged': 'لا توجد إجابات مسجّلة هذا الأسبوع بعد',
+      'insightsTrendAvg': 'متوسط {avg}٪ عبر {days} أيام نشطة',
+      'insightsBestHour': 'أفضل وقت للدراسة',
+      'bestHourText': 'حوالي {hour} — دقتك {pct}٪ في هذا الوقت',
+      'insightsGoal': 'اقتراح الهدف الذكي',
+      'goalRaiseReason':
+          'حققت هدفك في {met} من آخر 7 أيام بمتوسط {avg} XP — أنت جاهز لرفع السقف!',
+      'goalLowerReason':
+          'فوّت هدفك في {miss} من آخر 7 أيام — هدف أصغر يعني انتظاماً أكبر.',
+      'goalCurrentNew': 'هدفك الحالي {current} — المقترح {new}',
+      'goalApply': 'تطبيق الهدف الجديد ({goal})',
+      'goalApplied': 'تم تحديث الهدف اليومي',
+      'insightsPairs': 'أزواج الالتباس',
+      'pairsHint': 'كلمات تخلط بينها كثيراً — درّبها معاً لتفريقها.',
+      'pairTimes': '{n} مرات',
+      'pairPractice': 'تدرّب',
+      'pairPracticeTitle': 'تمرين زوج الالتباس',
+      'insightsForecast': 'توقعات المراجعة',
+      'dueNowCount': '{n} بطاقة مستحقة الآن',
+      'dueTomorrowCount': '{n} بطاقة غداً',
+      'insightsTips': 'نصائح مدرّبك المحلي',
+      'tipConfusion':
+          'خلطت بين «{a}» و«{b}» ‏{n} مرات — جرّب تمرينهما معاً حتى تفرّقهما.',
+      'tipBestHour':
+          'ذاكرتك أقوى حوالي {hour} — حجز هذا الوقت للمراجعة يرفع دقتك ({pct}٪).',
+      'tipStreakGuard':
+          'سلسلة {streak} أيام في خطر! بقي {left} XP فقط لهدف اليوم.',
+      'tipReviewWave':
+          'غداً موجة مراجعة كبيرة ({n} بطاقة) — خصّص 10 دقائق لها.',
+      'tipTrendUp': 'دقتك في تحسّن مستمر (+{delta}٪) — استمر بنفس الوتيرة!',
+      'tipTrendDown':
+          'الدقة انخفضت قليلاً مؤخراً ({delta}٪) — جلسة كلمات صعبة ستعيد الأمور لمسارها.',
+      'favorites': 'المفضلة',
+      'practiceFavorites': 'راجع المفضلة ({n})',
+      'exitFavorites': 'إنهاء جلسة المفضلة',
+      'favoritesEmpty': 'مجموعة المفضلة فارغة',
+      'favoritesHint': 'أضف كلمات بنجمة من القاموس ثم عد هنا لمراجعتها',
     },
     'en': {
       'appName': 'Language Path',
@@ -343,7 +387,7 @@ class L {
       'aboutEngine':
           'The spaced-repetition engine is inspired by SM-2/FSRS with learning steps and adaptive intervals.',
       // v4.1
-      'version': 'Version 4.3.0',
+      'version': 'Version 4.4.0',
       'weakPracticeTitle': 'Tough-words practice',
       'weakPracticeHint':
           'Read the word, flip the card, rate yourself honestly',
@@ -370,6 +414,51 @@ class L {
       'listenSentence': 'Listen and choose the right sentence',
       'listenMeaning': 'Listen and choose the correct meaning',
       'audioBuild': 'Listen, then arrange the words',
+      // v4.4 — local intelligence (insights) + favorites
+      'insightsTitle': 'Learning insights',
+      'insightsPrivacy':
+          'Fully local intelligence: every insight is computed on your device from your own progress — no network, no accounts.',
+      'noInsightsYet':
+          'Not enough data yet — finish a lesson or a review session and your insights will build up.',
+      'insightsTrend': 'Accuracy — last 7 days',
+      'noAnswersLogged': 'No answers logged this week yet',
+      'insightsTrendAvg': 'Average {avg}% across {days} active days',
+      'insightsBestHour': 'Best study time',
+      'bestHourText': 'Around {hour} — your accuracy is {pct}% at this time',
+      'insightsGoal': 'Smart goal suggestion',
+      'goalRaiseReason':
+          'You hit your goal on {met} of the last 7 days (avg {avg} XP) — ready to raise the bar!',
+      'goalLowerReason':
+          'You missed your goal on {miss} of the last 7 days — a smaller goal builds consistency.',
+      'goalCurrentNew': 'Current goal {current} — suggested {new}',
+      'goalApply': 'Apply new goal ({goal})',
+      'goalApplied': 'Daily goal updated',
+      'insightsPairs': 'Confusion pairs',
+      'pairsHint': 'Words you often mix up — practice them side by side.',
+      'pairTimes': '{n} times',
+      'pairPractice': 'Practice',
+      'pairPracticeTitle': 'Confusion pair practice',
+      'insightsForecast': 'Review forecast',
+      'dueNowCount': '{n} cards due now',
+      'dueTomorrowCount': '{n} cards tomorrow',
+      'insightsTips': 'Your local tutor tips',
+      'tipConfusion':
+          'You mixed up "{a}" and "{b}" {n} times — try practicing them together.',
+      'tipBestHour':
+          'Your memory peaks around {hour} — booking reviews then lifts accuracy ({pct}%).',
+      'tipStreakGuard':
+          'Your {streak}-day streak is at risk! Only {left} XP to go today.',
+      'tipReviewWave':
+          'A big review wave tomorrow ({n} cards) — plan 10 minutes for it.',
+      'tipTrendUp': 'Your accuracy is trending up (+{delta}%) — keep the pace!',
+      'tipTrendDown':
+          'Accuracy dipped recently ({delta}%) — a tough-words session will fix it.',
+      'favorites': 'Favorites',
+      'practiceFavorites': 'Review favorites ({n})',
+      'exitFavorites': 'Exit favorites session',
+      'favoritesEmpty': 'Your favorites deck is empty',
+      'favoritesHint':
+          'Star words in the Dictionary, then come back to review them',
     },
   };
 

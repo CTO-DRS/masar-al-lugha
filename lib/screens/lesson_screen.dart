@@ -38,6 +38,25 @@ class _LessonScreenState extends State<LessonScreen> {
     for (final v in widget.lesson.vocab) v.target: v.id,
   };
 
+  // v4.4 (local intelligence): text -> vocabId over the WHOLE course
+  // (targets + Arabic meanings). Lets us capture WHICH word the learner
+  // picked when they meant another one — the confusion-pair signal behind
+  // the insights screen. Distractor options that are not real corpus
+  // words (e.g. realWordReserve padding, emojis, true/false) simply miss.
+  Map<String, String>? _idByTextCache;
+  Map<String, String> get _idByText {
+    var m = _idByTextCache;
+    if (m == null) {
+      m = {};
+      for (final v in AppScope.of(context).course.allVocab) {
+        m.putIfAbsent(v.target, () => v.id);
+        m.putIfAbsent(v.translationAr, () => v.id);
+      }
+      _idByTextCache = m;
+    }
+    return m;
+  }
+
   // per-exercise interaction state
   int? selected;
   bool answered = false;
@@ -823,6 +842,12 @@ class _LessonScreenState extends State<LessonScreen> {
           if (leftWordId != null) {
             wordResults[leftWordId] = false;
             st.recordWordMistake(leftWordId);
+            // v4.4: wrong match -> the right-side text belongs to another
+            // word; record the pair for the confusion engine.
+            final rightId = _idByText[matchSelRight!];
+            if (rightId != null && rightId != leftWordId) {
+              st.recordConfusion(leftWordId, rightId);
+            }
           }
           st.recordAnswer(false);
           mistakes++;
@@ -910,7 +935,28 @@ class _LessonScreenState extends State<LessonScreen> {
     // answered wrong in this lesson stays flagged as shaky.
     if (!wasCorrect || wordResults[ex.vocab.id] == false) {
       wordResults[ex.vocab.id] = false;
-      if (!wasCorrect) st.recordWordMistake(ex.vocab.id);
+      if (!wasCorrect) {
+        st.recordWordMistake(ex.vocab.id);
+        // v4.4: capture WHICH word was picked instead (when the chosen
+        // option maps to a real corpus word). true/false answers and
+        // emoji options never map, so they are excluded implicitly.
+        if (selected != null && selected! < ex.options.length) {
+          switch (ex.type) {
+            case ExerciseType.mcq:
+            case ExerciseType.reverse:
+            case ExerciseType.listen:
+            case ExerciseType.picToWord:
+            case ExerciseType.fillblank:
+              final other = _idByText[ex.options[selected!]];
+              if (other != null && other != ex.vocab.id) {
+                st.recordConfusion(ex.vocab.id, other);
+              }
+              break;
+            default:
+              break; // build/match/truefalse/wordToPic: no text option
+          }
+        }
+      }
     } else {
       wordResults[ex.vocab.id] = true;
     }

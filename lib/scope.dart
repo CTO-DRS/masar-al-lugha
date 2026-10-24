@@ -23,4 +23,12 @@ class AppScope extends InheritedNotifier<AppState> {
 
 extension L10nX on BuildContext {
   String tr(String key) => L.t(AppScope.of(this).uiLocale, key);
+
+  /// v4.4: translate then substitute {param} placeholders — used by the
+  /// insights tips whose templates carry runtime numbers/words.
+  String trF(String key, Map<String, String> params) {
+    var s = tr(key);
+    params.forEach((k, v) => s = s.replaceAll('{$k}', v));
+    return s;
+  }
 }

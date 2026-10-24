@@ -2,6 +2,8 @@
 // a dedicated flashcard session driven by the learner's real mistake counts
 // (wordMistakes). Rates through the same SRS engine as the Cards tab, so
 // practice results flow into the normal review schedule. Works fully offline.
+// v4.4: optional [fixedPool] — the insights screen opens this screen with a
+// specific confusion pair (two words) to drill them side by side.
 import 'package:flutter/material.dart';
 
 import '../models.dart';
@@ -11,7 +13,11 @@ import '../theme.dart';
 import '../widgets/mascot.dart';
 
 class WeakWordsScreen extends StatefulWidget {
-  const WeakWordsScreen({super.key});
+  final List<Vocab>? fixedPool;
+  final String titleKey;
+
+  const WeakWordsScreen(
+      {super.key, this.fixedPool, this.titleKey = 'weakPracticeTitle'});
 
   @override
   State<WeakWordsScreen> createState() => _WeakWordsScreenState();
@@ -31,8 +37,11 @@ class _WeakWordsScreenState extends State<WeakWordsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final st = AppScope.of(context);
       setState(() {
-        // Most-missed first; hard cap keeps a session short by design.
-        queue = st.weakestVocab(st.course).take(20).toList();
+        // v4.4: explicit pool (confusion pair) or most-missed-first queue;
+        // the hard cap keeps a session short by design.
+        queue = widget.fixedPool != null
+            ? List<Vocab>.from(widget.fixedPool!)
+            : st.weakestVocab(st.course).take(20).toList();
         current = queue.isNotEmpty ? queue.first : null;
         started = true;
       });
@@ -69,7 +78,7 @@ class _WeakWordsScreenState extends State<WeakWordsScreen> {
     final total = practiced + queue.length;
 
     return Scaffold(
-      appBar: AppBar(title: Text(tr('weakPracticeTitle'))),
+      appBar: AppBar(title: Text(tr(widget.titleKey))),
       body: !started
           ? const SizedBox.shrink()
           : current == null

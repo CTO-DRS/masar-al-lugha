@@ -114,14 +114,43 @@ UI seam: long listen options (sentences) switch the option grid to full-width
 rows; listen captions are variant-accurate (`listenAndChoose` /
 `listenMeaning` / `listenSentence`); retries re-enter with the same style.
 
-## 4. Content pipeline
+## 4. Local intelligence layer (v4.4)
+
+`lib/insights.dart` is a Flutter-free, rule-based engine over the learner's
+own logs. Design invariants:
+
+- **On-device only.** Inputs are state the app already stores (`xpLog`,
+  `answerLog`, hour buckets, `confusionPairs`, SRS cards). No network, no
+  accounts, no paid APIs — consistent with the hard invariants.
+- **Explainable rules.** Every output has a documented threshold and reason
+  key (`goalRaiseReason`/`goalLowerReason`), rendered with `{param}`
+  substitution via `context.trF`. The UI never shows a number the engine
+  did not justify.
+- **Evidence gating.** Nothing appears before its minimum sample count
+  (best hour ≥ 8 answers/hour, trend halves ≥ 20 answers, confusion tip
+  ≥ 3 misses, review wave ≥ 8 cards). Under-informed = silent, never a
+  guess.
+- **Bounded storage.** `confusionPairs` trims to the top 40 when it exceeds
+  60; `answerLog` keeps 30 days — profile growth is capped.
+- **Capture points.** `recordAnswer` (every graded tap) fills hour buckets
+  + daily accuracy; the lesson screen maps wrong picked options back to
+  vocab ids (`recordConfusion`); flashcard self-ratings deliberately do
+  NOT inflate confusion counts (honesty of the signal).
+
+Data flows: capture (lesson/flashcards/dictionary) → AppState fields →
+ProfileStore additive keys (`insights`, `favorites`) → InsightsScreen reads
+through the engine. The engine has no dependency on Flutter, widgets, or
+l10n, so `test/insights_test.dart` exercises it as pure Dart with injected
+`DateTime` anchors.
+
+## 5. Content pipeline
 
 Python generators (append-only IDs) → `assets/data/*.json` → validated by
 `scripts/validate_content.py` (duplicate IDs, required fields, id-format sanity,
 per-lesson emoji conflicts) in CI → APK. Old vocab IDs are never mutated so
 existing user progress keeps resolving.
 
-## 5. Build & release
+## 6. Build & release
 
 - `applicationId com.masar.allugha`, namespace aligned in v4.0.
 - Local reproducible build without NDK: `flutter.installedNdkVersions` bypass +

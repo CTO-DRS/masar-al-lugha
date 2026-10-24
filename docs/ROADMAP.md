@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.3.0+11** — see docs/PROJECT_AUDIT.md §8 for the v4.3
+**Current release: v4.4.0+12** — see docs/PROJECT_AUDIT.md §9 for the v4.4
 increment with file/test evidence.
 
 ## Where we are
@@ -18,6 +18,7 @@ increment with file/test evidence.
 | v4.1 | Architecture & engine polish: `ProfileStore` persistence class extracted (backend-swap seam), tough-words practice lane (`weakestVocab`, feeds real SRS), error-analysis screen (accuracy + top-20 misses), placement re-test entry, 34 tests |
 | **v4.2** | **Curriculum depth: EN 52 units (+192 words: phrasal verbs, idioms, business, academic C1), FR/UR 21 units each (+360 words), formal monotonic CEFR ladder A1→C1 on every unit (validator- + test-enforced), CEFR pill on unit banners, `test/content_test.dart` asset tests — 3538 words / 94 units / 334 lessons** |
 | v4.3 | Lesson styles on the same corpus: **sentence-mining** (cloze-first: fill-blank on real sentences → sentence building → listen-and-pick-the-sentence) and **audio-first** (TTS-led: hear→word / hear→meaning pass, audio sentence building, listen rounds) with a lesson-style bottom sheet in the learn path — 49 tests |
+| v4.4 | **Local intelligence + favorites: on-device insights engine (accuracy trend, best study hour, confusion pairs, smart daily-goal suggestion, review forecast, rule-based tutor tips), Learning Insights screen, confusion capture inside lessons with pair practice, favorites (star in dictionary + dedicated flashcards deck), new launcher icon — 72 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -35,6 +36,33 @@ increment with file/test evidence.
 3. ✅ **Lesson-style chooser** — bottom sheet on lesson tap (learn path):
    Full lesson / Sentence mining / Listening lesson. The hero quick-start
    button keeps the classic one-tap flow; retry keeps the same style.
+
+## v4.4 — local intelligence + favorites (SHIPPED)
+
+1. ✅ **Insights engine (`lib/insights.dart`)** — Flutter-free, rule-based and
+   explainable: best study hour (hour buckets, min 8 samples), 7-day accuracy
+   trend + trend delta (needs >= 20 answers per half), smart daily-goal
+   suggestion (raise +5 after a 6/7 met week with avg >= goal+15, lower -5
+   after 4+ missed days, cap 60 / floor 10), top confusion pairs, review
+   forecast (due within 24h) and up to 4 prioritized tutor tips. Zero
+   network, zero accounts — evidence thresholds everywhere, never guesses.
+2. ✅ **Confusion capture** — lesson screen maps every wrong picked option
+   (word/meaning text) back to a real vocab id and records the normalized
+   pair (`recordConfusion`); pairs are bounded (60 -> top 40). Both the
+   wrong MCQ/option flow and the wrong match pairs feed it.
+3. ✅ **Learning Insights screen** — privacy banner, 7-day accuracy bars,
+   best-hour card, goal suggestion with one-tap apply, confusion pairs with
+   a per-pair "practice" CTA, review forecast and the tutor tips list.
+   Entry: new insights button on the Profile weak-words card.
+4. ✅ **Pair practice** — `WeakWordsScreen(fixedPool: ...)` drills a single
+   confusion pair through the same SRS flow.
+5. ✅ **Favorites** — star toggle in the dictionary (per course, newest
+   first), persisted in the schema-v2 profile, plus a favorites deck in the
+   Cards tab (hand-picked words bypass the daily new-card budget by design;
+   ratings still flow through the SRS engine).
+6. ✅ **New launcher icon** — generated "language path" emblem (winding path
+   to a star + A/ع speech bubbles on the brand green gradient), full-bleed
+   square + round variants at all 5 mipmap densities (scripts/apply_app_icon.py).
 
 ## v5.0 — platform growth
 

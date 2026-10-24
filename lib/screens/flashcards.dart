@@ -21,6 +21,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
   Vocab? current;
   bool showingAll = false;
   bool newCapped = false; // daily new-card budget exhausted (v4.0 H3)
+  bool favMode = false; // v4.4: practice the starred (favorites) deck
 
   @override
   void initState() {
@@ -32,6 +33,20 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
     final st = AppScope.of(context);
     final course = st.course;
     final now = DateTime.now().millisecondsSinceEpoch;
+
+    // v4.4 favorites deck: the learner's explicitly starred words, in
+    // starred order. The daily new-card budget does not gate this lane —
+    // the user hand-picked these words — but ratings still flow through
+    // the same SRS engine (rateCard).
+    if (favMode) {
+      final fav = st.favoriteVocab(course);
+      setState(() {
+        dueQueue = fav;
+        current = fav.isNotEmpty ? fav.first : null;
+        flipped = false;
+      });
+      return;
+    }
 
     // v4.0 (audit H3): new SRS cards come ONLY from lessons the learner
     // already completed, in course order, capped by the daily budget —
@@ -67,6 +82,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
     String tr(String k) => context.tr(k);
     final allCount = st.course.allVocab.length;
     final dueCount = dueQueue.length;
+    final favCount = st.favoriteVocab(st.course).length;
 
     return Scaffold(
       body: Column(
@@ -78,10 +94,10 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
               children: [
                 Expanded(
                   child: _deckStat(
-                    icon: Icons.style,
-                    color: AppColors.blue,
+                    icon: favMode ? Icons.star : Icons.style,
+                    color: favMode ? AppColors.yellow : AppColors.blue,
                     value: '$dueCount',
-                    label: tr('dueToday'),
+                    label: favMode ? tr('favorites') : tr('dueToday'),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -96,6 +112,42 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
               ],
             ),
           ),
+          // v4.4: favorites deck toggle (only when there is something to show).
+          if (favCount > 0 || favMode)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 2, 20, 4),
+              child: SizedBox(
+                width: double.infinity,
+                height: 42,
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    setState(() => favMode = !favMode);
+                    _refresh();
+                  },
+                  icon: Icon(
+                    favMode ? Icons.close : Icons.star,
+                    color: AppColors.yellow,
+                    size: 20,
+                  ),
+                  label: Text(
+                    favMode
+                        ? tr('exitFavorites')
+                        : context.trF('practiceFavorites', {'n': '$favCount'}),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 13.5,
+                      color: AppColors.yellow,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: AppColors.yellow, width: 2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           Expanded(
             child: dueCount == 0
                 ? _emptyState(tr)
@@ -169,13 +221,15 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
           const Mascot(size: 120, mood: MascotMood.celebrate),
           const SizedBox(height: 20),
           Text(
-            newCapped ? tr('newCardsTomorrow') : tr('noCardsDue'),
+            favMode
+                ? tr('favoritesEmpty')
+                : (newCapped ? tr('newCardsTomorrow') : tr('noCardsDue')),
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
           ),
           const SizedBox(height: 6),
           Text(
-            tr('comeBackTomorrow'),
+            favMode ? tr('favoritesHint') : tr('comeBackTomorrow'),
             style: TextStyle(color: context.mutedText, fontSize: 14),
           ),
         ],

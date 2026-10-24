@@ -10,6 +10,7 @@ import '../widgets/common.dart';
 import '../widgets/mascot.dart';
 import 'error_analysis_screen.dart';
 import 'home_shell.dart';
+import 'insights_screen.dart';
 import 'settings.dart';
 import 'weak_words_screen.dart';
 
@@ -489,6 +490,17 @@ class _WeakWordsCard extends StatelessWidget {
                         },
                         icon: Icon(Icons.chevron_right,
                             size: 22, color: context.mutedText),
+                      ),
+                      // v4.4: local-intelligence dashboard (insights).
+                      IconButton(
+                        tooltip: tr('insightsTitle'),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const InsightsScreen(),
+                          ));
+                        },
+                        icon: const Icon(Icons.insights,
+                            color: AppColors.blue, size: 22),
                       ),
                     ],
                   ),

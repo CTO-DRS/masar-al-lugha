@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import 'insights.dart';
 import 'models.dart';
 import 'profile_store.dart';
 import 'srs.dart';
@@ -54,6 +55,24 @@ class AppState extends ChangeNotifier {
       {}; // courseId -> flat lesson index unlocked by placement
   int newCardsToday = 0; // new SRS cards introduced today
   String newCardsDay = '';
+
+  // ---- v4.4 local intelligence (all on-device, see lib/insights.dart) ----
+  /// "vocabIdA|vocabIdB" (lexically sorted) -> times the learner picked B
+  /// when A was correct. Bounded by [_maxConfusionPairs].
+  Map<String, int> confusionPairs = {};
+
+  /// Answers per hour-of-day bucket (0..23) for the best-study-time rule.
+  List<int> hourTotal = List<int>.filled(24, 0);
+  List<int> hourCorrect = List<int>.filled(24, 0);
+
+  /// dayKey -> [total, correct] answers (last 30 days) — accuracy trend.
+  Map<String, List<int>> answerLog = {};
+
+  /// courseId -> starred vocab ids (newest first) — favorites deck.
+  Map<String, List<String>> favorites = {};
+
+  static const int _maxConfusionPairs = 60;
+  static const int _keepConfusionPairs = 40;
 
   /// Current progress schema version (marker lives in ProfileStore).
   static const int progressSchema = ProfileStore.progressSchema;
@@ -218,6 +237,70 @@ class AppState extends ChangeNotifier {
     scheduleSave();
   }
 
+  // ================= v4.4 local intelligence =================
+
+  /// Records which word the learner picked when they meant another one.
+  /// Called from the lesson screen with the CORRECT vocab id and the id of
+  /// the option actually chosen (when it maps to a real vocab item).
+  /// Pairs are stored normalized (lexically sorted) so both directions
+  /// count toward the same bucket.
+  void recordConfusion(String correctId, String chosenId) {
+    if (correctId.isEmpty || chosenId.isEmpty || correctId == chosenId) return;
+    final key = Insights.confusionKey(correctId, chosenId);
+    confusionPairs[key] = (confusionPairs[key] ?? 0) + 1;
+    if (confusionPairs.length > _maxConfusionPairs) {
+      final keep =
+          Insights.topConfusions(confusionPairs, limit: _keepConfusionPairs)
+              .map((p) => p.key)
+              .toSet();
+      confusionPairs.removeWhere((k, _) => !keep.contains(k));
+    }
+    scheduleSave();
+  }
+
+  /// Top confusion pairs for the CURRENT course (ids resolved, both words
+  /// present in [course]) — drives the insights screen + pair practice.
+  List<ConfusionPair> courseConfusionPairs([int limit = 5]) {
+    final byId = {for (final v in course.allVocab) v.id: v};
+    return Insights.topConfusions(confusionPairs, limit: limit)
+        .where(
+            (p) => byId.containsKey(p.vocabIdA) && byId.containsKey(p.vocabIdB))
+        .toList();
+  }
+
+  /// Cards that come due within the next 24h (overdue included).
+  int get dueTomorrowCount => Insights.dueWithinDays(cards, 1);
+
+  /// v4.4 favorites: per-course starred words, newest first.
+  bool isFavorite(String vocabId) =>
+      (favorites[courseId] ?? const []).contains(vocabId);
+
+  void toggleFavorite(String vocabId) {
+    final list = [...(favorites[courseId] ?? const <String>[])];
+    if (list.contains(vocabId)) {
+      list.remove(vocabId);
+    } else {
+      list.insert(0, vocabId);
+    }
+    favorites[courseId] = list;
+    save();
+    notifyListeners();
+  }
+
+  /// Favorites of [course] resolved against the corpus; stale ids (removed
+  /// content, foreign profile import) are dropped silently.
+  List<Vocab> favoriteVocab(Course course) {
+    final byId = {for (final v in course.allVocab) v.id: v};
+    return (favorites[course.id] ?? const <String>[])
+        .map((id) => byId[id])
+        .whereType<Vocab>()
+        .toList();
+  }
+
+  /// Vocab lookup for the confusion capture in the lesson screen.
+  Map<String, Vocab> vocabById(Course course) =>
+      {for (final v in course.allVocab) v.id: v};
+
   /// Words the learner struggles with most (for the practice mode).
   List<String> get weakestWordIds {
     final entries = wordMistakes.entries.toList()
@@ -313,6 +396,26 @@ class AppState extends ChangeNotifier {
   void recordAnswer(bool correct) {
     totalAnswers += 1;
     if (correct) correctAnswers += 1;
+    // v4.4: hour-of-day + per-day accuracy logs for the insights engine.
+    final h = DateTime.now().hour;
+    if (h >= 0 && h < 24) {
+      hourTotal[h] += 1;
+      if (correct) hourCorrect[h] += 1;
+    }
+    final t = todayKey();
+    final e = [
+      ...(answerLog[t] ?? const <int>[0, 0])
+    ];
+    if (e.length < 2) e.addAll(const <int>[0, 0]);
+    e[0] += 1;
+    if (correct) e[1] += 1;
+    answerLog[t] = e;
+    if (answerLog.length > 30) {
+      final keys = answerLog.keys.toList()..sort();
+      while (answerLog.length > 30) {
+        answerLog.remove(keys.removeAt(0));
+      }
+    }
     scheduleSave();
   }
 
@@ -446,6 +549,11 @@ class AppState extends ChangeNotifier {
     placementSkip = {};
     newCardsToday = 0;
     newCardsDay = todayKey();
+    confusionPairs = {};
+    hourTotal = List<int>.filled(24, 0);
+    hourCorrect = List<int>.filled(24, 0);
+    answerLog = {};
+    favorites = {};
     pendingBadges.clear();
     await save();
     notifyListeners();
@@ -477,6 +585,13 @@ class AppState extends ChangeNotifier {
         'badges': badges,
         'wordMistakes': wordMistakes,
         'placement': placementDone,
+        'insights': {
+          'confusionPairs': confusionPairs,
+          'hourTotal': hourTotal,
+          'hourCorrect': hourCorrect,
+          'answerLog': answerLog,
+        },
+        'favorites': favorites,
         'settings': {
           'darkMode': darkMode,
           'reduceMotion': reduceMotion,
@@ -555,6 +670,19 @@ class AppState extends ChangeNotifier {
         ..remove('');
       placementDone = ((p['placement'] as Map?) ?? {})
           .map((k, v) => MapEntry(k as String, v as bool));
+      final ins = p['insights'];
+      if (ins is Map) {
+        confusionPairs = ((ins['confusionPairs'] as Map?) ?? {})
+            .map((k, v) => MapEntry(k as String, (v as num).toInt()));
+        hourTotal = _read24(ins['hourTotal']);
+        hourCorrect = _read24(ins['hourCorrect']);
+        answerLog = ((ins['answerLog'] as Map?) ?? {}).map((k, v) => MapEntry(
+            k as String,
+            ((v as List?) ?? []).map((e) => (e as num).toInt()).toList()));
+        answerLog.removeWhere((_, e) => e.length < 2);
+      }
+      favorites = ((p['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(
+          k as String, ((v as List?) ?? []).map((e) => e as String).toList()));
       if (s is Map) {
         darkMode = (s['darkMode'] as bool?) ?? darkMode;
         reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;
@@ -572,6 +700,12 @@ class AppState extends ChangeNotifier {
     await save();
     notifyListeners();
     return null;
+  }
+
+  /// Reads a 24-slot hour bucket list from an imported payload.
+  static List<int> _read24(Object? raw) {
+    final list = (raw as List?)?.map((e) => (e as num).toInt()).toList() ?? [];
+    return list.length == 24 ? list : List<int>.filled(24, 0);
   }
 
   // Lesson unlock logic: first lesson unlocked; next unlocks when previous

@@ -233,24 +233,49 @@ class _WordTileState extends State<_WordTile> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    // speak button
-                    GestureDetector(
-                      onTap: () {
-                        final tts = AppScope.ttsOf(context);
-                        tts
-                            .setLanguage(st.course.ttsLang)
-                            .then((_) => tts.speak(v.target));
-                      },
-                      child: Container(
-                        width: 38,
-                        height: 38,
-                        decoration: BoxDecoration(
-                          color: AppColors.blueLight,
-                          borderRadius: BorderRadius.circular(10),
+                    // v4.4: favorite star + speak button
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () => st.toggleFavorite(v.id),
+                          child: Container(
+                            width: 38,
+                            height: 38,
+                            decoration: BoxDecoration(
+                              color: AppColors.yellow.withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(
+                              st.isFavorite(v.id)
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: AppColors.yellow,
+                              size: 22,
+                            ),
+                          ),
                         ),
-                        child: const Icon(Icons.volume_up,
-                            color: AppColors.blue, size: 22),
-                      ),
+                        const SizedBox(width: 6),
+                        // speak button
+                        GestureDetector(
+                          onTap: () {
+                            final tts = AppScope.ttsOf(context);
+                            tts
+                                .setLanguage(st.course.ttsLang)
+                                .then((_) => tts.speak(v.target));
+                          },
+                          child: Container(
+                            width: 38,
+                            height: 38,
+                            decoration: BoxDecoration(
+                              color: AppColors.blueLight,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(Icons.volume_up,
+                                color: AppColors.blue, size: 22),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 4),
                     Container(

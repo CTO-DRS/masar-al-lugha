@@ -75,6 +75,24 @@ class ProfileStore {
             .map((k, v) => MapEntry(k as String, (v as num).toInt()));
         s.newCardsToday = (j['newCardsToday'] as num?)?.toInt() ?? 0;
         s.newCardsDay = (j['newCardsDay'] as String?) ?? '';
+        // v4.4 local intelligence (additive, null-safe for old payloads).
+        final ins = j['insights'];
+        if (ins is Map) {
+          s.confusionPairs = ((ins['confusionPairs'] as Map?) ?? {})
+              .map((k, v) => MapEntry(k as String, (v as num).toInt()));
+          s.hourTotal = _read24(ins['hourTotal']);
+          s.hourCorrect = _read24(ins['hourCorrect']);
+          s.answerLog = ((ins['answerLog'] as Map?) ?? {}).map((k, v) =>
+              MapEntry(
+                  k as String,
+                  ((v as List?) ?? [])
+                      .map((e) => (e as num).toInt())
+                      .toList()));
+          s.answerLog.removeWhere((_, e) => e.length < 2);
+        }
+        s.favorites = ((j['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(
+            k as String,
+            ((v as List?) ?? []).map((e) => e as String).toList()));
         final settings = j['settings'];
         if (settings is Map) {
           s.darkMode = (settings['darkMode'] as bool?) ?? s.darkMode;
@@ -124,6 +142,13 @@ class ProfileStore {
       'placementSkip': s.placementSkip,
       'newCardsToday': s.newCardsToday,
       'newCardsDay': s.newCardsDay,
+      'insights': {
+        'confusionPairs': s.confusionPairs,
+        'hourTotal': s.hourTotal,
+        'hourCorrect': s.hourCorrect,
+        'answerLog': s.answerLog,
+      },
+      'favorites': s.favorites,
       'settings': {
         'darkMode': s.darkMode,
         'reduceMotion': s.reduceMotion,
@@ -161,6 +186,16 @@ class ProfileStore {
       j['lessonStars'] ??= <String, dynamic>{};
       j['cards'] ??= <String, dynamic>{};
     }
+    // v2 additive keys (v4.4): insights + favorites are read null-safe in
+    // load()/save() — no structural migration required; old app versions
+    // simply ignore the extra keys (forward-compatible).
     j['schema'] = AppState.progressSchema;
+  }
+
+  /// Reads a 24-slot hour bucket list from a stored payload.
+  static List<int> _read24(Object? raw) {
+    final list =
+        (raw as List?)?.map((e) => (e as num).toInt()).toList() ?? const [];
+    return list.length == 24 ? list : List<int>.filled(24, 0);
   }
 }

@@ -159,3 +159,28 @@ ur 350/619** vocab items qualify as sentence-plan candidates (example sentence
 or multi-word item). No new permissions, no network calls, no dependencies
 added; dark mode uses theme-context colors only; RTL unaffected (new strings
 are Arabic-first, sheet layout uses stretch + Expanded rows).
+
+## 9. v4.4 increment (local intelligence + favorites — ROADMAP v4.4)
+
+Scope: a fully on-device intelligence layer plus the favorites feature and a
+new launcher icon. No content-file changes, no new dependencies, no network,
+no permissions. Storage stays schema-v2 — the new fields are additive
+null-safe keys (`insights`, `favorites`), so v4.3 payloads load unchanged and
+old app versions simply ignore the extra keys (forward-compatible).
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Insights engine | New Flutter-free engine: `bestStudyHour` (hour buckets, min 8 samples, tie→busier), `accuracyTrend` (per-day pct, oldest first), `trendDelta` (last-3 vs previous-3 active days, ≥20 answers per half), `goalSuggestion` (raise +5 when met ≥6/7 with avg ≥ goal+15, cap 60; lower −5 when 4+ missed full days, floor 10; derived from `xpLog` — no new state), `topConfusions` + `confusionKey` (lexically-normalized pairs), `dueWithinDays` forecast, `tutorTips` (≤4 prioritized, evidence-gated: confusion ≥3, best hour, streak-at-risk, review wave ≥8, trend ±8). | `lib/insights.dart` (new) | `test/insights_test.dart`: 16 engine tests incl. thresholds, caps, floors, tie-breaks, evidence gating |
+| Capture layer | `recordAnswer` now also fills 24 hour buckets (`hourTotal`/`hourCorrect`) + a 30-day `answerLog` (day→[total, correct]); new `recordConfusion` records normalized bounded pairs (60→top 40); favorites API (`isFavorite`/`toggleFavorite`/`favoriteVocab` per course, stale ids dropped). | `lib/app_state.dart`, `lib/profile_store.dart` (load/save/export/import, additive) | AppState tests: buckets + answerLog growth, direction-independent pairs, bounded map, per-course favorites, save/load round-trip, export/import carry, legacy v4.3 import without insights keys |
+| Confusion capture in lessons | Wrong option answers (mcq/reverse/listen/picToWord/fillblank) map the chosen text to a real vocab id via a course-wide text→id map (targets + Arabic meanings) and record the pair; wrong match pairs record (left word ↔ right text id). true/false and emoji options never map (skipped implicitly). | `lib/screens/lesson_screen.dart` (`_idByText`, `_check`, `_onMatchTap`) | Covered via AppState pair tests + analyze; capture point shares the existing wrong-answer branch |
+| Insights screen | New dashboard: privacy banner, 7-day accuracy bars (localized weekday labels, today marked), best-hour card, smart-goal card with one-tap apply + snackbar, confusion pairs with per-pair practice CTA, review forecast (due now / due tomorrow), tutor tips list. Entry: insights button on the Profile weak-words card. | `lib/screens/insights_screen.dart` (new), `lib/screens/profile.dart`, `lib/scope.dart` (`trF` param substitution) | Analyze clean; dark-mode via theme-context colors; RTL-safe (Arabic-first strings) |
+| Pair practice | `WeakWordsScreen` gained optional `fixedPool` + `titleKey` — the insights screen opens a specific pair through the same SRS-rating flow. | `lib/screens/weak_words_screen.dart` | Same mechanics as the v4.1 lane (already tested); pool path exercised by fixedPool param |
+| Favorites UI | Star toggle on every dictionary word tile (yellow, filled/border); Cards tab gains a favorites-deck toggle chip: deck stat + queue switch, hand-picked words bypass the daily new-card budget by design (user choice), ratings still flow through `rateCard`. | `lib/screens/dictionary.dart`, `lib/screens/flashcards.dart` | Analyze clean; empty-state handled (`favoritesEmpty`/`favoritesHint`) |
+| l10n & version | 38 new ar/en keys (insights, tips, goal, pairs, favorites) — 207 keys per locale, no duplicates; `version` strings → 4.4.0 (replaced in place). | `lib/l10n.dart` | Duplicate-key scan clean |
+| Launcher icon | New brand icon (winding path → star, A/ع speech bubbles on the green gradient): baked white corners replaced by seamless per-row gradient fill → full-bleed square + circular variant, all 5 densities (48/72/96/144/192). | `android/app/src/main/res/mipmap-*/ic_launcher{,_round}.png`, `scripts/apply_app_icon.py` | Pixel-verified corners (no white ring); previews in `download/icon/` |
+
+Test count 49 → **72** (23 new in `test/insights_test.dart`: 16 engine-rule tests + 7 AppState capture tests). Known
+limitations: hour-bucket accuracy needs ≥8 answers per hour before a
+best-time tip appears; goal derivation uses the *current* goal against
+historical XP (documented approximation); confusion capture is lesson-only
+(flashcard self-ratings deliberately excluded to keep the signal honest).
