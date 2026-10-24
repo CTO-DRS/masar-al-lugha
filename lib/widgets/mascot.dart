@@ -1,161 +1,347 @@
-// Rafiq & Friends — companion widgets (v4.5, rich art v4.8.1).
+// Rafiq & Friends — living human companions (v4.9).
 //
-// The companions are drawn as layered vector art on a normalized 100x100
-// canvas by [_CompanionPainter] — flat "Duolingo-style" shapes with soft
-// shading, distinct silhouettes per character (owl tufts, chick crest,
-// cat whiskers + tail, fox muzzle, bunny ears) and per-mood facial
-// expressions (happy / celebrate / sad / neutral). No emoji glyphs, no
-// images, no new dependencies — everything is CustomPainter paths, so it
-// renders identically on every device and in widget tests.
+// v4.9: the cast is now drawn as HUMAN characters (a coach, classmates,
+// mentors) instead of animals — and everything LIVES:
+//   * idle breathing/bobbing + a natural blink cycle
+//   * celebration hop with raised arms when a milestone lands
+//   * a talking mouth synced to the speech-bubble typewriter
+//   * tap any companion → it waves at you
+// Art is still layered vector paths on a normalized 100x100 canvas — no
+// images, no emoji glyphs, no new dependencies, identical on every device.
+// Motion respects MediaQuery.disableAnimations (reduce motion) and the
+// [Mascot.animated] flag; widget tests pump fixed durations instead of
+// pumpAndSettle because idle motion intentionally never settles.
 //
 // Personality data comes from lib/mascot.dart (engine: cast, unlocks,
-// lines). This file only renders:
-//   * Mascot        — a character body reacting to a mood
-//   * MascotBubble  — companion + speech bubble for engine lines
+// lines, typewriter math). This file only renders:
+//   * Mascot        — an animated human body reacting to mood/talking/taps
+//   * MascotBubble  — companion + speech bubble with a typewriter reveal
 //
 // Back-compat: `MascotMood` is re-exported from the engine, and Mascot
 // defaults to `rafiq`, so every pre-4.5 call site keeps compiling.
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 
-import '../mascot.dart' show MascotMood, mascotById;
+import '../mascot.dart' show MascotEngine, MascotMood;
 import '../theme.dart';
 
 export '../mascot.dart' show MascotMood;
 
-// ---------------- per-character palettes ----------------
+// ---------------- per-character looks (v4.9 human crew) ----------------
 
-class _Palette {
-  final Color body;
-  final Color dark; // shading: wings, ears, brows, strokes
-  final Color light; // belly / inner ears / muzzle
-  final Color accent; // beak / nose
-  final bool bird; // birds get a beak + feet, furry get a muzzle
+class _Look {
+  final Color skin;
+  final Color hair; // males only (females wear a hijab)
+  final Color top; // shirt / tee
+  final Color topDark; // hem, collar, sleeve shade
+  final Color pants;
+  final Color? hijab; // null → male hairstyle
+  final bool glasses;
+  final bool blush;
 
-  const _Palette({
-    required this.body,
-    required this.dark,
-    required this.light,
-    required this.accent,
-    required this.bird,
+  const _Look({
+    required this.skin,
+    required this.hair,
+    required this.top,
+    required this.topDark,
+    required this.pants,
+    this.hijab,
+    this.glasses = false,
+    this.blush = false,
   });
 }
 
-const _purpleDark = Color(0xFFB05EE0);
-const _purpleLight = Color(0xFFF1E4FF);
-const _orangeDark = Color(0xFFE07C00);
+const _hairBlack = Color(0xFF2B2B33);
+const _denim = Color(0xFF4E6372);
+const _purpleDeep = Color(0xFF9C4DCC);
 
-_Palette _paletteFor(String id) {
+_Look _lookFor(String id) {
   switch (id) {
     case 'farah':
-      return const _Palette(
-        body: AppColors.orange,
-        dark: _orangeDark,
-        light: AppColors.yellow,
-        accent: AppColors.yellowDark,
-        bird: true,
+      // Farah — cheerful classmate, orange hijab, blue top.
+      return const _Look(
+        skin: Color(0xFFF4C79B),
+        hair: _hairBlack,
+        top: AppColors.blue,
+        topDark: AppColors.blueDark,
+        pants: AppColors.ink,
+        hijab: AppColors.orange,
+        blush: true,
       );
     case 'nur':
-      return const _Palette(
-        body: AppColors.blue,
-        dark: AppColors.blueDark,
-        light: AppColors.blueLight,
-        accent: AppColors.ink,
-        bird: false,
+      // Nur — calm night friend, blue hijab, deep teal top.
+      return const _Look(
+        skin: Color(0xFFE3AC7E),
+        hair: _hairBlack,
+        top: AppColors.blueDark,
+        topDark: Color(0xFF1479A8),
+        pants: AppColors.ink,
+        hijab: AppColors.blue,
+        blush: true,
       );
     case 'zayd':
-      return const _Palette(
-        body: AppColors.yellow,
-        dark: AppColors.yellowDark,
-        light: AppColors.bg,
-        accent: AppColors.ink,
-        bird: false,
+      // Zayd — the path expert, yellow tee, curly black hair.
+      return const _Look(
+        skin: Color(0xFFD9A06B),
+        hair: _hairBlack,
+        top: AppColors.yellow,
+        topDark: AppColors.yellowDark,
+        pants: _denim,
       );
     case 'salma':
-      return const _Palette(
-        body: AppColors.purple,
-        dark: _purpleDark,
-        light: _purpleLight,
-        accent: AppColors.ink,
-        bird: false,
+      // Salma — patient mentor, purple hijab, deep purple top.
+      return const _Look(
+        skin: Color(0xFFC98F5D),
+        hair: _hairBlack,
+        top: _purpleDeep,
+        topDark: Color(0xFF7E3AA6),
+        pants: AppColors.ink,
+        hijab: AppColors.purple,
+        blush: true,
       );
-    default: // rafiq
-      return const _Palette(
-        body: AppColors.green,
-        dark: AppColors.greenDark,
-        light: AppColors.greenLight,
-        accent: AppColors.orange,
-        bird: true,
+    default:
+      // Rafiq — your personal coach, green polo, glasses.
+      return const _Look(
+        skin: Color(0xFFEAB98C),
+        hair: _hairBlack,
+        top: AppColors.green,
+        topDark: AppColors.greenDark,
+        pants: _denim,
+        glasses: true,
       );
   }
 }
 
+// ---------------- pose (what the animator feeds the painter) ----------------
+
+class _Pose {
+  final double bobY; // vertical offset of the whole figure
+  final bool blink; // true → eyes closed this frame
+  final double mouth; // 0..1 talk openness
+  final double armL; // radians, 0 = hanging down, + raises outward
+  final double armR; // radians (negative raises the right arm outward)
+
+  const _Pose({
+    this.bobY = 0,
+    this.blink = false,
+    this.mouth = 0,
+    this.armL = 0,
+    this.armR = 0,
+  });
+
+  @override
+  bool operator ==(Object other) =>
+      other is _Pose &&
+      other.bobY == bobY &&
+      other.blink == blink &&
+      other.mouth == mouth &&
+      other.armL == armL &&
+      other.armR == armR;
+
+  @override
+  int get hashCode => Object.hash(bobY, blink, mouth, armL, armR);
+}
+
 // ---------------- the widget ----------------
 
-class Mascot extends StatelessWidget {
+class Mascot extends StatefulWidget {
   final double size;
   final MascotMood mood;
   final String characterId;
+
+  /// v4.9: set false to freeze all motion (static vector art). Motion is
+  /// additionally disabled automatically under reduce-motion settings.
+  final bool animated;
+
+  /// v4.9: while true the mouth opens/closes ("talking"). The bubble drives
+  /// this while its typewriter is revealing the line.
+  final ValueListenable<bool>? talking;
+
+  /// v4.9: extra tap handler. Tapping ALWAYS plays a wave animation.
+  final VoidCallback? onTap;
 
   const Mascot({
     super.key,
     this.size = 120,
     this.mood = MascotMood.happy,
     this.characterId = 'rafiq',
+    this.animated = true,
+    this.talking,
+    this.onTap,
   });
 
   @override
+  State<Mascot> createState() => _MascotState();
+}
+
+class _MascotState extends State<Mascot> with TickerProviderStateMixin {
+  late final AnimationController _bob = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2600),
+  );
+
+  late final AnimationController _blink = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 4400),
+  );
+
+  late final AnimationController _talk = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 340),
+  );
+
+  late final AnimationController _action = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1200),
+  );
+
+  bool _live = false;
+
+  /// Starts/stops the ambient controllers to match [live]. Controllers that
+  /// never run also keep pumpAndSettle terminating (tests, reduce motion).
+  void _setLive(bool live) {
+    _live = live;
+    void run(AnimationController c) {
+      if (live && !c.isAnimating) {
+        c.repeat();
+      } else if (!live && c.isAnimating) {
+        c.stop();
+      }
+    }
+
+    run(_bob);
+    run(_blink);
+    run(_talk);
+    if (!live && _action.isAnimating) _action.stop();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.animated && widget.mood == MascotMood.celebrate) {
+      _action.forward();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant Mascot old) {
+    super.didUpdateWidget(old);
+    if (old.mood != widget.mood) {
+      if (widget.mood == MascotMood.celebrate && _live) {
+        _action.forward(from: 0);
+      } else if (_action.isAnimating) {
+        _action.stop();
+      }
+    }
+  }
+
+  void _poke() {
+    if (_live && widget.mood != MascotMood.celebrate) {
+      _action.forward(from: 0);
+    }
+    widget.onTap?.call();
+  }
+
+  @override
+  void dispose() {
+    for (final c in [_bob, _blink, _talk, _action]) {
+      c.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final id = mascotById(characterId).id;
-    return CustomPaint(
-      size: Size.square(size),
-      painter: _CompanionPainter(id, mood),
+    final live = widget.animated && !MediaQuery.of(context).disableAnimations;
+    _setLive(live);
+    return GestureDetector(
+      onTap: _poke,
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_bob, _blink, _talk, _action]),
+        builder: (context, _) {
+          final bob = live ? math.sin(_bob.value * 2 * math.pi) * 1.2 : 0.0;
+          final phase = _blink.value;
+          final blink = live && phase > 0.90 && phase < 0.945;
+          final speaking = widget.talking?.value ?? false;
+          final mouth = live && speaking
+              ? math.sin(_talk.value * 2 * math.pi) * 0.5 + 0.5
+              : 0.0;
+          var armL = 0.0;
+          var armR = 0.0;
+          var hop = 0.0;
+          if (widget.mood == MascotMood.celebrate) {
+            // Arms stay up while celebrating; the one-shot action adds a
+            // springy raise + a little hop.
+            final a = _action.isAnimating
+                ? Curves.easeOutBack.transform(_action.value)
+                : 1.0;
+            final lift = a.clamp(0.0, 1.35);
+            armL = 2.2 * lift;
+            armR = -2.2 * lift;
+            hop = _action.isAnimating
+                ? -math.sin(_action.value * math.pi) * 4.5
+                : 0.0;
+          } else if (live && _action.isAnimating) {
+            // Wave: the right arm swings while the action plays.
+            final w = _action.value;
+            armR = -2.0 + 0.55 * math.sin(w * math.pi * 3);
+          }
+          return CustomPaint(
+            size: Size.square(widget.size),
+            painter: _HumanPainter(
+              widget.characterId,
+              widget.mood,
+              _Pose(
+                bobY: bob + hop,
+                blink: blink,
+                mouth: mouth,
+                armL: armL,
+                armR: armR,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
 
 // ---------------- painter ----------------
 
-class _CompanionPainter extends CustomPainter {
+class _HumanPainter extends CustomPainter {
   final String characterId;
   final MascotMood mood;
+  final _Pose pose;
 
-  _CompanionPainter(this.characterId, this.mood);
+  _HumanPainter(this.characterId, this.mood, this.pose);
 
   @override
   void paint(Canvas canvas, Size size) {
-    final p = _paletteFor(characterId);
+    final lk = _lookFor(characterId);
     canvas.save();
     canvas.scale(size.width / 100, size.height / 100);
 
     _groundShadow(canvas);
-    switch (characterId) {
-      case 'farah':
-        _paintChick(canvas, p);
-        break;
-      case 'nur':
-        _paintCat(canvas, p);
-        break;
-      case 'zayd':
-        _paintFox(canvas, p);
-        break;
-      case 'salma':
-        _paintBunny(canvas, p);
-        break;
-      default:
-        _paintOwl(canvas, p);
-    }
+    canvas.translate(0, pose.bobY);
+
+    _legsAndShoes(canvas, lk);
+    _arm(canvas, lk, const Offset(32.5, 63), pose.armL);
+    _arm(canvas, lk, const Offset(67.5, 63), pose.armR);
+    _torso(canvas, lk);
+    _head(canvas, lk);
+
     if (mood == MascotMood.celebrate) _celebration(canvas);
 
     canvas.restore();
   }
 
-  // ---------------- shared helpers ----------------
+  // ---------------- body parts ----------------
 
   void _groundShadow(Canvas c) {
     c.drawOval(
-      Rect.fromCenter(center: const Offset(50, 96.5), width: 46, height: 6),
+      Rect.fromCenter(center: const Offset(50, 96.5), width: 44, height: 6),
       Paint()..color = const Color(0x1A3C3C3C),
     );
   }
@@ -170,106 +356,184 @@ class _CompanionPainter extends CustomPainter {
   void _circle(Canvas c, double cx, double cy, double r, Color color) =>
       _ellipse(c, cx, cy, r, r, color);
 
-  void _triangle(Canvas c, Offset a, Offset b, Offset d, Color color,
-      {bool rounded = false}) {
-    final path = Path()
-      ..moveTo(a.dx, a.dy)
-      ..lineTo(b.dx, b.dy)
-      ..lineTo(d.dx, d.dy)
-      ..close();
-    c.drawPath(
-      path,
-      Paint()
-        ..color = color
-        ..strokeJoin = rounded ? StrokeJoin.round : StrokeJoin.miter
-        ..style = PaintingStyle.fill,
+  Paint _stroke(Color color, double w) => Paint()
+    ..color = color
+    ..strokeWidth = w
+    ..strokeCap = StrokeCap.round
+    ..style = PaintingStyle.stroke;
+
+  void _legsAndShoes(Canvas c, _Look lk) {
+    final legs = RRect.fromRectAndRadius(
+      const Rect.fromLTWH(36.5, 74, 11.5, 16),
+      const Radius.circular(4),
     );
+    final legs2 = RRect.fromRectAndRadius(
+      const Rect.fromLTWH(52, 74, 11.5, 16),
+      const Radius.circular(4),
+    );
+    c.drawRRect(legs, Paint()..color = lk.pants);
+    c.drawRRect(legs2, Paint()..color = lk.pants);
+    _ellipse(c, 42, 91.5, 6.2, 2.8, AppColors.ink);
+    _ellipse(c, 58, 91.5, 6.2, 2.8, AppColors.ink);
   }
 
-  /// Eye: white sclera + pupil + highlight. Sad looks down a little.
-  void _eye(Canvas c, double cx, double cy, double r, MascotMood mood) {
-    _circle(c, cx, cy, r, Colors.white);
-    final dy = mood == MascotMood.sad ? r * 0.28 : 0.0;
-    _circle(c, cx, cy + dy, r * 0.46, AppColors.ink);
-    _circle(c, cx - r * 0.16, cy + dy - r * 0.18, r * 0.14, Colors.white);
+  void _torso(Canvas c, _Look lk) {
+    final torso = RRect.fromRectAndCorners(
+      const Rect.fromLTWH(31, 55, 38, 29),
+      topLeft: const Radius.circular(12),
+      topRight: const Radius.circular(12),
+      bottomLeft: const Radius.circular(7),
+      bottomRight: const Radius.circular(7),
+    );
+    c.drawRRect(torso, Paint()..color = lk.top);
+    // hem band
+    c.drawRRect(
+      RRect.fromRectAndCorners(
+        const Rect.fromLTWH(31, 79, 38, 5),
+        bottomLeft: const Radius.circular(7),
+        bottomRight: const Radius.circular(7),
+      ),
+      Paint()..color = lk.topDark,
+    );
+    // collar notch
+    final collar = Path()
+      ..moveTo(45.5, 55)
+      ..lineTo(50, 60.5)
+      ..lineTo(54.5, 55);
+    c.drawPath(collar, _stroke(lk.topDark, 2));
   }
 
-  /// Brows above the eyes: worried (inner ends up) when sad, raised and
-  /// excited when celebrating. Hidden for happy/neutral.
-  void _brows(Canvas c, MascotMood mood, Color color,
-      {required Offset left, required Offset right, double w = 5}) {
-    if (mood != MascotMood.sad && mood != MascotMood.celebrate) return;
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = w
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke;
-    final raise = mood == MascotMood.celebrate ? 3.0 : 0.0;
-    final innerLift = mood == MascotMood.sad ? 6.0 : 3.0;
-    // left brow: outer -> inner (inner end lifted)
-    c.drawLine(Offset(left.dx - 7, left.dy - raise),
-        Offset(left.dx, left.dy - raise - innerLift), paint);
-    // right brow: inner -> outer (mirrored)
-    c.drawLine(Offset(right.dx, right.dy - raise - innerLift),
-        Offset(right.dx + 7, right.dy - raise), paint);
+  /// Arm capsule pivoting at the shoulder. angle 0 hangs down; positive
+  /// raises the LEFT arm outward-up, negative raises the RIGHT one.
+  void _arm(Canvas c, _Look lk, Offset shoulder, double angle) {
+    c.save();
+    c.translate(shoulder.dx, shoulder.dy);
+    c.rotate(angle);
+    c.drawRRect(
+      RRect.fromRectAndRadius(
+        const Rect.fromLTWH(-3.4, -2, 6.8, 20),
+        const Radius.circular(3.4),
+      ),
+      Paint()..color = lk.top,
+    );
+    c.drawCircle(const Offset(0, 18), 3.1, Paint()..color = lk.skin);
+    c.restore();
   }
 
-  /// Furry mouth: nose + smile / frown / open smile per mood.
-  void _muzzle(Canvas c, MascotMood mood, Offset nose, Color noseColor,
-      {double w = 12}) {
-    final paint = Paint()
-      ..color = AppColors.ink
-      ..strokeWidth = 2
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke;
-    c.drawCircle(nose, w * 0.18, Paint()..color = noseColor);
-    final mouth = Path();
+  void _head(Canvas c, _Look lk) {
+    final female = lk.hijab != null;
+
+    // ears stick out from behind the head (males only)
+    if (!female) {
+      _circle(c, 28.8, 37, 3.4, lk.skin);
+      _circle(c, 71.2, 37, 3.4, lk.skin);
+    }
+
+    _circle(c, 50, 35, 21, lk.skin);
+
+    if (female) {
+      // hijab: outer shell behind the face + drape under the chin.
+      _circle(c, 50, 33.5, 23, lk.hijab!);
+      _ellipse(c, 50, 58.5, 20, 8, lk.hijab!);
+      _circle(c, 50, 39.5, 16.8, lk.skin);
+      // fold hint
+      final fold = Path()
+        ..moveTo(33.5, 30)
+        ..quadraticBezierTo(50, 20.5, 66.5, 30);
+      c.drawPath(fold, _stroke(Colors.white.withValues(alpha: .25), 2.2));
+    } else {
+      // hair cap via the two-circle trick, then character fringe details.
+      _circle(c, 50, 30.5, 20.5, lk.hair);
+      _circle(c, 50, 38.5, 17.6, lk.skin);
+      if (characterId == 'zayd') {
+        _circle(c, 36, 18, 8.2, lk.hair);
+        _circle(c, 50, 13.5, 9.4, lk.hair);
+        _circle(c, 64, 18, 8.2, lk.hair);
+      }
+    }
+
+    _face(c, lk);
+  }
+
+  void _face(Canvas c, _Look lk) {
+    const eyeL = Offset(42.5, 38.5);
+    const eyeR = Offset(57.5, 38.5);
+    final sad = mood == MascotMood.sad;
+
+    // eyes
+    if (pose.blink) {
+      c.drawLine(eyeL.translate(-2.6, 0), eyeL.translate(2.6, 0),
+          _stroke(AppColors.ink, 2));
+      c.drawLine(eyeR.translate(-2.6, 0), eyeR.translate(2.6, 0),
+          _stroke(AppColors.ink, 2));
+    } else {
+      final dy = sad ? 1.1 : 0.0;
+      _circle(c, eyeL.dx, eyeL.dy + dy, 3.1, AppColors.ink);
+      _circle(c, eyeR.dx, eyeR.dy + dy, 3.1, AppColors.ink);
+      _circle(c, eyeL.dx - 1.0, eyeL.dy + dy - 1.0, 1.0, Colors.white);
+      _circle(c, eyeR.dx - 1.0, eyeR.dy + dy - 1.0, 1.0, Colors.white);
+    }
+
+    // brows: worried when sad, raised when celebrating
+    final browPaint = _stroke(lk.hijab != null ? lk.topDark : lk.hair, 2.2);
+    final raise = mood == MascotMood.celebrate ? 2.4 : 0.0;
+    final tilt = sad ? 2.0 : 0.0;
+    c.drawLine(Offset(eyeL.dx - 3.4, 32.6 - raise),
+        Offset(eyeL.dx + 3.2, 31.6 - raise + tilt), browPaint);
+    c.drawLine(Offset(eyeR.dx - 3.2, 31.6 - raise - tilt),
+        Offset(eyeR.dx + 3.4, 32.6 - raise), browPaint);
+
+    // glasses (Rafiq)
+    if (lk.glasses) {
+      final gp = _stroke(AppColors.ink.withValues(alpha: .8), 1.5);
+      c.drawCircle(eyeL, 5.4, gp);
+      c.drawCircle(eyeR, 5.4, gp);
+      c.drawLine(
+          Offset(eyeL.dx + 5.4, eyeL.dy), Offset(eyeR.dx - 5.4, eyeR.dy), gp);
+    }
+
+    // blush
+    if (lk.blush) {
+      _circle(c, 35.2, 44.5, 2.8, AppColors.red.withValues(alpha: .22));
+      _circle(c, 64.8, 44.5, 2.8, AppColors.red.withValues(alpha: .22));
+    }
+
+    _mouth(c);
+  }
+
+  void _mouth(Canvas c) {
+    const mx = 50.0;
+    const my = 46.0;
+    // Talking overrides the mood mouth: an open, animating mouth.
+    if (pose.mouth > 0.08) {
+      _ellipse(c, mx, my, 3.0 + pose.mouth * 1.9, 0.9 + pose.mouth * 3.4,
+          AppColors.ink);
+      return;
+    }
+    final p = _stroke(AppColors.ink, 2.2);
     switch (mood) {
       case MascotMood.sad:
-        mouth
-          ..moveTo(nose.dx - 5, nose.dy + 9)
-          ..quadraticBezierTo(nose.dx, nose.dy + 4.5, nose.dx + 5, nose.dy + 9);
+        final mouth = Path()
+          ..moveTo(mx - 5, my + 3.5)
+          ..quadraticBezierTo(mx, my - 1, mx + 5, my + 3.5);
+        c.drawPath(mouth, p);
         break;
       case MascotMood.celebrate:
-        mouth
-          ..moveTo(nose.dx - 5, nose.dy + 6)
-          ..quadraticBezierTo(nose.dx, nose.dy + 13, nose.dx + 5, nose.dy + 6)
+        final mouth = Path()
+          ..moveTo(mx - 5.5, my - 0.5)
+          ..quadraticBezierTo(mx, my + 6.5, mx + 5.5, my - 0.5)
           ..close();
         c.drawPath(mouth, Paint()..color = AppColors.ink);
-        return;
+        break;
       case MascotMood.neutral:
-        mouth
-          ..moveTo(nose.dx - 3.5, nose.dy + 8)
-          ..lineTo(nose.dx + 3.5, nose.dy + 8);
+        c.drawLine(Offset(mx - 3.5, my + 2), Offset(mx + 3.5, my + 2), p);
         break;
       case MascotMood.happy:
-        mouth
-          ..moveTo(nose.dx - 5, nose.dy + 6)
-          ..quadraticBezierTo(nose.dx, nose.dy + 11, nose.dx + 5, nose.dy + 6);
+        final mouth = Path()
+          ..moveTo(mx - 5, my)
+          ..quadraticBezierTo(mx, my + 5, mx + 5, my);
+        c.drawPath(mouth, p);
         break;
-    }
-    c.drawPath(mouth, paint);
-  }
-
-  /// Bird beak per mood: open diamond when celebrating, droopy when sad.
-  void _beak(Canvas c, MascotMood mood, double cx, double cy, Color accent) {
-    switch (mood) {
-      case MascotMood.celebrate:
-        _triangle(c, Offset(cx - 6, cy), Offset(cx + 6, cy), Offset(cx, cy + 9),
-            accent,
-            rounded: true);
-        _triangle(c, Offset(cx - 4.5, cy + 1), Offset(cx + 4.5, cy + 1),
-            Offset(cx, cy + 6.5), AppColors.ink.withValues(alpha: .55));
-        break;
-      case MascotMood.sad:
-        _triangle(c, Offset(cx - 4, cy + 1), Offset(cx + 4, cy + 1),
-            Offset(cx, cy + 6), accent,
-            rounded: true);
-        break;
-      default:
-        _triangle(c, Offset(cx - 5, cy - 1), Offset(cx + 5, cy - 1),
-            Offset(cx, cy + 8), accent,
-            rounded: true);
     }
   }
 
@@ -314,225 +578,28 @@ class _CompanionPainter extends CustomPainter {
     c.restore();
   }
 
-  // ---------------- characters ----------------
-
-  /// Rafiq — the wise owl: tufts, big eye discs, wings, little feet.
-  void _paintOwl(Canvas c, _Palette p) {
-    // ear tufts (behind body)
-    _triangle(c, const Offset(28, 20), const Offset(40, 22),
-        const Offset(33, 6), p.dark,
-        rounded: true);
-    _triangle(c, const Offset(60, 22), const Offset(72, 20),
-        const Offset(67, 6), p.dark,
-        rounded: true);
-    // body
-    _ellipse(c, 50, 56, 37, 38, p.body);
-    // wings
-    _ellipse(c, 17, 60, 9, 16, p.dark);
-    _ellipse(c, 83, 60, 9, 16, p.dark);
-    // belly
-    _ellipse(c, 50, 73, 21, 17, p.light);
-    // big owl eye discs
-    _circle(c, 38, 45, 13.5, Colors.white);
-    _circle(c, 62, 45, 13.5, Colors.white);
-    _eye(c, 38, 45, 9, mood);
-    _eye(c, 62, 45, 9, mood);
-    _brows(c, mood, p.dark,
-        left: const Offset(35, 27.5), right: const Offset(65, 27.5));
-    _beak(c, mood, 50, 56, p.accent);
-    // feet
-    _ellipse(c, 42, 93.5, 4.5, 3, p.accent);
-    _ellipse(c, 58, 93.5, 4.5, 3, p.accent);
-  }
-
-  /// Farah — the chirpy chick: single crest feather, round body.
-  void _paintChick(Canvas c, _Palette p) {
-    // crest feather
-    final crest = Path()
-      ..moveTo(50, 22)
-      ..quadraticBezierTo(46, 6, 58, 4)
-      ..quadraticBezierTo(55, 12, 56, 22)
-      ..close();
-    c.drawPath(
-      crest,
-      Paint()
-        ..color = p.dark
-        ..strokeJoin = StrokeJoin.round,
-    );
-    // body
-    _circle(c, 50, 58, 36, p.body);
-    // wings
-    _ellipse(c, 16, 62, 8, 13, p.dark);
-    _ellipse(c, 84, 62, 8, 13, p.dark);
-    // belly
-    _ellipse(c, 50, 73, 18, 14, p.light);
-    // face
-    _circle(c, 39, 48, 11, Colors.white);
-    _circle(c, 61, 48, 11, Colors.white);
-    _eye(c, 39, 48, 7.5, mood);
-    _eye(c, 61, 48, 7.5, mood);
-    _brows(c, mood, p.dark,
-        left: const Offset(36, 33), right: const Offset(64, 33));
-    _beak(c, mood, 50, 57, p.accent);
-    // feet
-    _ellipse(c, 42, 93.5, 4, 2.8, p.dark);
-    _ellipse(c, 58, 93.5, 4, 2.8, p.dark);
-  }
-
-  /// Nur — the night cat: pointed ears, whiskers, curling tail.
-  void _paintCat(Canvas c, _Palette p) {
-    // tail (behind body)
-    final tail = Path()
-      ..moveTo(80, 78)
-      ..quadraticBezierTo(97, 72, 93, 52);
-    c.drawPath(
-      tail,
-      Paint()
-        ..color = p.dark
-        ..strokeWidth = 7
-        ..strokeCap = StrokeCap.round
-        ..style = PaintingStyle.stroke,
-    );
-    // ears with inner triangles
-    _triangle(c, const Offset(24, 26), const Offset(44, 26),
-        const Offset(29, 8), p.body,
-        rounded: true);
-    _triangle(c, const Offset(56, 26), const Offset(76, 26),
-        const Offset(71, 8), p.body,
-        rounded: true);
-    _triangle(c, const Offset(30, 22), const Offset(40, 22),
-        const Offset(32, 13), p.light);
-    _triangle(c, const Offset(60, 22), const Offset(70, 22),
-        const Offset(68, 13), p.light);
-    // body
-    _ellipse(c, 50, 58, 34, 35, p.body);
-    // belly + muzzle patch
-    _ellipse(c, 50, 75, 18, 12, p.light);
-    _ellipse(c, 50, 63, 15, 10.5, p.light);
-    // face
-    _circle(c, 38, 47, 10, Colors.white);
-    _circle(c, 62, 47, 10, Colors.white);
-    _eye(c, 38, 47, 6.8, mood);
-    _eye(c, 62, 47, 6.8, mood);
-    _brows(c, mood, p.dark,
-        left: const Offset(35, 33), right: const Offset(65, 33));
-    _muzzle(c, mood, const Offset(50, 59), p.accent);
-    // whiskers
-    final whisker = Paint()
-      ..color = p.dark
-      ..strokeWidth = 1.6
-      ..strokeCap = StrokeCap.round;
-    for (final dy in [-2.5, 0.0, 2.5]) {
-      c.drawLine(Offset(30, 60 + dy), Offset(19, 57 + dy * 1.6), whisker);
-      c.drawLine(Offset(70, 60 + dy), Offset(81, 57 + dy * 1.6), whisker);
-    }
-  }
-
-  /// Zayd — the path fox: big ears, white muzzle, sly default brows.
-  void _paintFox(Canvas c, _Palette p) {
-    // tail with light tip (behind body)
-    final tail = Path()
-      ..moveTo(80, 80)
-      ..quadraticBezierTo(98, 70, 92, 50);
-    c.drawPath(
-      tail,
-      Paint()
-        ..color = p.dark
-        ..strokeWidth = 8
-        ..strokeCap = StrokeCap.round
-        ..style = PaintingStyle.stroke,
-    );
-    _circle(c, 92, 50, 4.5, p.light);
-    // big ears with dark inner
-    _triangle(c, const Offset(20, 30), const Offset(44, 28),
-        const Offset(26, 6), p.body,
-        rounded: true);
-    _triangle(c, const Offset(56, 28), const Offset(80, 30),
-        const Offset(74, 6), p.body,
-        rounded: true);
-    _triangle(c, const Offset(27, 25), const Offset(39, 24),
-        const Offset(29, 13), p.dark);
-    _triangle(c, const Offset(61, 24), const Offset(73, 25),
-        const Offset(71, 13), p.dark);
-    // body
-    _ellipse(c, 50, 58, 34, 35, p.body);
-    // belly + white muzzle
-    _ellipse(c, 50, 76, 16, 12, p.light);
-    final muzzle = Path()
-      ..moveTo(37, 58)
-      ..quadraticBezierTo(50, 54, 63, 58)
-      ..quadraticBezierTo(60, 72, 50, 73)
-      ..quadraticBezierTo(40, 72, 37, 58)
-      ..close();
-    c.drawPath(muzzle, Paint()..color = p.light);
-    // face
-    _circle(c, 38, 46, 10, Colors.white);
-    _circle(c, 62, 46, 10, Colors.white);
-    _eye(c, 38, 46, 6.8, mood);
-    _eye(c, 62, 46, 6.8, mood);
-    _brows(c, mood, p.dark,
-        left: const Offset(35, 32.5), right: const Offset(65, 32.5));
-    _muzzle(c, mood, const Offset(50, 60), p.accent, w: 11);
-  }
-
-  /// Salma — the calm bunny: long ears with light inner, blush cheeks.
-  void _paintBunny(Canvas c, _Palette p) {
-    // long ears with inner
-    for (final dx in [-11.0, 11.0]) {
-      final ear = RRect.fromRectAndCorners(
-        Rect.fromLTWH(50 + dx - 5.5, 2, 11, 32),
-        topLeft: const Radius.circular(6),
-        topRight: const Radius.circular(6),
-        bottomLeft: const Radius.circular(4),
-        bottomRight: const Radius.circular(4),
-      );
-      c.drawRRect(ear, Paint()..color = p.body);
-      c.drawRRect(
-        RRect.fromRectAndCorners(
-          Rect.fromLTWH(50 + dx - 2.8, 6, 5.6, 22),
-          topLeft: const Radius.circular(3),
-          topRight: const Radius.circular(3),
-          bottomLeft: const Radius.circular(2),
-          bottomRight: const Radius.circular(2),
-        ),
-        Paint()..color = p.light,
-      );
-    }
-    // body
-    _ellipse(c, 50, 60, 33, 34, p.body);
-    // belly
-    _ellipse(c, 50, 76, 17, 13, p.light);
-    // face
-    _circle(c, 39, 50, 10, Colors.white);
-    _circle(c, 61, 50, 10, Colors.white);
-    _eye(c, 39, 50, 6.8, mood);
-    _eye(c, 61, 50, 6.8, mood);
-    _brows(c, mood, p.dark,
-        left: const Offset(36, 36.5), right: const Offset(64, 36.5));
-    // blush
-    _circle(c, 29, 60, 3.2, Colors.white.withValues(alpha: .35));
-    _circle(c, 71, 60, 3.2, Colors.white.withValues(alpha: .35));
-    _muzzle(c, mood, const Offset(50, 62), p.accent, w: 11);
-  }
-
   @override
-  bool shouldRepaint(covariant _CompanionPainter old) =>
-      old.characterId != characterId || old.mood != mood;
+  bool shouldRepaint(covariant _HumanPainter old) =>
+      old.characterId != characterId || old.mood != mood || old.pose != pose;
 }
 
-/// Companion + speech bubble. The text comes from MascotEngine lines.
-/// Entrance: gentle scale+fade (skipped when [animate] is false so
-/// reduce-motion settings can disable it).
-class MascotBubble extends StatelessWidget {
+/// Companion + speech bubble with a typewriter reveal (v4.9).
+///
+/// While the text is being revealed the mouth of the companion animates:
+/// when [showAvatar] is true the built-in avatar is synced automatically;
+/// otherwise pass the same [talking] notifier to the nearby [Mascot].
+/// Tapping the bubble reveals the whole line at once. The entrance
+/// scale+fade is skipped when [animate] is false (reduce motion) — which
+/// also prints the full text instantly.
+class MascotBubble extends StatefulWidget {
   final String characterId;
   final MascotMood mood;
   final String text;
   final double size;
   final bool animate;
-
-  /// v4.5: set false when a large companion is already visible next to the
-  /// bubble (result screens) — renders the bubble text only.
   final bool showAvatar;
+  final ValueNotifier<bool>? talking;
+  final VoidCallback? onTap;
 
   const MascotBubble({
     super.key,
@@ -542,71 +609,160 @@ class MascotBubble extends StatelessWidget {
     this.size = 96,
     this.animate = true,
     this.showAvatar = true,
+    this.talking,
+    this.onTap,
   });
+
+  @override
+  State<MascotBubble> createState() => _MascotBubbleState();
+}
+
+class _MascotBubbleState extends State<MascotBubble>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _type = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 400),
+  )
+    ..addListener(_tick)
+    ..addStatusListener(_onStatus);
+
+  late String _shown = _reveal(0);
+
+  bool get _typing => _shown.length < widget.text.length;
+
+  void _pushTalking(bool v) => widget.talking?.value = v;
+
+  String _reveal(int elapsedMs) => widget.text.substring(
+      0, MascotEngine.revealedChars(widget.text, elapsedMs: elapsedMs));
+
+  void _tick() {
+    final dur = _type.duration ?? Duration.zero;
+    final elapsed = (_type.value * dur.inMilliseconds).round();
+    final next = _reveal(elapsed);
+    if (next != _shown) setState(() => _shown = next);
+  }
+
+  void _onStatus(AnimationStatus s) {
+    if (s == AnimationStatus.completed) {
+      setState(() => _shown = widget.text);
+      _pushTalking(false);
+    }
+  }
+
+  void _configure() {
+    _type.stop();
+    if (!widget.animate || widget.text.isEmpty) {
+      _shown = widget.text;
+      _pushTalking(false);
+      return;
+    }
+    _type.duration = MascotEngine.revealDuration(widget.text);
+    _shown = _reveal(0);
+    _pushTalking(true);
+    _type.forward();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _configure();
+  }
+
+  @override
+  void didUpdateWidget(covariant MascotBubble old) {
+    super.didUpdateWidget(old);
+    if (old.text != widget.text || old.animate != widget.animate) {
+      _configure();
+    }
+  }
+
+  void _tap() {
+    if (_typing) {
+      _type.stop();
+      setState(() => _shown = widget.text);
+      _pushTalking(false);
+    }
+    widget.onTap?.call();
+  }
+
+  @override
+  void dispose() {
+    _type.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final body = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (showAvatar) ...[
-          Mascot(size: size, mood: mood, characterId: characterId),
+        if (widget.showAvatar) ...[
+          Mascot(
+            size: widget.size,
+            mood: widget.mood,
+            characterId: widget.characterId,
+            talking: widget.talking,
+          ),
           const SizedBox(width: 10),
         ],
         Expanded(
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                decoration: BoxDecoration(
-                  color: context.card,
-                  border: Border.all(color: context.line, width: 2),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                        color: context.line,
-                        offset: const Offset(0, 3),
-                        blurRadius: 0),
-                  ],
-                ),
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 15,
-                    height: 1.5,
-                    fontWeight: FontWeight.w700,
-                    color: context.bodyText,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: _tap,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: context.card,
+                    border: Border.all(color: context.line, width: 2),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                          color: context.line,
+                          offset: const Offset(0, 3),
+                          blurRadius: 0),
+                    ],
+                  ),
+                  child: Text(
+                    _shown,
+                    style: TextStyle(
+                      fontSize: 15,
+                      height: 1.5,
+                      fontWeight: FontWeight.w700,
+                      color: context.bodyText,
+                    ),
                   ),
                 ),
-              ),
-              // bubble tail pointing at the companion
-              Positioned(
-                top: 2,
-                left: -5,
-                child: Transform.rotate(
-                  angle: 3.14159 / 4,
-                  child: Container(
-                    width: 14,
-                    height: 14,
-                    decoration: BoxDecoration(
-                      color: context.card,
-                      border: Border(
-                        left: BorderSide(color: context.line, width: 2),
-                        top: BorderSide(color: context.line, width: 2),
+                // bubble tail pointing at the companion
+                Positioned(
+                  top: 2,
+                  left: -5,
+                  child: Transform.rotate(
+                    angle: 3.14159 / 4,
+                    child: Container(
+                      width: 14,
+                      height: 14,
+                      decoration: BoxDecoration(
+                        color: context.card,
+                        border: Border(
+                          left: BorderSide(color: context.line, width: 2),
+                          top: BorderSide(color: context.line, width: 2),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
     );
-    if (!animate) return body;
+    if (!widget.animate) return body;
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0.0, end: 1.0),
       duration: const Duration(milliseconds: 350),

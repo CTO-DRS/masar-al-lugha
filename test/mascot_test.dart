@@ -350,7 +350,9 @@ void main() {
               ),
             ),
           ));
-          await tester.pumpAndSettle();
+          // v4.9: idle motion never settles — pump fixed frames instead.
+          await tester.pump();
+          await tester.pump(const Duration(milliseconds: 300));
           expect(tester.takeException(), isNull, reason: '${c.id}/$mood');
         }
       });
@@ -367,7 +369,9 @@ void main() {
           ),
         ),
       ));
-      await tester.pumpAndSettle();
+      // The typewriter is finite, but the avatar idles forever: pump past
+      // the reveal window instead of pumpAndSettle.
+      await tester.pump(const Duration(seconds: 2));
       expect(find.text('Hello learner'), findsOneWidget);
       expect(find.byType(Mascot), findsOneWidget);
 
@@ -382,9 +386,172 @@ void main() {
           ),
         ),
       ));
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(find.text('Second bubble'), findsOneWidget);
       expect(find.byType(Mascot), findsNothing);
+    });
+  });
+
+  group('v4.9 typewriter math', () {
+    test('revealedChars clamps and scales', () {
+      const text = 'abcdef';
+      expect(MascotEngine.revealedChars(text, elapsedMs: 0), 0);
+      expect(MascotEngine.revealedChars(text, elapsedMs: -5), 0);
+      expect(
+        MascotEngine.revealedChars(text, elapsedMs: 1000, charsPerSecond: 3),
+        3,
+      );
+      expect(MascotEngine.revealedChars(text, elapsedMs: 99999), 6);
+      expect(MascotEngine.revealedChars('', elapsedMs: 100), 0);
+    });
+
+    test('revealDuration matches the character rate', () {
+      expect(MascotEngine.revealDuration(''), Duration.zero);
+      // 34 cps default: 34 chars → 1000 ms; 7 chars → ceil(205.9) = 206.
+      expect(MascotEngine.revealDuration('x' * 34),
+          const Duration(milliseconds: 1000));
+      expect(MascotEngine.revealDuration('1234567'),
+          const Duration(milliseconds: 206));
+    });
+
+    test('a full reveal always shows the whole line', () {
+      const text = 'سطر عربي كامل للتحقق من الآلة الكاتبة';
+      final ms = MascotEngine.revealDuration(text).inMilliseconds;
+      expect(MascotEngine.revealedChars(text, elapsedMs: ms), text.length);
+    });
+  });
+
+  group('v4.9 tap + greeting lines', () {
+    test('tap lines: parity, no placeholders, deterministic rotation', () {
+      expect(mascotTapLines, isNotEmpty);
+      final f = _f();
+      for (var i = 0; i < mascotTapLines.length; i++) {
+        final ar = MascotEngine.tapLine(f, 'ar', salt: i);
+        final en = MascotEngine.tapLine(f, 'en', salt: i);
+        expect(ar, mascotTapLines[i].$1);
+        expect(en, mascotTapLines[i].$2);
+        expect(ar.contains('{'), isFalse, reason: ar);
+        expect(en.contains('{'), isFalse, reason: en);
+      }
+      // rotation actually rotates
+      expect(MascotEngine.tapLine(f, 'ar', salt: 0),
+          isNot(MascotEngine.tapLine(f, 'ar', salt: 1)));
+    });
+
+    test('greetings: slot boundaries and parity', () {
+      String g(int h, String l, {int salt = 0}) =>
+          MascotEngine.greetingLine(hour: h, locale: l, salt: salt);
+      // morning 5-11, afternoon 12-17, night otherwise
+      expect(g(5, 'en'), startsWith('Good morning'));
+      expect(g(11, 'en'), startsWith('Good morning'));
+      expect(g(12, 'en'), startsWith('Good evening'));
+      expect(g(17, 'en'), startsWith('Good evening'));
+      expect(g(18, 'en'), startsWith('Restful night'));
+      expect(g(23, 'en'), startsWith('Restful night'));
+      expect(g(4, 'en'), startsWith('Restful night'));
+      for (final h in [5, 9, 12, 15, 18, 22, 3]) {
+        expect(g(h, 'ar'), isNotEmpty);
+        expect(g(h, 'en'), isNotEmpty);
+      }
+      // salt rotates within a slot
+      expect(g(9, 'ar', salt: 0), isNot(g(9, 'ar', salt: 1)));
+    });
+  });
+
+  group('v4.9 living widgets', () {
+    testWidgets('typewriter reveals progressively then completes',
+        (tester) async {
+      final text = 'A' * 34; // exactly 1 second at 34 cps
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: MascotBubble(
+            characterId: 'rafiq',
+            mood: MascotMood.happy,
+            text: text,
+            showAvatar: false,
+          ),
+        ),
+      ));
+      await tester.pump(const Duration(milliseconds: 250));
+      expect(find.text(text), findsNothing); // mid-reveal
+      expect(find.textContaining('A'), findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 900));
+      expect(find.text(text), findsOneWidget); // complete
+    });
+
+    testWidgets('tapping the bubble reveals the line instantly',
+        (tester) async {
+      final text = 'B' * 34;
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: MascotBubble(
+            characterId: 'rafiq',
+            mood: MascotMood.happy,
+            text: text,
+            showAvatar: false,
+          ),
+        ),
+      ));
+      await tester.pump(const Duration(milliseconds: 150));
+      expect(find.text(text), findsNothing);
+      await tester.tap(find.byType(MascotBubble));
+      await tester.pump();
+      expect(find.text(text), findsOneWidget);
+    });
+
+    testWidgets('talking notifier: true while typing, false after',
+        (tester) async {
+      final talking = ValueNotifier<bool>(false);
+      final text = 'C' * 34;
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: MascotBubble(
+            characterId: 'rafiq',
+            mood: MascotMood.happy,
+            text: text,
+            showAvatar: false,
+            talking: talking,
+          ),
+        ),
+      ));
+      await tester.pump(const Duration(milliseconds: 200));
+      expect(talking.value, isTrue);
+      await tester.pump(const Duration(seconds: 2));
+      expect(talking.value, isFalse);
+      talking.dispose();
+    });
+
+    testWidgets('tapping a Mascot waves without exceptions', (tester) async {
+      var poked = false;
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Mascot(
+              size: 80,
+              characterId: 'salma',
+              onTap: () => poked = true,
+            ),
+          ),
+        ),
+      ));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.tap(find.byType(Mascot));
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(poked, isTrue);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('animated:false stays fully static (settle-able)',
+        (tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Mascot(size: 80, characterId: 'nur', animated: false),
+          ),
+        ),
+      ));
+      await tester.pumpAndSettle(); // must terminate
+      expect(tester.takeException(), isNull);
     });
   });
 }

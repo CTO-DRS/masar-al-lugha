@@ -3,9 +3,11 @@
 // (M9), stable node sides (M7), and a weak-words practice launcher (H4).
 import 'package:flutter/material.dart';
 
+import '../mascot.dart' show MascotEngine;
 import '../models.dart';
 import '../scope.dart';
 import '../theme.dart';
+import '../widgets/mascot.dart';
 import 'home_shell.dart';
 import 'lesson_screen.dart';
 import 'placement_screen.dart';
@@ -99,6 +101,10 @@ class _HomeHero extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // v4.9: the companion greets you on the home path (time of day),
+            // taps → fresh encouragement, mouth synced to the typewriter.
+            _HomeCompanion(),
+            const SizedBox(height: 12),
             Row(
               children: [
                 Text(tr('continueLearning'),
@@ -583,4 +589,43 @@ Color _hexToColor(String hex) {
   hex = hex.replaceAll('#', '');
   if (hex.length == 6) hex = 'FF$hex';
   return Color(int.parse(hex, radix: 16));
+}
+
+// v4.9: the home-screen companion. Greets by time of day (deterministic
+// daily rotation); tapping it waves and says a fresh encouragement line.
+class _HomeCompanion extends StatefulWidget {
+  @override
+  State<_HomeCompanion> createState() => _HomeCompanionState();
+}
+
+class _HomeCompanionState extends State<_HomeCompanion> {
+  final ValueNotifier<bool> _talking = ValueNotifier(false);
+  int _taps = 0;
+
+  @override
+  void dispose() {
+    _talking.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final st = AppScope.of(context);
+    final now = DateTime.now();
+    final text = _taps == 0
+        ? MascotEngine.greetingLine(
+            hour: now.hour, locale: st.uiLocale, salt: now.day)
+        : MascotEngine.tapLine(st.mascotFacts, st.uiLocale, salt: _taps);
+    return GestureDetector(
+      onTap: () => setState(() => _taps++),
+      child: MascotBubble(
+        characterId: st.mascotId,
+        mood: _taps == 0 ? MascotMood.happy : MascotMood.celebrate,
+        text: text,
+        size: 56,
+        animate: !st.reduceMotion,
+        talking: _talking,
+      ),
+    );
+  }
 }

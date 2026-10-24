@@ -289,3 +289,23 @@ No new dependencies, no assets, no API changes.
 Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
 `flutter test` 143/143 · `validate_content.py` PASS. Version: pubspec
 `4.8.1+17`, l10n `version` strings 4.8.1.
+
+## 15. v4.9 increment (living human companions)
+
+Scope: the cast becomes human and comes alive — motion (breathing,
+blinking, celebration hop, wave), speech (typewriter bubbles with a
+mouth synced to the reveal) and direct interaction (tap → wave + fresh
+line; time-of-day greetings on the home path). No new dependencies, no
+images, no persisted-state changes; `mascotId` values and unlock gates
+are unchanged so existing profiles keep their chosen companion.
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| Human cast | Painter rewritten for people on the same 100×100 canvas: rafiq (green polo, glasses, short dark hair), zayd (curly hair, yellow tee), farah/nur/salma (hijab shells + face opening + chin drape + fold hint, distinct palettes), skin tones per character, blush for the female cast, chibi proportions (big head, capsule arms/legs, hem + collar details). Taglines rewritten from species to human roles. | `lib/widgets/mascot.dart` (rewritten), `lib/mascot.dart` (taglines) | Visual grid verified 5 characters × 4 moods during development (temporary golden, then deleted); analyze clean |
+| Motion layer | `Mascot` → `StatefulWidget` with 4 controllers: breathing bob (2.6 s), blink cycle (4.4 s, ~200 ms closure), celebration (easeOutBack arm raise + hop, re-fired on mood change), wave (one-shot on tap, right-arm swing). `_setLive` stops all controllers when `animated:false` or `MediaQuery.disableAnimations` — static art and `pumpAndSettle`-safe. | `lib/widgets/mascot.dart` | `animated:false` settle test; per-character × per-mood render tests |
+| Typewriter speech | `MascotEngine.revealedChars` / `revealDuration` (Flutter-free, 34 cps); `MascotBubble` → `StatefulWidget` revealing progressively, tap-to-complete, `talking` ValueNotifier pushed true while typing and false on completion; mouth openness = sine of the talk controller whenever the notifier is true. Wired on result/failed screens, profile card, home companion. | `lib/mascot.dart`, `lib/widgets/mascot.dart`, `lib/screens/lesson_screen.dart`, `lib/screens/profile.dart` | Progressive-reveal, tap-complete and notifier-lifecycle widget tests |
+| Interaction + home companion | Tap any companion → wave (`_poke`) + optional `onTap`. Result/failed screens re-roll fresh tap lines on tap (`_lineSalt`); `LessonFailedScreen` converted to StatefulWidget. New `_HomeCompanion` on the learn-path hero: `MascotEngine.greetingLine` (morning 5-11 / afternoon 12-17 / night, daily salt) then celebrate + `MascotEngine.tapLine` (6-line bank) when poked. | `lib/screens/learn_path.dart`, `lib/screens/lesson_screen.dart`, `lib/mascot.dart` | Tap-line parity/determinism test, greeting boundary test (5/11/12/17/18/4), wave smoke test |
+
+Gates at commit time: `dart format` clean · `flutter analyze` No issues ·
+`flutter test` 153/153 · `validate_content.py` PASS. Version: pubspec
+`4.9.0+18`, l10n `version` strings 4.9.0.

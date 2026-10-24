@@ -659,6 +659,14 @@ class _CompanionCard extends StatefulWidget {
 
 class _CompanionCardState extends State<_CompanionCard> {
   int _tipSalt = 0;
+  // v4.9: the bubble's typewriter drives the avatar's mouth.
+  final ValueNotifier<bool> _talking = ValueNotifier(false);
+
+  @override
+  void dispose() {
+    _talking.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -713,6 +721,7 @@ class _CompanionCardState extends State<_CompanionCard> {
               text: tip,
               size: 64,
               animate: !st.reduceMotion,
+              talking: _talking,
             ),
           ),
           const SizedBox(height: 10),

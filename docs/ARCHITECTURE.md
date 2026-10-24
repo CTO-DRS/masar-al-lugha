@@ -180,10 +180,24 @@ offline, evidence-gated, explainable:
   `mascot`; load and import both validate against the cast and fall back
   to `rafiq`; export/import and `resetAll` handle it symmetrically.
 
-Rendering lives in `lib/widgets/mascot.dart` (palettes + ear accessories per
-character behind the stable `Mascot` API; `MascotBubble` with reduce-motion-
-aware entrance). Wiring: LessonResultScreen, LessonFailedScreen, Profile
-companion card.
+Since v4.9 the cast is human (coach + classmates + mentors, same ids and
+gates) and the render layer (`lib/widgets/mascot.dart`) is a motion
+contract, not just art:
+
+- **Motion is gated, never accidental.** Breathing/blink/talk controllers
+  run only when `animated == true` and `MediaQuery.disableAnimations` is
+  false; `_setLive` keeps them stopped otherwise, so reduce-motion users
+  get static art and `pumpAndSettle` still terminates in widget tests.
+- **Speech is a producer/consumer pair.** The bubble owns the typewriter
+  (Flutter-free reveal math in the engine) and pushes `talking` on a
+  shared `ValueNotifier<bool>`; the nearby `Mascot` consumes it to open
+  and close the mouth. When the bubble renders its own avatar the sync
+  is automatic; split layouts wire the notifier explicitly.
+- **Interaction is deterministic.** Tapping a companion plays a wave and
+  may re-roll a line: tap lines and time-of-day greetings live in the
+  engine catalog next to the event lines and obey the same parity,
+  placeholder-free and salt-rotation rules (`test/mascot_test.dart`
+  enforces all three).
 
 ## 4c. Custom word lists (v4.7)
 

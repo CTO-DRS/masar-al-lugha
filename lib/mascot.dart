@@ -15,7 +15,8 @@
 //  * Placeholder vocabulary: {s} streak, {lvl} level, {p} accuracy %,
 //    {m} missed days — {m} is only valid in comeback lines.
 
-/// The five companions. Each is unlocked by an evidence-based rule.
+/// The five companions — since v4.9 they are the human learning crew
+/// (coach, classmates and mentors). Each is unlocked by an evidence rule.
 class MascotCharacter {
   final String id;
   final String nameAr;
@@ -59,38 +60,38 @@ const List<MascotCharacter> mascotCast = [
     id: 'rafiq',
     nameAr: 'رفيق',
     nameEn: 'Rafiq',
-    taglineAr: 'بومة حكيمة تمشي معك خطوة بخطوة',
-    taglineEn: 'A wise owl that walks the path with you',
+    taglineAr: 'مدرّبك الشخصي — يمشي معك خطوة بخطوة',
+    taglineEn: 'Your personal coach — step by step with you',
   ),
   MascotCharacter(
     id: 'farah',
     nameAr: 'فرَح',
     nameEn: 'Farah',
-    taglineAr: 'صغير نشيط يحتفل بكل نجاحك',
-    taglineEn: 'A chirpy chick that celebrates every win',
+    taglineAr: 'زميل مرح يحتفل بكل نجاحاتك',
+    taglineEn: 'A cheerful classmate celebrating every win',
     unlockXp: 500,
   ),
   MascotCharacter(
     id: 'nur',
     nameAr: 'نور',
     nameEn: 'Nur',
-    taglineAr: 'قطة ليلية تذكّرك بالمراجعة قبل النوم',
-    taglineEn: 'A night cat that nudges you to review',
+    taglineAr: 'صديقة هادئة تذكّرك بالمراجعة قبل النوم',
+    taglineEn: 'A calm friend nudging you to review at night',
     unlockStreak: 7,
   ),
   MascotCharacter(
     id: 'zayd',
     nameAr: 'زايد',
     nameEn: 'Zayd',
-    taglineAr: 'ثعلب الطريق: يعرف كل اختصار… لكنه يعلّمك الأساس',
-    taglineEn: 'The path fox: knows shortcuts, teaches foundations',
+    taglineAr: 'خبير المسار: يعرف كل الطرق… ويرسّخ لك الأساس',
+    taglineEn: 'The path expert: knows every route, nails the basics',
     unlockLessons: 50,
   ),
   MascotCharacter(
     id: 'salma',
     nameAr: 'سلمى',
-    taglineAr: 'أرنوبة هادئة تشجعك بلطف بعد كل خطأ',
-    taglineEn: 'A calm bunny with the gentlest encouragement',
+    taglineAr: 'مدرّبة صبورة تشجعك بلطف بعد كل خطأ',
+    taglineEn: 'A patient mentor with the gentlest encouragement',
     nameEn: 'Salma',
     unlockXp: 1500,
   ),
@@ -210,6 +211,51 @@ class MascotEngine {
       .replaceAll('{lvl}', '${f.level}')
       .replaceAll('{p}', '${f.accuracy}')
       .replaceAll('{m}', '${f.missedDays}');
+
+  // ---------------------------------------------------------------------
+  // v4.9 — living-speech primitives (typewriter). Flutter-free so widget
+  // tests can drive the reveal deterministically.
+  // ---------------------------------------------------------------------
+
+  /// Characters of [text] visible after [elapsedMs] of typing at
+  /// [charsPerSecond]. Clamps to [0, text.length]; empty text reveals 0.
+  static int revealedChars(
+    String text, {
+    required int elapsedMs,
+    int charsPerSecond = 34,
+  }) {
+    if (text.isEmpty || elapsedMs <= 0) return 0;
+    return (elapsedMs * charsPerSecond ~/ 1000).clamp(0, text.length);
+  }
+
+  /// Total time the typewriter needs for [text] (0 ms for empty text).
+  static Duration revealDuration(String text, {int charsPerSecond = 34}) {
+    if (text.isEmpty) return Duration.zero;
+    return Duration(milliseconds: (text.length * 1000 / charsPerSecond).ceil());
+  }
+
+  /// v4.9: encouragement spoken when the learner taps a companion.
+  static String tapLine(MascotFacts f, String locale, {required int salt}) {
+    final tpl = mascotTapLines[salt % mascotTapLines.length];
+    return fill(locale == 'ar' ? tpl.$1 : tpl.$2, f);
+  }
+
+  /// v4.9: time-of-day greeting — morning 5-11, afternoon 12-17, night.
+  static String greetingLine({
+    required int hour,
+    required String locale,
+    required int salt,
+  }) {
+    final bank = mascotGreetings[_greetingSlot(hour)];
+    final tpl = bank[salt % bank.length];
+    return locale == 'ar' ? tpl.$1 : tpl.$2;
+  }
+
+  static int _greetingSlot(int hour) {
+    if (hour >= 5 && hour < 12) return 0;
+    if (hour >= 12 && hour < 18) return 1;
+    return 2;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -474,3 +520,68 @@ const Map<MascotEvent, List<MascotBiLine>> mascotLineCatalog = {
     ),
   ],
 };
+
+// ---------------------------------------------------------------------------
+// v4.9 — tap lines: what a companion says when the learner pokes it.
+// 6 lines x 2 locales, no placeholders, same tone rules as the catalog.
+// ---------------------------------------------------------------------------
+const List<MascotBiLine> mascotTapLines = [
+  (
+    'هل نشرتَني؟ أنا جاهز دائماً — لنكمل!',
+    'Poked me? I am always ready — let us continue!'
+  ),
+  (
+    'أنت تفعل أفضل مما تظن. واصِل!',
+    'You are doing better than you think. Keep going!'
+  ),
+  (
+    'خطوة صغيرة اليوم = ثقة كبيرة غداً',
+    'A small step today = big confidence tomorrow'
+  ),
+  (
+    'أنا هنا في كل درس — لننجزه معاً',
+    'I am here for every lesson — let us finish it together'
+  ),
+  (
+    'تذكّر: الاستمرارية أقوى من الحماس المؤقت',
+    'Remember: consistency beats bursts of motivation'
+  ),
+  (
+    'الطريق طويل لكن خطواتك تُحتسب كلها',
+    'The path is long, but every step of yours counts'
+  ),
+];
+
+// ---------------------------------------------------------------------------
+// v4.9 — time-of-day greetings (ar, en): morning 5-11 / afternoon 12-17 /
+// night. Shown by the home-screen companion; rotates with a daily salt.
+// ---------------------------------------------------------------------------
+const List<List<MascotBiLine>> mascotGreetings = [
+  [
+    ('صباح الخير! جاهز لدرس اليوم؟', 'Good morning! Ready for today?'),
+    (
+      'صباح الإنجاز! كل كلمة اليوم تصنع فرقاً',
+      'A productive morning — every word counts today'
+    ),
+  ],
+  [
+    (
+      'مساء الخير! تمرين سريع يرفع مزاجك',
+      'Good evening! A quick session lifts your mood'
+    ),
+    (
+      'لديك طاقة عصر — لنستثمرها بكلمات جديدة',
+      'Afternoon energy detected — let us spend it on new words'
+    ),
+  ],
+  [
+    (
+      'ليلة موفقة! مراجعة قصيرة قبل النوم تثبّت الكلمات',
+      'Restful night! A short review before sleep locks words in'
+    ),
+    (
+      'ما زلت مستيقظاً؟ خمس دقائق مراجعة تكفي الليلة',
+      'Still up? Five minutes of review is enough tonight'
+    ),
+  ],
+];

@@ -1303,6 +1303,16 @@ class LessonResultScreen extends StatefulWidget {
 
 class _LessonResultScreenState extends State<LessonResultScreen> {
   String? badgeShown;
+  // v4.9: the companion's mouth is driven by the bubble's typewriter,
+  // and tapping it re-rolls a fresh encouragement line.
+  final ValueNotifier<bool> _talking = ValueNotifier(false);
+  int _lineSalt = 0;
+
+  @override
+  void dispose() {
+    _talking.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -1320,9 +1330,12 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
     String tr(String k) => context.tr(k);
     final st = AppScope.of(context);
     // v4.5: companion speaks the moment — line rotates per lesson count.
-    final bubbleText = MascotEngine.lineFor(
-        widget.mascotEvent, st.mascotFacts, st.uiLocale,
-        salt: st.lessonsCompleted);
+    // v4.9: after a tap the companion switches to tap lines instead.
+    final bubbleText = _lineSalt == 0
+        ? MascotEngine.lineFor(widget.mascotEvent, st.mascotFacts, st.uiLocale,
+            salt: st.lessonsCompleted)
+        : MascotEngine.tapLine(st.mascotFacts, st.uiLocale,
+            salt: _lineSalt + st.lessonsCompleted);
     final mood = MascotEngine.moodFor(widget.mascotEvent);
     return Scaffold(
       backgroundColor: context.pageBg,
@@ -1334,7 +1347,13 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
               child: Column(
                 children: [
                   const Spacer(),
-                  Mascot(size: 120, mood: mood, characterId: st.mascotId),
+                  Mascot(
+                    size: 120,
+                    mood: mood,
+                    characterId: st.mascotId,
+                    talking: _talking,
+                    onTap: () => setState(() => _lineSalt++),
+                  ),
                   const SizedBox(height: 18),
                   Text(
                     tr('lessonComplete'),
@@ -1358,6 +1377,7 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
                     text: bubbleText,
                     showAvatar: false,
                     animate: !st.reduceMotion,
+                    talking: _talking,
                   ),
                   const SizedBox(height: 30),
                   Row(
@@ -1479,7 +1499,7 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
   }
 }
 
-class LessonFailedScreen extends StatelessWidget {
+class LessonFailedScreen extends StatefulWidget {
   final Lesson lesson;
   final LessonMode mode; // v4.3: retry keeps the same lesson style
 
@@ -1490,13 +1510,31 @@ class LessonFailedScreen extends StatelessWidget {
   });
 
   @override
+  State<LessonFailedScreen> createState() => _LessonFailedScreenState();
+}
+
+class _LessonFailedScreenState extends State<LessonFailedScreen> {
+  // v4.9: talking sync + tap for a fresh comfort line.
+  final ValueNotifier<bool> _talking = ValueNotifier(false);
+  int _lineSalt = 0;
+
+  @override
+  void dispose() {
+    _talking.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     String tr(String k) => context.tr(k);
     // v4.5: the chosen companion speaks comfort (never shame).
     final st = AppScope.of(context);
-    final bubbleText = MascotEngine.lineFor(
-        MascotEvent.lessonFailed, st.mascotFacts, st.uiLocale,
-        salt: st.lessonsCompleted);
+    final bubbleText = _lineSalt == 0
+        ? MascotEngine.lineFor(
+            MascotEvent.lessonFailed, st.mascotFacts, st.uiLocale,
+            salt: st.lessonsCompleted)
+        : MascotEngine.tapLine(st.mascotFacts, st.uiLocale,
+            salt: _lineSalt + st.lessonsCompleted);
     return Scaffold(
       backgroundColor: context.pageBg,
       body: SafeArea(
@@ -1505,7 +1543,13 @@ class LessonFailedScreen extends StatelessWidget {
           child: Column(
             children: [
               const Spacer(),
-              Mascot(size: 120, mood: MascotMood.sad, characterId: st.mascotId),
+              Mascot(
+                size: 120,
+                mood: MascotMood.sad,
+                characterId: st.mascotId,
+                talking: _talking,
+                onTap: () => setState(() => _lineSalt++),
+              ),
               const SizedBox(height: 18),
               Text(
                 tr('lessonFailed'),
@@ -1525,6 +1569,7 @@ class LessonFailedScreen extends StatelessWidget {
                 text: bubbleText,
                 showAvatar: false,
                 animate: !st.reduceMotion,
+                talking: _talking,
               ),
               const Spacer(),
               ChunkyButton(
@@ -1533,7 +1578,8 @@ class LessonFailedScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (_) => LessonScreen(
-                        lesson: lesson, mode: mode), // v4.3: keep style
+                        lesson: widget.lesson,
+                        mode: widget.mode), // v4.3: keep style
                   ));
                 },
               ),

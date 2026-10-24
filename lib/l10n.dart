@@ -278,7 +278,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 4.8.1',
+      'version': 'الإصدار 4.9.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -559,7 +559,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 4.8.1',
+      'version': 'Version 4.9.0',
     },
   };
 

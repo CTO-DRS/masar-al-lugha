@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.8.1+17** — see docs/PROJECT_AUDIT.md §13 for the v4.8
+**Current release: v4.9.0+18** — see docs/PROJECT_AUDIT.md §15 for the v4.9
 increment with file/test evidence.
 
 ## Where we are
@@ -24,6 +24,7 @@ increment with file/test evidence.
 | v4.7 | **Custom word lists ("قوائمي"): user-authored decks stored in the schema-v2 profile (bounded 12×200, tamper-proof strict parse, stable monotonic word ids), add/remove words with duplicate + length guards, flip-card practice with shuffle + tap-to-hear, full export/import/reset coverage, entry from the Cards tab — 128 tests** |
 | v4.8 | **Records board ("السجلات"): all-time personal bests engine (Flutter-free) + dedicated screen — bestStreak / bestDayXp / activeDays counters maintained at zero storage cost inside the existing streak hook, 14-record grid, two-week XP momentum bars, record-broken mascot celebration (10th event, 6 new bilingual lines), entry from Profile — 143 tests** |
 | v4.8.1 | **Companion art upgrade: the five characters are redrawn as layered vector art (CustomPainter, normalized 100×100 canvas) — owl tufts + eye discs + feet, chick crest, cat whiskers + tail, fox muzzle + big ears, bunny long ears + blush, per-mood expressions (smile / neutral / worried frown / star + confetti), mood-aware beaks and mouths. No new deps, no images, same Mascot/MascotBubble API — 143 tests** |
+| v4.9 | **Living human companions: the cast is redrawn as HUMANS (coach Rafiq with glasses, hijabi classmates Farah/Nur/Salma, curly-haired path expert Zayd) and everything LIVES — idle breathing + blink cycle, celebration hop with raised arms, typewriter speech bubbles with a talking mouth synced to the reveal, tap any companion → it waves and says a fresh encouragement line (6 tap lines), home-path companion greets by time of day (3 slots × 2 lines), reduce-motion respected, animated:false stays static for tests — 153 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -203,6 +204,44 @@ increment with file/test evidence.
    (same-day, consecutive, 3-day gap), completeLesson feeding, save/load
    + export/import round trips, old-payload zeros, record-vs-levelup
    priority, milestone outranks record, catalog shape/parity/rotation).
+
+## v4.9 — living human companions (SHIPPED)
+
+1. ✅ **Human cast (same IDs, same unlocks)** — the five companions are
+   now drawn as people, keeping the persisted `mascotId` values and
+   evidence gates intact: Rafiq = personal coach (green polo, glasses),
+   Farah = cheerful classmate (orange hijab, blue top), Nur = calm
+   night friend (blue hijab, teal top), Zayd = path expert (curly hair,
+   yellow tee), Salma = patient mentor (purple hijab). Taglines
+   rewritten from animal species to human roles (engine-only change).
+2. ✅ **Everyone moves** — `Mascot` is now a `StatefulWidget` driving
+   four controllers: idle breathing bob (2.6 s loop), a natural blink
+   cycle (one blink per ~4.4 s), a celebration action (springy arm
+   raise + hop on `didUpdateWidget` mood change) and a one-shot wave.
+   Motion auto-disables under `MediaQuery.disableAnimations` and the
+   `animated:false` flag keeps controllers stopped (static art — and
+   `pumpAndSettle` keeps terminating in tests).
+3. ✅ **Everyone talks** — `MascotBubble` reveals engine lines through a
+   typewriter (34 cps, Flutter-free math in `MascotEngine.revealedChars`
+   / `revealDuration`), tapping the bubble completes the line instantly,
+   and a shared `talking` ValueNotifier drives the companion's mouth
+   open/close while the reveal is in flight (auto-synced when the
+   bubble renders its own avatar; wired explicitly on lesson result,
+   lesson failed, profile card and the new home companion).
+4. ✅ **Everyone interacts** — tapping any companion plays a wave and
+   (on result/failed/home surfaces) re-rolls a fresh line from the new
+   6-line tap bank (`MascotEngine.tapLine`, parity-tested, no
+   placeholders). The learn-path hero gained `_HomeCompanion`: it
+   greets by time of day (`MascotEngine.greetingLine`, morning 5-11 /
+   afternoon 12-17 / night slots, daily salt rotation) and switches to
+   celebrate + tap lines when poked.
+5. ✅ **Tests 143 → 153** (+10 in `test/mascot_test.dart`: typewriter
+   math clamp/rate/full-reveal, tap-line parity+determinism, greeting
+   slot boundaries, progressive reveal, tap-to-complete, talking
+   notifier lifecycle, tap-wave smoke, static `animated:false`
+   settle-ability; the two legacy widget tests moved from
+   `pumpAndSettle` to fixed-duration pumps because idle motion now
+   intentionally never settles).
 
 ## v5.0 — platform growth
 
