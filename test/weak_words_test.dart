@@ -82,7 +82,7 @@ void main() {
     });
     st.courses['en'] = en;
 
-    // Simulate a 3-card practice session: again, good, good.
+    // Simulate a 3-card practice session: again, good, again.
     final session = ['apple', 'banana', 'apple'];
     for (final id in session) {
       final q = id == 'apple' ? Srs.again : Srs.good;
@@ -94,7 +94,7 @@ void main() {
 
     expect(st.cardsReviewed, 3);
     expect(st.totalAnswers, 3);
-    expect(st.correctAnswers, 2);
+    expect(st.correctAnswers, 1); // only the 'good' rating counts as correct
     expect(st.xp, 3);
 
     // Design decision (documented in ARCHITECTURE.md §3): practice-mode
