@@ -8,8 +8,10 @@ import '../scope.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 import '../widgets/mascot.dart';
+import 'error_analysis_screen.dart';
 import 'home_shell.dart';
 import 'settings.dart';
+import 'weak_words_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -459,11 +461,35 @@ class _WeakWordsCard extends StatelessWidget {
                       const Icon(Icons.trending_up,
                           color: AppColors.red, size: 22),
                       const SizedBox(width: 8),
-                      Text(tr('weakWords'),
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16,
-                              color: context.bodyText)),
+                      Expanded(
+                        child: Text(tr('weakWords'),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
+                                color: context.bodyText)),
+                      ),
+                      // v4.1: quick lane into the tough-words practice.
+                      IconButton(
+                        tooltip: tr('practiceWeak'),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const WeakWordsScreen(),
+                          ));
+                        },
+                        icon: const Icon(Icons.fitness_center,
+                            color: AppColors.red, size: 22),
+                      ),
+                      // v4.1: full error-analysis screen (top-20 + accuracy).
+                      IconButton(
+                        tooltip: tr('errorAnalysis'),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const ErrorAnalysisScreen(),
+                          ));
+                        },
+                        icon: Icon(Icons.chevron_right,
+                            size: 22, color: context.mutedText),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 12),

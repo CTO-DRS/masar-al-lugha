@@ -102,3 +102,21 @@ python3 scripts/validate_content.py   # 2986 ids, 0 fatal, notices only
 at max scale; measured in `test/storage_test.dart`), hardened with schema v2 +
 migration, corrupt-backup, debounced writes, export/import. SQLite/Drift not
 warranted — full rationale in docs/ARCHITECTURE.md §2.
+
+## 6. v4.1 increment (architecture & engine polish — ROADMAP items 1–4)
+
+Scope: no new defects were found in v4.0.1; this increment delivers the four
+v4.1 roadmap items and keeps every existing test green.
+
+| Item | What changed | Files | Verification |
+|---|---|---|---|
+| 1. ProfileStore extraction | All persistence (keys, schema-v2 migration, corrupt-backup, debounced writes) moved out of `AppState` into a standalone class. `AppState.load/save/scheduleSave/flush/dirty` are thin delegation; `ensureDaily` became public because the store calls it after restore. Zero behavior change — same keys, same payload, same debounce. | `lib/profile_store.dart` (new), `lib/app_state.dart` | New round-trip test "AppState delegates persistence to ProfileStore" + all pre-existing load/save/migration/corrupt tests untouched and passing through the same public API |
+| 2. Tough-words practice | New offline practice lane over `AppState.weakestVocab(course)` (course-filtered, most-missed first, session cap 20). Ratings reuse `rateCard`/`addXp`/`recordAnswer` so practice feeds the real SRS schedule. Practice self-ratings deliberately do not inflate `wordMistakes`. | `lib/screens/weak_words_screen.dart` (new), `lib/app_state.dart` (`weakestVocab`), entry from Profile weak-words card | `test/weak_words_test.dart`: ordering, cross-course filtering, ghost-id filtering, empty queue, SRS/stats integration, `wordMistakes` untouched |
+| 3. Error-analysis screen | Full screen from the Profile weak-words card: overall accuracy ring (`correctAnswers/totalAnswers`) + top-20 most-missed words per course with tap-to-speak + practice CTA. | `lib/screens/error_analysis_screen.dart` (new), `lib/screens/profile.dart` | Numbers come only from persisted counters; disabled CTA when queue is empty |
+| 4. Placement re-test | Returning users with `placementDone[courseId] == true` get a re-test row in the learn-path hero; confirming overwrites `placementSkip`, stars are preserved. | `lib/screens/learn_path.dart` | Same `PlacementScreen` + engine tests as initial placement; entry condition covered by state, not new logic |
+
+Also in v4.1: l10n keys for all new surfaces (ar+en), version strings bumped to
+4.1.0 (`pubspec.yaml` → `4.1.0+9`), test count 30 → 34 (grep-counted:
+widget 6, weak_words 3, srs 10, app_state 8, placement 5, storage 2). No new
+permissions, no network calls, no dependencies added; dark mode + RTL respected
+by the new screens (theme-context colors only).

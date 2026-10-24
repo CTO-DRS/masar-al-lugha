@@ -1,7 +1,7 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.0.1+8** — see docs/PROJECT_AUDIT.md §5 for what the
-v4.0 upgrade actually changed, with file/line evidence.
+**Current release: v4.1.0+9** — see docs/PROJECT_AUDIT.md §6 for the v4.1
+increment with file/test evidence.
 
 ## Where we are
 
@@ -15,20 +15,9 @@ v4.0 upgrade actually changed, with file/line evidence.
 | v3.3 | Full English expansion: EN 48 units / 188 lessons / 2016 words — 2986 total |
 | **v4.0** | **Audit-driven upgrade: 4 HIGH + 10 MEDIUM defects fixed, schema v2 storage, placement test, dark mode, export/import, honest SRS docs, CI quality gates, 27 tests** |
 | v4.0.1 | External review fixes: streak progression (was pinned at 1 — HIGH, test-backed), match-exercise duplicate TTS speak, dead `\|\| true` condition, dark-mode surfaces on flashcards/lesson match/dictionary/settings, debounced saves for XP |
+| v4.1 | Architecture & engine polish: `ProfileStore` persistence class extracted (backend-swap seam), tough-words practice lane (`weakestVocab`, feeds real SRS), error-analysis screen (accuracy + top-20 misses), placement re-test entry, 34 tests |
 
-## v4.1 — architecture & engine polish (next)
-
-1. **Extract `ProfileStore`** — move `load/save/flush/_migrateSchema` out of
-   AppState into a dedicated class behind the same API; adds no behavior change,
-   unlocks backend swaps (docs/ARCHITECTURE.md §2 decision stays under review).
-2. **Weak-words practice mode** — a dedicated review lane driven by
-   `wordMistakes` (lifetime error counts already persisted) with its own stats.
-3. **Error-analysis screen in Profile** — top-20 mistake words per course,
-   accuracy trend from existing `totalAnswers/correctAnswers`.
-4. **Placement per course** — currently one placement pass per course start;
-   add "re-test" entry for returning users who feel misplaced.
-
-## v4.2 — curriculum depth
+## v4.2 — curriculum depth (next)
 
 1. **EN: 52 units** (idioms, phrasal verbs, business English, exam prep).
 2. **Formal CEFR mapping** — tag every unit A1→C1 (self-referenced; the app does

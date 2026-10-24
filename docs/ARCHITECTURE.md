@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v4.0
+# ARCHITECTURE — Masar Al-Lugha v4.1
 
 ## 1. Layered view (post-v4.0)
 
@@ -10,8 +10,7 @@
 │ Application         lib/scope.dart (AppScope DI + l10n ext) │
 │                     lib/app_state.dart (ChangeNotifier;     │
 │                      gamification, streaks, badges, prefs;  │
-│                      persistence seam: load / save / flush  │
-│                      / _migrateSchema — see §2)             │
+│                      delegates persistence to ProfileStore) │
 ├─────────────────────────────────────────────────────────────┤
 │ Domain              lib/models.dart (Course/Unit/Lesson/    │
 │                     Vocab/Exercise/CardData)                │
@@ -19,23 +18,25 @@
 │                     lib/exercise_gen.dart (item generator)  │
 │                     lib/placement.dart (v4.0)               │
 ├─────────────────────────────────────────────────────────────┤
-│ Data                SharedPreferences via lib/app_state.dart│
-│                     (schema v2, corrupt-backup, export/     │
-│                     import, debounced writes — see §2)      │
+│ Data                lib/profile_store.dart (v4.1): keys,    │
+│                     schema v2 migration, corrupt-backup,    │
+│                     debounced writes, export/import payload │
 ├─────────────────────────────────────────────────────────────┤
 │ Services            lib/services/tts.dart (flutter_tts)     │
 └─────────────────────────────────────────────────────────────┘
 Assets: assets/data/course_{en,ur,fr}.json (read-only content)
 ```
 
-Rules enforced in v4.0:
+Rules enforced since v4.0, tightened in v4.1:
 - Widgets never decode/persist state directly; they go through `AppScope.of(context)`.
 - Domain code (`srs.dart`, `exercise_gen.dart`, `placement.dart`, `models.dart`) is
   Flutter-free and unit-testable.
-- All persistence flows through four AppState methods (`load`, `save`, `flush`,
-  `_migrateSchema`) — a single de-facto seam. Extracting it into a standalone
-  `ProfileStore` class is planned for v4.1 (see docs/ROADMAP.md); the swap to any
-  other backend then touches only that class, not UI or domain code.
+- The persistence seam promised in v4.0 is now a real class: `lib/profile_store.dart`
+  owns the SharedPreferences keys, schema migration, corrupt-backup and the debounced
+  write. AppState keeps the domain API (`load/save/scheduleSave/flush/dirty`) as thin
+  delegation, so swapping the backend (e.g. SQLite/Drift) touches only ProfileStore —
+  not UI, not domain code. Verified by `test/app_state_test.dart`
+  ("AppState delegates persistence to ProfileStore" round-trip).
 
 ## 2. Storage decision (v4.0) — SharedPreferences, hardened
 
@@ -70,6 +71,20 @@ Pipeline: lesson exercises record **per-word** results → lesson end feeds real
 (mistakes → `learning`, clean → `review`) → flashcards serve due reviews + a **daily
 new-card cap (10)** built **only** from lessons already completed → `placement.dart`
 (option) lets re-learners skip ahead by sampling across units.
+
+**v4.1 additions** (all offline, all testable without Flutter):
+- *Tough-words practice lane* (`screens/weak_words_screen.dart`) — a short self-paced
+  session over `AppState.weakestVocab(course)` (most-missed first, cap 20). Ratings go
+  through the same `Srs.rate` + stats path as the Cards tab, so practice reshapes the
+  real review schedule. Design decision: practice self-ratings do **not** inflate
+  lifetime `wordMistakes` — that list stays driven by real lesson errors
+  (asserted in `test/weak_words_test.dart`).
+- *Error analysis screen* (`screens/error_analysis_screen.dart`) — overall accuracy
+  from `correctAnswers/totalAnswers` plus the top-20 most-missed words per course.
+  No invented analytics; every number traces to persisted state.
+- *Placement re-test* — returning users who feel misplaced can re-take the placement
+  from the learn-path hero; confirming overwrites `placementSkip[courseId]`, completed
+  lessons keep their stars.
 
 ## 4. Content pipeline
 

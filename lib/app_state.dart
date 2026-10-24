@@ -1,11 +1,12 @@
-// App state: courses, progress, gamification, storage, badges.
-import 'dart:async';
+// App state: courses, progress, gamification, badges.
+// v4.1: persistence (load/save/debounce/migration) extracted to ProfileStore
+// — AppState delegates to [store] and stays the domain + notification layer.
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models.dart';
+import 'profile_store.dart';
 import 'srs.dart';
 import 'theme.dart';
 
@@ -17,16 +18,6 @@ class BadgeDef {
 }
 
 class AppState extends ChangeNotifier {
-  static const _kLocale = 'ui_locale';
-  static const _kCourse = 'course_id';
-  static const _kProgress = 'progress_json_v1';
-  static const _kBackup = 'progress_backup_v1'; // corrupt-state snapshot (v4.0)
-  static const _kOnboard = 'onboarding_done';
-
-  /// Current progress schema version. Bump when shape changes and handle
-  /// old shapes in [_migrateSchema].
-  static const int progressSchema = 2;
-
   // ---- content ----
   final Map<String, Course> courses = {};
   String courseId = 'en';
@@ -64,11 +55,13 @@ class AppState extends ChangeNotifier {
   int newCardsToday = 0; // new SRS cards introduced today
   String newCardsDay = '';
 
-  /// Unsaved-dirty flag for debounced persistence (v4.0).
-  bool _dirty = false;
+  /// Current progress schema version (marker lives in ProfileStore).
+  static const int progressSchema = ProfileStore.progressSchema;
 
-  /// True when there are unsaved changes (debug/diagnostics, tests).
-  bool get dirty => _dirty;
+  /// v4.1: persistence backend (keys, migration, debounced writes).
+  /// One store per AppState; created lazily because field initializers
+  /// cannot reference `this`.
+  late final ProfileStore store = ProfileStore(this);
 
   // ---- badges registry (v2.0: 15 badges) ----
   static const List<BadgeDef> badgeDefs = [
@@ -135,113 +128,21 @@ class AppState extends ChangeNotifier {
 
   bool isGoalDone(String day) => dailyXpDay == day && dailyXp >= dailyGoal;
 
-  // ================= lifecycle =================
+  // ================= lifecycle (delegated to ProfileStore, v4.1) ==========
 
   Future<void> load() async {
-    final prefs = await SharedPreferences.getInstance();
-    uiLocale = prefs.getString(_kLocale) ?? 'ar';
-    courseId = prefs.getString(_kCourse) ?? 'en';
-    onboardingDone = prefs.getBool(_kOnboard) ?? false;
-
-    final raw = prefs.getString(_kProgress);
-    if (raw != null) {
-      try {
-        final j = jsonDecode(raw) as Map<String, dynamic>;
-        _migrateSchema(j);
-        xp = (j['xp'] as num?)?.toInt() ?? 0;
-        streak = (j['streak'] as num?)?.toInt() ?? 0;
-        lastActiveDay = j['lastActiveDay'] as String?;
-        dailyGoal = (j['dailyGoal'] as num?)?.toInt() ?? 20;
-        dailyXp = (j['dailyXp'] as num?)?.toInt() ?? 0;
-        dailyXpDay = (j['dailyXpDay'] as String?) ?? '';
-        cardsReviewed = (j['cardsReviewed'] as num?)?.toInt() ?? 0;
-        totalAnswers = (j['totalAnswers'] as num?)?.toInt() ?? 0;
-        correctAnswers = (j['correctAnswers'] as num?)?.toInt() ?? 0;
-        lessonStars = ((j['lessonStars'] as Map?) ?? {})
-            .map((k, v) => MapEntry(k as String, (v as num).toInt()));
-        xpLog = ((j['xpLog'] as Map?) ?? {})
-            .map((k, v) => MapEntry(k as String, (v as num).toInt()));
-        cards = ((j['cards'] as Map?) ?? {}).map((k, v) => MapEntry(
-            k as String, CardData.fromJson(v as Map<String, dynamic>)));
-        badges =
-            ((j['badges'] as List?) ?? []).map((e) => e as String).toList();
-        wordMistakes = ((j['wordMistakes'] as Map?) ?? {})
-            .map((k, v) => MapEntry(k as String, (v as num).toInt()));
-        placementDone = ((j['placement'] as Map?) ?? {})
-            .map((k, v) => MapEntry(k as String, v as bool));
-        placementSkip = ((j['placementSkip'] as Map?) ?? {})
-            .map((k, v) => MapEntry(k as String, (v as num).toInt()));
-        newCardsToday = (j['newCardsToday'] as num?)?.toInt() ?? 0;
-        newCardsDay = (j['newCardsDay'] as String?) ?? '';
-        final s = j['settings'];
-        if (s is Map) {
-          darkMode = (s['darkMode'] as bool?) ?? darkMode;
-          reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;
-          ttsEnabled = (s['ttsEnabled'] as bool?) ?? ttsEnabled;
-          ttsRate = (s['ttsRate'] as num?)?.toDouble() ?? ttsRate;
-        }
-        if (newCardsDay != todayKey()) {
-          newCardsToday = 0;
-          newCardsDay = todayKey();
-        }
-      } catch (_) {
-        // Corrupt data — keep a recoverable copy before starting fresh (v4.0).
-        prefs.setString(_kBackup, raw);
-      }
-    }
-    _ensureDaily();
-    loaded = true;
+    await store.load();
     notifyListeners();
   }
 
-  Future<void> save() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_kLocale, uiLocale);
-    await prefs.setString(_kCourse, courseId);
-    await prefs.setBool(_kOnboard, onboardingDone);
-    final j = {
-      'schema': progressSchema,
-      'xp': xp,
-      'streak': streak,
-      'lastActiveDay': lastActiveDay,
-      'dailyGoal': dailyGoal,
-      'dailyXp': dailyXp,
-      'dailyXpDay': dailyXpDay,
-      'cardsReviewed': cardsReviewed,
-      'totalAnswers': totalAnswers,
-      'correctAnswers': correctAnswers,
-      'lessonStars': lessonStars,
-      'xpLog': xpLog,
-      'cards': cards.map((k, v) => MapEntry(k, v.toJson())),
-      'badges': badges,
-      'wordMistakes': wordMistakes,
-      'placement': placementDone,
-      'placementSkip': placementSkip,
-      'newCardsToday': newCardsToday,
-      'newCardsDay': newCardsDay,
-      'settings': {
-        'darkMode': darkMode,
-        'reduceMotion': reduceMotion,
-        'ttsEnabled': ttsEnabled,
-        'ttsRate': ttsRate,
-      },
-    };
-    await prefs.setString(_kProgress, jsonEncode(j));
-    _dirty = false;
-  }
+  Future<void> save() => store.save();
 
   /// Marks state dirty and schedules a debounced save. Heavy callers
   /// (every answer tap) should use this instead of awaiting [save].
-  void scheduleSave() {
-    _dirty = true;
-    _saveTimer?.cancel();
-    _saveTimer = Timer(_saveDelay, () {
-      if (_dirty) save();
-    });
-  }
+  void scheduleSave() => store.scheduleSave();
 
-  static const _saveDelay = Duration(seconds: 2);
-  Timer? _saveTimer;
+  /// True when there are unsaved changes (debug/diagnostics, tests).
+  bool get dirty => store.dirty;
 
   /// v4.0: new SRS cards introduced per day (audit H3).
   static const int dailyNewCardLimit = 10;
@@ -252,23 +153,7 @@ class AppState extends ChangeNotifier {
   }
 
   /// Force-write now if dirty (call on app pause / critical moments).
-  Future<void> flush() async {
-    _saveTimer?.cancel();
-    if (_dirty) await save();
-  }
-
-  /// Migrates older progress payloads to the current schema in place.
-  void _migrateSchema(Map<String, dynamic> j) {
-    final v = (j['schema'] as num?)?.toInt() ?? 1; // v1 = pre-4.0 payloads
-    if (v < 2) {
-      // v1 -> v2: settings previously lived outside the progress blob;
-      // cards map keys unchanged. Nothing structural to transform yet,
-      // but we normalize optional containers defensively.
-      j['lessonStars'] ??= <String, dynamic>{};
-      j['cards'] ??= <String, dynamic>{};
-    }
-    j['schema'] = progressSchema;
-  }
+  Future<void> flush() => store.flush();
 
   // ================= helpers =================
 
@@ -282,7 +167,9 @@ class AppState extends ChangeNotifier {
     return '${n.year.toString().padLeft(4, '0')}-${n.month.toString().padLeft(2, '0')}-${n.day.toString().padLeft(2, '0')}';
   }
 
-  void _ensureDaily() {
+  /// Rolls daily counters and lazily resets a broken streak. Public since
+  /// v4.1: ProfileStore.load() calls it after restoring the payload.
+  void ensureDaily() {
     final today = todayKey();
     if (dailyXpDay != today) {
       dailyXp = 0;
@@ -338,6 +225,14 @@ class AppState extends ChangeNotifier {
     return entries.take(30).map((e) => e.key).toList();
   }
 
+  /// v4.1 (ROADMAP item 2): weak words that belong to [course] only — most
+  /// missed first. Drives the tough-words practice lane; ids recorded in
+  /// other courses (or removed from content) are filtered out safely.
+  List<Vocab> weakestVocab(Course course) {
+    final byId = {for (final v in course.allVocab) v.id: v};
+    return weakestWordIds.map((id) => byId[id]).whereType<Vocab>().toList();
+  }
+
   void markPlacement(String courseId) {
     placementDone[courseId] = true;
     save();
@@ -380,7 +275,7 @@ class AppState extends ChangeNotifier {
   }
 
   void addXp(int amount) {
-    _ensureDaily();
+    ensureDaily();
     xp += amount;
     dailyXp += amount;
     _bumpStreak();
@@ -424,7 +319,7 @@ class AppState extends ChangeNotifier {
   /// Called when a lesson finishes successfully.
   void completeLesson(String lessonId,
       {required int mistakes, required int vocabCount}) {
-    _ensureDaily();
+    ensureDaily();
     final stars = mistakes == 0
         ? 3
         : mistakes <= (vocabCount / 3).ceil()
@@ -464,7 +359,7 @@ class AppState extends ChangeNotifier {
   }
 
   void rateCard(String vocabId, int q) {
-    _ensureDaily();
+    ensureDaily();
     final c = cards[vocabId];
     final isNew = c == null || c.reps == 0;
     if (newCardsDay != todayKey()) {
@@ -673,7 +568,7 @@ class AppState extends ChangeNotifier {
     } catch (_) {
       return 'importInvalid';
     }
-    _ensureDaily();
+    ensureDaily();
     await save();
     notifyListeners();
     return null;

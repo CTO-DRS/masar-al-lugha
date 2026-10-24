@@ -187,6 +187,35 @@ class _HomeHero extends StatelessWidget {
                 ),
               ),
             ],
+            // v4.1 (ROADMAP item 4): re-test lane for returning users who
+            // feel misplaced. Confirming a result overwrites placementSkip;
+            // completed lessons keep their stars either way.
+            if (st.placementDone[st.courseId] == true) ...[
+              const SizedBox(height: 8),
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => const PlacementScreen(),
+                  ));
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.refresh, size: 18, color: context.mutedText),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(tr('placementRetest'),
+                          style: TextStyle(
+                              color: context.mutedText,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13)),
+                    ),
+                    Icon(Icons.chevron_right,
+                        size: 18, color: context.mutedText),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

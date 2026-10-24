@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:masar_al_lugha/app_state.dart';
+import 'package:masar_al_lugha/profile_store.dart';
 
 const _kProgress = 'progress_json_v1';
 const _kBackup = 'progress_backup_v1';
@@ -171,5 +172,34 @@ void main() {
     expect(st.badges, contains('streak_3'));
 
     await st.flush();
+  });
+
+  test('v4.1: AppState delegates persistence to ProfileStore (same keys)',
+      () async {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final st = AppState();
+    await st.load();
+
+    // Dirty flag is mirrored from the store through the same public API.
+    st.xp = 7;
+    expect(st.dirty, isFalse);
+    st.scheduleSave();
+    expect(st.dirty, isTrue);
+    expect(st.store.dirty, isTrue);
+
+    // Round-trip through the extracted store keeps the on-disk shape:
+    // same progress key, schema marker, and settings blob.
+    await st.flush();
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString('progress_json_v1');
+    expect(raw, isNotNull);
+    final j = jsonDecode(raw!) as Map<String, dynamic>;
+    expect(j['schema'], ProfileStore.progressSchema);
+    expect(j['settings'], isA<Map>());
+
+    final st2 = AppState();
+    await st2.load();
+    expect(st2.xp, 7);
+    expect(st2.dirty, isFalse);
   });
 }

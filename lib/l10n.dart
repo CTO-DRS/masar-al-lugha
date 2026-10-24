@@ -159,6 +159,21 @@ class L {
       'wordStats': 'إحصاءات الكلمات',
       'aboutEngine':
           'محرك التكرار المتباعد مستوحى من SM-2/FSRS مع خطوات تعلّم وفواصل متكيفة.',
+      // v4.1
+      'version': 'الإصدار 4.1.0',
+      'weakPracticeTitle': 'تدريب الكلمات الصعبة',
+      'weakPracticeHint': 'اقرأ الكلمة ثم اقلب البطاقة وقيّم نفسك بصدق',
+      'practiceDone': 'أنهيت جلسة التدريب!',
+      'cardsPracticed': 'بطاقة تدربت عليها',
+      'misses': 'أخطاء',
+      'errorAnalysis': 'تحليل الأخطاء',
+      'accuracyOverall': 'دقتك الإجمالية',
+      'answersTracked': 'إجابة مسجّلة',
+      'accuracyNote': 'تُحتسب من كل الإجابات في كل الدورات',
+      'topMistakes': 'أكثر الكلمات خطأً (أعلى 20)',
+      'analysisCourseEn': 'القائمة تعرض كلمات دورة الإنجليزية الحالية',
+      'analysisCourseOther': 'القائمة تعرض كلمات الدورة المختارة حالياً',
+      'placementRetest': 'إعادة اختبار تحديد المستوى',
     },
     'en': {
       'appName': 'Language Path',
@@ -317,6 +332,22 @@ class L {
       'wordStats': 'Word stats',
       'aboutEngine':
           'The spaced-repetition engine is inspired by SM-2/FSRS with learning steps and adaptive intervals.',
+      // v4.1
+      'version': 'Version 4.1.0',
+      'weakPracticeTitle': 'Tough-words practice',
+      'weakPracticeHint':
+          'Read the word, flip the card, rate yourself honestly',
+      'practiceDone': 'Practice session complete!',
+      'cardsPracticed': 'cards practiced',
+      'misses': 'misses',
+      'errorAnalysis': 'Error analysis',
+      'accuracyOverall': 'Overall accuracy',
+      'answersTracked': 'answers tracked',
+      'accuracyNote': 'Counted across every answer in all courses',
+      'topMistakes': 'Most-missed words (top 20)',
+      'analysisCourseEn': 'This list covers your current English course',
+      'analysisCourseOther': 'This list covers the currently selected course',
+      'placementRetest': 'Re-take placement test',
     },
   };
 
