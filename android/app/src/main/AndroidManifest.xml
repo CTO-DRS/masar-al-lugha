@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- v5.6 pronunciation practice: microphone access is OPTIONAL — the
+         permission dialog fires only when the learner opens the pronunciation
+         screen and taps the mic. Everything else works without it. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <application
         android:label="مسار اللغة"
         android:name="${applicationName}"

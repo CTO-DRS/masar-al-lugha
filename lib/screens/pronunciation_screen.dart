@@ -1,0 +1,335 @@
+// Pronunciation practice (v5.6, Phase 4 skill 1): speak a course word and
+// get an APPROXIMATE score by comparing the speech-to-text transcript with
+// the expected text. Microphone permission is OPTIONAL — the feature is
+// reached by explicit action, the OS dialog fires on first use, and every
+// failure (no permission, no recognizer, test environment) degrades to an
+// honest "unavailable" state instead of a fake score.
+import 'package:flutter/material.dart';
+
+import '../models.dart';
+import '../pronunciation.dart';
+import '../scope.dart';
+import '../services/stt.dart';
+import '../theme.dart';
+import '../widgets/mascot.dart';
+
+class PronunciationScreen extends StatefulWidget {
+  final String? initialWord;
+  const PronunciationScreen({super.key, this.initialWord});
+
+  @override
+  State<PronunciationScreen> createState() => _PronunciationScreenState();
+}
+
+class _PronunciationScreenState extends State<PronunciationScreen> {
+  late final List<Vocab> _words;
+  late Vocab _current;
+  final TextEditingController _pickCtrl = TextEditingController();
+
+  bool _engineReady = false;
+  bool _engineChecked = false;
+  bool _listening = false;
+  String _transcript = '';
+  int? _score;
+  String? _verdictKey;
+  final SttService _stt = SttService.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final st = AppScope.of(context);
+      _words = st.course.allVocab.where((v) => !v.isSentence).toList();
+      _current = _words.firstWhere(
+        (v) => widget.initialWord != null && v.target == widget.initialWord,
+        orElse: () => _words.first,
+      );
+      if (widget.initialWord != null) _pickCtrl.text = _current.target;
+      _engineReady = await _stt.init();
+      if (mounted) setState(() => _engineChecked = true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _stt.stop();
+    _pickCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _speak() async {
+    final tts = AppScope.ttsOf(context);
+    await tts.setLanguage(AppScope.of(context).course.ttsLang);
+    await tts.speak(_current.target);
+  }
+
+  Future<void> _listen() async {
+    if (_listening) {
+      await _stt.stop();
+      setState(() => _listening = false);
+      return;
+    }
+    if (!_engineReady) {
+      _engineReady = await _stt.init();
+      if (!mounted) return;
+      setState(() {});
+      if (!_engineReady) return; // unavailable banner already visible
+    }
+    final st = AppScope.of(context);
+    final locale = await _stt.localeFor(st.course.ttsLang);
+    setState(() {
+      _listening = true;
+      _transcript = '';
+      _score = null;
+      _verdictKey = null;
+    });
+    await _stt.listen(
+      localeId: locale ?? st.course.ttsLang.replaceAll('-', '_'),
+      onFinal: (text) {
+        if (!mounted) return;
+        setState(() {
+          _listening = false;
+          _transcript = text.trim();
+          _score = PronScorer.score(_current.target, _transcript);
+          _verdictKey = PronScorer.verdictKey(_score!);
+        });
+      },
+      onPartial: (text) {
+        if (!mounted) return;
+        setState(() => _transcript = text);
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String tr(String k) => context.tr(k);
+
+    return Scaffold(
+      appBar: AppBar(title: Text(tr('pronTitle'))),
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          Text(tr('pronIntro'),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: context.mutedText, fontSize: 13.5)),
+          const SizedBox(height: 16),
+          // word picker with autocomplete over the course corpus
+          RawAutocomplete<Vocab>(
+            textEditingController: _pickCtrl,
+            focusNode: FocusNode(),
+            displayStringForOption: (v) => v.target,
+            optionsBuilder: (TextEditingValue value) {
+              final q = value.text.trim().toLowerCase();
+              if (q.isEmpty) return const Iterable<Vocab>.empty();
+              return _words.where((v) =>
+                  v.target.toLowerCase().contains(q) ||
+                  v.translationAr.contains(value.text.trim()));
+            },
+            onSelected: (Vocab v) => setState(() {
+              _current = v;
+              _transcript = '';
+              _score = null;
+              _verdictKey = null;
+            }),
+            fieldViewBuilder: (context, ctrl, focus, onFieldSubmitted) =>
+                TextField(
+              controller: ctrl,
+              focusNode: focus,
+              onSubmitted: (_) => onFieldSubmitted(),
+              decoration: InputDecoration(
+                hintText: tr('pronPickWord'),
+                prefixIcon: Icon(Icons.search, color: context.mutedText),
+                suffixIcon: Icon(Icons.record_voice_over,
+                    color: context.mutedText, size: 20),
+                filled: true,
+                fillColor: context.softBg,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: context.line, width: 2),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: context.line, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: AppColors.green, width: 2),
+                ),
+              ),
+            ),
+            optionsViewBuilder: (context, onSelected, options) => Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                elevation: 4,
+                borderRadius: BorderRadius.circular(14),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 240),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      for (final v in options.take(8))
+                        ListTile(
+                          dense: true,
+                          title: Text(v.target,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w800)),
+                          subtitle: Text(v.translationAr,
+                              style: const TextStyle(fontSize: 12)),
+                          onTap: () => onSelected(v),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 22),
+          // target card: word + TTS replay
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 18),
+            decoration: BoxDecoration(
+              color: context.card,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: context.line, width: 2),
+            ),
+            child: Column(
+              children: [
+                Text(_current.target,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 26, fontWeight: FontWeight.w900)),
+                const SizedBox(height: 6),
+                Text(_current.translationAr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: context.mutedText, fontSize: 15)),
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  onPressed: _speak,
+                  icon: const Icon(Icons.volume_up, size: 20),
+                  label: Text(tr('pronSpeakFirst')),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 22),
+          // mic + result
+          Center(
+            child: GestureDetector(
+              onTap: _listen,
+              child: Container(
+                width: 92,
+                height: 92,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _listening ? AppColors.red : AppColors.green,
+                  boxShadow: [
+                    BoxShadow(
+                      color: (_listening ? AppColors.red : AppColors.green)
+                          .withValues(alpha: 0.35),
+                      blurRadius: _listening ? 26 : 10,
+                      spreadRadius: _listening ? 6 : 1,
+                    ),
+                  ],
+                ),
+                child: Icon(_listening ? Icons.stop : Icons.mic,
+                    color: Colors.white, size: 40),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            _listening ? tr('pronListening') : tr('pronTapMic'),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: context.mutedText, fontSize: 13),
+          ),
+          if (_engineChecked && !_engineReady) ...[
+            const SizedBox(height: 8),
+            Text(tr('pronUnavailable'),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: AppColors.orange,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800)),
+          ],
+          if (_score != null) ...[
+            const SizedBox(height: 18),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: context.card,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: context.line, width: 2),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 74,
+                        height: 74,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                              value: _score! / 100,
+                              strokeWidth: 8,
+                              backgroundColor:
+                                  context.line.withValues(alpha: 0.4),
+                              valueColor: AlwaysStoppedAnimation(_score! >= 60
+                                  ? AppColors.green
+                                  : AppColors.orange),
+                            ),
+                            Text('$_score%',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 15)),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(tr(_verdictKey!),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 16)),
+                            Text(tr('pronApprox'),
+                                style: TextStyle(
+                                    color: context.mutedText, fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (_transcript.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    Text('${tr('pronSaid')}: "$_transcript"',
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(color: context.mutedText, fontSize: 13)),
+                  ],
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(height: 20),
+          const _HomeCompanion(),
+        ],
+      ),
+    );
+  }
+}
+
+// Small companion so the screen never goes quiet (same widget family as
+// the learn path hero), kept private — no state persisted.
+class _HomeCompanion extends StatelessWidget {
+  const _HomeCompanion();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Mascot(size: 76, mood: MascotMood.happy));
+  }
+}

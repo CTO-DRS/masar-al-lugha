@@ -1,6 +1,7 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.5.0+29** — see the v5.5 section below for the adaptive
+**Current release: v5.6.0+30** — see the v5.6 section below for the
+pronunciation practice skill, the v5.5 section for the adaptive
 placement probe, the v5.4 section for the content wave (German to full unit
 parity + 1022 new example sentences and enforced coverage floors), the v5.3
 section for the FSRS scheduler, the v5.2 section for the Urdu
@@ -40,6 +41,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.3** | **The scheduler becomes REAL FSRS-4.5: per-card difficulty/stability memory states + the power-law forgetting curve R(t,S)=(1+19/81·t/S)^(−1/2) replace the SM-2-lite ease/interval math; a target-retention dial (default 90%, 70–98%) in Settings turns stability into intervals; a one-time migration derives FSRS states from every pre-v5.3 card WITHOUT moving due/reps/lapses/state/interval — zero progress loss; new additive card keys (d/s/last) ride the schema-v2 payload; 222 tests (+22 FSRS/migration)** |
 | **v5.4** | **Content wave in the de→ur→en priority order: German backfill 522 sentences (12.9%→100%) + 5 new units (School A2, Bank B1, Media B2, Literature & Philosophy C1×2) = 25 units / 779 words — full parity with French's unit count; Urdu backfill 500 sentences (17.8%→39.3%); enforced example-coverage floors in validator + content tests (en≥18% · fr≥40% · ur≥35% · de≥95%), global ids 6086→6266; all generated content marked "needs human review" in CONTENT_AUDIT** |
 | **v5.5** | **The placement test goes ADAPTIVE: a new `PlacementProber` staircase (18 questions, band step 12%, start 30% depth) raises the sampled depth after correct answers and lowers it after wrong ones — questions concentrate at the learner's ceiling; the result adds a per-CEFR-level breakdown chips row, the skip honors every SOLID band (`recommendedFlatIndexSolid`) instead of a leading prefix, and the tier maps the final band; the fixed-probe v4.0 API stays untouched and the prober feeds it; 234 tests** |
+| **v5.6** | **New skill — PRONUNCIATION practice (Phase 4/1): a `PronScorer` engine (Flutter-free, tested) grades the speech-to-text TRANSCRIPT against the expected word (Levenshtein over tashkeel/punctuation-normalized text) with honest thresholds; `SttService` wraps the device recognizer (speech_to_text, de/en/fr/ur locales) behind graceful degradation; optional mic permission fires only on use; autocomplete word picker over the course corpus + TTS replay; every score labeled "approximate" — recognition quality is device-dependent and cannot be verified without hardware; new RECORD_AUDIO permission + speech_to_text dependency (justified)** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -671,6 +673,40 @@ adaptive probe instead of a fixed sample:
 5. **l10n** — `placementQof` (progress, {n}/{t} via `trF`) and
    `placementBreakdown` in ar+en; version pin group moved to v5.5.
    Suite: 224 → **234** tests (9 adaptive engine tests).
+
+
+## v5.6 — pronunciation practice (SHIPPED, Phase 4 skill 1/4)
+
+New skill in its own branch (`feature/skill-pronunciation`, merged
+--no-ff). Scope and honesty up front: the app does NOT do acoustic
+analysis — it scores the DEVICE speech recognizer's transcript against
+the expected text. Recognition quality depends on the phone and cannot
+be verified without hardware; the UI says "approximate" everywhere and
+degrades honestly when the recognizer is missing (including the test
+environment, which has no platform channel).
+
+1. **`lib/pronunciation.dart`** (Flutter-free, 10 tests) —
+   `normalize` (case/punctuation folding + Arabic tashkeel/tatweel
+   STRIPPED here, unlike the dictation grader where diacritics are
+   content — documented difference), classic `editDistance`, `score`
+   (0–100 similarity), `verdictKey` (≥85 great / ≥60 close / >0
+   partial / 0 miss).
+2. **`lib/services/stt.dart`** — `speech_to_text` wrapper: init (where
+   the optional OS mic dialog fires), `localeFor` maps course
+   `ttsLang` (de-DE→de_DE … ur-PK→ur_PK with base-language fallback),
+   single-session `listen` with partial + final results, honest
+   `isAvailable`. Any platform error → unavailable, never a fake score.
+3. **`lib/screens/pronunciation_screen.dart`** — autocomplete word
+   picker over the whole course corpus (targets + Arabic glosses),
+   target card with TTS replay, big mic button (tap to start/stop),
+   score ring + verdict + "what I heard" transcript, and a live
+   companion. Entry: mic icon in the dictionary search bar (carries
+   the current query as the initial word).
+4. **Wiring** — `speech_to_text >=7 <8` dependency (justified: no
+   lighter offline path exists) + `RECORD_AUDIO` permission marked
+   OPTIONAL in the manifest comment; app otherwise unchanged. l10n:
+   13 new ar/en keys; version pin group moved to v5.6. Suite:
+   234 → **248** tests.
 
 ## Hard invariants (never break)
 
