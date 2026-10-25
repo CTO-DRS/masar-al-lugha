@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.0
+# ARCHITECTURE — Masar Al-Lugha v5.1
 
 ## 1. Layered view (post-v4.0)
 
@@ -386,6 +386,27 @@ contains `ريف` (countryside) — so the unit's Arabic title was retitled
 `التعرّف على النفس` to keep the domain partition honest. The pin lives
 in `test/path_test.dart`; `scripts/domain_counts_sim.py` recomputes the
 per-domain expectations from the data.
+
+### 4h. Urdu course at full parity (v5.1)
+
+`course_ur.json` grew from 25 to **56 units / 172 lessons / 1669
+words — the same unit count and level spread as the English course**
+(A1 14 · A2 14 · B1 18 · B2 5 · C1 5). The 31 new units were authored
+as batch files under `scripts/ur_new_*.json` and merged by
+`scripts/expand_urdu.py`, which inserts each level's units AFTER that
+level's existing units so the CEFR-monotonic path order survives.
+
+Invariants that made the append safe:
+
+- not one pre-existing vocab id moved (append-only progress keys);
+  37 candidate ids that already existed were renamed inside the NEW
+  units only (e.g. `ur_ghar` → `ur_ghar_home`, `ur_seb` → `ur_sayb`);
+- new unit titles avoid accidental catalog-substring hits — the domain
+  spread (daily 16 / nature 8 / business 6 / culture 7 / travel 5 /
+  food 5 / health 4 / basics 3 / tech 2) is pinned in
+  `test/path_test.dart`;
+- `content_test.dart` pins the per-course shape (56/172/1669) and the
+  global vocab total (5427), mirroring `validate_content.py`.
 
 ## 5. Content pipeline
 

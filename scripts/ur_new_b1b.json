@@ -1,0 +1,242 @@
+[
+ {
+  "id": "ur_u46",
+  "color": "#059669",
+  "titleAr": "الفضاء والفلك",
+  "titleEn": "Space & Astronomy",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u46_l1",
+    "titleAr": "الكواكب",
+    "titleEn": "The Planets",
+    "vocab": [
+     {"id": "ur_khalaa", "target": "خلا", "translationAr": "الفضاء", "phonetic": "خلا", "emoji": "🌌"},
+     {"id": "ur_solar_system", "target": "نظامِ شمسی", "translationAr": "المجموعة الشمسية", "phonetic": "نظامِ شمسی", "emoji": "☀️"},
+     {"id": "ur_siyaara", "target": "سیارہ", "translationAr": "الكوكب", "phonetic": "سیارہ", "emoji": "🪐"},
+     {"id": "ur_zameen", "target": "زمین", "translationAr": "الأرض", "phonetic": "زمین", "emoji": "🌍", "exampleTarget": "زمین کے چاند ہے", "exampleAr": "للأرض قمر"},
+     {"id": "ur_mushtari", "target": "مشتری", "translationAr": "المشتري", "phonetic": "مشتری", "emoji": "🟠"},
+     {"id": "ur_zuhal", "target": "زحل", "translationAr": "زحل", "phonetic": "زُحل", "emoji": "🟡"},
+     {"id": "ur_uttaard", "target": "عطارد", "translationAr": "عطارد", "phonetic": "عطارد", "emoji": "⚪"},
+     {"id": "ur_zuhra", "target": "زہرہ", "translationAr": "الزهرة", "phonetic": "زُهرہ", "emoji": "✨"},
+     {"id": "ur_mareekh", "target": "مریخ", "translationAr": "المريخ", "phonetic": "مریخ", "emoji": "🔴"},
+     {"id": "ur_sitaara", "target": "ستارہ", "translationAr": "النجم", "phonetic": "ستارہ", "emoji": "⭐"}
+    ]
+   },
+   {
+    "id": "ur_u46_l2",
+    "titleAr": "النجوم والمجرات",
+    "titleEn": "Stars & Galaxies",
+    "vocab": [
+     {"id": "ur_kahkashaan", "target": "کہکشاں", "translationAr": "المجرة", "phonetic": "کہکشاں", "emoji": "🌌"},
+     {"id": "ur_black_hole", "target": "کالا سوراخ", "translationAr": "الثقب الأسود", "phonetic": "کالا سوراخ", "emoji": "🕳️"},
+     {"id": "ur_kainaat", "target": "کائنات", "translationAr": "الكون", "phonetic": "کائنات", "emoji": "🌠"},
+     {"id": "ur_aasmaan", "target": "آسمان", "translationAr": "السماء", "phonetic": "آسمان", "emoji": "☁️"},
+     {"id": "ur_telescope", "target": "ٹیلی سکوپ", "translationAr": "التلسكوب", "phonetic": "ٹیلی سکوپ", "emoji": "🔭"},
+     {"id": "ur_falkiyaat", "target": "فلکیات", "translationAr": "علم الفلك", "phonetic": "فلکیات", "emoji": "🔮"},
+     {"id": "ur_markab", "target": "مرکب", "translationAr": "المركبة الفضائية", "phonetic": "مرکب", "emoji": "🛸"},
+     {"id": "ur_khala_baaz", "target": "خلاباز", "translationAr": "رائد الفضاء", "phonetic": "خلاباز", "emoji": "🧑‍🚀"},
+     {"id": "ur_khalai_jahaz", "target": "خلائی جہاز", "translationAr": "السفينة الفضائية", "phonetic": "خلائی جہاز", "emoji": "🚀"},
+     {"id": "ur_helmet", "target": "ہیلمٹ", "translationAr": "الخوذة", "phonetic": "ہیلمٹ", "emoji": "🪖"}
+    ]
+   },
+   {
+    "id": "ur_u46_l3",
+    "titleAr": "رحلات الفضاء",
+    "titleEn": "Space Missions",
+    "vocab": [
+     {"id": "ur_launch", "target": "لانچ", "translationAr": "الإطلاق", "phonetic": "لانچ", "emoji": "🚀"},
+     {"id": "ur_madaar", "target": "مدار", "translationAr": "المدار", "phonetic": "مدار", "emoji": "🛰️"},
+     {"id": "ur_satellite", "target": "سیٹلائٹ", "translationAr": "القمر الصناعي", "phonetic": "سیٹلائٹ", "emoji": "📡"},
+     {"id": "ur_lunar_eclipse", "target": "چاند گرہن", "translationAr": "الخسوف", "phonetic": "چاند گرہن", "emoji": "🌒"},
+     {"id": "ur_solar_eclipse", "target": "سورج گرہن", "translationAr": "الكسوف", "phonetic": "سورج گرہن", "emoji": "🌑"},
+     {"id": "ur_meteor", "target": "شہاب ثاقب", "translationAr": "الشهاب", "phonetic": "شہاب ثاقب", "emoji": "☄️"},
+     {"id": "ur_space_travel", "target": "خلائی سفر", "translationAr": "السفر الفضائي", "phonetic": "خلائی سفر", "emoji": "🌠"},
+     {"id": "ur_space_station", "target": "خلائی اسٹیشن", "translationAr": "محطة الفضاء", "phonetic": "خلائی اسٹیشن", "emoji": "🛸"},
+     {"id": "ur_gravity", "target": "جاذبہ", "translationAr": "الجاذبية", "phonetic": "جاذبہ", "emoji": "🍎"},
+     {"id": "ur_outer_space", "target": "بیرونی خلا", "translationAr": "الفضاء الخارجي", "phonetic": "بیرونی خلا", "emoji": "⚫"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u47",
+  "color": "#00CD9C",
+  "titleAr": "جغرافیا العالم",
+  "titleEn": "World Geography",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u47_l1",
+    "titleAr": "القارات والدول",
+    "titleEn": "Continents & Countries",
+    "vocab": [
+     {"id": "ur_bara_sagheer", "target": "براعظم", "translationAr": "القارة", "phonetic": "براعظم", "emoji": "🗺️"},
+     {"id": "ur_asia", "target": "ایشیا", "translationAr": "آسيا", "phonetic": "ایشیا", "emoji": "🌏"},
+     {"id": "ur_europe", "target": "یورپ", "translationAr": "أوروبا", "phonetic": "یورپ", "emoji": "🌍"},
+     {"id": "ur_africa", "target": "افریقہ", "translationAr": "أفريقيا", "phonetic": "افریقہ", "emoji": "🌎"},
+     {"id": "ur_america", "target": "امریکہ", "translationAr": "أمريكا", "phonetic": "امریکہ", "emoji": "🇺🇸"},
+     {"id": "ur_mulk", "target": "ملک", "translationAr": "البلد", "phonetic": "ملک", "emoji": "🏳️"},
+     {"id": "ur_capital", "target": "دارالحکومت", "translationAr": "العاصمة", "phonetic": "دارالحکومت", "emoji": "🏛️"},
+     {"id": "ur_hudood", "target": "حدود", "translationAr": "الحدود", "phonetic": "حدود", "emoji": "🚧"},
+     {"id": "ur_equator", "target": "خط استوا", "translationAr": "خط الاستواء", "phonetic": "خط استوا", "emoji": "🌐"},
+     {"id": "ur_latitude", "target": "عرضِ بلد", "translationAr": "خط العرض", "phonetic": "عرضِ بلد", "emoji": "↕️"}
+    ]
+   },
+   {
+    "id": "ur_u47_l2",
+    "titleAr": "التضاريس",
+    "titleEn": "Terrain",
+    "vocab": [
+     {"id": "ur_mountain_range", "target": "سلسلہ کوہ", "translationAr": "سلسلة الجبال", "phonetic": "سلسلہ کوہ", "emoji": "🏔️"},
+     {"id": "ur_darra", "target": "درہ", "translationAr": "الممر الجبلي", "phonetic": "درہ", "emoji": "🛤️"},
+     {"id": "ur_irtifa", "target": "مرتفع", "translationAr": "الهضبة", "phonetic": "مرتفع", "emoji": "🟫"},
+     {"id": "ur_registan", "target": "ریگستان", "translationAr": "الصحراء", "phonetic": "ریگستان", "emoji": "🏜️"},
+     {"id": "ur_dasht", "target": "دشت", "translationAr": "السهل", "phonetic": "دشت", "emoji": "🌾"},
+     {"id": "ur_jazeera", "target": "جزیرہ", "translationAr": "الجزيرة", "phonetic": "جزیرہ", "emoji": "🏝️"},
+     {"id": "ur_chashma", "target": "چشمہ", "translationAr": "النبع", "phonetic": "چشمہ", "emoji": "⛲"},
+     {"id": "ur_pahaari", "target": "پہاڑی", "translationAr": "التلّ", "phonetic": "پہاڑی", "emoji": "⛰️"},
+     {"id": "ur_ghaati", "target": "گھاٹی", "translationAr": "الأخدود", "phonetic": "گھاٹی", "emoji": "🕳️"},
+     {"id": "ur_volcano", "target": "آتش فشاں", "translationAr": "البركان", "phonetic": "آتش فشاں", "emoji": "🌋"}
+    ]
+   },
+   {
+    "id": "ur_u47_l3",
+    "titleAr": "البحار والأنهار",
+    "titleEn": "Seas & Rivers",
+    "vocab": [
+     {"id": "ur_samandar", "target": "سمندر", "translationAr": "البحر", "phonetic": "سمندر", "emoji": "🌊"},
+     {"id": "ur_khaleej", "target": "خلیج", "translationAr": "الخليج", "phonetic": "خلیج", "emoji": "🏖️"},
+     {"id": "ur_nahar", "target": "نہر", "translationAr": "القناة", "phonetic": "نہر", "emoji": "🛶"},
+     {"id": "ur_saaheel", "target": "ساحل", "translationAr": "الساحل", "phonetic": "ساحل", "emoji": "🌅"},
+     {"id": "ur_mauj", "target": "موج", "translationAr": "الموجة", "phonetic": "موج", "emoji": "〰️"},
+     {"id": "ur_gehraai", "target": "گہرائی", "translationAr": "العمق", "phonetic": "گہرائی", "emoji": "🔵"},
+     {"id": "ur_bahaao", "target": "بہاؤ", "translationAr": "الجريان", "phonetic": "بہاؤ", "emoji": "💦"},
+     {"id": "ur_delta", "target": "ڈیلٹا", "translationAr": "الدلتا", "phonetic": "ڈیلٹا", "emoji": "🔺"},
+     {"id": "ur_dam", "target": "ڈیم", "translationAr": "السدّ", "phonetic": "ڈیم", "emoji": "🧱"},
+     {"id": "ur_tides", "target": "جزر و مد", "translationAr": "المد والجزر", "phonetic": "جزر و مد", "emoji": "🌓"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u48",
+  "color": "#1CB0F6",
+  "titleAr": "الشاطئ والبحر",
+  "titleEn": "Beach & Sea",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u48_l1",
+    "titleAr": "على الشاطئ",
+    "titleEn": "On the Beach",
+    "vocab": [
+     {"id": "ur_shaaht", "target": "شاطئ", "translationAr": "الشاطئ", "phonetic": "شاطئ", "emoji": "🏖️"},
+     {"id": "ur_rett", "target": "ریت", "translationAr": "الرمل", "phonetic": "ریت", "emoji": "🟨"},
+     {"id": "ur_chhatri", "target": "چھتری", "translationAr": "المظلة الشمسية", "phonetic": "چھتری", "emoji": "⛱️"},
+     {"id": "ur_naseem", "target": "نسیم", "translationAr": "النسيم", "phonetic": "نسیم", "emoji": "🌬️"},
+     {"id": "ur_ainak", "target": "عینک", "translationAr": "النظارة", "phonetic": "عینک", "emoji": "🕶️"},
+     {"id": "ur_port", "target": "بندرگاہ", "translationAr": "الميناء", "phonetic": "بندرگاہ", "emoji": "⚓"},
+     {"id": "ur_sand_castle", "target": "ریت کا قلعہ", "translationAr": "قلعة الرمل", "phonetic": "ریت کا قلعہ", "emoji": "🏰"},
+     {"id": "ur_sunscreen", "target": "سن اسکرین", "translationAr": "واقي الشمس", "phonetic": "سن اسکرین", "emoji": "🧴"},
+     {"id": "ur_flag", "target": "جھنڈا", "translationAr": "العلم", "phonetic": "جھنڈا", "emoji": "🚩"},
+     {"id": "ur_sunset", "target": "غروبِ آفتاب", "translationAr": "غروب الشمس", "phonetic": "غروبِ آفتاب", "emoji": "🌇"}
+    ]
+   },
+   {
+    "id": "ur_u48_l2",
+    "titleAr": "حياة البحر",
+    "titleEn": "Sea Life",
+    "vocab": [
+     {"id": "ur_machhli_fish", "target": "مچھلی", "translationAr": "السمك", "phonetic": "مچھلی", "emoji": "🐟"},
+     {"id": "ur_whale", "target": "وال", "translationAr": "الحوت", "phonetic": "وال", "emoji": "🐳"},
+     {"id": "ur_shark", "target": "شارک", "translationAr": "القرش", "phonetic": "شارک", "emoji": "🦈"},
+     {"id": "ur_dolphin", "target": "دلفین", "translationAr": "الدلفين", "phonetic": "دلفین", "emoji": "🐬"},
+     {"id": "ur_octopus", "target": "اختاپوس", "translationAr": "الأخطبوط", "phonetic": "اختاپوس", "emoji": "🐙"},
+     {"id": "ur_tortoise", "target": "کچھوا", "translationAr": "السلحفاة", "phonetic": "کچھوا", "emoji": "🐢"},
+     {"id": "ur_coral", "target": "مرجانی", "translationAr": "المرجان", "phonetic": "مرجانی", "emoji": "🪸"},
+     {"id": "ur_shell", "target": "گھونگا", "translationAr": "الصدفة", "phonetic": "گھونگا", "emoji": "🐚"},
+     {"id": "ur_prawn", "target": "کیکڑا", "translationAr": "الجمبري", "phonetic": "کیکڑا", "emoji": "🦐"},
+     {"id": "ur_seaweed", "target": "سمندری کائی", "translationAr": "الطحالب البحرية", "phonetic": "سمندری کائی", "emoji": "🌿"}
+    ]
+   },
+   {
+    "id": "ur_u48_l3",
+    "titleAr": "الرياضات المائية",
+    "titleEn": "Water Sports",
+    "vocab": [
+     {"id": "ur_diving", "target": "غوطہ خوری", "translationAr": "الغوص", "phonetic": "غوطہ خوری", "emoji": "🤿"},
+     {"id": "ur_surfing", "target": "سرفنگ", "translationAr": "ركوب الأمواج", "phonetic": "سرفنگ", "emoji": "🏄"},
+     {"id": "ur_kayak", "target": "کایک", "translationAr": "الزورق", "phonetic": "کایک", "emoji": "🛶"},
+     {"id": "ur_jet_ski", "target": "جیٹ اسکی", "translationAr": "الزورق النفاث", "phonetic": "جیٹ اسکی", "emoji": "🛥️"},
+     {"id": "ur_para_sailing", "target": "پیرا سیلنگ", "translationAr": "التزلج بالمظلة", "phonetic": "پیرا سیلنگ", "emoji": "🪂"},
+     {"id": "ur_beach_volleyball", "target": "بیچ والی بال", "translationAr": "الكرة الطائرة الشاطئية", "phonetic": "بیچ والی بال", "emoji": "🏐"},
+     {"id": "ur_scuba", "target": "سکوبا", "translationAr": "الغوص بالأسطوانة", "phonetic": "سکوبا", "emoji": "🐠"},
+     {"id": "ur_yacht", "target": "یخت", "translationAr": "اليخت", "phonetic": "یخت", "emoji": "⛵"},
+     {"id": "ur_sailing", "target": "کشتی رانی", "translationAr": "الإبحار", "phonetic": "کشتی رانی", "emoji": "🚤"},
+     {"id": "ur_water_park", "target": "آبی پارک", "translationAr": "مركز الألعاب المائية", "phonetic": "آبی پارک", "emoji": "🏊"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u49",
+  "color": "#FF9600",
+  "titleAr": "المزرعة والريف",
+  "titleEn": "Farm & Countryside",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u49_l1",
+    "titleAr": "في المزرعة",
+    "titleEn": "On the Farm",
+    "vocab": [
+     {"id": "ur_farm", "target": "مزرعہ", "translationAr": "المزرعة", "phonetic": "مزرعہ", "emoji": "🚜"},
+     {"id": "ur_kisaan", "target": "کسان", "translationAr": "الفلاح", "phonetic": "کسان", "emoji": "🧑‍🌾"},
+     {"id": "ur_hull", "target": "ہل", "translationAr": "المحراث", "phonetic": "ہل", "emoji": "🛠️"},
+     {"id": "ur_bowaai", "target": "بوائی", "translationAr": "البذر", "phonetic": "بوائی", "emoji": "🌱"},
+     {"id": "ur_gandum", "target": "گندم", "translationAr": "القمح", "phonetic": "گندم", "emoji": "🌾"},
+     {"id": "ur_fasli", "target": "فصل", "translationAr": "المحصول", "phonetic": "فصل", "emoji": "🌽"},
+     {"id": "ur_khaad", "target": "کھاد", "translationAr": "السماد", "phonetic": "کھاد", "emoji": "💩"},
+     {"id": "ur_chawal_rice", "target": "چاول", "translationAr": "الأرز", "phonetic": "چاول", "emoji": "🍚"},
+     {"id": "ur_ganna", "target": "گنا", "translationAr": "قصب السكر", "phonetic": "گنا", "emoji": "🎋"},
+     {"id": "ur_kapaas", "target": "کپاس", "translationAr": "القطن", "phonetic": "کپاس", "emoji": "☁️"}
+    ]
+   },
+   {
+    "id": "ur_u49_l2",
+    "titleAr": "الدواب",
+    "titleEn": "Farm Animals",
+    "vocab": [
+     {"id": "ur_bhains", "target": "بھینس", "translationAr": "الجاموسة", "phonetic": "بھینس", "emoji": "🐃"},
+     {"id": "ur_oont", "target": "اونٹ", "translationAr": "الجمل", "phonetic": "اونٹ", "emoji": "🐪"},
+     {"id": "ur_gadha", "target": "گدھا", "translationAr": "الحمار", "phonetic": "گدھا", "emoji": "🐴"},
+     {"id": "ur_murgha", "target": "مرغا", "translationAr": "الديك", "phonetic": "مرغا", "emoji": "🐓"},
+     {"id": "ur_anday", "target": "انڈے", "translationAr": "البيض", "phonetic": "انڈے", "emoji": "🥚"},
+     {"id": "ur_honey_bee", "target": "شہد کی مکھی", "translationAr": "النحلة", "phonetic": "شہد کی مکھی", "emoji": "🐝"},
+     {"id": "ur_squirrel", "target": "گلہری", "translationAr": "السنجاب", "phonetic": "گلہری", "emoji": "🐿️"},
+     {"id": "ur_fox", "target": "لومڑی", "translationAr": "الثعلب", "phonetic": "لومڑی", "emoji": "🦊"},
+     {"id": "ur_hedgehog", "target": "خارپشت", "translationAr": "القنفذ", "phonetic": "خارپشت", "emoji": "🦔"},
+     {"id": "ur_snake", "target": "سانپ", "translationAr": "الثعبان", "phonetic": "سانپ", "emoji": "🐍"}
+    ]
+   },
+   {
+    "id": "ur_u49_l3",
+    "titleAr": "حياة الريف",
+    "titleEn": "Village Life",
+    "vocab": [
+     {"id": "ur_dehaat", "target": "دیہات", "translationAr": "القرى", "phonetic": "دیہات", "emoji": "🏘️"},
+     {"id": "ur_dehaati", "target": "دیہاتی", "translationAr": "قروي", "phonetic": "دیہاتی", "emoji": "👨‍🌾"},
+     {"id": "ur_koaan", "target": "کوں", "translationAr": "البئر", "phonetic": "کوں", "emoji": "🪣"},
+     {"id": "ur_charaagaah", "target": "چراگاہ", "translationAr": "المرعى", "phonetic": "چراگاہ", "emoji": "🌄"},
+     {"id": "ur_kuttia", "target": "کٹیا", "translationAr": "الكوخ", "phonetic": "کٹیا", "emoji": "🛖"},
+     {"id": "ur_gharra", "target": "گھڑا", "translationAr": "الجرة", "phonetic": "گھڑا", "emoji": "🏺"},
+     {"id": "ur_zoo", "target": "چڑیا گھر", "translationAr": "حديقة الحيوان", "phonetic": "چڑیا گھر", "emoji": "🦓"},
+     {"id": "ur_lakrri", "target": "لکڑی", "translationAr": "الحطب", "phonetic": "لکڑی", "emoji": "🪵"},
+     {"id": "ur_laalteen", "target": "لالٹین", "translationAr": "الفانوس", "phonetic": "لالٹین", "emoji": "🏮"},
+     {"id": "ur_khayt", "target": "کھیت", "translationAr": "الحقل", "phonetic": "کھیت", "emoji": "🌾"}
+    ]
+   }
+  ]
+ }
+]

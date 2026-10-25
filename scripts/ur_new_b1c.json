@@ -1,0 +1,122 @@
+[
+ {
+  "id": "ur_u50",
+  "color": "#58CC02",
+  "titleAr": "الطيور والحشرات",
+  "titleEn": "Birds & Insects",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u50_l1",
+    "titleAr": "الطيور",
+    "titleEn": "Birds",
+    "vocab": [
+     {"id": "ur_parrinda", "target": "پرندہ", "translationAr": "الطائر", "phonetic": "پرندہ", "emoji": "🐦"},
+     {"id": "ur_kabootar", "target": "کبوتر", "translationAr": "الحمامة", "phonetic": "کبوتر", "emoji": "🕊️"},
+     {"id": "ur_baaz", "target": "باز", "translationAr": "الصقر", "phonetic": "باز", "emoji": "🦅"},
+     {"id": "ur_ullu", "target": "اُلو", "translationAr": "البومة", "phonetic": "اُلو", "emoji": "🦉"},
+     {"id": "ur_meena", "target": "مینا", "translationAr": "الزرزور", "phonetic": "مینا", "emoji": "🐤"},
+     {"id": "ur_hans", "target": "ہنس", "translationAr": "الإوزة", "phonetic": "ہنس", "emoji": "🦢"},
+     {"id": "ur_mor_bird", "target": "مور", "translationAr": "الطاوس", "phonetic": "مور", "emoji": "🦚"},
+     {"id": "ur_aashiyaana", "target": "آشیانہ", "translationAr": "العشّ", "phonetic": "آشیانہ", "emoji": "🪹"},
+     {"id": "ur_parr", "target": "پر", "translationAr": "الريشة", "phonetic": "پر", "emoji": "🪶"},
+     {"id": "ur_choonch", "target": "چونچ", "translationAr": "المنقار", "phonetic": "چونچ", "emoji": "🦜"}
+    ]
+   },
+   {
+    "id": "ur_u50_l2",
+    "titleAr": "الحشرات",
+    "titleEn": "Insects",
+    "vocab": [
+     {"id": "ur_keera", "target": "کیڑا", "translationAr": "الحشرة", "phonetic": "کیڑا", "emoji": "🐜"},
+     {"id": "ur_makkhi", "target": "مکھی", "translationAr": "الذبابة", "phonetic": "مکھی", "emoji": "🪰"},
+     {"id": "ur_machhhar", "target": "مچھر", "translationAr": "البعوض", "phonetic": "مچھر", "emoji": "🦟"},
+     {"id": "ur_tittli", "target": "تتلی", "translationAr": "الفراشة", "phonetic": "تتلی", "emoji": "🦋"},
+     {"id": "ur_cockroach", "target": "کاکروچ", "translationAr": "الصرصور", "phonetic": "کاکروچ", "emoji": "🪳"},
+     {"id": "ur_deemak", "target": "دیمک", "translationAr": "النمل الأبيض", "phonetic": "دیمک", "emoji": "🪵"},
+     {"id": "ur_makrrri", "target": "مکڑی", "translationAr": "العنكبوت", "phonetic": "مکڑی", "emoji": "🕷️"},
+     {"id": "ur_jaalaa", "target": "جالا", "translationAr": "شبكة العنكبوت", "phonetic": "جالا", "emoji": "🕸️"},
+     {"id": "ur_bichhoo", "target": "بچھو", "translationAr": "العقرب", "phonetic": "بچھو", "emoji": "🦂"},
+     {"id": "ur_caterpillar", "target": "کن کھجورہ", "translationAr": "يرقة الفراشة", "phonetic": "کن کھجورہ", "emoji": "🐛"}
+    ]
+   },
+   {
+    "id": "ur_u50_l3",
+    "titleAr": "الحياة البرية",
+    "titleEn": "Wildlife",
+    "vocab": [
+     {"id": "ur_wild_boar", "target": "جنگلی سور", "translationAr": "الخنزير البري", "phonetic": "جنگلی سور", "emoji": "🐗"},
+     {"id": "ur_hiran", "target": "ہرن", "translationAr": "الغزال", "phonetic": "ہرن", "emoji": "🦌"},
+     {"id": "ur_zebra", "target": "زیبرا", "translationAr": "الحمار الوحشي", "phonetic": "زیبرا", "emoji": "🦓"},
+     {"id": "ur_koala", "target": "کوالا", "translationAr": "الكوالا", "phonetic": "کوالا", "emoji": "🐨"},
+     {"id": "ur_panda", "target": "پانڈا", "translationAr": "الباندا", "phonetic": "پانڈا", "emoji": "🐼"},
+     {"id": "ur_kangaroo", "target": "کنگرو", "translationAr": "الكنغر", "phonetic": "کنگرو", "emoji": "🦘"},
+     {"id": "ur_hippo", "target": "دریائی گھوڑا", "translationAr": "فرس النهر", "phonetic": "دریائی گھوڑا", "emoji": "🦛"},
+     {"id": "ur_rhino", "target": "گینڈا", "translationAr": "الكركدن", "phonetic": "گینڈا", "emoji": "🦏"},
+     {"id": "ur_lemur", "target": "لیمر", "translationAr": "الليمور", "phonetic": "لیمر", "emoji": "🐒"},
+     {"id": "ur_safari", "target": "شکار گاہ", "translationAr": "محمية الصيد", "phonetic": "شکار گاہ", "emoji": "🏞️"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u51",
+  "color": "#2B70C9",
+  "titleAr": "المكتب والأعمال",
+  "titleEn": "Office & Business",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u51_l1",
+    "titleAr": "في المكتب",
+    "titleEn": "In the Office",
+    "vocab": [
+     {"id": "ur_office", "target": "دفتر", "translationAr": "المكتب", "phonetic": "دفتر", "emoji": "🏢"},
+     {"id": "ur_mez", "target": "میز", "translationAr": "الطاولة", "phonetic": "میز", "emoji": "🗄️"},
+     {"id": "ur_file", "target": "فائل", "translationAr": "الملف", "phonetic": "فائل", "emoji": "📁"},
+     {"id": "ur_kaghaz", "target": "کاغذ", "translationAr": "الورقة", "phonetic": "کاغذ", "emoji": "📃"},
+     {"id": "ur_printer", "target": "پرنٹر", "translationAr": "الطابعة", "phonetic": "پرنٹر", "emoji": "🖨️"},
+     {"id": "ur_stapler", "target": "سٹیپلر", "translationAr": "دبّاسة الورق", "phonetic": "سٹیپلر", "emoji": "📎"},
+     {"id": "ur_clipboard", "target": "کلپ بورڈ", "translationAr": "الحافظة", "phonetic": "کلپ بورڈ", "emoji": "📋"},
+     {"id": "ur_pencil", "target": "پنسل", "translationAr": "قلم الرصاص", "phonetic": "پنسل", "emoji": "✏️"},
+     {"id": "ur_marker", "target": "مارکر", "translationAr": "قلم التحديد", "phonetic": "مارکر", "emoji": "🖊️"},
+     {"id": "ur_cabinet", "target": "کیبنٹ", "translationAr": "الخزانة المكتبية", "phonetic": "کیبنٹ", "emoji": "🗃️"}
+    ]
+   },
+   {
+    "id": "ur_u51_l2",
+    "titleAr": "الاجتماعات",
+    "titleEn": "Meetings",
+    "vocab": [
+     {"id": "ur_meeting", "target": "میٹنگ", "translationAr": "الاجتماع", "phonetic": "میٹنگ", "emoji": "👥"},
+     {"id": "ur_agenda", "target": "ایجینڈا", "translationAr": "جدول الأعمال", "phonetic": "ایجینڈا", "emoji": "📅"},
+     {"id": "ur_presentation", "target": "پریزنٹیشن", "translationAr": "العرض التقديمي", "phonetic": "پریزنٹیشن", "emoji": "📊"},
+     {"id": "ur_speaker", "target": "اسپیکر", "translationAr": "المتحدّث", "phonetic": "اسپیکر", "emoji": "🎤"},
+     {"id": "ur_slide", "target": "سلیڈ", "translationAr": "الشريحة", "phonetic": "سلیڈ", "emoji": "🖼️"},
+     {"id": "ur_video_call", "target": "ویڈیو کال", "translationAr": "المكالمة المرئية", "phonetic": "ویڈیو کال", "emoji": "📹"},
+     {"id": "ur_mic", "target": "مائیک", "translationAr": "الميكروفون", "phonetic": "مائیک", "emoji": "🎙️"},
+     {"id": "ur_notice", "target": "نوٹس", "translationAr": "الملاحظة", "phonetic": "نوٹس", "emoji": "📝"},
+     {"id": "ur_minutes", "target": "منٹ", "translationAr": "الدقائق", "phonetic": "منٹ", "emoji": "⏱️"},
+     {"id": "ur_minutes_log", "target": "قرارداد", "translationAr": "محضر الاجتماع", "phonetic": "قرارداد", "emoji": "🖋️"}
+    ]
+   },
+   {
+    "id": "ur_u51_l3",
+    "titleAr": "أوراق العمل",
+    "titleEn": "Work Papers",
+    "vocab": [
+     {"id": "ur_senior", "target": "سینیئر", "translationAr": "الأقدم", "phonetic": "سینیئر", "emoji": "🧑‍💼"},
+     {"id": "ur_junior", "target": "جونیئر", "translationAr": "المبتدئ", "phonetic": "جونیئر", "emoji": "🧑‍🎓"},
+     {"id": "ur_salary", "target": "تنخواہ", "translationAr": "الراتب", "phonetic": "تنخواہ", "emoji": "💴"},
+     {"id": "ur_bonus", "target": "بونس", "translationAr": "المكافأة", "phonetic": "بونس", "emoji": "🎁"},
+     {"id": "ur_leave", "target": "رخصت", "translationAr": "الإجازة", "phonetic": "رخصت", "emoji": "🏖️"},
+     {"id": "ur_schedule", "target": "شیڈول", "translationAr": "الجدول الزمني", "phonetic": "شیڈول", "emoji": "🗓️"},
+     {"id": "ur_deadline", "target": "ڈیڈ لائن", "translationAr": "الموعد النهائي", "phonetic": "ڈیڈ لائن", "emoji": "⏳"},
+     {"id": "ur_overtime", "target": "اوور ٹائم", "translationAr": "العمل الإضافي", "phonetic": "اوور ٹائم", "emoji": "🌙"},
+     {"id": "ur_kaam", "target": "کام", "translationAr": "العمل", "phonetic": "کام", "emoji": "💼"},
+     {"id": "ur_contract", "target": "معاہدہ", "translationAr": "العقد", "phonetic": "معاہدہ", "emoji": "✍️"}
+    ]
+   }
+  ]
+ }
+]

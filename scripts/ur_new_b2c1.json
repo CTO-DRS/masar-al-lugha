@@ -1,0 +1,302 @@
+[
+ {
+  "id": "ur_u52",
+  "color": "#1CB0F6",
+  "titleAr": "العلوم والمختبر",
+  "titleEn": "Science & Laboratory",
+  "cefr": "B2",
+  "lessons": [
+   {
+    "id": "ur_u52_l1",
+    "titleAr": "المختبر",
+    "titleEn": "The Laboratory",
+    "vocab": [
+     {"id": "ur_lab", "target": "لیبارٹری", "translationAr": "المختبر", "phonetic": "لیبارٹری", "emoji": "🧪"},
+     {"id": "ur_chemistry", "target": "کیمیا", "translationAr": "الكيمياء", "phonetic": "کیمیا", "emoji": "⚗️"},
+     {"id": "ur_physics", "target": "طبیعیات", "translationAr": "الفيزياء", "phonetic": "طبیعیات", "emoji": "🧲"},
+     {"id": "ur_biology", "target": "حیاتیات", "translationAr": "الأحياء", "phonetic": "حیاتیات", "emoji": "🧬"},
+     {"id": "ur_microscope", "target": "خردبین", "translationAr": "المجهر", "phonetic": "خردبین", "emoji": "🔬"},
+     {"id": "ur_test_tube", "target": "آزمائشی ٹیوب", "translationAr": "أنبوب الاختبار", "phonetic": "آزمائشی ٹیوب", "emoji": "🧫"},
+     {"id": "ur_flask", "target": "فلاسک", "translationAr": "القارورة المخبرية", "phonetic": "فلاسک", "emoji": "🧴"},
+     {"id": "ur_petri_dish", "target": "پیٹری ڈش", "translationAr": "طبق بتري", "phonetic": "پیٹری ڈش", "emoji": "🥏"},
+     {"id": "ur_solution", "target": "حل", "translationAr": "المحلول", "phonetic": "حَل", "emoji": "💧"},
+     {"id": "ur_gas", "target": "گیس", "translationAr": "الغاز", "phonetic": "گیس", "emoji": "💨"}
+    ]
+   },
+   {
+    "id": "ur_u52_l2",
+    "titleAr": "المصطلحات العلمية",
+    "titleEn": "Scientific Terms",
+    "vocab": [
+     {"id": "ur_experiment", "target": "تجربہ", "translationAr": "التجربة", "phonetic": "تجربہ", "emoji": "🔬"},
+     {"id": "ur_result", "target": "نتیجہ", "translationAr": "النتيجة", "phonetic": "نتیجہ", "emoji": "✅"},
+     {"id": "ur_data", "target": "اعداد و شمار", "translationAr": "البيانات", "phonetic": "اعداد و شمار", "emoji": "📊"},
+     {"id": "ur_formula", "target": "فارمولا", "translationAr": "الصيغة", "phonetic": "فارمولا", "emoji": "📐"},
+     {"id": "ur_theory", "target": "نظریہ", "translationAr": "النظرية", "phonetic": "نظریہ", "emoji": "💡"},
+     {"id": "ur_research", "target": "تحقیق", "translationAr": "البحث", "phonetic": "تحقیق", "emoji": "🔎"},
+     {"id": "ur_discoverer", "target": "کاشف", "translationAr": "المكتشف", "phonetic": "کاشف", "emoji": "🧑‍🔬"},
+     {"id": "ur_discovery", "target": "دریافت", "translationAr": "الاكتشاف", "phonetic": "دریافت", "emoji": "💎"},
+     {"id": "ur_innovation", "target": "جدت", "translationAr": "الابتكار", "phonetic": "جدت", "emoji": "✨"},
+     {"id": "ur_haqeeqat", "target": "حقیقت", "translationAr": "الحقيقة", "phonetic": "حقیقت", "emoji": "🎯"}
+    ]
+   },
+   {
+    "id": "ur_u52_l3",
+    "titleAr": "التجارب والنتائج",
+    "titleEn": "Experiments & Results",
+    "vocab": [
+     {"id": "ur_measurement", "target": "پیمائش", "translationAr": "القياس", "phonetic": "پیمائش", "emoji": "⚖️"},
+     {"id": "ur_temperature", "target": "درجہ حرارت", "translationAr": "درجة الحرارة", "phonetic": "درجہ حرارت", "emoji": "🌡️"},
+     {"id": "ur_pressure", "target": "دباؤ", "translationAr": "الضغط", "phonetic": "دباؤ", "emoji": "💥"},
+     {"id": "ur_speed", "target": "سرعت", "translationAr": "السرعة", "phonetic": "سرعت", "emoji": "🏎️"},
+     {"id": "ur_weight", "target": "وزن", "translationAr": "الوزن", "phonetic": "وزن", "emoji": "🏋️"},
+     {"id": "ur_light", "target": "روشنی", "translationAr": "الضوء", "phonetic": "روشنی", "emoji": "🔆"},
+     {"id": "ur_energy", "target": "توانائی", "translationAr": "الطاقة", "phonetic": "توانائی", "emoji": "🔋"},
+     {"id": "ur_madda", "target": "مادہ", "translationAr": "المادة", "phonetic": "مادہ", "emoji": "🧱"},
+     {"id": "ur_atom", "target": "جوہر", "translationAr": "الذرة", "phonetic": "جوہر", "emoji": "⚛️"},
+     {"id": "ur_technology", "target": "ٹیکنالوجی", "translationAr": "التكنولوجيا", "phonetic": "ٹیکنالوجی", "emoji": "🤖"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u53",
+  "color": "#FF4B4B",
+  "titleAr": "الطوارئ والسلامة",
+  "titleEn": "Emergency & Safety",
+  "cefr": "B2",
+  "lessons": [
+   {
+    "id": "ur_u53_l1",
+    "titleAr": "مكالمات الطوارئ",
+    "titleEn": "Emergency Calls",
+    "vocab": [
+     {"id": "ur_emergency", "target": "ہنگامی حالت", "translationAr": "حالة الطوارئ", "phonetic": "ہنگامی حالت", "emoji": "🚨"},
+     {"id": "ur_police", "target": "پولیس", "translationAr": "الشرطة", "phonetic": "پولیس", "emoji": "🚓"},
+     {"id": "ur_ambulance", "target": "ایمبولینس", "translationAr": "سيارة الإسعاف", "phonetic": "ایمبولینس", "emoji": "🚑"},
+     {"id": "ur_fire", "target": "آگ لگنا", "translationAr": "اشتعال النار", "phonetic": "آگ لگنا", "emoji": "🔥"},
+     {"id": "ur_firefighter", "target": "فائر برگیڈ", "translationAr": "رجل الإطفاء", "phonetic": "فائر برگیڈ", "emoji": "🧑‍🚒"},
+     {"id": "ur_thief", "target": "چور", "translationAr": "اللص", "phonetic": "چور", "emoji": "🥷"},
+     {"id": "ur_theft", "target": "چوری", "translationAr": "السرقة", "phonetic": "چوری", "emoji": "🔓"},
+     {"id": "ur_scream_help", "target": "پکار", "translationAr": "الاستغاثة", "phonetic": "پکار", "emoji": "🆘"},
+     {"id": "ur_khatra", "target": "خطرہ", "translationAr": "الخطر", "phonetic": "خطرہ", "emoji": "⚠️"},
+     {"id": "ur_siren", "target": "سوئرین", "translationAr": "صفارة الإنذار", "phonetic": "سوئرین", "emoji": "📢"}
+    ]
+   },
+   {
+    "id": "ur_u53_l2",
+    "titleAr": "السلامة العامة",
+    "titleEn": "Public Safety",
+    "vocab": [
+     {"id": "ur_hifaazat", "target": "حفاظت", "translationAr": "السلامة", "phonetic": "حفاظت", "emoji": "🛡️"},
+     {"id": "ur_belt", "target": "بیلیٹ", "translationAr": "الحزام", "phonetic": "بیلیٹ", "emoji": "⛑️"},
+     {"id": "ur_warning_sign", "target": "وارننگ سائن", "translationAr": "لافتة التحذير", "phonetic": "وارننگ سائن", "emoji": "🚧"},
+     {"id": "ur_paabandi", "target": "پابندی", "translationAr": "المنع", "phonetic": "پابندی", "emoji": "🚫"},
+     {"id": "ur_permission", "target": "اجازت", "translationAr": "الإذن", "phonetic": "اجازت", "emoji": "✔️"},
+     {"id": "ur_khabardaar", "target": "خبردار", "translationAr": "انتبه", "phonetic": "خبردار", "emoji": "‼️"},
+     {"id": "ur_manhole", "target": "مین ہول", "translationAr": "بئر الصرف", "phonetic": "مین ہول", "emoji": "🕳️"},
+     {"id": "ur_electric_shock", "target": "بجلی کا جھٹکا", "translationAr": "صعقة كهربائية", "phonetic": "بجلی کا جھٹکا", "emoji": "⚡"},
+     {"id": "ur_poisonous", "target": "زہریلا", "translationAr": "سمّي", "phonetic": "زہریلا", "emoji": "☠️"},
+     {"id": "ur_shelter", "target": "پناہ گاہ", "translationAr": "الملجأ", "phonetic": "پناہ گاہ", "emoji": "⛺"}
+    ]
+   },
+   {
+    "id": "ur_u53_l3",
+    "titleAr": "الحرائق والإسعاف",
+    "titleEn": "Fires & First Aid",
+    "vocab": [
+     {"id": "ur_extinguish", "target": "بجھانا", "translationAr": "إطفاء النار", "phonetic": "بجھانا", "emoji": "💨"},
+     {"id": "ur_extinguisher", "target": "آگ بجھانے والا", "translationAr": "طفاية الحريق", "phonetic": "آگ بجھانے والا", "emoji": "🧯"},
+     {"id": "ur_smoke", "target": "دھواں", "translationAr": "الدخان", "phonetic": "دھواں", "emoji": "🌫️"},
+     {"id": "ur_flame", "target": "شعلہ", "translationAr": "الشعلة", "phonetic": "شعلہ", "emoji": "🔥"},
+     {"id": "ur_burn", "target": "جلنا", "translationAr": "الاحتراق", "phonetic": "جلنا", "emoji": "🥵"},
+     {"id": "ur_injured", "target": "زخمی", "translationAr": "مصاب", "phonetic": "زخمی", "emoji": "🤕"},
+     {"id": "ur_rescue", "target": "بچانا", "translationAr": "الإنقاذ", "phonetic": "بچانا", "emoji": "🛟"},
+     {"id": "ur_rescuer", "target": "بچانے والا", "translationAr": "المنقذ", "phonetic": "بچانے والا", "emoji": "🦸‍♂️"},
+     {"id": "ur_caution", "target": "احتیاط", "translationAr": "الحذر", "phonetic": "احتیاط", "emoji": "🧐"},
+     {"id": "ur_first_aid", "target": "پہلا علاج", "translationAr": "الإسعافات الأولية", "phonetic": "پہلا علاج", "emoji": "🚑"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u54",
+  "color": "#FFC800",
+  "titleAr": "الأعمال والاقتصاد",
+  "titleEn": "Business & Economics",
+  "cefr": "B2",
+  "lessons": [
+   {
+    "id": "ur_u54_l1",
+    "titleAr": "المصطلحات الاقتصادية",
+    "titleEn": "Economic Terms",
+    "vocab": [
+     {"id": "ur_economy", "target": "اکانومی", "translationAr": "الاقتصاد", "phonetic": "اکانومی", "emoji": "📊"},
+     {"id": "ur_tax", "target": "ٹیکس", "translationAr": "الضريبة", "phonetic": "ٹیکس", "emoji": "🧾"},
+     {"id": "ur_income", "target": "آمدنی", "translationAr": "الدخل", "phonetic": "آمدنی", "emoji": "💰"},
+     {"id": "ur_budget", "target": "بجٹ", "translationAr": "الموازنة", "phonetic": "بجٹ", "emoji": "📔"},
+     {"id": "ur_poverty", "target": "غربت", "translationAr": "الفقر", "phonetic": "غربت", "emoji": "🥺"},
+     {"id": "ur_prosperity", "target": "خوشحالی", "translationAr": "الثراء", "phonetic": "خوشحالی", "emoji": "💎"},
+     {"id": "ur_employment", "target": "روزگار", "translationAr": "التوظيف", "phonetic": "روزگار", "emoji": "🧑‍💼"},
+     {"id": "ur_unemployment", "target": "بے روزگاری", "translationAr": "البطالة", "phonetic": "بے روزگاری", "emoji": "📉"},
+     {"id": "ur_tijaarat", "target": "تجارت", "translationAr": "التجارة", "phonetic": "تجارت", "emoji": "🤝"},
+     {"id": "ur_mandi", "target": "منڈی", "translationAr": "سوق الجملة", "phonetic": "منڈی", "emoji": "🏪"}
+    ]
+   },
+   {
+    "id": "ur_u54_l2",
+    "titleAr": "التجارة والاستيراد",
+    "titleEn": "Trade & Imports",
+    "vocab": [
+     {"id": "ur_import", "target": "درآمد", "translationAr": "الاستيراد", "phonetic": "درآمد", "emoji": "📥"},
+     {"id": "ur_export", "target": "برآمد", "translationAr": "التصدير", "phonetic": "برآمد", "emoji": "📤"},
+     {"id": "ur_container", "target": "کنٹینر", "translationAr": "الحاوية", "phonetic": "کنٹینر", "emoji": "🚛"},
+     {"id": "ur_warehouse", "target": "گودام", "translationAr": "المستودع", "phonetic": "گودام", "emoji": "🏗️"},
+     {"id": "ur_kaarobaar", "target": "کاروبار", "translationAr": "التجارة الخاصة", "phonetic": "کاروبار", "emoji": "💼"},
+     {"id": "ur_partnership", "target": "شراکت", "translationAr": "الشراكة", "phonetic": "شراکت", "emoji": "🧑‍🤝‍🧑"},
+     {"id": "ur_merchant", "target": "سوداگر", "translationAr": "التاجر", "phonetic": "سوداگر", "emoji": "🧔"},
+     {"id": "ur_collection", "target": "وصولی", "translationAr": "التحصيل", "phonetic": "وصولی", "emoji": "💴"},
+     {"id": "ur_payment", "target": "ادائیگی", "translationAr": "الدفع", "phonetic": "ادائیگی", "emoji": "💳"},
+     {"id": "ur_documents", "target": "دستاویزات", "translationAr": "المستندات", "phonetic": "دستاویزات", "emoji": "📄"}
+    ]
+   },
+   {
+    "id": "ur_u54_l3",
+    "titleAr": "الاستثمار والشركات",
+    "titleEn": "Investment & Companies",
+    "vocab": [
+     {"id": "ur_investment", "target": "سرمایہ کاری", "translationAr": "الاستثمار", "phonetic": "سرمایہ کاری", "emoji": "🪙"},
+     {"id": "ur_share", "target": "حصہ", "translationAr": "السهم", "phonetic": "حصہ", "emoji": "🍰"},
+     {"id": "ur_profitable", "target": "منافع بخش", "translationAr": "مربح", "phonetic": "منافع بخش", "emoji": "📈"},
+     {"id": "ur_company", "target": "شرکت", "translationAr": "الشركة", "phonetic": "شرکت", "emoji": "🏛️"},
+     {"id": "ur_brand", "target": "برانڈ", "translationAr": "العلامة التجارية", "phonetic": "برانڈ", "emoji": "🏷️"},
+     {"id": "ur_marketing", "target": "مارکیٹنگ", "translationAr": "التسويق", "phonetic": "مارکیٹنگ", "emoji": "📢"},
+     {"id": "ur_competitor", "target": "حریف", "translationAr": "المنافس", "phonetic": "حریف", "emoji": "⚔️"},
+     {"id": "ur_stamp", "target": "مہر", "translationAr": "الختم", "phonetic": "مہر", "emoji": "🖼️"},
+     {"id": "ur_standard", "target": "معیار", "translationAr": "المعيار", "phonetic": "معیار", "emoji": "📏"},
+     {"id": "ur_deal", "target": "معاملہ", "translationAr": "الصفقة", "phonetic": "معاملہ", "emoji": "🤝"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u55",
+  "color": "#2B70C9",
+  "titleAr": "الأكاديمي والامتحانات",
+  "titleEn": "Academic & Exams",
+  "cefr": "C1",
+  "lessons": [
+   {
+    "id": "ur_u55_l1",
+    "titleAr": "الحياة الجامعية",
+    "titleEn": "University Life",
+    "vocab": [
+     {"id": "ur_university", "target": "یونیورسٹی", "translationAr": "الجامعة", "phonetic": "یونیورسٹی", "emoji": "🎓"},
+     {"id": "ur_degree", "target": "ڈگری", "translationAr": "الشهادة", "phonetic": "ڈگری", "emoji": "📜"},
+     {"id": "ur_faculty", "target": "فیکلٹی", "translationAr": "الكلية", "phonetic": "فیکلٹی", "emoji": "🏛️"},
+     {"id": "ur_professor", "target": "پروفیسر", "translationAr": "الأستاذ الجامعي", "phonetic": "پروفیسر", "emoji": "🧑‍🏫"},
+     {"id": "ur_semester", "target": "سیمسٹر", "translationAr": "الفصل الدراسي", "phonetic": "سیمسٹر", "emoji": "🗓️"},
+     {"id": "ur_campus", "target": "کیمپس", "translationAr": "الحرم الجامعي", "phonetic": "کیمپس", "emoji": "🏟️"},
+     {"id": "ur_hostel", "target": "ہاسٹل", "translationAr": "السكن الجامعي", "phonetic": "ہاسٹل", "emoji": "🛏️"},
+     {"id": "ur_fellowship", "target": "فیلوشپ", "translationAr": "الزمالة", "phonetic": "فیلوشپ", "emoji": "🏅"},
+     {"id": "ur_thesis", "target": "تحقیقی مقالہ", "translationAr": "الأطروحة", "phonetic": "تحقیقی مقالہ", "emoji": "📚"},
+     {"id": "ur_class", "target": "کلاس", "translationAr": "الفصل (الدراسي)", "phonetic": "کلاس", "emoji": "🏫"}
+    ]
+   },
+   {
+    "id": "ur_u55_l2",
+    "titleAr": "الامتحانات",
+    "titleEn": "Examinations",
+    "vocab": [
+     {"id": "ur_exam", "target": "امتحان", "translationAr": "الامتحان", "phonetic": "امتحان", "emoji": "📝", "exampleTarget": "امتحان قریب ہے، تیاری کرو", "exampleAr": "الامتحان قريب، استعدّ"},
+     {"id": "ur_marks", "target": "نمبر", "translationAr": "الدرجات", "phonetic": "نمبر", "emoji": "💯"},
+     {"id": "ur_pass_exam", "target": "پاس", "translationAr": "ناجح", "phonetic": "پاس", "emoji": "✔️"},
+     {"id": "ur_fail_exam", "target": "فیل", "translationAr": "راسب", "phonetic": "فیل", "emoji": "❌"},
+     {"id": "ur_optional_q", "target": "اختیاری سوال", "translationAr": "سؤال اختياري", "phonetic": "اختیاری سوال", "emoji": "🔘"},
+     {"id": "ur_compulsory_q", "target": "لازمی سوال", "translationAr": "سؤال إلزامي", "phonetic": "لازمی سوال", "emoji": "🔴"},
+     {"id": "ur_speech", "target": "تقریر", "translationAr": "الإلقاء", "phonetic": "تقریر", "emoji": "🗣️"},
+     {"id": "ur_rehaishi", "target": "مذاکرہ", "translationAr": "المراجعة", "phonetic": "مذاکرہ", "emoji": "🧠"},
+     {"id": "ur_roll_number", "target": "رول نمبر", "translationAr": "الرقم الجامعي", "phonetic": "رول نمبر", "emoji": "🔢"},
+     {"id": "ur_exam_hall", "target": "امتحانی ہال", "translationAr": "قاعة الامتحان", "phonetic": "امتحانی ہال", "emoji": "🚪"}
+    ]
+   },
+   {
+    "id": "ur_u55_l3",
+    "titleAr": "البحث والتوثيق",
+    "titleEn": "Research & Citation",
+    "vocab": [
+     {"id": "ur_hawala_ref", "target": "حوالہ", "translationAr": "المرجع", "phonetic": "حوالہ", "emoji": "🔖"},
+     {"id": "ur_footnote", "target": "حاشیہ", "translationAr": "الهامش", "phonetic": "حاشیہ", "emoji": "📎"},
+     {"id": "ur_paragraph", "target": "پیراگراف", "translationAr": "الفقرة", "phonetic": "پیراگراف", "emoji": "📑"},
+     {"id": "ur_page", "target": "صفحہ", "translationAr": "الصفحة", "phonetic": "صفحہ", "emoji": "📃"},
+     {"id": "ur_chapter", "target": "فصل", "translationAr": "الفصل (الكتاب)", "phonetic": "فصل", "emoji": "📖"},
+     {"id": "ur_kitaabein", "target": "کتابیں", "translationAr": "الكتب", "phonetic": "کتابیں", "emoji": "📚"},
+     {"id": "ur_mashq_practice", "target": "مشق", "translationAr": "التمرين", "phonetic": "مشق", "emoji": "✏️"},
+     {"id": "ur_tafseer", "target": "تفسیر", "translationAr": "التفسير", "phonetic": "تفسیر", "emoji": "💬"},
+     {"id": "ur_tabeer", "target": "تعبیر", "translationAr": "التأويل", "phonetic": "تعبیر", "emoji": "🔮"},
+     {"id": "ur_khulasa_summary", "target": "خلاصہ", "translationAr": "الخلاصة", "phonetic": "خلاصہ", "emoji": "📋"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u56",
+  "color": "#D97706",
+  "titleAr": "الحجة والإقناع",
+  "titleEn": "Argument & Persuasion",
+  "cefr": "C1",
+  "lessons": [
+   {
+    "id": "ur_u56_l1",
+    "titleAr": "بناء الحجة",
+    "titleEn": "Building an Argument",
+    "vocab": [
+     {"id": "ur_daleel_proof", "target": "دلیل", "translationAr": "الدليل", "phonetic": "دلیل", "emoji": "🧾"},
+     {"id": "ur_mauqif", "target": "موقف", "translationAr": "الموقف", "phonetic": "موقف", "emoji": "📍"},
+     {"id": "ur_burhaan", "target": "برہان", "translationAr": "البرهان", "phonetic": "برہان", "emoji": "💡"},
+     {"id": "ur_saboot_evidence", "target": "ثبوت", "translationAr": "الإثبات", "phonetic": "ثبوت", "emoji": "📄"},
+     {"id": "ur_mantiq_logic", "target": "منطق", "translationAr": "المنطق", "phonetic": "منطق", "emoji": "🧩"},
+     {"id": "ur_istidlal", "target": "استدلال", "translationAr": "الاستدلال", "phonetic": "استدلال", "emoji": "🧠"},
+     {"id": "ur_mafrooza", "target": "مفروضہ", "translationAr": "الفرضية", "phonetic": "مفروضہ", "emoji": "🤔"},
+     {"id": "ur_shak", "target": "شک", "translationAr": "الشك", "phonetic": "شک", "emoji": "🤨"},
+     {"id": "ur_faisla_decision", "target": "فیصلہ", "translationAr": "القرار", "phonetic": "فیصلہ", "emoji": "⚖️"},
+     {"id": "ur_waazeh", "target": "واضح", "translationAr": "واضح", "phonetic": "واضح", "emoji": "👓"}
+    ]
+   },
+   {
+    "id": "ur_u56_l2",
+    "titleAr": "الإقناع والتفاوض",
+    "titleEn": "Persuasion & Negotiation",
+    "vocab": [
+     {"id": "ur_asar_andazi", "target": "اثر اندازی", "translationAr": "التأثير", "phonetic": "اثر اندازی", "emoji": "💫"},
+     {"id": "ur_qaael", "target": "قائل", "translationAr": "مقتنع", "phonetic": "قائل", "emoji": "👍"},
+     {"id": "ur_beyaqeen", "target": "بے یقین", "translationAr": "غير واثق", "phonetic": "بے یقین", "emoji": "🤷"},
+     {"id": "ur_razaamandi", "target": "رضامندی", "translationAr": "الموافقة", "phonetic": "رضامندی", "emoji": "🤝"},
+     {"id": "ur_shart", "target": "شرط", "translationAr": "الشرط", "phonetic": "شرط", "emoji": "📜"},
+     {"id": "ur_samjhauta", "target": "سمجھوتا", "translationAr": "التسوية", "phonetic": "سمجھوتا", "emoji": "🤲"},
+     {"id": "ur_kashmakash", "target": "کشمکش", "translationAr": "الصراع", "phonetic": "کشمکش", "emoji": "🥊"},
+     {"id": "ur_raazi_karna", "target": "راضی کرنا", "translationAr": "الإرضاء", "phonetic": "راضی کرنا", "emoji": "😊"},
+     {"id": "ur_faaida", "target": "فائدہ", "translationAr": "الفائدة", "phonetic": "فائدہ", "emoji": "💹"},
+     {"id": "ur_nuqs", "target": "نقص", "translationAr": "النقص", "phonetic": "نقص", "emoji": "⬇️"}
+    ]
+   },
+   {
+    "id": "ur_u56_l3",
+    "titleAr": "النقاش المتقدم",
+    "titleEn": "Advanced Debate",
+    "vocab": [
+     {"id": "ur_bahes", "target": "بحث", "translationAr": "المناظرة", "phonetic": "بحث", "emoji": "🗣️"},
+     {"id": "ur_mukhaalif", "target": "مخالف", "translationAr": "المعارض", "phonetic": "مخالف", "emoji": "🙅"},
+     {"id": "ur_muafiq", "target": "موافق", "translationAr": "المؤيد", "phonetic": "موافق", "emoji": "🙆"},
+     {"id": "ur_haq_truth", "target": "حق", "translationAr": "الحق", "phonetic": "حق", "emoji": "✅"},
+     {"id": "ur_tarjeeh", "target": "ترجیح", "translationAr": "التفضيل", "phonetic": "ترجیح", "emoji": "🥇"},
+     {"id": "ur_zor", "target": "زور", "translationAr": "القوة", "phonetic": "زور", "emoji": "💪"},
+     {"id": "ur_mukhaalifat", "target": "مخالفت", "translationAr": "المعارضة", "phonetic": "مخالفت", "emoji": "⛔"},
+     {"id": "ur_himaayat", "target": "حمایت", "translationAr": "الدعم", "phonetic": "حمایت", "emoji": "🤗"},
+     {"id": "ur_mazammat", "target": "مذمت", "translationAr": "الإدانة", "phonetic": "مذمت", "emoji": "👎"},
+     {"id": "ur_faisla_kun", "target": "فیصلہ کن", "translationAr": "حاسم", "phonetic": "فیصلہ کن", "emoji": "🔚"}
+    ]
+   }
+  ]
+ }
+]

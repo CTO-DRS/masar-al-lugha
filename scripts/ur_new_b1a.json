@@ -1,0 +1,242 @@
+[
+ {
+  "id": "ur_u42",
+  "color": "#2B70C9",
+  "titleAr": "المطار والطيران",
+  "titleEn": "Airport & Flying",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u42_l1",
+    "titleAr": "في المطار",
+    "titleEn": "At the Airport",
+    "vocab": [
+     {"id": "ur_airport", "target": "ہوائی اڈہ", "translationAr": "المطار", "phonetic": "ہوائی اڈہ", "emoji": "🛬"},
+     {"id": "ur_takeoff", "target": "اڑان بھرنا", "translationAr": "الإقلاع", "phonetic": "اڑان بھرنا", "emoji": "🛫"},
+     {"id": "ur_flight", "target": "پرواز", "translationAr": "الرحلة الجوية", "phonetic": "پرواز", "emoji": "🛩️"},
+     {"id": "ur_international", "target": "بین الاقوامی", "translationAr": "دولتي", "phonetic": "بین الاقوامی", "emoji": "🌍"},
+     {"id": "ur_lounge", "target": "انتظار گاہ", "translationAr": "قاعة الانتظار", "phonetic": "انتظار گاہ", "emoji": "🛋️"},
+     {"id": "ur_boarding_pass", "target": "بورڈنگ پاس", "translationAr": "بطاقة الصعود", "phonetic": "بورڈنگ پاس", "emoji": "🎫"},
+     {"id": "ur_gate", "target": "گیٹ", "translationAr": "بوابة الصعود", "phonetic": "گیٹ", "emoji": "🚪"},
+     {"id": "ur_checkin", "target": "چیک اِن", "translationAr": "تسجيل الوصول", "phonetic": "چیک اِن", "emoji": "📋"},
+     {"id": "ur_baggage_belt", "target": "لگژری بیلٹ", "translationAr": "حزام الأمتعة", "phonetic": "لگژری بیلٹ", "emoji": "🛄"},
+     {"id": "ur_elaan", "target": "اعلان", "translationAr": "الإعلان الصوتي", "phonetic": "اعلان", "emoji": "📢"}
+    ]
+   },
+   {
+    "id": "ur_u42_l2",
+    "titleAr": "على متن الطائرة",
+    "titleEn": "On the Plane",
+    "vocab": [
+     {"id": "ur_pilot", "target": "پائلٹ", "translationAr": "الطيار", "phonetic": "پائلٹ", "emoji": "🧑‍✈️"},
+     {"id": "ur_air_hostess", "target": "ایئر ہوسٹس", "translationAr": "المضيفة", "phonetic": "ایئر ہوسٹس", "emoji": "👩‍✈️"},
+     {"id": "ur_seat_belt", "target": "سیٹ بیلٹ", "translationAr": "حزام الأمان", "phonetic": "سیٹ بیلٹ", "emoji": "⛑️"},
+     {"id": "ur_oxygen_mask", "target": "آکسیجن ماسک", "translationAr": "قناع الأوكسجين", "phonetic": "آکسیجن ماسک", "emoji": "😷"},
+     {"id": "ur_flight_meal", "target": "ہوائی کھانا", "translationAr": "وجبة الطيران", "phonetic": "ہوائی کھانا", "emoji": "🍽️"},
+     {"id": "ur_window_shade", "target": "سنشیڈ", "translationAr": "ستارة النافذة", "phonetic": "سنشیڈ", "emoji": "🪟"},
+     {"id": "ur_turbulence", "target": "تربلنس", "translationAr": "الاضطراب الجوي", "phonetic": "تربلنس", "emoji": "🌪️"},
+     {"id": "ur_exit", "target": "ایمرجنسی ایگزٹ", "translationAr": "مخرج الطوارئ", "phonetic": "ایمرجنسی ایگزٹ", "emoji": "🟩"},
+     {"id": "ur_altitude", "target": "بلندی", "translationAr": "الارتفاع", "phonetic": "بلندی", "emoji": "🎈"},
+     {"id": "ur_airfare", "target": "کرایہ", "translationAr": "أجرة السفر", "phonetic": "کرایہ", "emoji": "💶"}
+    ]
+   },
+   {
+    "id": "ur_u42_l3",
+    "titleAr": "الوصول والجوازات",
+    "titleEn": "Arrival & Documents",
+    "vocab": [
+     {"id": "ur_landing", "target": "لینڈنگ", "translationAr": "الهبوط", "phonetic": "لینڈنگ", "emoji": "🛬"},
+     {"id": "ur_immigration", "target": "امیگریشن", "translationAr": "قسم الجوازات", "phonetic": "امیگریشن", "emoji": "🛂"},
+     {"id": "ur_visa", "target": "ویزا", "translationAr": "التأشيرة", "phonetic": "ویزا", "emoji": "🖼️", "exampleTarget": "ویزا کب تک درست رہے گی؟", "exampleAr": "حتى متى تبقى التأشيرة صالحة؟"},
+     {"id": "ur_customs", "target": "کسٹمز", "translationAr": "الجمارك", "phonetic": "کسٹمز", "emoji": "🛃"},
+     {"id": "ur_cargo", "target": "کارگو", "translationAr": "الحمولة", "phonetic": "کارگو", "emoji": "📦"},
+     {"id": "ur_claim", "target": "دعویٰ", "translationAr": "المطالبة", "phonetic": "دعویٰ", "emoji": "🗂️"},
+     {"id": "ur_welcome", "target": "استقبال", "translationAr": "الاستقبال", "phonetic": "استقبال", "emoji": "🤗"},
+     {"id": "ur_trolley", "target": "ٹرالی", "translationAr": "عربة الأمتعة", "phonetic": "ٹرالی", "emoji": "🛒"},
+     {"id": "ur_delay", "target": "تاخیر", "translationAr": "التأخير", "phonetic": "تاخیر", "emoji": "⏰"},
+     {"id": "ur_return", "target": "واپسی", "translationAr": "العودة", "phonetic": "واپسی", "emoji": "↩️"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u43",
+  "color": "#A0522D",
+  "titleAr": "الفندق والإقامة",
+  "titleEn": "Hotel & Stay",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u43_l1",
+    "titleAr": "حجز الفندق",
+    "titleEn": "Booking a Hotel",
+    "vocab": [
+     {"id": "ur_resort", "target": "ریزورٹ", "translationAr": "المنتجع", "phonetic": "ریزورٹ", "emoji": "🏝️"},
+     {"id": "ur_confirmation", "target": "کنفرمیشن", "translationAr": "التأكيد", "phonetic": "کنفرمیشن", "emoji": "📆"},
+     {"id": "ur_suite", "target": "سوئٹ", "translationAr": "الجناح", "phonetic": "سوئٹ", "emoji": "🛏️"},
+     {"id": "ur_lobby", "target": "لابی", "translationAr": "الردهة", "phonetic": "لابی", "emoji": "🛋️"},
+     {"id": "ur_reception", "target": "ریسپشن", "translationAr": "مكتب الاستقبال", "phonetic": "ریسپشن", "emoji": "🔔"},
+     {"id": "ur_telephone", "target": "ٹیلی فون", "translationAr": "الهاتف", "phonetic": "ٹیلی فون", "emoji": "☎️"},
+     {"id": "ur_advance_pay", "target": "پیشگی ادائیگی", "translationAr": "الدفع المسبق", "phonetic": "پیشگی ادائیگی", "emoji": "💴"},
+     {"id": "ur_qiyaam", "target": "قیام", "translationAr": "الإقامة", "phonetic": "قیام", "emoji": "🛌"},
+     {"id": "ur_aamad", "target": "آمد", "translationAr": "الوصول", "phonetic": "آمد", "emoji": "🛬"},
+     {"id": "ur_checkout", "target": "چیک آؤٹ", "translationAr": "المغادرة", "phonetic": "چیک آؤٹ", "emoji": "🔑"}
+    ]
+   },
+   {
+    "id": "ur_u43_l2",
+    "titleAr": "في الغرفة",
+    "titleEn": "In the Room",
+    "vocab": [
+     {"id": "ur_ac", "target": "ایئر کنڈیشن", "translationAr": "المكيّف", "phonetic": "ایئر کنڈیشن", "emoji": "❄️"},
+     {"id": "ur_geyser", "target": "گیزر", "translationAr": "سخّان الماء", "phonetic": "گیزر", "emoji": "♨️"},
+     {"id": "ur_shower", "target": "شاور", "translationAr": "الدُّش", "phonetic": "شاور", "emoji": "🚿"},
+     {"id": "ur_slippers", "target": "سلیپرز", "translationAr": "الخُفّ الداخلي", "phonetic": "سلیپرز", "emoji": "🩴"},
+     {"id": "ur_remote", "target": "ریموٹ", "translationAr": "جهاز التحكّم", "phonetic": "ریموٹ", "emoji": "🎛️"},
+     {"id": "ur_mini_bar", "target": "منی بار", "translationAr": "البار الصغير", "phonetic": "منی بار", "emoji": "🍸"},
+     {"id": "ur_room_service", "target": "روم سروس", "translationAr": "خدمة الغرف", "phonetic": "روم سروس", "emoji": "🛎️"},
+     {"id": "ur_housekeeping", "target": "ہاؤس کیپنگ", "translationAr": "خدمة التنظيف", "phonetic": "ہاؤس کیپنگ", "emoji": "🧹"},
+     {"id": "ur_bed_sheet", "target": "چادر", "translationAr": "الشرشف", "phonetic": "چادر", "emoji": "🛏️"},
+     {"id": "ur_password", "target": "پاس ورڈ", "translationAr": "كلمة السرّ", "phonetic": "پاس ورڈ", "emoji": "🔐"}
+    ]
+   },
+   {
+    "id": "ur_u43_l3",
+    "titleAr": "الخدمات والشكاوى",
+    "titleEn": "Services & Complaints",
+    "vocab": [
+     {"id": "ur_kharaabi", "target": "خرابی", "translationAr": "العُطل", "phonetic": "خرابی", "emoji": "⚠️"},
+     {"id": "ur_repair", "target": "مرمت", "translationAr": "الإصلاح", "phonetic": "مرمت", "emoji": "🔧"},
+     {"id": "ur_power_cut", "target": "بجلی بند", "translationAr": "انقطاع التيار", "phonetic": "بجلی بند", "emoji": "🔌"},
+     {"id": "ur_staff", "target": "سٹاف", "translationAr": "الطاقم", "phonetic": "سٹاف", "emoji": "🧑‍💼"},
+     {"id": "ur_manager", "target": "مینیجر", "translationAr": "المدير", "phonetic": "مینیجر", "emoji": "💼"},
+     {"id": "ur_compensation", "target": "معاوضہ", "translationAr": "التعويض", "phonetic": "معاوضہ", "emoji": "💱"},
+     {"id": "ur_lift", "target": "لفٹ", "translationAr": "المصعد", "phonetic": "لفٹ", "emoji": "🛗"},
+     {"id": "ur_safe", "target": "سیف", "translationAr": "الخزنة", "phonetic": "سیف", "emoji": "🏦"},
+     {"id": "ur_shor", "target": "شور", "translationAr": "الإزعاج", "phonetic": "شور", "emoji": "🗯️"},
+     {"id": "ur_rehaish", "target": "رہائش", "translationAr": "السكن", "phonetic": "رہائش", "emoji": "🏘️"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u44",
+  "color": "#FFC800",
+  "titleAr": "المال والبنك",
+  "titleEn": "Money & Banking",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u44_l1",
+    "titleAr": "في البنك",
+    "titleEn": "At the Bank",
+    "vocab": [
+     {"id": "ur_bank", "target": "بنک", "translationAr": "المصرف", "phonetic": "بنک", "emoji": "🏦"},
+     {"id": "ur_account", "target": "اکاؤنٹ", "translationAr": "الحساب المصرفي", "phonetic": "اکاؤنٹ", "emoji": "📒"},
+     {"id": "ur_cashier", "target": "کیشئر", "translationAr": "الصرّاف", "phonetic": "کیشئر", "emoji": "🧑‍💼"},
+     {"id": "ur_atm", "target": "ای ٹی ایم", "translationAr": "الصراف الآلي", "phonetic": "ای ٹی ایم", "emoji": "🏧"},
+     {"id": "ur_deposit", "target": "ڈپازٹ", "translationAr": "الإيداع", "phonetic": "ڈپازٹ", "emoji": "💰"},
+     {"id": "ur_withdraw", "target": "ود ڈرا", "translationAr": "السحب", "phonetic": "ود ڈرا", "emoji": "📤"},
+     {"id": "ur_sood", "target": "سود", "translationAr": "الفائدة", "phonetic": "سود", "emoji": "📈"},
+     {"id": "ur_chequebook", "target": "چیک بک", "translationAr": "دفتر الشيكات", "phonetic": "چیک بک", "emoji": "🧾"},
+     {"id": "ur_passbook", "target": "پاس بک", "translationAr": "دفتر التوفير", "phonetic": "پاس بک", "emoji": "📔"},
+     {"id": "ur_qist_bank", "target": "قسط", "translationAr": "القسط", "phonetic": "قِسط", "emoji": "🔢"}
+    ]
+   },
+   {
+    "id": "ur_u44_l2",
+    "titleAr": "الادخار والقروض",
+    "titleEn": "Savings & Loans",
+    "vocab": [
+     {"id": "ur_pasaandaz", "target": "پس انداز", "translationAr": "الادخار", "phonetic": "پس انداز", "emoji": "🐷"},
+     {"id": "ur_qarz", "target": "قرض", "translationAr": "القرض", "phonetic": "قرض", "emoji": "🤝", "exampleTarget": "بین سے قرض لینا آسان نہیں", "exampleAr": "أخذ قرض من المصرف ليس سهلاً"},
+     {"id": "ur_sharh", "target": "شرح", "translationAr": "النسبة", "phonetic": "شرح", "emoji": "📊"},
+     {"id": "ur_sarmaya", "target": "سرمایہ", "translationAr": "رأس المال", "phonetic": "سرمایہ", "emoji": "💰"},
+     {"id": "ur_kamana", "target": "کمانا", "translationAr": "الكسب", "phonetic": "کمانا", "emoji": "💵"},
+     {"id": "ur_ikhrajaat", "target": "اخراجات", "translationAr": "النفقات", "phonetic": "اخراجات", "emoji": "💸"},
+     {"id": "ur_manaafay", "target": "منافع", "translationAr": "الأرباح", "phonetic": "منافع", "emoji": "💹"},
+     {"id": "ur_khsaara", "target": "خسارہ", "translationAr": "الخسارة", "phonetic": "خسارہ", "emoji": "📉"},
+     {"id": "ur_zamanat", "target": "ضمانت", "translationAr": "الضمانة", "phonetic": "ضمانت", "emoji": "🛡️"},
+     {"id": "ur_beema", "target": "بیمہ", "translationAr": "التأمين", "phonetic": "بیمہ", "emoji": "☂️"}
+    ]
+   },
+   {
+    "id": "ur_u44_l3",
+    "titleAr": "الصرافة والعملات",
+    "titleEn": "Exchange & Currencies",
+    "vocab": [
+     {"id": "ur_sarraafi", "target": "صرافہ", "translationAr": "الصرافة", "phonetic": "صرافہ", "emoji": "💱"},
+     {"id": "ur_tabdeeli", "target": "تبدیلی", "translationAr": "تبديل العملة", "phonetic": "تبدیلی", "emoji": "🔁"},
+     {"id": "ur_currency", "target": "کرنسی", "translationAr": "العملة", "phonetic": "کرنسی", "emoji": "💴"},
+     {"id": "ur_dollar", "target": "ڈالر", "translationAr": "الدولار", "phonetic": "ڈالر", "emoji": "💵"},
+     {"id": "ur_euro", "target": "یورو", "translationAr": "اليورو", "phonetic": "یورو", "emoji": "💶"},
+     {"id": "ur_pound", "target": "پاؤنڈ", "translationAr": "الجنيه", "phonetic": "پاؤنڈ", "emoji": "💷"},
+     {"id": "ur_dirham", "target": "درہم", "translationAr": "الدرهم", "phonetic": "درہم", "emoji": "🟡"},
+     {"id": "ur_riyaal", "target": "ریال", "translationAr": "الريال", "phonetic": "ریال", "emoji": "🟢"},
+     {"id": "ur_hisaab_kitaab", "target": "حساب کتاب", "translationAr": "الحساب والدفاتر", "phonetic": "حساب کتاب", "emoji": "🧮"},
+     {"id": "ur_card", "target": "کارڈ", "translationAr": "البطاقة", "phonetic": "کارڈ", "emoji": "💳"}
+    ]
+   }
+  ]
+ },
+ {
+  "id": "ur_u45",
+  "color": "#FF6FB5",
+  "titleAr": "المرض والعلاج",
+  "titleEn": "Illness & Medicine",
+  "cefr": "B1",
+  "lessons": [
+   {
+    "id": "ur_u45_l1",
+    "titleAr": "أعراض المرض",
+    "titleEn": "Symptoms",
+    "vocab": [
+     {"id": "ur_marz", "target": "مرض", "translationAr": "المرض", "phonetic": "مرض", "emoji": "🤒"},
+     {"id": "ur_qay", "target": "قے", "translationAr": "القيء", "phonetic": "قے", "emoji": "🤮"},
+     {"id": "ur_sar_dard", "target": "سر درد", "translationAr": "الصداع", "phonetic": "سر درد", "emoji": "🤕"},
+     {"id": "ur_naak_behna", "target": "ناک بہنا", "translationAr": "سيلان الأنف", "phonetic": "ناک بہنا", "emoji": "🤧"},
+     {"id": "ur_khansi", "target": "کھانسی", "translationAr": "السعال", "phonetic": "کھانسی", "emoji": "🫁"},
+     {"id": "ur_kamzori", "target": "کمزوری", "translationAr": "الوهن", "phonetic": "کمزوری", "emoji": "🥀"},
+     {"id": "ur_maaday_dard", "target": "معدے کا درد", "translationAr": "ألم المعدة", "phonetic": "معدے کا درد", "emoji": "🤢"},
+     {"id": "ur_chakkar", "target": "چکر", "translationAr": "الدوار", "phonetic": "چکر", "emoji": "💫"},
+     {"id": "ur_khaaraish", "target": "خارش", "translationAr": "الحكّة", "phonetic": "خارش", "emoji": "🦟"},
+     {"id": "ur_thakaawat", "target": "تھکاوٹ", "translationAr": "التعب", "phonetic": "تھکاوٹ", "emoji": "🥱"}
+    ]
+   },
+   {
+    "id": "ur_u45_l2",
+    "titleAr": "عند الصيدلية",
+    "titleEn": "At the Pharmacy",
+    "vocab": [
+     {"id": "ur_pharmacist", "target": "فارماسسٹ", "translationAr": "الصيدلي", "phonetic": "فارماسسٹ", "emoji": "🧑‍⚕️"},
+     {"id": "ur_dawaakhana", "target": "دواخانہ", "translationAr": "الصيدلية", "phonetic": "دوااخانہ", "emoji": "💊"},
+     {"id": "ur_nuskha", "target": "نسخہ", "translationAr": "الوصفة الطبية", "phonetic": "نسخہ", "emoji": "📜"},
+     {"id": "ur_khuraak_dose", "target": "خوراک", "translationAr": "الجرعة", "phonetic": "خوراک", "emoji": "🥄"},
+     {"id": "ur_syringe", "target": "سرنج", "translationAr": "الحقنة", "phonetic": "سرنج", "emoji": "💉"},
+     {"id": "ur_patti", "target": "پٹی", "translationAr": "الضماد", "phonetic": "پٹی", "emoji": "🩹"},
+     {"id": "ur_marham", "target": "مرہم", "translationAr": "المرهم", "phonetic": "مرہم", "emoji": "🧴"},
+     {"id": "ur_cough_syrup", "target": "کھانسی کا شربت", "translationAr": "شراب السعال", "phonetic": "کھانسی کا شربت", "emoji": "🍯"},
+     {"id": "ur_vitamins", "target": "ویٹمنٹ", "translationAr": "الفيتامينات", "phonetic": "ویٹمنٹ", "emoji": "🍊"},
+     {"id": "ur_test", "target": "ٹیسٹ", "translationAr": "الفحص", "phonetic": "ٹیسٹ", "emoji": "🧪"}
+    ]
+   },
+   {
+    "id": "ur_u45_l3",
+    "titleAr": "العلاج والراحة",
+    "titleEn": "Treatment & Rest",
+    "vocab": [
+     {"id": "ur_ilaaj", "target": "علاج", "translationAr": "العلاج", "phonetic": "علاج", "emoji": "🩺"},
+     {"id": "ur_operation", "target": "عمل", "translationAr": "الجراحة", "phonetic": "عمَل", "emoji": "🔪"},
+     {"id": "ur_parehez", "target": "پرہیز", "translationAr": "الامتناع", "phonetic": "پرہیز", "emoji": "🚫"},
+     {"id": "ur_aaraam", "target": "آرام", "translationAr": "الراحة", "phonetic": "آرام", "emoji": "😌"},
+     {"id": "ur_sehatmand", "target": "صحت مند", "translationAr": "معافى", "phonetic": "صحت مند", "emoji": "💚"},
+     {"id": "ur_muaaina", "target": "معائنہ", "translationAr": "الكشف الطبي", "phonetic": "معائنہ", "emoji": "🔍"},
+     {"id": "ur_maahir", "target": "ماہر", "translationAr": "الخبير", "phonetic": "ماہر", "emoji": "🎓"},
+     {"id": "ur_bachao_health", "target": "بچاؤ", "translationAr": "الوقاية", "phonetic": "بچاؤ", "emoji": "🛡️"},
+     {"id": "ur_vaccine", "target": "واکسین", "translationAr": "اللقاح", "phonetic": "واکسین", "emoji": "💉"},
+     {"id": "ur_health_care", "target": "صحت کا خیال", "translationAr": "العناية بالصحة", "phonetic": "صحت کا خیال", "emoji": "🧘"}
+    ]
+   }
+  ]
+ }
+]

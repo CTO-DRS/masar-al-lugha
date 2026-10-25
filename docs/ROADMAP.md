@@ -1,7 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.0.0+24** — see the v5.0 section below for the
-German course (the fourth language) and the v4.13.1 section for the RTL
+**Current release: v5.1.0+25** — see the v5.1 section below for the
+Urdu course's full-parity expansion, the v5.0 section for the German
+course (the fourth language) and the v4.13.1 section for the RTL
 direction-safety fix with test evidence.
 
 ## Where we are
@@ -32,6 +33,7 @@ direction-safety fix with test evidence.
 | v4.13 | **The placement result now suggests the FIELD too: `Placement.recommendedDomain` lets every correctly answered word vote for its unit's domain (majority wins, catalog-order ties, no signal → no guess), `AppState.setPathDomain` stores it keeping the detected tier — so confirming the test can complete a whole plan (مجال × مستوى) without the wizard; a second badge shows the suggestion and both wizard steps pre-fill + refresh from it** |
 | v4.13.1 | **RTL direction-safety fix (learner-reported): target-language tiles in the build (arrange) exercise inherited the Arabic UI's RTL and rendered English sentences REVERSED (`morning \| Good`) — new first-strong `directionOf` + `ScriptDirection` widget lay every target-language surface (build rows, cloze prompt, dictation field, mcq/tf prompts, feedback answer, option cards, flashcard front, example lines) in its OWN script direction; the Urdu course keeps flowing RTL — pinned in `test/rtl_direction_test.dart`** |
 | **v5.0** | **German joins — the fourth course: 20 units / 60 lessons / 599 words (CEFR A1→C1 monotonic, de-DE TTS, 100% Arabic phonetics + emoji) loaded through the same engines (path domains, placement, exercise generation, SRS, custom decks); `all_de_units` badge + polyglot now spans four courses; a substring trap fixed (`التعريف` contains the nature keyword `ريف` → retitled `التعرّف على النفس`); content gate scans all four courses — 4497 words / 126 units / 430 lessons, 199 tests** |
+| **v5.1** | **The Urdu course reaches FULL parity with English: +31 hand-authored units (A1 ×8, A2 ×8, B1 ×10, B2 ×3, C1 ×2), +93 lessons, +930 real Urdu words (Arabic glosses, Arabic-script phonetics, per-lesson unique emoji, ~30% example sentences) — now 56 units / 172 lessons / 1669 words with the same level spread as English (A1 14 · A2 14 · B1 18 · B2 5 · C1 5); new unit titles pre-checked against the domain-keyword catalog (domain spread: daily 16 · nature 8 · business 6 · culture 7 · travel 5 · food 5 · health 4 · basics 3 · tech 2); all pre-existing vocab ids untouched (append-only) — content gate: 5427 words / 157 units / 523 lessons** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -420,6 +422,45 @@ target-language content inherits it — unless told otherwise.
    `ScriptDirection` widget tests (English→LTR and Urdu→RTL inside an
    RTL shell via `Directionality.of`), and `OptionCard` direction for
    English vs Arabic options inside an RTL shell.
+
+## v5.1 — the Urdu course reaches full parity (SHIPPED)
+
+The oldest gap in the catalog closes: Urdu, the app's founding course,
+grew from 25 units to **56 units — the exact size and level spread of
+the English course** (A1 ×14 · A2 ×14 · B1 ×18 · B2 ×5 · C1 ×5).
+
+What was added (31 hand-authored units, 93 lessons, 930 words):
+
+1. **A1 (+8)** — Body & Health, Clothing & Weather, Travel & Transport,
+   Food & Drink II (fruits/vegetables/drinks), Home & Furniture, Market
+   & Shopping, Basic Verbs, Basic Feelings.
+2. **A2 (+8)** — City & Places, Sports & Hobbies, Restaurant & Ordering,
+   Music & Movies, Verbs & Conversation, Nature & Animals, Tools &
+   Objects, Feelings & Conversation.
+3. **B1 (+10)** — Airport & Flying, Hotel & Stay, Money & Banking,
+   Illness & Medicine, Space & Astronomy, World Geography, Beach & Sea,
+   Farm & Countryside, Birds & Insects, Office & Business.
+4. **B2 (+3)** — Science & Laboratory, Emergency & Safety, Business &
+   Economics.
+5. **C1 (+2)** — Academic & Exams, Argument & Persuasion.
+
+Quality gates kept:
+
+- every word ships with an Arabic gloss, an Arabic-script phonetic line
+  and a per-lesson-unique emoji; roughly 30% carry example sentences
+  (the sentence-mining exercises feed on these);
+- titles were pre-checked against the path-domain keyword catalog (the
+  v5.0 `التعريف ⊃ ريف` lesson): new spread is daily 16, nature 8,
+  business 6, culture 7, travel 5, food 5, health 4, basics 3, tech 2
+  — pinned in `test/path_test.dart` and reproducible via
+  `scripts/domain_counts_sim.py`;
+- 37 candidate vocab ids already existed (the old course predates slug
+  ids in places) — all were RENAMED in the new units only; not one
+  pre-existing id moved, so progress keys keep resolving (validator:
+  FATAL 0).
+
+Totals across the four courses: **5427 words / 157 units / 523
+lessons**.
 
 ## v5.0 — German joins: the fourth course (SHIPPED)
 

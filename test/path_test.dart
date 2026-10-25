@@ -200,18 +200,18 @@ void main() {
       // \bsea\b must NOT match "Seasons" (was travel before full boundary).
       expect(PathEngine.domainOfUnit(en.units[34]), PathDomain.nature);
       // Latin 'time' keyword removed — "Sports & Free Time" is daily.
-      expect(PathEngine.domainOfUnit(ur.units[12]), PathDomain.daily);
+      expect(PathEngine.domainOfUnit(ur.units[28]), PathDomain.daily);
       // Sensible anchors.
       expect(PathEngine.domainOfUnit(en.units[31]), PathDomain.travel);
       expect(PathEngine.domainOfUnit(en.units[45]), PathDomain.business);
       expect(PathEngine.domainOfUnit(en.units[46]), PathDomain.tech);
       expect(PathEngine.domainOfUnit(en.units[9]), PathDomain.travel);
       expect(PathEngine.domainOfUnit(en.units[54]), PathDomain.business);
-      expect(PathEngine.domainOfUnit(ur.units[22]), PathDomain.culture);
-      expect(PathEngine.domainOfUnit(ur.units[18]), PathDomain.nature);
+      expect(PathEngine.domainOfUnit(ur.units[46]), PathDomain.culture);
+      expect(PathEngine.domainOfUnit(ur.units[34]), PathDomain.nature);
     });
 
-    test('pinned domain counts for both courses (81 units)', () {
+    test('pinned domain counts for all courses (157 units)', () {
       int count(Course c, PathDomain d) => PathEngine.domainUnits(c, d).length;
       expect(count(en, PathDomain.business), 7);
       expect(count(en, PathDomain.travel), 5);
@@ -222,15 +222,17 @@ void main() {
       expect(count(en, PathDomain.culture), 4);
       expect(count(en, PathDomain.basics), 4);
       expect(count(en, PathDomain.daily), 18);
-      expect(count(ur, PathDomain.business), 2);
-      expect(count(ur, PathDomain.travel), 1);
-      expect(count(ur, PathDomain.food), 3);
-      expect(count(ur, PathDomain.health), 1);
-      expect(count(ur, PathDomain.tech), 1);
-      expect(count(ur, PathDomain.nature), 2);
-      expect(count(ur, PathDomain.culture), 6);
+      // v5.1: the Urdu course reached full 56-unit parity with English —
+      // the 31 new units route through the same keyword catalog.
+      expect(count(ur, PathDomain.business), 6);
+      expect(count(ur, PathDomain.travel), 5);
+      expect(count(ur, PathDomain.food), 5);
+      expect(count(ur, PathDomain.health), 4);
+      expect(count(ur, PathDomain.tech), 2);
+      expect(count(ur, PathDomain.nature), 8);
+      expect(count(ur, PathDomain.culture), 7);
       expect(count(ur, PathDomain.basics), 3);
-      expect(count(ur, PathDomain.daily), 6);
+      expect(count(ur, PathDomain.daily), 16);
       // v5.0: the German course partitions cleanly out of the box — its
       // English unit titles route through the SAME Latin keyword catalog.
       expect(count(de, PathDomain.basics), 3); // Numbers / Colors / Days
@@ -295,10 +297,13 @@ void main() {
       expect(p.tierRelaxed, isTrue);
     });
 
-    test('urdu business × expert relaxes to its A2 units', () {
+    test('urdu business × expert relaxes to its B1/B2 units', () {
+      // v5.1 added B1 (Money & Banking, Office & Business) and B2
+      // (Business & Economics) business units, so expert no longer
+      // relaxes all the way down to the A2 band.
       final p = PathEngine.build(ur, PathDomain.business, LevelTier.expert);
-      expect(p.unitIndices, [8, 11]); // A2 work units
-      expect(p.effectiveTier, LevelTier.beginner);
+      expect(p.unitIndices, [38, 45, 50]);
+      expect(p.effectiveTier, LevelTier.intermediate);
       expect(p.tierRelaxed, isTrue);
     });
 
@@ -684,15 +689,21 @@ void main() {
   });
 
   group('l10n parity for v5.0 keys', () {
-    test('German course keys exist in ar and en, version bumped', () {
+    test('German course keys exist in ar and en', () {
       expect(
           L.t('ar', 'badge_all_de_units'), 'خبير الألمانية — أكمل كل الوحدات');
       expect(
           L.t('en', 'badge_all_de_units'), 'German Master — finish all units');
       expect(L.t('ar', 'badge_polyglot'), contains('الأربع'));
       expect(L.t('en', 'badge_polyglot'), contains('four'));
-      expect(L.t('ar', 'version'), contains('5.0.0'));
-      expect(L.t('en', 'version'), contains('5.0.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.1 keys', () {
+    test('Urdu full-parity wave: version bumped', () {
+      expect(L.t('ar', 'version'), contains('5.1.0'));
+      expect(L.t('en', 'version'), contains('5.1.0'));
     });
   });
 

@@ -4,7 +4,7 @@
 // fails BOTH the Python gate and `flutter test`.
 //
 // What is verified (docs/CONTENT_AUDIT.md v4.2):
-// - all four courses parse and keep the shipped shape (56/25/25/20 units)
+// - all four courses parse and keep the shipped shape (56/56/25/20 units)
 // - every unit carries a valid, monotonic (non-decreasing) CEFR tag
 // - vocab ids stay globally unique across en/fr/ur/de (append-only progress keys)
 // - every vocab has a non-empty target + Arabic translation
@@ -19,7 +19,7 @@ import 'package:masar_al_lugha/models.dart';
 const _expected = <String, List<int>>{
   'en': [56, 216, 2328],
   'fr': [25, 75, 831],
-  'ur': [25, 79, 739],
+  'ur': [56, 172, 1669],
   'de': [20, 60, 599],
 };
 
@@ -48,7 +48,7 @@ void main() {
             reason: '$lang lesson count drifted');
         expect(words, _expected[lang]![2], reason: '$lang word count drifted');
       }
-      expect(totalWords, 4497);
+      expect(totalWords, 5427);
     });
 
     test('every unit has a valid monotonic CEFR tag', () async {
@@ -81,7 +81,7 @@ void main() {
               reason: '${v.id} has empty translationAr');
         }
       }
-      expect(seen.length, 4497);
+      expect(seen.length, 5427);
     });
 
     test('new v4.2 units keep per-lesson emoji uniqueness', () async {
@@ -103,7 +103,7 @@ void main() {
 
     test(
         'v4.6 units are appended at the end with ids in the u55-u56 '
-        '(en) / u24-u25 (fr, ur) range — append-only invariant', () async {
+        '(en) / v5.1 tail range (ur) — append-only invariant', () async {
       final en = await _load('en');
       expect(en.units.last.id, 'en_u56');
       expect(en.units[54].id, 'en_u55');
@@ -112,8 +112,9 @@ void main() {
       expect(fr.units.last.id, 'fr_u25');
       expect(fr.units[22].id, 'fr_u23'); // v4.5 tail still intact
       final ur = await _load('ur');
-      expect(ur.units.last.id, 'ur_u25');
-      expect(ur.units[22].id, 'ur_u23'); // v4.5 tail still intact
+      expect(ur.units.last.id, 'ur_u56'); // v5.1 tail
+      expect(ur.units[54].id, 'ur_u55'); // v5.1 tail
+      expect(ur.units[51].id, 'ur_u23'); // v4.5 tail still intact
       // v4.6 unit cefr endpoints match the ROADMAP ladder.
       expect(en.units.last.cefr, 'C1');
       expect(fr.units.last.cefr, 'C1');
