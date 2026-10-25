@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../app_state.dart';
 import '../scope.dart';
+import '../profile_store.dart';
 import '../srs.dart';
 import '../theme.dart';
 
@@ -146,6 +148,77 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ],
           ),
+          const SizedBox(height: 24),
+          // v5.10: local multi-profile slots (up to 3 learners on this
+          // device) — purely on-device, no accounts, no network.
+          _sectionTitle(tr('profilesTitle')),
+          const SizedBox(height: 4),
+          Text(tr('profilesHint'),
+              style: TextStyle(fontSize: 12.5, color: context.mutedText)),
+          const SizedBox(height: 10),
+          for (var slot = 1; slot <= ProfileStore.maxProfiles; slot++)
+            Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: slot == st.profileSlot
+                    ? AppColors.green.withValues(alpha: 0.10)
+                    : context.card,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                    color: slot == st.profileSlot
+                        ? AppColors.green.withValues(alpha: 0.5)
+                        : context.line,
+                    width: 2),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    slot == 1 ? Icons.person : Icons.person_outline,
+                    size: 20,
+                    color: slot == st.profileSlot
+                        ? AppColors.green
+                        : context.mutedText,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      st.profileNames[slot] ?? '${tr('profileDefault')} $slot',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 13.5,
+                        color: slot == st.profileSlot
+                            ? AppColors.green
+                            : context.bodyText,
+                      ),
+                    ),
+                  ),
+                  if (slot == st.profileSlot)
+                    Text(tr('profileCurrent'),
+                        style: const TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.green))
+                  else
+                    TextButton(
+                      onPressed: () => setState(() => st.switchProfile(slot)),
+                      child: Text(tr('profileSwitch'),
+                          style: const TextStyle(
+                              fontSize: 12.5, fontWeight: FontWeight.w900)),
+                    ),
+                  IconButton(
+                    tooltip: tr('profileRename'),
+                    visualDensity: VisualDensity.compact,
+                    icon: Icon(Icons.edit,
+                        size: 16,
+                        color: slot == st.profileSlot
+                            ? AppColors.green
+                            : context.mutedText),
+                    onPressed: () => _renameProfile(context, st, slot, tr),
+                  ),
+                ],
+              ),
+            ),
           const SizedBox(height: 24),
           _sectionTitle(tr('backupRestore')),
           const SizedBox(height: 10),
@@ -357,4 +430,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+}
+
+Future<void> _renameProfile(BuildContext context, AppState st, int slot,
+    String Function(String) tr) async {
+  final ctrl = TextEditingController(
+      text: st.profileNames[slot] ?? '${tr('profileDefault')} $slot');
+  await showDialog<void>(
+    context: context,
+    builder: (dlg) => AlertDialog(
+      title: Text(tr('profileRename')),
+      content: TextField(controller: ctrl, autofocus: true),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.of(dlg).pop(),
+            child: Text(MaterialLocalizations.of(dlg).cancelButtonLabel)),
+        FilledButton(
+          onPressed: () {
+            st.renameProfile(slot, ctrl.text);
+            Navigator.of(dlg).pop();
+          },
+          child: Text(tr('profileRename')),
+        ),
+      ],
+    ),
+  );
 }

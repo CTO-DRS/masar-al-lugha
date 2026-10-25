@@ -184,6 +184,18 @@ class L {
       'conversationRestart': 'إعادة المحادثة',
       'conversationTypePlaceholder': 'اكتب ردك باللغة الهدف…',
       'conversationProviderLocal': 'يعمل بلا إنترنت — تقييم بالكلمات المفتاحية',
+      'profilesTitle': 'الملفات الشخصية (على هذا الجهاز)',
+      'profilesHint':
+          'حتى ٣ متعلمين مستقلين — كل ملف بتقدمه الخاص، بلا حساب وبلا إنترنت.',
+      'profileDefault': 'متعلم',
+      'profileCurrent': 'الحالي',
+      'profileSwitch': 'تحويل',
+      'profileRename': 'إعادة تسمية',
+      'analyticsOptIn': 'تحليلات محلية (اختيارية)',
+      'analyticsHint':
+          'قياس الاستمرارية والعودة — تبقى على جهازك فقط ولا تُرسل لأي مكان.',
+      'retentionCard': 'نسبة العودة في اليوم التالي',
+      'retentionNoData': 'تحتاج يومين نشِطين على الأقل لعرضها',
       'placementResult': 'ننصحك بالبدء من هنا',
       'placementConfirm': 'ابدأ من هذا المستوى',
       'placementSkip': 'تخطي الاختبار والبدء من البداية',
@@ -349,7 +361,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.9.0',
+      'version': 'الإصدار 5.10.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -533,6 +545,18 @@ class L {
       'conversationRestart': 'Restart dialogue',
       'conversationTypePlaceholder': 'Type your reply in the target language…',
       'conversationProviderLocal': 'Offline — keyword-based evaluation',
+      'profilesTitle': 'Profiles (on this device)',
+      'profilesHint':
+          'Up to 3 independent learners — each with their own progress, no accounts, no internet.',
+      'profileDefault': 'Learner',
+      'profileCurrent': 'Current',
+      'profileSwitch': 'Switch',
+      'profileRename': 'Rename',
+      'analyticsOptIn': 'Local analytics (optional)',
+      'analyticsHint':
+          'Measures your consistency and comebacks — stays on your device only, never sent anywhere.',
+      'retentionCard': 'Next-day return rate',
+      'retentionNoData': 'Needs at least two active days to show',
       'placementResult': 'We suggest starting here',
       'placementConfirm': 'Start from this level',
       'placementSkip': 'Skip the test and start from zero',
@@ -702,7 +726,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.9.0',
+      'version': 'Version 5.10.0',
     },
   };
 

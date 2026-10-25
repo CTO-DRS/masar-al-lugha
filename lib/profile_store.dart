@@ -33,6 +33,59 @@ class ProfileStore {
   static const _kCourse = 'course_id';
   static const _kProgress = 'progress_json_v1';
   static const _kBackup = 'progress_backup_v1'; // corrupt-state snapshot
+  // v5.10 local multi-profile slots: up to 3 independent learners on one
+  // device, each with its OWN progress payload key. Purely local — no
+  // accounts, no network (hard invariants); the "no account" mode stays
+  // the default (slot 1 = the original key, byte-compatible).
+  static const _kProfileNames = 'profile_names';
+  static const maxProfiles = 3;
+  int _slot = 1;
+  int get slot => _slot;
+
+  String get _kProgressSlot => _slot > 1 ? '${_kProgress}_$_slot' : _kProgress;
+  String get _kBackupSlot => _slot > 1 ? '${_kBackup}_$_slot' : _kBackup;
+
+  /// Switches the active profile slot. Flushes the CURRENT slot first so
+  /// no debounced write lands in the wrong file afterwards.
+  Future<void> setSlot(int s) async {
+    final target = s.clamp(1, maxProfiles);
+    if (target == _slot) return;
+    await flush();
+    _slot = target;
+  }
+
+  /// Device-level profile display names (slot -> name), owned here.
+  Map<int, String> loadProfileNames() {
+    // synchronous prefs access is not available; cached at load time via
+    // [refreshProfileNames] — kept simple for the 3-slot scale.
+    return _profileNames;
+  }
+
+  Map<int, String> _profileNames = {};
+
+  Future<void> refreshProfileNames() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_kProfileNames);
+    if (raw == null) {
+      _profileNames = {};
+      return;
+    }
+    try {
+      final j = jsonDecode(raw) as Map<String, dynamic>;
+      _profileNames =
+          j.map((k, v) => MapEntry(int.tryParse(k) ?? 1, (v as String?) ?? ''));
+    } catch (_) {
+      _profileNames = {};
+    }
+  }
+
+  Future<void> saveProfileNames(Map<int, String> names) async {
+    final prefs = await SharedPreferences.getInstance();
+    _profileNames = Map<int, String>.from(names);
+    await prefs.setString(_kProfileNames,
+        jsonEncode({for (final e in names.entries) '${e.key}': e.value}));
+  }
+
   static const _kOnboard = 'onboarding_done';
 
   /// True when there are unsaved changes (debug/diagnostics, tests).
@@ -47,7 +100,7 @@ class ProfileStore {
     s.courseId = prefs.getString(_kCourse) ?? 'en';
     s.onboardingDone = prefs.getBool(_kOnboard) ?? false;
 
-    final raw = prefs.getString(_kProgress);
+    final raw = prefs.getString(_kProgressSlot);
     if (raw != null) {
       try {
         final j = jsonDecode(raw) as Map<String, dynamic>;
@@ -135,6 +188,8 @@ class ProfileStore {
               (settings['reduceMotion'] as bool?) ?? s.reduceMotion;
           s.ttsEnabled = (settings['ttsEnabled'] as bool?) ?? s.ttsEnabled;
           s.ttsRate = (settings['ttsRate'] as num?)?.toDouble() ?? s.ttsRate;
+          s.analyticsOptIn =
+              (settings['analyticsOptIn'] as bool?) ?? s.analyticsOptIn;
           s.retentionTarget =
               (settings['retentionTarget'] as num?)?.toDouble() ??
                   s.retentionTarget;
@@ -145,9 +200,12 @@ class ProfileStore {
         }
       } catch (_) {
         // Corrupt data — keep a recoverable copy before starting fresh.
-        prefs.setString(_kBackup, raw);
+        prefs.setString(_kBackupSlot, raw);
       }
     }
+    // v5.10: profile names load unconditionally — a fresh slot has no
+    // payload yet but its display name must still show up.
+    await refreshProfileNames();
     s.ensureDaily();
     s.loaded = true;
     // AppState.load() fires notifyListeners() after awaiting this method,
@@ -199,10 +257,11 @@ class ProfileStore {
         'reduceMotion': s.reduceMotion,
         'ttsEnabled': s.ttsEnabled,
         'ttsRate': s.ttsRate,
+        'analyticsOptIn': s.analyticsOptIn,
         'retentionTarget': s.retentionTarget,
       },
     };
-    await prefs.setString(_kProgress, jsonEncode(j));
+    await prefs.setString(_kProgressSlot, jsonEncode(j));
     _dirty = false;
   }
 

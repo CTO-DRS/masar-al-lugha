@@ -277,3 +277,43 @@ class Insights {
     return tips.take(maxTips).toList();
   }
 }
+
+// ================= v5.10 opt-in local analytics ==========================
+
+/// Local, anonymous-by-construction retention metrics (opt-in only),
+/// derived purely from the xpLog the app already stores — nothing ever
+/// leaves the device.
+class RetentionStats {
+  RetentionStats._();
+
+  /// Of the learner's last [window] active days, the fraction that were
+  /// followed by an active NEXT day. Returns null when there is no
+  /// evidence yet (<2 active days).
+  static double? dayReturnRate(Map<String, int> xpLog, DateTime today,
+      {int window = 14}) {
+    final days = xpLog.keys
+        .where((k) => (xpLog[k] ?? 0) > 0)
+        .map(_parseDay)
+        .whereType<DateTime>()
+        .toList()
+      ..sort();
+    if (days.length < 2) return null;
+    final from =
+        days.length > window ? days.sublist(days.length - window) : days;
+    var followed = 0;
+    for (var i = 0; i < from.length - 1; i++) {
+      if (from[i + 1].difference(from[i]).inDays == 1) followed++;
+    }
+    return followed / (from.length - 1);
+  }
+
+  static DateTime? _parseDay(String key) {
+    final p = key.split('-');
+    if (p.length != 3) return null;
+    final y = int.tryParse(p[0]);
+    final m = int.tryParse(p[1]);
+    final d = int.tryParse(p[2]);
+    if (y == null || m == null || d == null) return null;
+    return DateTime(y, m, d);
+  }
+}
