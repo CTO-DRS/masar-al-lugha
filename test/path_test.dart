@@ -810,8 +810,30 @@ void main() {
         expect(L.t('ar', k), isNot(k), reason: k);
         expect(L.t('en', k), isNot(k), reason: k);
       }
-      expect(L.t('ar', 'version'), contains('5.9.0'));
-      expect(L.t('en', 'version'), contains('5.9.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.10 keys', () {
+    test('profiles + analytics keys exist in ar and en, version bumped', () {
+      const keys = [
+        'profilesTitle',
+        'profilesHint',
+        'profileDefault',
+        'profileCurrent',
+        'profileSwitch',
+        'profileRename',
+        'analyticsOptIn',
+        'analyticsHint',
+        'retentionCard',
+        'retentionNoData',
+      ];
+      for (final k in keys) {
+        expect(L.t('ar', k), isNot(k), reason: k);
+        expect(L.t('en', k), isNot(k), reason: k);
+      }
+      expect(L.t('ar', 'version'), contains('5.10.0'));
+      expect(L.t('en', 'version'), contains('5.10.0'));
     });
   });
 

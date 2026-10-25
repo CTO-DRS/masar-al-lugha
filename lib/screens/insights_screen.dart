@@ -56,6 +56,10 @@ class _InsightsScreenState extends State<InsightsScreen> {
               children: [
                 _privacyBanner(tr),
                 const SizedBox(height: 16),
+                // v5.10: opt-in local retention card — OFF unless the
+                // learner explicitly enables it; nothing leaves the device.
+                _retentionCard(context, tr, st),
+                const SizedBox(height: 16),
                 _trendCard(tr, trend, ar),
                 const SizedBox(height: 16),
                 if (bestHour != null) ...[
@@ -561,4 +565,69 @@ class _InsightsScreenState extends State<InsightsScreen> {
       ..remove('idB');
     return context.trF(tip.key, params);
   }
+}
+
+// ---------------- v5.10: opt-in local retention ----------------
+
+Widget _retentionCard(
+    BuildContext context, String Function(String) tr, AppState st) {
+  final rate = st.analyticsOptIn
+      ? RetentionStats.dayReturnRate(st.xpLog, DateTime.now())
+      : null;
+  return Container(
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: st.analyticsOptIn
+          ? AppColors.green.withValues(alpha: 0.08)
+          : context.softBg,
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(
+          color: st.analyticsOptIn
+              ? AppColors.green.withValues(alpha: 0.4)
+              : context.line,
+          width: 2),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.query_stats,
+                size: 18,
+                color: st.analyticsOptIn ? AppColors.green : Colors.grey),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(tr('analyticsOptIn'),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900, fontSize: 13.5)),
+            ),
+            Switch(
+              value: st.analyticsOptIn,
+              onChanged: (v) => st.setAnalyticsOptIn(v),
+            ),
+          ],
+        ),
+        Text(
+          tr('analyticsHint'),
+          style: TextStyle(
+            fontSize: 12,
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.55),
+          ),
+        ),
+        if (st.analyticsOptIn) ...[
+          const SizedBox(height: 8),
+          if (rate == null)
+            Text(tr('retentionNoData'),
+                style: const TextStyle(
+                    fontSize: 12.5, fontWeight: FontWeight.w700))
+          else
+            Text(
+              '${tr('retentionCard')}: ${(rate * 100).round()}%',
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900),
+            ),
+        ],
+      ],
+    ),
+  );
 }

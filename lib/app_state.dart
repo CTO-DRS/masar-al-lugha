@@ -59,6 +59,12 @@ class AppState extends ChangeNotifier {
   double ttsRate = 0.9;
   // v5.3 FSRS target retention (0.70..0.98) — lower schedules longer intervals.
   double retentionTarget = Srs.defaultRetention;
+  // v5.10 local multi-profile slot (1..3) + device-level display names.
+  int profileSlot = 1;
+  Map<int, String> profileNames = {};
+  // v5.10 opt-in local analytics (retention metrics) — OFF by default and
+  // anonymous BY CONSTRUCTION: nothing ever leaves the device.
+  bool analyticsOptIn = false;
   Map<String, bool> placementDone = {}; // courseId -> placed
   Map<String, int> wordMistakes = {}; // vocabId -> lifetime mistake count
   Map<String, int> placementSkip =
@@ -172,6 +178,8 @@ class AppState extends ChangeNotifier {
 
   Future<void> load() async {
     await store.load();
+    profileSlot = store.slot;
+    profileNames = Map<int, String>.from(store.loadProfileNames());
     notifyListeners();
   }
 
@@ -255,6 +263,12 @@ class AppState extends ChangeNotifier {
 
   /// v5.3: FSRS target retention, clamped to the engine's supported range
   /// and rounded so the payload stays stable across round-trips.
+  void setAnalyticsOptIn(bool on) {
+    analyticsOptIn = on;
+    save();
+    notifyListeners();
+  }
+
   void setRetentionTarget(double r) {
     retentionTarget = r.clamp(Srs.minRetention, Srs.maxRetention).toDouble();
     retentionTarget = (retentionTarget * 100).roundToDouble() / 100;
@@ -772,6 +786,15 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> resetAll() async {
+    _resetInMemory();
+    pendingBadges.clear();
+    await save();
+    notifyListeners();
+  }
+
+  /// v5.10: wipes every in-memory progress field WITHOUT touching prefs —
+  /// used by [switchProfile] before loading another slot's payload.
+  void _resetInMemory() {
     xp = 0;
     streak = 0;
     bestStreak = 0; // v4.8 records reset with everything else
@@ -802,8 +825,35 @@ class AppState extends ChangeNotifier {
     customDecks = [];
     _deckCounter = 0;
     mascotId = 'rafiq';
-    pendingBadges.clear();
+  }
+
+  // ================= v5.10: local multi-profile slots ==================
+
+  /// Switches to another LOCAL profile slot (1..3). Saves the current
+  /// slot, wipes in-memory progress, loads the target payload. Purely
+  /// on-device — no accounts, no network; slot 1 is the original key so
+  /// the "no account" default is byte-compatible with older builds.
+  Future<void> switchProfile(int slot) async {
+    final target = slot.clamp(1, ProfileStore.maxProfiles);
+    if (target == profileSlot) return;
     await save();
+    await store.setSlot(target);
+    profileSlot = target;
+    _resetInMemory();
+    await load();
+    notifyListeners();
+  }
+
+  /// Renames a local profile slot (device-level display names).
+  Future<void> renameProfile(int slot, String name) async {
+    final s = slot.clamp(1, ProfileStore.maxProfiles);
+    final trimmed = name.trim().substring(0, name.trim().length.clamp(0, 24));
+    if (trimmed.isEmpty) {
+      profileNames.remove(s);
+    } else {
+      profileNames[s] = trimmed;
+    }
+    await store.saveProfileNames(profileNames);
     notifyListeners();
   }
 
@@ -854,6 +904,7 @@ class AppState extends ChangeNotifier {
           'ttsEnabled': ttsEnabled,
           'ttsRate': ttsRate,
           'retentionTarget': retentionTarget,
+          'analyticsOptIn': analyticsOptIn,
           'uiLocale': uiLocale,
           'courseId': courseId,
           'onboardingDone': onboardingDone,
@@ -974,6 +1025,7 @@ class AppState extends ChangeNotifier {
         reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;
         ttsEnabled = (s['ttsEnabled'] as bool?) ?? ttsEnabled;
         ttsRate = (s['ttsRate'] as num?)?.toDouble() ?? ttsRate;
+        analyticsOptIn = (s['analyticsOptIn'] as bool?) ?? analyticsOptIn;
         retentionTarget =
             (s['retentionTarget'] as num?)?.toDouble() ?? retentionTarget;
         uiLocale = (s['uiLocale'] as String?) ?? uiLocale;

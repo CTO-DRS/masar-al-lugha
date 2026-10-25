@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.9
+# ARCHITECTURE — Masar Al-Lugha v5.10
 
 ## 1. Layered view (post-v4.0)
 
@@ -498,6 +498,15 @@ deliberately small (`reply(scenario, step, text) → result`): any future
 AI provider implements it, but wiring one would change the no-network
 invariant and is therefore an explicit user decision. Dialogues are
 machine-authored ("needs human review").
+
+## 2b. Storage additions (v5.10)
+
+Multi-profile slots: progress payloads live at `progress_json_v1[_2|_3]`
+per device slot (max 3), each with its own corrupt-backup key. Slot 1 is
+byte-compatible with every older build — the default stays "no account".
+Profile display names are device-level and load unconditionally (a fresh
+slot has no payload yet). Opt-in analytics (`RetentionStats`) derive
+from the existing xpLog only and never leave the device.
 
 ## 5. Content pipeline
 
