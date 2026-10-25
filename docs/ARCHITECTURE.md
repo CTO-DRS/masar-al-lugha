@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.7
+# ARCHITECTURE — Masar Al-Lugha v5.8
 
 ## 1. Layered view (post-v4.0)
 
@@ -480,6 +480,14 @@ tests; `grammar_screen.dart` is a plain reader + MCQ drills over it. The
 catalog is machine-authored ("needs human review" in CONTENT_AUDIT) and
 lives outside the course JSONs on purpose — grammar ids are namespaced
 `gr_` and can never collide with the append-only vocab ids.
+
+## 4m. Reading skill (v5.8)
+
+`lib/reading.dart` holds leveled texts with aligned Arabic glosses and an
+honest corpus lookup (null outside the course). Tap-to-review feeds the
+REAL SRS through `rateCard(id, Srs.hard)` — identical to the flashcards
+path, so reading practice reshapes the schedule honestly. Texts are
+machine-authored ("needs human review").
 
 ## 5. Content pipeline
 

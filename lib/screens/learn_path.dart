@@ -9,6 +9,7 @@ import '../scope.dart';
 import '../theme.dart';
 import '../widgets/mascot.dart';
 import 'grammar_screen.dart';
+import 'reading_screen.dart';
 import 'home_shell.dart';
 import 'lesson_screen.dart';
 import 'path_setup_screen.dart';
@@ -53,37 +54,16 @@ class LearnPath extends StatelessWidget {
       body: Column(
         children: [
           const TopStatsBar(),
-          // v5.7: grammar lessons entry — slim banner under the stats bar.
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 6),
-            child: Material(
-              color: context.card,
-              borderRadius: BorderRadius.circular(14),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(14),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => const GrammarScreen(),
-                )),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.school,
-                          size: 20, color: AppColors.green),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(context.tr('grammarTitle'),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w900, fontSize: 13.5)),
-                      ),
-                      const Icon(Icons.chevron_right,
-                          size: 18, color: AppColors.green),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+          // v5.7 + v5.8: grammar & reading entries — slim banners.
+          _SkillBanner(
+            icon: Icons.school,
+            labelKey: 'grammarTitle',
+            builder: (_) => const GrammarScreen(),
+          ),
+          _SkillBanner(
+            icon: Icons.menu_book,
+            labelKey: 'readingTitle',
+            builder: (_) => const ReadingScreen(),
           ),
           Expanded(
             child: ListView.builder(
@@ -841,6 +821,47 @@ class _HomeCompanionState extends State<_HomeCompanion> {
       size: 56,
       reduceMotion: st.reduceMotion,
       salt: DateTime.now().day,
+    );
+  }
+}
+
+/// v5.7/v5.8: shared slim banner entry for the skill screens.
+class _SkillBanner extends StatelessWidget {
+  final IconData icon;
+  final String labelKey;
+  final WidgetBuilder builder;
+  const _SkillBanner(
+      {required this.icon, required this.labelKey, required this.builder});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 6),
+      child: Material(
+        color: context.card,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: () =>
+              Navigator.of(context).push(MaterialPageRoute(builder: builder)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: Row(
+              children: [
+                Icon(icon, size: 20, color: AppColors.green),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(context.tr(labelKey),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900, fontSize: 13.5)),
+                ),
+                const Icon(Icons.chevron_right,
+                    size: 18, color: AppColors.green),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

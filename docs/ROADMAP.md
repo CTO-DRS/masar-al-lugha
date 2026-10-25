@@ -1,8 +1,9 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.7.0+31** — see the v5.7 section below for the
-grammar skill, the v5.6 section for the pronunciation practice skill,
-the v5.5 section for the adaptive placement probe, the v5.4 section for the content wave (German to full unit
+**Current release: v5.8.0+32** — see the v5.8 section below for the
+reading skill, the v5.7 section for the grammar skill, the v5.6 section
+for the pronunciation practice skill, the v5.5 section for the adaptive
+placement probe, the v5.4 section for the content wave (German to full unit
 parity + 1022 new example sentences and enforced coverage floors), the v5.3
 section for the FSRS scheduler, the v5.2 section for the Urdu
 lesson-for-lesson parity, the v5.1 section for the Urdu unit expansion and
@@ -43,6 +44,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.5** | **The placement test goes ADAPTIVE: a new `PlacementProber` staircase (18 questions, band step 12%, start 30% depth) raises the sampled depth after correct answers and lowers it after wrong ones — questions concentrate at the learner's ceiling; the result adds a per-CEFR-level breakdown chips row, the skip honors every SOLID band (`recommendedFlatIndexSolid`) instead of a leading prefix, and the tier maps the final band; the fixed-probe v4.0 API stays untouched and the prober feeds it; 234 tests** |
 | **v5.6** | **New skill — PRONUNCIATION practice (Phase 4/1): a `PronScorer` engine (Flutter-free, tested) grades the speech-to-text TRANSCRIPT against the expected word (Levenshtein over tashkeel/punctuation-normalized text) with honest thresholds; `SttService` wraps the device recognizer (speech_to_text, de/en/fr/ur locales) behind graceful degradation; optional mic permission fires only on use; autocomplete word picker over the course corpus + TTS replay; every score labeled "approximate" — recognition quality is device-dependent and cannot be verified without hardware; new RECORD_AUDIO permission + speech_to_text dependency (justified)** |
 | **v5.7** | **New skill — GRAMMAR lessons explained in Arabic (Phase 4/2): `lib/grammar.dart` catalog (Flutter-free, tested) with 8 contrastive lessons — 2 per course (en articles+3rd-person-s, de der/die/das+V2 order, fr le/la/les+ne…pas, ur ergative نے+postpositions), each with Arabic-vs-target bullets and 4 MCQ drills with per-drill explanations; reader screen with expandable lesson cards from the learn path; content lives as Dart data (no course-JSON churn, `gr_` ids cannot collide with vocab ids); machine-authored and flagged "needs human review"** |
+| **v5.8** | **New skill — LEVELED READING (Phase 4/3): `lib/reading.dart` catalog with 2 texts per course (8 total, A1/A2 bands, machine-authored → "needs human review"); reader screen with per-word tap → meaning sheet (course-corpus lookup with punctuation stripping + singular fallback, honest null outside the corpus), TTS replay and one-tap add-to-review feeding the REAL SRS via rateCard(hard) — the same honest path as the flashcards; Arabic sentence glosses under every line; slim skill banners on the learn path (`_SkillBanner`)** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -737,6 +739,32 @@ the angle the courses alone do not cover:
    ids, so the append-only course JSONs and the validator are untouched.
    l10n: grammarTitle/grammarNone (ar+en); version pin group moved to
    v5.7. Suite: 248 → **255** tests.
+
+
+## v5.8 — leveled reading (SHIPPED, Phase 4 skill 3/4)
+
+New skill in its own branch (`feature/skill-reading`, merged --no-ff).
+
+1. **`lib/reading.dart`** (Flutter-free, 6 tests) — `ReadingText`
+   (id/courseId/level/title/body + aligned Arabic sentence glosses,
+   sentence-split over [.!?؟۔]) and `ReadingCatalog` with an honest
+   `lookup`: punctuation-stripped, case-insensitive corpus match with a
+   singular fallback for Latin courses — words outside the corpus return
+   NULL and the UI says "not part of the course vocabulary" instead of
+   inventing a meaning.
+2. **Starter content (8 texts)** — 2 per course at A1/A2 bands, written
+   to reuse course vocabulary where natural. Machine-authored and
+   flagged "needs human review" in CONTENT_AUDIT; levels stay the
+   self-referenced bands (no CEFR certification claimed).
+3. **`lib/screens/reading_screen.dart`** — expandable text cards
+   (level pill) → per-sentence reading with underlined tappable words →
+   bottom sheet: meaning, TTS replay, and "add to review" that calls
+   `rateCard(id, Srs.hard)` — a REAL self-rating on the same path as the
+   flashcards, no fake mastery signal.
+4. **Wiring** — `_SkillBanner` (new shared slim banner) now hosts both
+   grammar and reading entries under the learn-path stats bar. l10n: 7
+   new ar/en keys; version pin group moved to v5.8. Suite:
+   255 → **262** tests.
 
 ## Hard invariants (never break)
 
