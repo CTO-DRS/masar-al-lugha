@@ -1,0 +1,342 @@
+// Conversation trainer screen (v5.9, Phase 4 skill 4): a role-play chat UI
+// over `ConversationProvider`. The shipped provider is on-device and
+// offline (OfflineScriptedProvider); any future AI provider implements the
+// same interface — wiring it is a separate, explicit decision because it
+// would touch the "no network in release" invariant.
+import 'package:flutter/material.dart';
+
+import '../conversation.dart';
+import '../scope.dart';
+import '../theme.dart';
+
+class ConversationScreen extends StatefulWidget {
+  const ConversationScreen({super.key});
+
+  @override
+  State<ConversationScreen> createState() => _ConversationScreenState();
+}
+
+class _ConversationScreenState extends State<ConversationScreen> {
+  late ConversationScenario _scenario;
+  int _stepIndex = 0;
+  bool _complete = false;
+  bool _waitingReply = false;
+  final List<ConversationMsg> _messages = [];
+  final TextEditingController _input = TextEditingController();
+  final ScrollController _scroll = ScrollController();
+  final ConversationProvider _provider = const OfflineScriptedProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scenario =
+          ConversationCatalog.forCourse(AppScope.of(context).courseId).first;
+      _restart();
+    });
+  }
+
+  @override
+  void dispose() {
+    _input.dispose();
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  void _restart() {
+    setState(() {
+      _stepIndex = 0;
+      _complete = false;
+      _waitingReply = false;
+      _messages
+        ..clear()
+        ..add(ConversationMsg.partner(_scenario.steps.first.partner,
+            textAr: _scenario.steps.first.partnerAr));
+    });
+  }
+
+  void _selectScenario(ConversationScenario s) {
+    setState(() {
+      _scenario = s;
+      _restart();
+    });
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _send(String text) async {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty || _waitingReply || _complete) return;
+    setState(() {
+      _messages.add(ConversationMsg.user(trimmed));
+      _waitingReply = true;
+    });
+    _input.clear();
+    _scrollDown();
+    final result = await _provider.reply(_scenario, _stepIndex, trimmed);
+    if (!mounted) return;
+    setState(() {
+      _messages.add(ConversationMsg.partner(result.partnerText,
+          textAr: result.partnerTextAr));
+      if (result.accepted) _stepIndex += 1;
+      _complete = result.scenarioComplete;
+      _waitingReply = false;
+    });
+    _scrollDown();
+  }
+
+  void _scrollDown() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scroll.hasClients) {
+        _scroll.animateTo(_scroll.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
+      }
+    });
+  }
+
+  void _showHint() {
+    if (_complete || _stepIndex >= _scenario.steps.length) return;
+    final step = _scenario.steps[_stepIndex];
+    showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+      ),
+      builder: (sheetCtx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(sheetCtx.tr('conversationHint'),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900, fontSize: 14)),
+              const SizedBox(height: 10),
+              Text(step.sampleReply,
+                  style: const TextStyle(
+                      fontSize: 17, fontWeight: FontWeight.w800)),
+              const SizedBox(height: 4),
+              Text(step.sampleReplyAr,
+                  style: TextStyle(
+                      color: Theme.of(sheetCtx)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.6),
+                      fontSize: 13)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String tr(String k) => context.tr(k);
+    final scenarios =
+        ConversationCatalog.forCourse(AppScope.of(context).courseId);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(tr('conversationTitle')),
+        actions: [
+          IconButton(
+            tooltip: tr('conversationRestart'),
+            icon: const Icon(Icons.refresh, size: 22),
+            onPressed: _restart,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // scenario picker
+          SizedBox(
+            height: 44,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              children: [
+                for (final s in scenarios)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      label: Text('${s.emoji} ${s.titleAr}',
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w800)),
+                      selected: s.id == _scenario.id,
+                      onSelected: (_) => _selectScenario(s),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          // provider + honesty badge
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+            child: Row(
+              children: [
+                Icon(Icons.offline_bolt, size: 14, color: AppColors.green),
+                const SizedBox(width: 6),
+                Text(tr(_provider.labelKey),
+                    style: TextStyle(
+                        color: context.mutedText,
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w800)),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                      '${tr('conversationStep')} ${_complete ? _scenario.steps.length : _stepIndex + 1}/${_scenario.steps.length}',
+                      style: TextStyle(
+                          color: context.mutedText,
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w800)),
+                ),
+              ],
+            ),
+          ),
+          Divider(height: 1, color: context.line),
+          // chat
+          Expanded(
+            child: ListView.builder(
+              controller: _scroll,
+              padding: const EdgeInsets.all(14),
+              itemCount: _messages.length + (_complete ? 1 : 0),
+              itemBuilder: (context, i) {
+                if (_complete && i == _messages.length) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Column(
+                      children: [
+                        FilledButton.icon(
+                          onPressed: _restart,
+                          icon: const Icon(Icons.replay, size: 18),
+                          label: Text(tr('conversationRestart')),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                final m = _messages[i];
+                return Align(
+                  alignment: m.fromPartner
+                      ? AlignmentDirectional.centerStart
+                      : AlignmentDirectional.centerEnd,
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 10),
+                    constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.78),
+                    decoration: BoxDecoration(
+                      color: m.fromPartner ? context.card : AppColors.green,
+                      borderRadius: BorderRadiusDirectional.only(
+                        topStart: const Radius.circular(16),
+                        topEnd: const Radius.circular(16),
+                        bottomStart: Radius.circular(m.fromPartner ? 4 : 16),
+                        bottomEnd: Radius.circular(m.fromPartner ? 16 : 4),
+                      ),
+                      border: m.fromPartner
+                          ? Border.all(color: context.line, width: 1.5)
+                          : null,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Directionality(
+                          // v4.13.1 seam: the line reads in its OWN script
+                          // direction (Latin replies LTR, Urdu/Arabic RTL).
+                          textDirection: directionOf(m.text),
+                          child: Text(
+                            m.text,
+                            style: TextStyle(
+                              fontSize: 14.5,
+                              fontWeight: FontWeight.w800,
+                              color: m.fromPartner ? null : Colors.white,
+                            ),
+                          ),
+                        ),
+                        if (m.textAr != null) ...[
+                          const SizedBox(height: 3),
+                          Text(m.textAr!,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: m.fromPartner
+                                      ? context.mutedText
+                                      : Colors.white.withValues(alpha: 0.9))),
+                        ],
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          Divider(height: 1, color: context.line),
+          // input row
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+              child: Row(
+                children: [
+                  IconButton(
+                    tooltip: tr('conversationHint'),
+                    icon: const Icon(Icons.lightbulb_outline, size: 22),
+                    color: AppColors.orange,
+                    onPressed: _complete ? null : _showHint,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _input,
+                      minLines: 1,
+                      maxLines: 3,
+                      onSubmitted: _waitingReply || _complete ? null : _send,
+                      decoration: InputDecoration(
+                        hintText: tr('conversationTypePlaceholder'),
+                        filled: true,
+                        fillColor: context.softBg,
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 8),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide(color: context.line, width: 2),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide(color: context.line, width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide:
+                              BorderSide(color: AppColors.green, width: 2),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: (_waitingReply || _complete)
+                        ? null
+                        : () => _send(_input.text),
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: (_waitingReply || _complete)
+                            ? context.line
+                            : AppColors.green,
+                      ),
+                      child:
+                          const Icon(Icons.send, color: Colors.white, size: 20),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

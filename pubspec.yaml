@@ -1,7 +1,7 @@
 name: masar_al_lugha
 description: "Masar Al-Lugha (مسار اللغة) - A fun language learning path app. Learn English, French, Urdu & German with smart flashcards, leveled lessons and gamification."
 publish_to: "none"
-version: 5.8.0+32
+version: 5.9.0+33
 
 environment:
   sdk: ">=3.5.0 <4.0.0"

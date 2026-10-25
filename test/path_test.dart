@@ -792,8 +792,26 @@ void main() {
         expect(L.t('ar', k), isNot(k), reason: k);
         expect(L.t('en', k), isNot(k), reason: k);
       }
-      expect(L.t('ar', 'version'), contains('5.8.0'));
-      expect(L.t('en', 'version'), contains('5.8.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.9 keys', () {
+    test('conversation keys exist in ar and en, version bumped', () {
+      const keys = [
+        'conversationTitle',
+        'conversationStep',
+        'conversationHint',
+        'conversationRestart',
+        'conversationTypePlaceholder',
+        'conversationProviderLocal',
+      ];
+      for (final k in keys) {
+        expect(L.t('ar', k), isNot(k), reason: k);
+        expect(L.t('en', k), isNot(k), reason: k);
+      }
+      expect(L.t('ar', 'version'), contains('5.9.0'));
+      expect(L.t('en', 'version'), contains('5.9.0'));
     });
   });
 

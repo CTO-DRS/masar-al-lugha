@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.8
+# ARCHITECTURE — Masar Al-Lugha v5.9
 
 ## 1. Layered view (post-v4.0)
 
@@ -487,6 +487,16 @@ lives outside the course JSONs on purpose — grammar ids are namespaced
 honest corpus lookup (null outside the course). Tap-to-review feeds the
 REAL SRS through `rateCard(id, Srs.hard)` — identical to the flashcards
 path, so reading practice reshapes the schedule honestly. Texts are
+machine-authored ("needs human review").
+
+## 4n. Conversation trainer (v5.9)
+
+Role-play chat behind `ConversationProvider`; the shipped
+`OfflineScriptedProvider` is deterministic keyword-group matching over
+scripted steps — on-device, zero network (hard invariants). The seam is
+deliberately small (`reply(scenario, step, text) → result`): any future
+AI provider implements it, but wiring one would change the no-network
+invariant and is therefore an explicit user decision. Dialogues are
 machine-authored ("needs human review").
 
 ## 5. Content pipeline

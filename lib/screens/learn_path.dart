@@ -9,6 +9,7 @@ import '../scope.dart';
 import '../theme.dart';
 import '../widgets/mascot.dart';
 import 'grammar_screen.dart';
+import 'conversation_screen.dart';
 import 'reading_screen.dart';
 import 'home_shell.dart';
 import 'lesson_screen.dart';
@@ -64,6 +65,11 @@ class LearnPath extends StatelessWidget {
             icon: Icons.menu_book,
             labelKey: 'readingTitle',
             builder: (_) => const ReadingScreen(),
+          ),
+          _SkillBanner(
+            icon: Icons.forum,
+            labelKey: 'conversationTitle',
+            builder: (_) => const ConversationScreen(),
           ),
           Expanded(
             child: ListView.builder(
