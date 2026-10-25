@@ -8,6 +8,7 @@ import '../path.dart';
 import '../scope.dart';
 import '../theme.dart';
 import '../widgets/mascot.dart';
+import 'grammar_screen.dart';
 import 'home_shell.dart';
 import 'lesson_screen.dart';
 import 'path_setup_screen.dart';
@@ -52,6 +53,38 @@ class LearnPath extends StatelessWidget {
       body: Column(
         children: [
           const TopStatsBar(),
+          // v5.7: grammar lessons entry — slim banner under the stats bar.
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 6),
+            child: Material(
+              color: context.card,
+              borderRadius: BorderRadius.circular(14),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(14),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const GrammarScreen(),
+                )),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.school,
+                          size: 20, color: AppColors.green),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(context.tr('grammarTitle'),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w900, fontSize: 13.5)),
+                      ),
+                      const Icon(Icons.chevron_right,
+                          size: 18, color: AppColors.green),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(bottom: 32),

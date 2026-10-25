@@ -763,8 +763,18 @@ void main() {
       }
       expect(L.t('ar', 'pronApprox'), contains('تقريبي'));
       expect(L.t('en', 'pronApprox'), contains('Approximate'));
-      expect(L.t('ar', 'version'), contains('5.6.0'));
-      expect(L.t('en', 'version'), contains('5.6.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.7 keys', () {
+    test('grammar keys exist in ar and en, version bumped', () {
+      expect(L.t('ar', 'grammarTitle'), contains('القواعد'));
+      expect(L.t('en', 'grammarTitle'), isNot('grammarTitle'));
+      expect(L.t('ar', 'grammarNone'), isNot('grammarNone'));
+      expect(L.t('en', 'grammarNone'), isNot('grammarNone'));
+      expect(L.t('ar', 'version'), contains('5.7.0'));
+      expect(L.t('en', 'version'), contains('5.7.0'));
     });
   });
 
