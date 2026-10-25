@@ -176,6 +176,18 @@ class CardData {
   int lapses;
   String state; // new | learning | review
 
+  // ---- v5.3 FSRS memory states (additive, never rename the old keys) ----
+  /// FSRS difficulty D ∈ [1,10]. 0 = unset (a legacy card or a brand-new one
+  /// that has not been rated under FSRS yet — see Srs.migrateLegacy).
+  double difficulty;
+
+  /// FSRS stability S in days (the interval at which retrievability hits the
+  /// default target of 90%). 0 = unset.
+  double stability;
+
+  /// Epoch ms of the last rating — drives the forgetting curve. 0 = unset.
+  int lastReviewEpochMs;
+
   CardData({
     this.ease = 2.5,
     this.intervalDays = 0,
@@ -183,7 +195,15 @@ class CardData {
     this.reps = 0,
     this.lapses = 0,
     this.state = 'new',
-  }) : dueEpochMs = dueEpochMs ?? DateTime.now().millisecondsSinceEpoch;
+    this.difficulty = 0,
+    this.stability = 0,
+    int? lastReviewEpochMs,
+  })  : dueEpochMs = dueEpochMs ?? DateTime.now().millisecondsSinceEpoch,
+        lastReviewEpochMs = lastReviewEpochMs ?? 0;
+
+  /// True once the card carries FSRS memory states (rated under v5.3+ or
+  /// migrated by [Srs.migrateLegacy]).
+  bool get hasFsrsState => stability > 0;
 
   bool get isDue => dueEpochMs <= DateTime.now().millisecondsSinceEpoch;
 
@@ -194,6 +214,9 @@ class CardData {
         'reps': reps,
         'lapses': lapses,
         'state': state,
+        'd': difficulty,
+        's': stability,
+        'last': lastReviewEpochMs,
       };
 
   factory CardData.fromJson(Map<String, dynamic> j) => CardData(
@@ -204,5 +227,8 @@ class CardData {
         reps: (j['reps'] as num?)?.toInt() ?? 0,
         lapses: (j['lapses'] as num?)?.toInt() ?? 0,
         state: (j['state'] as String?) ?? 'new',
+        difficulty: (j['d'] as num?)?.toDouble() ?? 0,
+        stability: (j['s'] as num?)?.toDouble() ?? 0,
+        lastReviewEpochMs: (j['last'] as num?)?.toInt() ?? 0,
       );
 }

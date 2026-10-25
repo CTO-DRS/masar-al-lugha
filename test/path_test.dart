@@ -701,9 +701,21 @@ void main() {
   });
 
   group('l10n parity for v5.2 keys', () {
-    test('Urdu lesson-for-lesson parity wave: version bumped', () {
-      expect(L.t('ar', 'version'), contains('5.2.0'));
-      expect(L.t('en', 'version'), contains('5.2.0'));
+    test('Urdu lesson-for-lesson parity wave', () {
+      expect(L.t('ar', 'version'), isNotEmpty);
+      expect(L.t('en', 'version'), isNotEmpty);
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.3 keys', () {
+    test('FSRS retention keys exist in ar and en, version bumped', () {
+      expect(L.t('ar', 'retentionTitle'), isNot('retentionTitle'));
+      expect(L.t('en', 'retentionTitle'), isNot('retentionTitle'));
+      expect(L.t('ar', 'retentionHint'), isNot('retentionHint'));
+      expect(L.t('en', 'retentionHint'), isNot('retentionHint'));
+      expect(L.t('ar', 'version'), contains('5.3.0'));
+      expect(L.t('en', 'version'), contains('5.3.0'));
     });
   });
 

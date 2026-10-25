@@ -135,6 +135,9 @@ class ProfileStore {
               (settings['reduceMotion'] as bool?) ?? s.reduceMotion;
           s.ttsEnabled = (settings['ttsEnabled'] as bool?) ?? s.ttsEnabled;
           s.ttsRate = (settings['ttsRate'] as num?)?.toDouble() ?? s.ttsRate;
+          s.retentionTarget =
+              (settings['retentionTarget'] as num?)?.toDouble() ??
+                  s.retentionTarget;
         }
         if (s.newCardsDay != AppState.todayKey()) {
           s.newCardsToday = 0;
@@ -196,6 +199,7 @@ class ProfileStore {
         'reduceMotion': s.reduceMotion,
         'ttsEnabled': s.ttsEnabled,
         'ttsRate': s.ttsRate,
+        'retentionTarget': s.retentionTarget,
       },
     };
     await prefs.setString(_kProgress, jsonEncode(j));

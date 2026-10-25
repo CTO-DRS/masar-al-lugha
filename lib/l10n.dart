@@ -70,6 +70,9 @@ class L {
       'english': 'English',
       'ttsSound': 'النطق الصوتي',
       'ttsRate': 'سرعة النطق',
+      'retentionTitle': 'الاستبقاء المستهدف (خوارزمية المراجعة)',
+      'retentionHint':
+          'نسبة التذكّر التي تهدف إليها الخوارزمية عند موعد كل مراجعة — نسبة أقل تعني فواصل أطول ومراجعات أقل، ونسبة أعلى تعني مراجعات أقرب وأكثر.',
       'slow': 'بطيء',
       'fast': 'سريع',
       'resetProgress': 'إعادة تعيين التقدم',
@@ -313,7 +316,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.2.0',
+      'version': 'الإصدار 5.3.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -382,6 +385,9 @@ class L {
       'english': 'English',
       'ttsSound': 'Text to speech',
       'ttsRate': 'Speech rate',
+      'retentionTitle': 'Target retention (review algorithm)',
+      'retentionHint':
+          'The recall probability the scheduler aims for at each due date — lower means longer intervals and fewer reviews, higher means reviews come sooner and more often.',
       'slow': 'Slow',
       'fast': 'Fast',
       'resetProgress': 'Reset progress',
@@ -630,7 +636,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.2.0',
+      'version': 'Version 5.3.0',
     },
   };
 

@@ -57,6 +57,8 @@ class AppState extends ChangeNotifier {
   bool reduceMotion = false;
   bool ttsEnabled = true;
   double ttsRate = 0.9;
+  // v5.3 FSRS target retention (0.70..0.98) — lower schedules longer intervals.
+  double retentionTarget = Srs.defaultRetention;
   Map<String, bool> placementDone = {}; // courseId -> placed
   Map<String, int> wordMistakes = {}; // vocabId -> lifetime mistake count
   Map<String, int> placementSkip =
@@ -247,6 +249,15 @@ class AppState extends ChangeNotifier {
 
   void setTtsRate(double r) {
     ttsRate = r;
+    save();
+    notifyListeners();
+  }
+
+  /// v5.3: FSRS target retention, clamped to the engine's supported range
+  /// and rounded so the payload stays stable across round-trips.
+  void setRetentionTarget(double r) {
+    retentionTarget = r.clamp(Srs.minRetention, Srs.maxRetention).toDouble();
+    retentionTarget = (retentionTarget * 100).roundToDouble() / 100;
     save();
     notifyListeners();
   }
@@ -577,10 +588,11 @@ class AppState extends ChangeNotifier {
     results.forEach((vocabId, correct) {
       final c = cards[vocabId] ?? CardData();
       if (c.reps == 0) {
-        Srs.rate(c, correct ? Srs.good : Srs.hard, now: now);
+        Srs.rate(c, correct ? Srs.good : Srs.hard,
+            now: now, requestRetention: retentionTarget);
         if (!correct) c.state = 'learning';
       } else if (!correct) {
-        Srs.rate(c, Srs.again, now: now);
+        Srs.rate(c, Srs.again, now: now, requestRetention: retentionTarget);
       }
       cards[vocabId] = c;
     });
@@ -596,7 +608,7 @@ class AppState extends ChangeNotifier {
       newCardsDay = todayKey();
     }
     final card = c ?? CardData();
-    Srs.rate(card, q);
+    Srs.rate(card, q, requestRetention: retentionTarget);
     cards[vocabId] = card;
     cardsReviewed += 1;
     if (isNew) newCardsToday += 1;
@@ -841,6 +853,7 @@ class AppState extends ChangeNotifier {
           'reduceMotion': reduceMotion,
           'ttsEnabled': ttsEnabled,
           'ttsRate': ttsRate,
+          'retentionTarget': retentionTarget,
           'uiLocale': uiLocale,
           'courseId': courseId,
           'onboardingDone': onboardingDone,
@@ -961,6 +974,8 @@ class AppState extends ChangeNotifier {
         reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;
         ttsEnabled = (s['ttsEnabled'] as bool?) ?? ttsEnabled;
         ttsRate = (s['ttsRate'] as num?)?.toDouble() ?? ttsRate;
+        retentionTarget =
+            (s['retentionTarget'] as num?)?.toDouble() ?? retentionTarget;
         uiLocale = (s['uiLocale'] as String?) ?? uiLocale;
         final cid = s['courseId'] as String?;
         if (cid != null && courses.containsKey(cid)) courseId = cid;

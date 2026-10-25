@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.2
+# ARCHITECTURE — Masar Al-Lugha v5.3
 
 ## 1. Layered view (post-v4.0)
 
@@ -60,12 +60,28 @@ and every native plugin complicates the reproducible local build. The storage se
 the later swap a contained change. This decision is re-evaluated if profiles exceed ~1 MB
 or per-card queries are needed.
 
-## 3. Learning engine (v4.0) — honest description
+## 3. Learning engine (v5.3) — honest description
 
-`srs.dart` is an **SM-2-inspired lite scheduler** (Anki-style ease/interval with learning
-steps), **not a full FSRS implementation** — it has no difficulty/stability memory states,
-no power-law forgetting curve, no optimizer. UI copy and docs say "FSRS-inspired";
-nowhere does the app claim certified FSRS.
+`srs.dart` is a **real FSRS-4.5 scheduler**: every card carries difficulty
+(D ∈ [1,10]) and stability (S, days) memory states, retrievability follows
+the power-law forgetting curve R(t,S) = (1 + 19/81·t/S)^(−1/2) (so
+R(S) = 0.9), ratings map to FSRS grades 1..4 with the official default
+weights w0..w16 (difficulty drift + mean reversion, recall-stability growth
+with hard penalty / easy bonus, post-lapse stability), and a **target
+retention dial** (default 90%, clamp 0.70–0.98, `AppState.retentionTarget`,
+slider in Settings) turns stability into scheduled intervals. What is NOT
+shipped: a per-user weight optimizer — the 17 defaults are not trained on
+this learner's log, and no UI copy claims otherwise.
+
+Pre-v5.3 cards migrate once and lazily (`Srs.migrateLegacy`, called from
+`rate()`): stability ≈ the committed interval (review cards) or the good
+anchor (learning cards), difficulty ≈ D0(good) shifted by the old ease,
+last review ≈ `due − interval` clamped to now — `due/ivl/reps/lapses/state/
+ease` never move, so no due review is lost or reshuffled. The legacy fields
+stay in the payload forever; the new additive keys `d`, `s`, `last` are
+ignored by older app versions (forward-compatible). The 10-minute learning
+step survives for new/lapsed cards; FSRS-4.5 grants no same-day stability
+growth, so graduating a re-shown card schedules from its existing stability.
 
 Pipeline: lesson exercises record **per-word** results → lesson end feeds real outcomes
 (mistakes → `learning`, clean → `review`) → flashcards serve due reviews + a **daily

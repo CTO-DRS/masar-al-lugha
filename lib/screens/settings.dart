@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../scope.dart';
+import '../srs.dart';
 import '../theme.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -109,6 +110,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   tts.rate = v;
                   setState(() => st.setTtsRate(v));
                 },
+              ),
+            ],
+          ),
+          // v5.3: FSRS target-retention dial — lower = longer intervals.
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(tr('retentionTitle'),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: context.bodyText)),
+                  ),
+                  Text(
+                    '${(st.retentionTarget * 100).round()}%',
+                    style: TextStyle(
+                        color: context.mutedText, fontWeight: FontWeight.w800),
+                  ),
+                ],
+              ),
+              Text(tr('retentionHint'),
+                  style: TextStyle(fontSize: 12.5, color: context.mutedText)),
+              Slider(
+                value: st.retentionTarget
+                    .clamp(Srs.minRetention, Srs.maxRetention),
+                min: Srs.minRetention,
+                max: Srs.maxRetention,
+                divisions: 7,
+                label: '${(st.retentionTarget * 100).round()}%',
+                onChanged: (v) => setState(() => st.setRetentionTarget(v)),
               ),
             ],
           ),

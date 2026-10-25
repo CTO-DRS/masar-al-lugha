@@ -467,7 +467,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                         ),
                       ),
                       Text(
-                        Srs.hintFor(c, q),
+                        Srs.hintFor(c, q, requestRetention: st.retentionTarget),
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.85),
                           fontSize: 10,

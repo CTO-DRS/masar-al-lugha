@@ -1,6 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.2.0+26** — see the v5.2 section below for the
+**Current release: v5.3.0+27** — see the v5.3 section below for the
+scheduler becoming a real FSRS implementation (stability, difficulty,
+retrievability and a target-retention dial), the v5.2 section for the
 Urdu course reaching lesson-for-lesson parity with English, the v5.1
 section for the Urdu unit expansion and the v5.0 section for the
 German course (the fourth language).
@@ -35,6 +37,7 @@ German course (the fourth language).
 | **v5.0** | **German joins — the fourth course: 20 units / 60 lessons / 599 words (CEFR A1→C1 monotonic, de-DE TTS, 100% Arabic phonetics + emoji) loaded through the same engines (path domains, placement, exercise generation, SRS, custom decks); `all_de_units` badge + polyglot now spans four courses; a substring trap fixed (`التعريف` contains the nature keyword `ريف` → retitled `التعرّف على النفس`); content gate scans all four courses — 4497 words / 126 units / 430 lessons, 199 tests** |
 | **v5.1** | **The Urdu course reaches FULL parity with English: +31 hand-authored units (A1 ×8, A2 ×8, B1 ×10, B2 ×3, C1 ×2), +93 lessons, +930 real Urdu words (Arabic glosses, Arabic-script phonetics, per-lesson unique emoji, ~30% example sentences) — now 56 units / 172 lessons / 1669 words with the same level spread as English (A1 14 · A2 14 · B1 18 · B2 5 · C1 5); new unit titles pre-checked against the domain-keyword catalog (domain spread: daily 16 · nature 8 · business 6 · culture 7 · travel 5 · food 5 · health 4 · basics 3 · tech 2); all pre-existing vocab ids untouched (append-only) — content gate: 5427 words / 157 units / 523 lessons** |
 | **v5.2** | **Urdu matches English LESSON-FOR-LESSON: +44 fourth lessons (one per unit whose English twin has four) and +659 words — 44 lesson-vocab sets of 10–12 themed words plus one densification word woven into every existing l1/l2/l3 lesson (each pre-checked against that lesson's words and emoji); Urdu now sits at exactly 56 units / 216 lessons / 2328 words = the English course's shape to the digit, with the same 4-lesson-unit spread (A1 12 · A2 12 · B1 18 · B2 5 · C1 1); content gate: 6086 words / 157 units / 567 lessons** |
+| **v5.3** | **The scheduler becomes REAL FSRS-4.5: per-card difficulty/stability memory states + the power-law forgetting curve R(t,S)=(1+19/81·t/S)^(−1/2) replace the SM-2-lite ease/interval math; a target-retention dial (default 90%, 70–98%) in Settings turns stability into intervals; a one-time migration derives FSRS states from every pre-v5.3 card WITHOUT moving due/reps/lapses/state/interval — zero progress loss; new additive card keys (d/s/last) ride the schema-v2 payload; 222 tests (+22 FSRS/migration)** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -542,6 +545,55 @@ session's working tree and completed end-to-end.
    `PathEngine.domainOfUnit` to recompute the per-domain pins whenever
    course data changes (the missing `domain_mapping_sim.py` twin the
    engine comments referenced).
+
+## v5.3 — the scheduler becomes real FSRS (SHIPPED)
+
+The v4.0 audit documented the old `srs.dart` honestly: an SM-2-inspired
+lite scheduler with no memory states. This wave replaces it with a real
+FSRS-4.5 implementation while keeping every stored byte of progress:
+
+1. **Memory states + forgetting curve** — every card now carries
+   `difficulty` (D ∈ [1,10]) and `stability` (S in days) alongside the
+   legacy fields; retrievability follows the FSRS-4.5 power law
+   R(t,S) = (1 + 19/81·t/S)^(−1/2), so R(S) = 0.9 exactly at one
+   stability. Ratings map our 0..3 buttons to FSRS grades 1..4 with the
+   official default weights (w0..w16): initial states per rating,
+   difficulty drift + mean reversion toward D0(easy), recall stability
+   growth with the hard penalty / easy bonus, and post-lapse stability
+   from difficulty and pre-lapse retrievability.
+2. **Target-retention dial** — `Srs.rate/hintFor` accept
+   `requestRetention` (clamped 0.70–0.98, default 0.90); the interval is
+   the time the forgetting curve needs to decay to that target. The
+   setting lives in `AppState.retentionTarget` (persisted additively in
+   the settings blob, carried by export/import) with a labelled slider in
+   Settings ("الاستبقاء المستهدف").
+3. **One-time migration, zero progress loss** — `Srs.migrateLegacy`
+   derives FSRS states from a pre-v5.3 card ONCE: stability ≈ the
+   committed interval (review cards) or the good anchor (learning cards),
+   difficulty ≈ D0(good) shifted by the old ease, last review ≈ the
+   scheduling time (`due − interval`, clamped to now). `due`, `ivl`,
+   `reps`, `lapses`, `state` and `ease` never move; unstudied cards stay
+   untouched until their first rating. The migration runs lazily inside
+   `rate()` and is idempotent (pinned by tests).
+4. **Same-day behavior** — the 10-minute learning step survives (new or
+   lapsed cards re-show in-session); FSRS-4.5 grants no same-day
+   stability growth, so graduating a re-shown card schedules from its
+   existing stability. `hintFor` computes on a scratch copy, so the hint
+   is provably identical to what `rate()` would schedule (matrix-tested).
+5. **Honest scope note** — the scheduler is FSRS-4.5; the per-user
+   weight OPTIMIZER is not shipped (defaults only). Docs and UI copy say
+   exactly that (ARCHITECTURE §3).
+6. **Tests** — suite grew 200 → **222**: forgetting-curve math (R at t=S
+   = 0.9, monotone decay, interval clamps), first-rating initialization
+   (interval 4d after good / 14d after easy — the honest FSRS-4.5
+   defaults), growth/lapse dynamics, difficulty clamping under abuse,
+   the retention dial through `rate`, `hintFor`, `AppState.rateCard`,
+   clamping + export/import carry, five migration cases (review,
+   learning, late, future-clamped, idempotence, unstudied untouched),
+   automatic migration on first rating, and legacy-payload JSON
+   compatibility. Version pin group moved to v5.3 in
+   `test/path_test.dart`; the SM-2 interval-math tests were replaced
+   (the algorithm they pinned no longer exists by design).
 
 ## Hard invariants (never break)
 
