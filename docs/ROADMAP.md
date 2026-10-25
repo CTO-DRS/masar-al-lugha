@@ -1,10 +1,11 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.4.0+28** — see the v5.4 section below for the content
-wave (German to full unit parity + 1022 new example sentences and enforced
-coverage floors), the v5.3 section for the FSRS scheduler, the v5.2 section
-for the Urdu lesson-for-lesson parity, the v5.1 section for the Urdu unit
-expansion and the v5.0 section for the German course (the fourth language).
+**Current release: v5.5.0+29** — see the v5.5 section below for the adaptive
+placement probe, the v5.4 section for the content wave (German to full unit
+parity + 1022 new example sentences and enforced coverage floors), the v5.3
+section for the FSRS scheduler, the v5.2 section for the Urdu
+lesson-for-lesson parity, the v5.1 section for the Urdu unit expansion and
+the v5.0 section for the German course (the fourth language).
 
 ## Where we are
 
@@ -38,6 +39,7 @@ expansion and the v5.0 section for the German course (the fourth language).
 | **v5.2** | **Urdu matches English LESSON-FOR-LESSON: +44 fourth lessons (one per unit whose English twin has four) and +659 words — 44 lesson-vocab sets of 10–12 themed words plus one densification word woven into every existing l1/l2/l3 lesson (each pre-checked against that lesson's words and emoji); Urdu now sits at exactly 56 units / 216 lessons / 2328 words = the English course's shape to the digit, with the same 4-lesson-unit spread (A1 12 · A2 12 · B1 18 · B2 5 · C1 1); content gate: 6086 words / 157 units / 567 lessons** |
 | **v5.3** | **The scheduler becomes REAL FSRS-4.5: per-card difficulty/stability memory states + the power-law forgetting curve R(t,S)=(1+19/81·t/S)^(−1/2) replace the SM-2-lite ease/interval math; a target-retention dial (default 90%, 70–98%) in Settings turns stability into intervals; a one-time migration derives FSRS states from every pre-v5.3 card WITHOUT moving due/reps/lapses/state/interval — zero progress loss; new additive card keys (d/s/last) ride the schema-v2 payload; 222 tests (+22 FSRS/migration)** |
 | **v5.4** | **Content wave in the de→ur→en priority order: German backfill 522 sentences (12.9%→100%) + 5 new units (School A2, Bank B1, Media B2, Literature & Philosophy C1×2) = 25 units / 779 words — full parity with French's unit count; Urdu backfill 500 sentences (17.8%→39.3%); enforced example-coverage floors in validator + content tests (en≥18% · fr≥40% · ur≥35% · de≥95%), global ids 6086→6266; all generated content marked "needs human review" in CONTENT_AUDIT** |
+| **v5.5** | **The placement test goes ADAPTIVE: a new `PlacementProber` staircase (18 questions, band step 12%, start 30% depth) raises the sampled depth after correct answers and lowers it after wrong ones — questions concentrate at the learner's ceiling; the result adds a per-CEFR-level breakdown chips row, the skip honors every SOLID band (`recommendedFlatIndexSolid`) instead of a leading prefix, and the tier maps the final band; the fixed-probe v4.0 API stays untouched and the prober feeds it; 234 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -636,6 +638,39 @@ order (de → ur → en), with every change append-only and gated:
    word's id/target/gloss/phonetic/emoji moved, CEFR monotonicity after
    insertion. Corpus: 6086 → **6266 words / 162 units / 582 lessons**.
    Suite: 222 → **224** tests.
+
+
+## v5.5 — adaptive placement probe (SHIPPED)
+
+Phase 3 of the quality plan: the placement test now behaves like a real
+adaptive probe instead of a fixed sample:
+
+1. **`PlacementProber`** (`lib/placement.dart`, Flutter-free) — a depth
+   STAIRCASE over the course: it starts at 30% depth and moves ±12% of
+   course depth per answer (up on correct, down on wrong, clamped to
+   2%–98%). Questions are single words sampled from the unit nearest the
+   current band (never unit-less pools, never a repeated id), with 4
+   prebuilt options (correct meaning + 3 unique course-wide distractors).
+   Default run: **18 questions** (was 12 fixed) — and they concentrate
+   around the learner's ceiling, where the answer is actually informative.
+2. **Richer result** — the result card gains a per-CEFR-level breakdown
+   (chips like `A1: 4/5`), derived from the CEFR tag of each sampled
+   unit; the tier maps the final band (≤0.33 beginner · ≤0.70
+   intermediate · above expert) — a "ready-for band", not a certificate.
+3. **Solid-band skip** — `Placement.recommendedFlatIndexSolid` walks the
+   checkpoints in depth order and keeps the END of the last checkpoint
+   whose words were ALL correct. Unlike the v4.0 leading-prefix rule, a
+   failed middle band no longer erases deeper proven bands — the
+   staircase legitimately samples a hard unit between easy ones. The
+   legacy `recommendedFlatIndex` stays for compatibility and tests pin
+   the difference.
+4. **v4.12/v4.13 links intact** — the prober's `checkpoints` group the
+   asked items by unit in depth order, so `recommendedTier`-style tier
+   storage and `recommendedDomain` (correct-answer votes) flow through
+   the SAME code paths; confirm still stores skip + tier + domain.
+5. **l10n** — `placementQof` (progress, {n}/{t} via `trF`) and
+   `placementBreakdown` in ar+en; version pin group moved to v5.5.
+   Suite: 224 → **234** tests (9 adaptive engine tests).
 
 ## Hard invariants (never break)
 

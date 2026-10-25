@@ -9,6 +9,9 @@
 // answered correctly) joins the link via AppState.setPathDomain — both
 // badges show what confirming will store, so the test can complete a
 // whole path plan (field × level) without the wizard.
+// v5.5: the probe becomes ADAPTIVE (PlacementProber): the sampled depth
+// rises after correct answers and falls after wrong ones across 18
+// questions, and the result card gains a per-CEFR-level breakdown.
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
@@ -26,12 +29,11 @@ class PlacementScreen extends StatefulWidget {
 }
 
 class _PlacementScreenState extends State<PlacementScreen> {
-  List<PlacementCheckpoint> checkpoints = [];
-  Map<String, String> key = {}; // wordId -> correct translation
+  late PlacementProber prober;
+  final Map<String, String> key = {}; // wordId -> correct translation
   final Map<String, String> wordOf = {}; // wordId -> target text
-  final Map<String, bool> results = {};
+  Map<String, bool> get results => prober.results;
 
-  int cpIndex = 0;
   bool finished = false;
   int? selected;
   bool answered = false;
@@ -45,8 +47,7 @@ class _PlacementScreenState extends State<PlacementScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final st = AppScope.of(context);
       final course = st.course;
-      checkpoints = Placement.sample(course);
-      key = Placement.answerKey(course, checkpoints.expand((c) => c.wordIds));
+      prober = PlacementProber.create(course);
       for (final v in course.allVocab) {
         wordOf[v.id] = v.target;
       }
@@ -55,33 +56,19 @@ class _PlacementScreenState extends State<PlacementScreen> {
   }
 
   void _nextQuestion() {
-    while (cpIndex < checkpoints.length) {
-      final cp = checkpoints[cpIndex];
-      final remaining =
-          cp.wordIds.where((id) => !results.containsKey(id)).toList();
-      if (remaining.isEmpty) {
-        // Checkpoint complete — advance only if fully correct.
-        final allCorrect = cp.wordIds.every((id) => results[id] == true);
-        if (!allCorrect) break;
-        cpIndex++;
-        continue;
-      }
-      final id = remaining.first;
-      final wrongs = key.values.where((t) => t != key[id]).toSet().toList()
-        ..shuffle();
-      setState(() {
-        currentId = id;
-        currentOptions = [key[id]!, ...wrongs.take(3)]..shuffle();
-        selected = null;
-        answered = false;
-      });
+    final item = prober.next();
+    if (item == null) {
+      setState(() => finished = true);
       return;
     }
-    setState(() => finished = true);
+    setState(() {
+      currentId = item.wordId;
+      key[item.wordId] = item.answer;
+      currentOptions = item.options;
+      selected = null;
+      answered = false;
+    });
   }
-
-  int get recommended => Placement.recommendedFlatIndex(
-      AppScope.of(context).course, checkpoints, results);
 
   void _answer(String opt) {
     if (answered || currentId == null) return;
@@ -89,8 +76,9 @@ class _PlacementScreenState extends State<PlacementScreen> {
     setState(() {
       selected = currentOptions.indexOf(opt);
       answered = true;
-      results[currentId!] = opt == key[currentId!];
-      st.recordAnswer(results[currentId!]!);
+      final correct = opt == key[currentId!];
+      prober.answer(correct);
+      st.recordAnswer(correct);
     });
   }
 
@@ -118,6 +106,19 @@ class _PlacementScreenState extends State<PlacementScreen> {
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontWeight: FontWeight.w900, fontSize: 17)),
+                  const SizedBox(height: 6),
+                  // v5.5: adaptive progress — question n of the probe total.
+                  Text(
+                    context.trF('placementQof', {
+                      'n': '${prober.asked.length + 1}',
+                      't': '${prober.questions}',
+                    }),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: context.mutedText,
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700),
+                  ),
                   const SizedBox(height: 14),
                   Center(
                     child: Container(
@@ -169,13 +170,13 @@ class _PlacementScreenState extends State<PlacementScreen> {
 
   Widget _result(String Function(String) tr, AppState st) {
     final course = st.course;
-    final flat = recommended;
-    // v4.12: the detected level shown on the result card and stored when
-    // the learner confirms — same consecutive-pass rule as the skip.
-    final tier = Placement.recommendedTier(checkpoints, results);
-    // v4.13: the suggested field — votes from the units whose words the
-    // learner answered correctly; null when nothing was answered right.
-    final domain = Placement.recommendedDomain(course, checkpoints, results);
+    // v5.5: all three outputs now flow from the adaptive probe — the skip
+    // honors every SOLID band (not just a leading prefix), the tier maps
+    // the final staircase depth, and the domain votes over the same set.
+    final flat = prober.flatSkip();
+    final tier = prober.tier;
+    final domain = prober.recommendedDomain();
+    final breakdown = prober.levelBreakdown();
     String title;
     if (flat <= 0) {
       title = tr('placementFromStart');
@@ -281,6 +282,39 @@ class _PlacementScreenState extends State<PlacementScreen> {
               ],
             ],
           ),
+          const SizedBox(height: 14),
+          // v5.5: per-CEFR-level performance breakdown.
+          if (breakdown.isNotEmpty) ...[
+            Text(tr('placementBreakdown'),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: context.mutedText,
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w800)),
+            const SizedBox(height: 6),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8,
+              runSpacing: 6,
+              children: [
+                for (final s in breakdown)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: context.card,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: context.line, width: 1.5),
+                    ),
+                    child: Text(
+                      '${s.cefr}: ${s.correct}/${s.asked}',
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w800),
+                    ),
+                  ),
+              ],
+            ),
+          ],
           const SizedBox(height: 26),
           ChunkyButton(
             label: tr('placementConfirm'),

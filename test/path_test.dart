@@ -723,9 +723,21 @@ void main() {
   });
 
   group('l10n parity for v5.4 keys', () {
-    test('content wave: version bumped', () {
-      expect(L.t('ar', 'version'), contains('5.4.0'));
-      expect(L.t('en', 'version'), contains('5.4.0'));
+    test('content wave keys exist in ar and en', () {
+      expect(L.t('ar', 'retentionTitle'), isNotEmpty);
+      expect(L.t('en', 'retentionTitle'), isNotEmpty);
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.5 keys', () {
+    test('adaptive placement keys exist in ar and en, version bumped', () {
+      expect(L.t('ar', 'placementQof'), contains('{n}'));
+      expect(L.t('en', 'placementQof'), contains('{n}'));
+      expect(L.t('ar', 'placementBreakdown'), isNot('placementBreakdown'));
+      expect(L.t('en', 'placementBreakdown'), isNot('placementBreakdown'));
+      expect(L.t('ar', 'version'), contains('5.5.0'));
+      expect(L.t('en', 'version'), contains('5.5.0'));
     });
   });
 

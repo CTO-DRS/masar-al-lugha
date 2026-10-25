@@ -151,6 +151,8 @@ class L {
       'placementIntro':
           'أجب عن أسئلة سريعة لنتخطى ما تعرفه، ونحدد مستواك (مبتدئ/متوسط/خبير) ونقترح مجالك تلقائياً.',
       'placementMeaningOf': 'ما معنى هذه الكلمة؟',
+      'placementQof': 'السؤال {n} من {t}',
+      'placementBreakdown': 'أداؤك حسب المستوى:',
       'placementResult': 'ننصحك بالبدء من هنا',
       'placementConfirm': 'ابدأ من هذا المستوى',
       'placementSkip': 'تخطي الاختبار والبدء من البداية',
@@ -316,7 +318,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.4.0',
+      'version': 'الإصدار 5.5.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -467,6 +469,8 @@ class L {
       'placementIntro':
           'Answer a few quick questions and we will skip what you already know — set your level (beginner/intermediate/expert) and suggest your field automatically.',
       'placementMeaningOf': 'What does this word mean?',
+      'placementQof': 'Question {n} of {t}',
+      'placementBreakdown': 'Your performance by level:',
       'placementResult': 'We suggest starting here',
       'placementConfirm': 'Start from this level',
       'placementSkip': 'Skip the test and start from zero',
@@ -636,7 +640,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.4.0',
+      'version': 'Version 5.5.0',
     },
   };
 

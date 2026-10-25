@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.3
+# ARCHITECTURE — Masar Al-Lugha v5.5
 
 ## 1. Layered view (post-v4.0)
 
@@ -314,7 +314,16 @@ third engine following the insights/records contract:
   `PathPlan` is never persisted, so a content update instantly reshapes
   an old plan without migration.
 
-### 4e. Placement → level & domain auto-link (v4.12 + v4.13)
+### 4e. Placement → level & domain auto-link (v4.12 + v4.13, adaptive in v5.5)
+
+Since v5.5 the screen drives `PlacementProber` (a depth staircase, see
+ROADMAP v5.5): 18 questions sampled near the running band, a per-CEFR
+breakdown on the result card, a solid-band skip
+(`recommendedFlatIndexSolid`) and a band→tier mapping. The fixed-probe
+API below remains the compatibility contract and the domain votes flow
+through it unchanged.
+
+### 4e.1. Placement → level & domain auto-link (v4.12 + v4.13)
 
 The placement quiz no longer only picks a starting lesson — it now sets the
 learner's `LevelTier` automatically (v4.12) AND suggests their
