@@ -124,10 +124,37 @@ def main() -> int:
             global_ids[vid] = f"{lang}/{loc}"
 
     print("=== CONTENT VALIDATION ===")
+    # v5.4: enforced minimum example-sentence coverage per course (mirrors
+    # test/content_test.dart). Floors rise as later waves backfill examples.
+    MIN_EXAMPLE_COVERAGE = {"en": 0.18, "fr": 0.40, "ur": 0.35, "de": 0.95}
     for lang, (nu, nl, nv, span) in stats.items():
         print(f"  {lang}: {nu} units, {nl} lessons, {nv} words "
               f"(CEFR {span})")
     print(f"  total unique vocab ids: {len(global_ids)}")
+    for lang in ('en', 'ur', 'fr', 'de'):
+        path = os.path.join(base, f'course_{lang}.json')
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, encoding='utf-8') as f:
+                course = json.load(f)
+        except json.JSONDecodeError:
+            continue
+        words = [v for u in course.get('units', [])
+                 for l in u.get('lessons', []) for v in l.get('vocab', [])]
+        if not words:
+            continue
+        with_ex = sum(1 for v in words
+                      if (v.get('exampleTarget') or '').strip()
+                      and (v.get('exampleAr') or '').strip())
+        ratio = with_ex / len(words)
+        floor = MIN_EXAMPLE_COVERAGE[lang]
+        mark = "ok" if ratio >= floor else "FAIL"
+        print(f"  {lang}: example coverage {with_ex}/{len(words)} = "
+              f"{ratio:.1%} (floor {floor:.0%}) [{mark}]")
+        if ratio < floor:
+            fatal.append(f"{lang}: example coverage {ratio:.1%} below "
+                         f"enforced floor {floor:.0%}")
     ok = not fatal
     print(f"=== FATAL: {len(fatal)} | NOTICES: {len(notices)} ===")
     for p in fatal[:60]:

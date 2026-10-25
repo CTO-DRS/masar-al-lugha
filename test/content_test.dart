@@ -20,7 +20,17 @@ const _expected = <String, List<int>>{
   'en': [56, 216, 2328],
   'fr': [25, 75, 831],
   'ur': [56, 216, 2328],
-  'de': [20, 60, 599],
+  'de': [25, 75, 779],
+};
+
+// v5.4: minimum example-sentence coverage per course — the validator
+// (scripts/validate_content.py) mirrors this so content can never silently
+// regress. Floors rise as later waves backfill more examples.
+const _minExampleCoverage = <String, double>{
+  'en': 0.18,
+  'fr': 0.40,
+  'ur': 0.35,
+  'de': 0.95,
 };
 
 const _cefr = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
@@ -48,7 +58,23 @@ void main() {
             reason: '$lang lesson count drifted');
         expect(words, _expected[lang]![2], reason: '$lang word count drifted');
       }
-      expect(totalWords, 6086);
+      expect(totalWords, 6266);
+    });
+
+    test('example-sentence coverage meets the enforced floor', () async {
+      for (final lang in _expected.keys) {
+        final course = await _load(lang);
+        final words = course.allVocab;
+        final withExample = words
+            .where((v) =>
+                (v.exampleTarget ?? '').trim().isNotEmpty &&
+                (v.exampleAr ?? '').trim().isNotEmpty)
+            .length;
+        final ratio = withExample / words.length;
+        expect(ratio, greaterThanOrEqualTo(_minExampleCoverage[lang]!),
+            reason: '$lang example coverage $withExample/${words.length} '
+                'fell below the ${_minExampleCoverage[lang]} floor');
+      }
     });
 
     test('every unit has a valid monotonic CEFR tag', () async {
@@ -81,7 +107,7 @@ void main() {
               reason: '${v.id} has empty translationAr');
         }
       }
-      expect(seen.length, 6086);
+      expect(seen.length, 6266);
     });
 
     test('new v4.2 units keep per-lesson emoji uniqueness', () async {

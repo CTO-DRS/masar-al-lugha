@@ -4,12 +4,13 @@
 
 ## Corpus
 
-| Course | Units | Lessons | Words | CEFR ladder | TTS lang |
-|---|---|---|---|---|---|
-| English | 56 | 216 | 2328 | A1→A2→B1→B2→C1 | en-US |
-| Urdu | 25 | 79 | 739 | A1→A2→B1→B2→C1 | ur-PK |
-| French | 25 | 75 | 831 | A1→A2→B1→B2→C1 | fr-FR |
-| **Total** | **106** | **370** | **3898** | | |
+| Course | Units | Lessons | Words | Example coverage | CEFR ladder | TTS lang |
+|---|---|---|---|---|---|---|
+| English | 56 | 216 | 2328 | 21.0% | A1→A2→B1→B2→C1 | en-US |
+| Urdu | 56 | 216 | 2328 | 39.3% | A1→A2→B1→B2→C1 | ur-PK |
+| French | 25 | 75 | 831 | 41.6% | A1→A2→B1→B2→C1 | fr-FR |
+| German | 25 | 75 | 779 | 100.0% | A1→A2→B1→B2→C1 | de-DE |
+| **Total** | **162** | **582** | **6266** | | | |
 
 ## v4.2 expansion (ROADMAP items 1+2)
 
@@ -151,3 +152,25 @@ generator already degrades to text exercises; picture rounds remain optional gar
   them by authoring rule, so the newest 12 units are fully usable in all
   three lesson styles.
 
+## v5.4 wave — GENERATED CONTENT REQUIRES HUMAN REVIEW
+
+This wave (v5.4) added: German backfill sentences (522), German units
+de_u21–de_u25 (5 units / 15 lessons / 180 words, per-level insertion),
+Urdu backfill sentences (500). All of it was machine-authored in this
+project's pipeline and is marked as **needing human review**:
+
+- German target sentences and their Arabic glosses follow A2–C1 grammar
+  but were NOT reviewed by a certified German/Arabic teacher.
+- Urdu sentences use standard register (خالص اردو) with Arabic glosses;
+  Urdu phonetics for the new units follow the same approximation policy
+  as the shipped course (documented below) — Arabic readers may find
+  regional variants differ.
+- The CEFR tags remain SELF-REFERENCED and monotonic; this is still NOT
+  an official CEFR certification.
+- Example sentences were chosen so the target string appears verbatim
+  (cloze-compatible); where grammar forbids a verbatim match, the item
+  degrades gracefully to build/listen/dictation rounds (by design).
+
+Enforced floors (validator + `test/content_test.dart`): en ≥18% ·
+fr ≥40% · ur ≥35% · de ≥95%. Later waves must RAISE these floors, never
+lower them.

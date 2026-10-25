@@ -384,10 +384,10 @@ build (arrange) exercise laid "Good morning" out as `morning | Good`.
   for Urdu inside an RTL shell, and OptionCard direction for both
   scripts.
 
-### 4g. Fourth course — German (v5.0)
+### 4g. Fourth course — German (v5.0, expanded v5.4)
 
 The course registry holds FOUR languages: en, ur, fr, de. German ships
-as `course_de.json` (20 units / 60 lessons / 599 words, CEFR A1→C1,
+as `course_de.json` (25 units / 75 lessons / 779 words since v5.4, CEFR A1→C1,
 `ttsLang de-DE`) and flows through every existing engine untouched —
 they are course-agnostic by design: the onboarding picker iterates
 `state.courses.values`, TTS reads `course.ttsLang`, and placement /
@@ -423,6 +423,15 @@ Invariants that made the append safe:
   `test/path_test.dart`;
 - `content_test.dart` pins the per-course shape (56/172/1669) and the
   global vocab total (5427), mirroring `validate_content.py`.
+
+### 4j. Example-sentence coverage floors (v5.4)
+
+`scripts/validate_content.py` and `test/content_test.dart` enforce a
+MINIMUM example-sentence coverage per course (en 18% · fr 40% · ur 35% ·
+de 95%). The floors are a ratchet — later content waves must raise, never
+lower, them. All v5.4 example content is machine-authored and flagged
+"needs human review" in docs/CONTENT_AUDIT.md; no official CEFR
+certification is claimed.
 
 ### 4i. Urdu lesson-for-lesson parity (v5.2)
 

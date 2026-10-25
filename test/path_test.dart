@@ -211,7 +211,7 @@ void main() {
       expect(PathEngine.domainOfUnit(ur.units[34]), PathDomain.nature);
     });
 
-    test('pinned domain counts for all courses (157 units)', () {
+    test('pinned domain counts for all courses (162 units)', () {
       int count(Course c, PathDomain d) => PathEngine.domainUnits(c, d).length;
       expect(count(en, PathDomain.business), 7);
       expect(count(en, PathDomain.travel), 5);
@@ -235,16 +235,20 @@ void main() {
       expect(count(ur, PathDomain.daily), 16);
       // v5.0: the German course partitions cleanly out of the box — its
       // English unit titles route through the SAME Latin keyword catalog.
+      // v5.4: +5 units (School A2, Bank B1, Media B2, Literature/Philosophy
+      // C1 ×2) recomputed via scripts/domain_counts_sim.py:
+      // culture 1→3 (Media, Literature + Idioms), business 2→3 (Bank),
+      // daily 5→7 (School, Philosophy join greetings/intro/family/home/city).
       expect(count(de, PathDomain.basics), 3); // Numbers / Colors / Days
       expect(count(de, PathDomain.travel), 2); // Transport / Hotel
       expect(count(de, PathDomain.food), 2); // Food / Restaurant
       expect(count(de, PathDomain.health), 2); // Body / Doctor
       expect(count(de, PathDomain.nature), 2); // Animals / Weather
-      expect(count(de, PathDomain.business), 2); // Shopping / Work
+      expect(count(de, PathDomain.business), 3); // Shopping / Work / Bank
       expect(count(de, PathDomain.tech), 1); // Technology
-      expect(count(de, PathDomain.culture), 1); // Idioms
+      expect(count(de, PathDomain.culture), 3); // Media / Literature / Idioms
       expect(count(de, PathDomain.daily),
-          5); // greetings, intro, family, home, city
+          7); // greetings, intro, family, home, city, school, philosophy
     });
 
     test('every unit lands in exactly one domain (partition)', () {
@@ -709,13 +713,19 @@ void main() {
   });
 
   group('l10n parity for v5.3 keys', () {
-    test('FSRS retention keys exist in ar and en, version bumped', () {
+    test('FSRS retention keys exist in ar and en', () {
       expect(L.t('ar', 'retentionTitle'), isNot('retentionTitle'));
       expect(L.t('en', 'retentionTitle'), isNot('retentionTitle'));
       expect(L.t('ar', 'retentionHint'), isNot('retentionHint'));
       expect(L.t('en', 'retentionHint'), isNot('retentionHint'));
-      expect(L.t('ar', 'version'), contains('5.3.0'));
-      expect(L.t('en', 'version'), contains('5.3.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.4 keys', () {
+    test('content wave: version bumped', () {
+      expect(L.t('ar', 'version'), contains('5.4.0'));
+      expect(L.t('en', 'version'), contains('5.4.0'));
     });
   });
 

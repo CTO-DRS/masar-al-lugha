@@ -1,11 +1,10 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.3.0+27** — see the v5.3 section below for the
-scheduler becoming a real FSRS implementation (stability, difficulty,
-retrievability and a target-retention dial), the v5.2 section for the
-Urdu course reaching lesson-for-lesson parity with English, the v5.1
-section for the Urdu unit expansion and the v5.0 section for the
-German course (the fourth language).
+**Current release: v5.4.0+28** — see the v5.4 section below for the content
+wave (German to full unit parity + 1022 new example sentences and enforced
+coverage floors), the v5.3 section for the FSRS scheduler, the v5.2 section
+for the Urdu lesson-for-lesson parity, the v5.1 section for the Urdu unit
+expansion and the v5.0 section for the German course (the fourth language).
 
 ## Where we are
 
@@ -38,6 +37,7 @@ German course (the fourth language).
 | **v5.1** | **The Urdu course reaches FULL parity with English: +31 hand-authored units (A1 ×8, A2 ×8, B1 ×10, B2 ×3, C1 ×2), +93 lessons, +930 real Urdu words (Arabic glosses, Arabic-script phonetics, per-lesson unique emoji, ~30% example sentences) — now 56 units / 172 lessons / 1669 words with the same level spread as English (A1 14 · A2 14 · B1 18 · B2 5 · C1 5); new unit titles pre-checked against the domain-keyword catalog (domain spread: daily 16 · nature 8 · business 6 · culture 7 · travel 5 · food 5 · health 4 · basics 3 · tech 2); all pre-existing vocab ids untouched (append-only) — content gate: 5427 words / 157 units / 523 lessons** |
 | **v5.2** | **Urdu matches English LESSON-FOR-LESSON: +44 fourth lessons (one per unit whose English twin has four) and +659 words — 44 lesson-vocab sets of 10–12 themed words plus one densification word woven into every existing l1/l2/l3 lesson (each pre-checked against that lesson's words and emoji); Urdu now sits at exactly 56 units / 216 lessons / 2328 words = the English course's shape to the digit, with the same 4-lesson-unit spread (A1 12 · A2 12 · B1 18 · B2 5 · C1 1); content gate: 6086 words / 157 units / 567 lessons** |
 | **v5.3** | **The scheduler becomes REAL FSRS-4.5: per-card difficulty/stability memory states + the power-law forgetting curve R(t,S)=(1+19/81·t/S)^(−1/2) replace the SM-2-lite ease/interval math; a target-retention dial (default 90%, 70–98%) in Settings turns stability into intervals; a one-time migration derives FSRS states from every pre-v5.3 card WITHOUT moving due/reps/lapses/state/interval — zero progress loss; new additive card keys (d/s/last) ride the schema-v2 payload; 222 tests (+22 FSRS/migration)** |
+| **v5.4** | **Content wave in the de→ur→en priority order: German backfill 522 sentences (12.9%→100%) + 5 new units (School A2, Bank B1, Media B2, Literature & Philosophy C1×2) = 25 units / 779 words — full parity with French's unit count; Urdu backfill 500 sentences (17.8%→39.3%); enforced example-coverage floors in validator + content tests (en≥18% · fr≥40% · ur≥35% · de≥95%), global ids 6086→6266; all generated content marked "needs human review" in CONTENT_AUDIT** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -594,6 +594,48 @@ FSRS-4.5 implementation while keeping every stored byte of progress:
    compatibility. Version pin group moved to v5.3 in
    `test/path_test.dart`; the SM-2 interval-math tests were replaced
    (the algorithm they pinned no longer exists by design).
+
+## v5.4 — content wave: German parity + sentences + enforced floors (SHIPPED)
+
+The v5.4 wave delivers Phase 2 of the quality plan in the agreed priority
+order (de → ur → en), with every change append-only and gated:
+
+1. **German sentence backfill (522)** — every German word that lacked an
+   example received `exampleTarget`/`exampleAr` (12.9% → **100%**):
+   A1 greetings/numbers/colors/family/food/time/home/body/animals, A2
+   shopping/travel/weather/restaurant/health, B1 work/city/hotel, B2
+   technology, C1 idioms. Sentences were written so the target string
+   appears verbatim wherever grammar allows (cloze-compatible); the rest
+   degrade gracefully to build/listen/dictation rounds.
+2. **German unit expansion (20 → 25)** — full unit-count parity with
+   French: `de_u21` School & Education (A2), `de_u22` Bank & Finance (B1),
+   `de_u23` Media & Press (B2), `de_u24` Literature & Rhetoric (C1),
+   `de_u25` Philosophy & Society (C1) — 15 lessons / 180 words, every
+   word with phonetics, emoji, and an example sentence. Per-level
+   insertion (like v5.1's Urdu wave) keeps the CEFR ladder monotonic;
+   the path-domain pins were recomputed via
+   `scripts/domain_counts_sim.py` (culture 1→3, business 2→3, daily 5→7)
+   and re-pinned in `test/path_test.dart` (162 units total).
+3. **Urdu sentence backfill (500)** — first batch of the Urdu gap
+   (17.8% → **39.3%**): greetings/pronouns/numbers, family, food &
+   fruits, colors, days/months, animals & young animals, body, health,
+   hygiene, clothes, weather, transport, house, market & money,
+   verbs, feelings, and everyday sentences.
+4. **Enforced coverage floors** — `scripts/validate_content.py` now
+   prints per-course example coverage and FAILS below the floor
+   (en ≥18% · fr ≥40% · ur ≥35% · de ≥95%); `test/content_test.dart`
+   mirrors the same floors inside the Dart suite. Floors are a ratchet:
+   later waves raise them, never lower them.
+5. **Honest labeling** — all v5.4 content is machine-authored and marked
+   "GENERATED CONTENT REQUIRES HUMAN REVIEW" in `docs/CONTENT_AUDIT.md`;
+   no official CEFR certification is claimed.
+6. **Safety gates at merge time** (`scripts/expand_de_v54.py`,
+   `scripts/expand_ur_v54.py`): global id uniqueness across all four
+   courses, no overwrite of existing examples, per-lesson emoji/target
+   uniqueness in new lessons, append-only check that not one existing
+   word's id/target/gloss/phonetic/emoji moved, CEFR monotonicity after
+   insertion. Corpus: 6086 → **6266 words / 162 units / 582 lessons**.
+   Suite: 222 → **224** tests.
 
 ## Hard invariants (never break)
 
