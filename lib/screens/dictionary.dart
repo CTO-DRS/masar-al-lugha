@@ -1,6 +1,8 @@
 // Dictionary: searchable word bank of the current course (v2.0).
 import 'package:flutter/material.dart';
 
+import 'pronunciation_screen.dart';
+
 import '../models.dart';
 import '../scope.dart';
 import '../theme.dart';
@@ -45,6 +47,19 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               decoration: InputDecoration(
                 hintText: tr('searchWords'),
                 prefixIcon: Icon(Icons.search, color: context.mutedText),
+                // v5.6: pronunciation practice entry — practice the word
+                // currently typed in the search box (or the first word).
+                suffixIcon: IconButton(
+                  tooltip: tr('pronTitle'),
+                  icon: Icon(Icons.record_voice_over,
+                      color: AppColors.green, size: 22),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => PronunciationScreen(
+                          initialWord: query.isEmpty ? null : query),
+                    ),
+                  ),
+                ),
                 filled: true,
                 fillColor: context.softBg,
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),

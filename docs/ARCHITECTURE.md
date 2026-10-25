@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.5
+# ARCHITECTURE — Masar Al-Lugha v5.6
 
 ## 1. Layered view (post-v4.0)
 
@@ -460,6 +460,17 @@ new-item ids that collided with legacy ids were renamed in the new
 content only, and 4 same-spelling/different-meaning targets were
 swapped for unambiguous words. `content_test.dart` now pins ur at
 [56, 216, 2328] with the global total at 6086.
+
+## 4k. Pronunciation skill (v5.6)
+
+`lib/pronunciation.dart` grades the DEVICE speech recognizer's transcript
+against the expected text (normalized Levenshtein similarity) — an
+APPROXIMATE score by construction, labeled as such in the UI. `SttService`
+wraps `speech_to_text` with per-course locale mapping and degrades to an
+explicit "unavailable" state on any platform failure (including tests).
+The mic permission is optional and only requested on first use of the
+screen. No network, no cloud recognizer — consistent with the hard
+invariants.
 
 ## 5. Content pipeline
 

@@ -731,13 +731,40 @@ void main() {
   });
 
   group('l10n parity for v5.5 keys', () {
-    test('adaptive placement keys exist in ar and en, version bumped', () {
+    test('adaptive placement keys exist in ar and en', () {
       expect(L.t('ar', 'placementQof'), contains('{n}'));
       expect(L.t('en', 'placementQof'), contains('{n}'));
       expect(L.t('ar', 'placementBreakdown'), isNot('placementBreakdown'));
       expect(L.t('en', 'placementBreakdown'), isNot('placementBreakdown'));
-      expect(L.t('ar', 'version'), contains('5.5.0'));
-      expect(L.t('en', 'version'), contains('5.5.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.6 keys', () {
+    test('pronunciation keys exist in ar and en, version bumped', () {
+      const keys = [
+        'pronTitle',
+        'pronIntro',
+        'pronPickWord',
+        'pronSpeakFirst',
+        'pronTapMic',
+        'pronListening',
+        'pronSaid',
+        'pronApprox',
+        'pronGreat',
+        'pronClose',
+        'pronPartial',
+        'pronMiss',
+        'pronUnavailable',
+      ];
+      for (final k in keys) {
+        expect(L.t('ar', k), isNot(k), reason: k);
+        expect(L.t('en', k), isNot(k), reason: k);
+      }
+      expect(L.t('ar', 'pronApprox'), contains('تقريبي'));
+      expect(L.t('en', 'pronApprox'), contains('Approximate'));
+      expect(L.t('ar', 'version'), contains('5.6.0'));
+      expect(L.t('en', 'version'), contains('5.6.0'));
     });
   });
 
