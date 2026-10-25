@@ -170,6 +170,14 @@ class L {
           'التعرف على الكلام غير متاح على هذا الجهاز — يمكنك الاستماع والتقليد بدلاً من ذلك',
       'grammarTitle': 'القواعد بالعربية',
       'grammarNone': 'لا توجد دروس قواعد لهذه اللغة بعد',
+      'readingTitle': 'القراءة المتدرجة',
+      'readingIntro':
+          'نصوص قصيرة بمفردات الكورس — انقر أي كلمة لترى معناها وتضيفها للمراجعة.',
+      'readingNone': 'لا توجد نصوص لهذه اللغة بعد',
+      'readingTapHint': 'انقر أي كلمة تحت خط أخضر لرؤية معناها',
+      'readingAddReview': 'أضفها للمراجعة',
+      'readingAdded': 'أُضيفت الكلمة إلى قائمة المراجعة',
+      'readingNotInCourse': 'هذه الكلمة ليست ضمن مفردات الكورس',
       'placementResult': 'ننصحك بالبدء من هنا',
       'placementConfirm': 'ابدأ من هذا المستوى',
       'placementSkip': 'تخطي الاختبار والبدء من البداية',
@@ -335,7 +343,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.7.0',
+      'version': 'الإصدار 5.8.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -505,6 +513,14 @@ class L {
           'Speech recognition is unavailable on this device — you can still listen and imitate',
       'grammarTitle': 'Grammar, explained in Arabic',
       'grammarNone': 'No grammar lessons for this language yet',
+      'readingTitle': 'Leveled reading',
+      'readingIntro':
+          'Short texts built from course words — tap any word to see its meaning and add it to review.',
+      'readingNone': 'No texts for this language yet',
+      'readingTapHint': 'Tap any underlined word to see its meaning',
+      'readingAddReview': 'Add to review',
+      'readingAdded': 'Word added to your review queue',
+      'readingNotInCourse': 'This word is not part of the course vocabulary',
       'placementResult': 'We suggest starting here',
       'placementConfirm': 'Start from this level',
       'placementSkip': 'Skip the test and start from zero',
@@ -674,7 +690,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.7.0',
+      'version': 'Version 5.8.0',
     },
   };
 

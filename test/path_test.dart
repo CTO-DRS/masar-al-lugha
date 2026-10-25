@@ -773,8 +773,27 @@ void main() {
       expect(L.t('en', 'grammarTitle'), isNot('grammarTitle'));
       expect(L.t('ar', 'grammarNone'), isNot('grammarNone'));
       expect(L.t('en', 'grammarNone'), isNot('grammarNone'));
-      expect(L.t('ar', 'version'), contains('5.7.0'));
-      expect(L.t('en', 'version'), contains('5.7.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.8 keys', () {
+    test('reading keys exist in ar and en, version bumped', () {
+      const keys = [
+        'readingTitle',
+        'readingIntro',
+        'readingNone',
+        'readingTapHint',
+        'readingAddReview',
+        'readingAdded',
+        'readingNotInCourse',
+      ];
+      for (final k in keys) {
+        expect(L.t('ar', k), isNot(k), reason: k);
+        expect(L.t('en', k), isNot(k), reason: k);
+      }
+      expect(L.t('ar', 'version'), contains('5.8.0'));
+      expect(L.t('en', 'version'), contains('5.8.0'));
     });
   });
 
