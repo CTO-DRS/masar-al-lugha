@@ -4,9 +4,9 @@
 // fails BOTH the Python gate and `flutter test`.
 //
 // What is verified (docs/CONTENT_AUDIT.md v4.2):
-// - all three courses parse and keep the v4.2 shape (52/21/21 units)
+// - all four courses parse and keep the shipped shape (56/25/25/20 units)
 // - every unit carries a valid, monotonic (non-decreasing) CEFR tag
-// - vocab ids stay globally unique across en/fr/ur (append-only progress keys)
+// - vocab ids stay globally unique across en/fr/ur/de (append-only progress keys)
 // - every vocab has a non-empty target + Arabic translation
 // - every v4.2 unit keeps per-lesson emoji uniqueness (picture rounds)
 import 'dart:convert';
@@ -20,6 +20,7 @@ const _expected = <String, List<int>>{
   'en': [56, 216, 2328],
   'fr': [25, 75, 831],
   'ur': [25, 79, 739],
+  'de': [20, 60, 599],
 };
 
 const _cefr = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
@@ -33,7 +34,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('course assets (v4.2)', () {
-    test('three courses parse with the expected unit/lesson/word shape',
+    test('four courses parse with the expected unit/lesson/word shape',
         () async {
       var totalWords = 0;
       for (final lang in _expected.keys) {
@@ -47,7 +48,7 @@ void main() {
             reason: '$lang lesson count drifted');
         expect(words, _expected[lang]![2], reason: '$lang word count drifted');
       }
-      expect(totalWords, 3898);
+      expect(totalWords, 4497);
     });
 
     test('every unit has a valid monotonic CEFR tag', () async {
@@ -80,7 +81,7 @@ void main() {
               reason: '${v.id} has empty translationAr');
         }
       }
-      expect(seen.length, 3898);
+      expect(seen.length, 4497);
     });
 
     test('new v4.2 units keep per-lesson emoji uniqueness', () async {

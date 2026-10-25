@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v4.1
+# ARCHITECTURE — Masar Al-Lugha v5.0
 
 ## 1. Layered view (post-v4.0)
 
@@ -24,7 +24,7 @@
 ├─────────────────────────────────────────────────────────────┤
 │ Services            lib/services/tts.dart (flutter_tts)     │
 └─────────────────────────────────────────────────────────────┘
-Assets: assets/data/course_{en,ur,fr}.json (read-only content)
+Assets: assets/data/course_{en,ur,fr,de}.json (read-only content)
 ```
 
 Rules enforced since v4.0, tightened in v4.1:
@@ -367,6 +367,25 @@ build (arrange) exercise laid "Good morning" out as `morning | Good`.
   widget tests asserting `Directionality.of` = LTR for English and RTL
   for Urdu inside an RTL shell, and OptionCard direction for both
   scripts.
+
+### 4g. Fourth course — German (v5.0)
+
+The course registry holds FOUR languages: en, ur, fr, de. German ships
+as `course_de.json` (20 units / 60 lessons / 599 words, CEFR A1→C1,
+`ttsLang de-DE`) and flows through every existing engine untouched —
+they are course-agnostic by design: the onboarding picker iterates
+`state.courses.values`, TTS reads `course.ttsLang`, and placement /
+path domains / exercise generation / SRS / custom decks all take the
+course as a parameter. Two wiring points were explicit: badges
+(`all_de_units` added; `polyglot` now spans four courses) and the
+custom-deck `courseId` whitelist (`['en','fr','ur','de']`).
+
+A routing subtlety worth remembering: the frozen path-keyword catalog
+matches Arabic keywords by SUBSTRING, and `التعريف` (introduction)
+contains `ريف` (countryside) — so the unit's Arabic title was retitled
+`التعرّف على النفس` to keep the domain partition honest. The pin lives
+in `test/path_test.dart`; `scripts/domain_counts_sim.py` recomputes the
+per-domain expectations from the data.
 
 ## 5. Content pipeline
 

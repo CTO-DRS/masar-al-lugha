@@ -104,7 +104,7 @@ def main() -> int:
     fatal, notices = [], []
     global_ids = {}
     stats = {}
-    for lang in ('en', 'ur', 'fr'):
+    for lang in ('en', 'ur', 'fr', 'de'):
         path = os.path.join(base, f'course_{lang}.json')
         if not os.path.exists(path):
             fatal.append(f"missing course file: {path}")

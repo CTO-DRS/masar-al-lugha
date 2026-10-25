@@ -1,0 +1,4956 @@
+{
+  "id": "de",
+  "flag": "🇩🇪",
+  "nameAr": "الألمانية",
+  "nameEn": "German",
+  "ttsLang": "de-DE",
+  "units": [
+    {
+      "id": "de_u1",
+      "color": "#58CC02",
+      "titleAr": "التحيات والوداع",
+      "titleEn": "Greetings & Goodbyes",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u1_l1",
+          "titleAr": "أول الكلمات",
+          "titleEn": "First Words",
+          "vocab": [
+            {
+              "id": "de_hallo",
+              "target": "Hallo",
+              "translationAr": "مرحباً",
+              "phonetic": "هالو",
+              "emoji": "👋"
+            },
+            {
+              "id": "de_guten_tag",
+              "target": "Guten Tag",
+              "translationAr": "مرحباً (نهاراً)",
+              "phonetic": "غوتن تاك",
+              "emoji": "☀️"
+            },
+            {
+              "id": "de_guten_morgen",
+              "target": "Guten Morgen",
+              "translationAr": "صباح الخير",
+              "phonetic": "غوتن مورغن",
+              "emoji": "🌅"
+            },
+            {
+              "id": "de_guten_abend",
+              "target": "Guten Abend",
+              "translationAr": "مساء الخير",
+              "phonetic": "غوتن آبنِت",
+              "emoji": "🌆"
+            },
+            {
+              "id": "de_gute_nacht",
+              "target": "Gute Nacht",
+              "translationAr": "تصبح على خير",
+              "phonetic": "غوتِه ناخت",
+              "emoji": "🌙"
+            },
+            {
+              "id": "de_tschuess",
+              "target": "Tschüss!",
+              "translationAr": "وداعاً (غير رسمي)",
+              "phonetic": "تشوس",
+              "emoji": "🤚"
+            },
+            {
+              "id": "de_auf_wiedersehen",
+              "target": "Auf Wiedersehen",
+              "translationAr": "مع السلامة",
+              "phonetic": "أوف ڤيدازين",
+              "emoji": "🙏"
+            },
+            {
+              "id": "de_bis_bald",
+              "target": "Bis bald!",
+              "translationAr": "إلى اللقاء قريباً",
+              "phonetic": "بيس بالت",
+              "emoji": "⏳"
+            },
+            {
+              "id": "de_wie_gehts",
+              "target": "Wie geht's?",
+              "translationAr": "كيف حالك؟",
+              "phonetic": "ڤي غيتس؟",
+              "emoji": "🤔"
+            },
+            {
+              "id": "de_gut_danke",
+              "target": "Gut, danke!",
+              "translationAr": "بخير، شكراً",
+              "phonetic": "غوت، دانكه",
+              "emoji": "😊"
+            }
+          ]
+        },
+        {
+          "id": "de_u1_l2",
+          "titleAr": "التعارف",
+          "titleEn": "Meeting People",
+          "vocab": [
+            {
+              "id": "de_ich_heisse",
+              "target": "Ich heiße...",
+              "translationAr": "اسمي...",
+              "phonetic": "إش هايسه",
+              "emoji": "🪪"
+            },
+            {
+              "id": "de_wie_heisst_du",
+              "target": "Wie heißt du?",
+              "translationAr": "ما اسمك؟",
+              "phonetic": "ڤي هايست دو؟",
+              "emoji": "❓"
+            },
+            {
+              "id": "de_freut_mich",
+              "target": "Freut mich!",
+              "translationAr": "تشرّفت بمعرفتك",
+              "phonetic": "فرويت ميش",
+              "emoji": "🤝"
+            },
+            {
+              "id": "de_woher_kommst_du",
+              "target": "Woher kommst du?",
+              "translationAr": "من أين أنت؟",
+              "phonetic": "ڤوهير كومست دو؟",
+              "emoji": "🌍"
+            },
+            {
+              "id": "de_ich_komme_aus",
+              "target": "Ich komme aus...",
+              "translationAr": "أنا من...",
+              "phonetic": "إش كومِه أوس",
+              "emoji": "📍"
+            },
+            {
+              "id": "de_wie_alt_bist_du",
+              "target": "Wie alt bist du?",
+              "translationAr": "كم عمرك؟",
+              "phonetic": "ڤي ألت بِست دو؟",
+              "emoji": "🎂"
+            },
+            {
+              "id": "de_ich_bin_zwanzig",
+              "target": "Ich bin zwanzig Jahre alt",
+              "translationAr": "عمري عشرون عاماً",
+              "phonetic": "إش بِن تسفانتسِش يارِه ألت",
+              "emoji": "🎈"
+            },
+            {
+              "id": "de_ich_wohne_in",
+              "target": "Ich wohne in...",
+              "translationAr": "أسكن في...",
+              "phonetic": "إش ڤونِه إن",
+              "emoji": "🏠"
+            },
+            {
+              "id": "de_entschuldigung",
+              "target": "Entschuldigung!",
+              "translationAr": "عفواً / اعذرني",
+              "phonetic": "إنتشولدِغونغ",
+              "emoji": "🙇"
+            },
+            {
+              "id": "de_kein_problem",
+              "target": "Kein Problem!",
+              "translationAr": "لا مشكلة",
+              "phonetic": "كاين پروبليم",
+              "emoji": "👌"
+            }
+          ]
+        },
+        {
+          "id": "de_u1_l3",
+          "titleAr": "عبارات المهذّب",
+          "titleEn": "Being Polite",
+          "vocab": [
+            {
+              "id": "de_danke",
+              "target": "Danke!",
+              "translationAr": "شكراً",
+              "phonetic": "دانكه",
+              "emoji": "🙏"
+            },
+            {
+              "id": "de_danke_schoen",
+              "target": "Danke schön!",
+              "translationAr": "شكراً جزيلاً",
+              "phonetic": "دانكه شون",
+              "emoji": "💐"
+            },
+            {
+              "id": "de_bitte",
+              "target": "Bitte!",
+              "translationAr": "من فضلك / تفضل",
+              "phonetic": "بيتِه",
+              "emoji": "🤲"
+            },
+            {
+              "id": "de_ja",
+              "target": "Ja",
+              "translationAr": "نعم",
+              "phonetic": "يا",
+              "emoji": "✅"
+            },
+            {
+              "id": "de_nein",
+              "target": "Nein",
+              "translationAr": "لا",
+              "phonetic": "ناين",
+              "emoji": "❌"
+            },
+            {
+              "id": "de_vielleicht",
+              "target": "Vielleicht",
+              "translationAr": "ربما",
+              "phonetic": "فيلياشت",
+              "emoji": "🤷"
+            },
+            {
+              "id": "de_gerne",
+              "target": "Gerne!",
+              "translationAr": "بكل سرور",
+              "phonetic": "غيرنِه",
+              "emoji": "😄"
+            },
+            {
+              "id": "de_tut_mir_leid",
+              "target": "Es tut mir leid",
+              "translationAr": "أنا آسف",
+              "phonetic": "إس توت مير لايت",
+              "emoji": "😔"
+            },
+            {
+              "id": "de_alles_gut",
+              "target": "Alles gut",
+              "translationAr": "لا بأس / كل شيء بخير",
+              "phonetic": "ألِس غوت",
+              "emoji": "👍"
+            },
+            {
+              "id": "de_bis_morgen",
+              "target": "Bis morgen!",
+              "translationAr": "إلى الغد",
+              "phonetic": "بيس مورغن",
+              "emoji": "🌄"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u2",
+      "color": "#1CB0F6",
+      "titleAr": "التعرّف على النفس",
+      "titleEn": "Introducing Yourself",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u2_l1",
+          "titleAr": "الضمائر",
+          "titleEn": "Pronouns",
+          "vocab": [
+            {
+              "id": "de_ich",
+              "target": "ich",
+              "translationAr": "أنا",
+              "phonetic": "إش",
+              "emoji": "🙋"
+            },
+            {
+              "id": "de_du",
+              "target": "du",
+              "translationAr": "أنتَ / أنتِ",
+              "phonetic": "دو",
+              "emoji": "🫵"
+            },
+            {
+              "id": "de_er",
+              "target": "er",
+              "translationAr": "هو",
+              "phonetic": "إير",
+              "emoji": "👨"
+            },
+            {
+              "id": "de_sie_sing",
+              "target": "sie",
+              "translationAr": "هي",
+              "phonetic": "زي",
+              "emoji": "👩"
+            },
+            {
+              "id": "de_es",
+              "target": "es",
+              "translationAr": "هو / هي (لغير العاقل)",
+              "phonetic": "إس",
+              "emoji": "❓"
+            },
+            {
+              "id": "de_wir",
+              "target": "wir",
+              "translationAr": "نحن",
+              "phonetic": "ڤير",
+              "emoji": "👥"
+            },
+            {
+              "id": "de_ihr",
+              "target": "ihr",
+              "translationAr": "أنتم",
+              "phonetic": "إير",
+              "emoji": "👪"
+            },
+            {
+              "id": "de_sie_pl",
+              "target": "sie",
+              "translationAr": "هم / هنّ",
+              "phonetic": "زي",
+              "emoji": "🧑‍🤝‍🧑"
+            },
+            {
+              "id": "de_mein",
+              "target": "mein",
+              "translationAr": "خاصتي / لي",
+              "phonetic": "ماين",
+              "emoji": "🔑"
+            },
+            {
+              "id": "de_dein",
+              "target": "dein",
+              "translationAr": "خاصتك / لك",
+              "phonetic": "داين",
+              "emoji": "🗝️"
+            }
+          ]
+        },
+        {
+          "id": "de_u2_l2",
+          "titleAr": "عبارات التعريف",
+          "titleEn": "About Me",
+          "vocab": [
+            {
+              "id": "de_ich_bin",
+              "target": "Ich bin...",
+              "translationAr": "أنا...",
+              "phonetic": "إش بِن",
+              "emoji": "🙋"
+            },
+            {
+              "id": "de_ich_bin_student",
+              "target": "Ich bin Student",
+              "translationAr": "أنا طالب",
+              "phonetic": "إش بِن شتودِنت",
+              "emoji": "🎓"
+            },
+            {
+              "id": "de_ich_arbeite_als",
+              "target": "Ich arbeite als...",
+              "translationAr": "أعمل كـ...",
+              "phonetic": "إش آربايتِه ألس",
+              "emoji": "💼"
+            },
+            {
+              "id": "de_das_ist",
+              "target": "Das ist...",
+              "translationAr": "هذا / هذه هو...",
+              "phonetic": "داس إست",
+              "emoji": "👉"
+            },
+            {
+              "id": "de_ich_spreche",
+              "target": "Ich spreche Deutsch",
+              "translationAr": "أتكلم الألمانية",
+              "phonetic": "إش شبريشِه دويتش",
+              "emoji": "🗣️"
+            },
+            {
+              "id": "de_ich_spreche_wenig",
+              "target": "Ich spreche wenig Deutsch",
+              "translationAr": "أتكلم القليل من الألمانية",
+              "phonetic": "إش شبريشِه ڤينِش دويتش",
+              "emoji": "🐣"
+            },
+            {
+              "id": "de_wiederholen_bitte",
+              "target": "Können Sie das wiederholen?",
+              "translationAr": "هل يمكنك تكرار ذلك؟",
+              "phonetic": "كونن زي داس ڤيداهولِن؟",
+              "emoji": "🔁"
+            },
+            {
+              "id": "de_wie_sagt_man",
+              "target": "Wie sagt man ... auf Deutsch?",
+              "translationAr": "كيف نقول ... بالألمانية؟",
+              "phonetic": "ڤي زاكت مان أوف دويتش؟",
+              "emoji": "💬"
+            },
+            {
+              "id": "de_ich_verstehe",
+              "target": "Ich verstehe",
+              "translationAr": "أفهم",
+              "phonetic": "إش فرشتايِه",
+              "emoji": "🧠"
+            },
+            {
+              "id": "de_ich_verstehe_nicht",
+              "target": "Ich verstehe nicht",
+              "translationAr": "لا أفهم",
+              "phonetic": "إش فرشتايِه نيشْت",
+              "emoji": "🤯"
+            }
+          ]
+        },
+        {
+          "id": "de_u2_l3",
+          "titleAr": "الأصل واللغات",
+          "titleEn": "Origin & Languages",
+          "vocab": [
+            {
+              "id": "de_deutschland",
+              "target": "Deutschland",
+              "translationAr": "ألمانيا",
+              "phonetic": "دويتشلانت",
+              "emoji": "🇩🇪"
+            },
+            {
+              "id": "de_die_stadt",
+              "target": "die Stadt",
+              "translationAr": "المدينة",
+              "phonetic": "دي شتات",
+              "emoji": "🏙️"
+            },
+            {
+              "id": "de_das_land",
+              "target": "das Land",
+              "translationAr": "البلد",
+              "phonetic": "داس لانت",
+              "emoji": "🗺️"
+            },
+            {
+              "id": "de_die_sprache",
+              "target": "die Sprache",
+              "translationAr": "اللغة",
+              "phonetic": "دي شبراخِه",
+              "emoji": "🗨️"
+            },
+            {
+              "id": "de_arabisch",
+              "target": "Arabisch",
+              "translationAr": "العربية",
+              "phonetic": "آرابيش",
+              "emoji": "🕌"
+            },
+            {
+              "id": "de_englisch",
+              "target": "Englisch",
+              "translationAr": "الإنجليزية",
+              "phonetic": "إنغليش",
+              "emoji": "🌐"
+            },
+            {
+              "id": "de_franzoesisch",
+              "target": "Französisch",
+              "translationAr": "الفرنسية",
+              "phonetic": "فرانتسويزيش",
+              "emoji": "🇫🇷"
+            },
+            {
+              "id": "de_der_tourist",
+              "target": "der Tourist",
+              "translationAr": "السائح",
+              "phonetic": "دير توريست",
+              "emoji": "🧳"
+            },
+            {
+              "id": "de_der_besucher",
+              "target": "der Besucher",
+              "translationAr": "الزائر",
+              "phonetic": "دير بوزوخير",
+              "emoji": "🚶"
+            },
+            {
+              "id": "de_der_nachbar",
+              "target": "der Nachbar",
+              "translationAr": "الجار",
+              "phonetic": "دير ناخبار",
+              "emoji": "🏘️"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u3",
+      "color": "#FFC800",
+      "titleAr": "الأرقام والعد",
+      "titleEn": "Numbers & Counting",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u3_l1",
+          "titleAr": "من صفر إلى عشرة",
+          "titleEn": "Zero to Ten",
+          "vocab": [
+            {
+              "id": "de_null",
+              "target": "null",
+              "translationAr": "صفر",
+              "phonetic": "نول",
+              "emoji": "0️⃣"
+            },
+            {
+              "id": "de_eins",
+              "target": "eins",
+              "translationAr": "واحد",
+              "phonetic": "أينس",
+              "emoji": "1️⃣"
+            },
+            {
+              "id": "de_zwei",
+              "target": "zwei",
+              "translationAr": "اثنان",
+              "phonetic": "تسڤاي",
+              "emoji": "2️⃣"
+            },
+            {
+              "id": "de_drei",
+              "target": "drei",
+              "translationAr": "ثلاثة",
+              "phonetic": "دراي",
+              "emoji": "3️⃣"
+            },
+            {
+              "id": "de_vier",
+              "target": "vier",
+              "translationAr": "أربعة",
+              "phonetic": "فير",
+              "emoji": "4️⃣"
+            },
+            {
+              "id": "de_fuenf",
+              "target": "fünf",
+              "translationAr": "خمسة",
+              "phonetic": "فونف",
+              "emoji": "5️⃣"
+            },
+            {
+              "id": "de_sechs",
+              "target": "sechs",
+              "translationAr": "ستة",
+              "phonetic": "زكس",
+              "emoji": "6️⃣"
+            },
+            {
+              "id": "de_sieben",
+              "target": "sieben",
+              "translationAr": "سبعة",
+              "phonetic": "زيبن",
+              "emoji": "7️⃣"
+            },
+            {
+              "id": "de_acht",
+              "target": "acht",
+              "translationAr": "ثمانية",
+              "phonetic": "أخت",
+              "emoji": "8️⃣"
+            },
+            {
+              "id": "de_neun",
+              "target": "neun",
+              "translationAr": "تسعة",
+              "phonetic": "نوين",
+              "emoji": "9️⃣"
+            },
+            {
+              "id": "de_zehn",
+              "target": "zehn",
+              "translationAr": "عشرة",
+              "phonetic": "تسين",
+              "emoji": "🔟"
+            }
+          ]
+        },
+        {
+          "id": "de_u3_l2",
+          "titleAr": "من أحد عشر إلى مئة",
+          "titleEn": "Eleven to Hundred",
+          "vocab": [
+            {
+              "id": "de_elf",
+              "target": "elf",
+              "translationAr": "أحد عشر",
+              "phonetic": "إلف",
+              "emoji": "🎲"
+            },
+            {
+              "id": "de_zwoelf",
+              "target": "zwölf",
+              "translationAr": "اثنا عشر",
+              "phonetic": "تسڤولف",
+              "emoji": "🕛"
+            },
+            {
+              "id": "de_dreizehn",
+              "target": "dreizehn",
+              "translationAr": "ثلاثة عشر",
+              "phonetic": "درايتسين",
+              "emoji": "🃏"
+            },
+            {
+              "id": "de_zwanzig",
+              "target": "zwanzig",
+              "translationAr": "عشرون",
+              "phonetic": "تسفانتسيش",
+              "emoji": "💶"
+            },
+            {
+              "id": "de_dreissig",
+              "target": "dreißig",
+              "translationAr": "ثلاثون",
+              "phonetic": "درايسِس",
+              "emoji": "🕰️"
+            },
+            {
+              "id": "de_vierzig",
+              "target": "vierzig",
+              "translationAr": "أربعون",
+              "phonetic": "فيرتسيش",
+              "emoji": "🏁"
+            },
+            {
+              "id": "de_fuenfzig",
+              "target": "fünfzig",
+              "translationAr": "خمسون",
+              "phonetic": "فونفتسيش",
+              "emoji": "⛱️"
+            },
+            {
+              "id": "de_sechzig",
+              "target": "sechzig",
+              "translationAr": "ستون",
+              "phonetic": "زختسيش",
+              "emoji": "🎫"
+            },
+            {
+              "id": "de_siebzig",
+              "target": "siebzig",
+              "translationAr": "سبعون",
+              "phonetic": "زيزتسيش",
+              "emoji": "🎯"
+            },
+            {
+              "id": "de_hundert",
+              "target": "hundert",
+              "translationAr": "مئة",
+              "phonetic": "هوندرت",
+              "emoji": "💯"
+            }
+          ]
+        },
+        {
+          "id": "de_u3_l3",
+          "titleAr": "العد في الاستخدام",
+          "titleEn": "Numbers in Use",
+          "vocab": [
+            {
+              "id": "de_wie_viel",
+              "target": "Wie viel?",
+              "translationAr": "كم؟",
+              "phonetic": "ڤي فيل؟",
+              "emoji": "❔"
+            },
+            {
+              "id": "de_die_nummer",
+              "target": "die Nummer",
+              "translationAr": "الرقم",
+              "phonetic": "دي نوما",
+              "emoji": "🔢"
+            },
+            {
+              "id": "de_die_telefonnummer",
+              "target": "die Telefonnummer",
+              "translationAr": "رقم الهاتف",
+              "phonetic": "دي تيلفوننوما",
+              "emoji": "☎️"
+            },
+            {
+              "id": "de_das_alter",
+              "target": "das Alter",
+              "translationAr": "العمر",
+              "phonetic": "داس ألتا",
+              "emoji": "⏱️"
+            },
+            {
+              "id": "de_der_erste",
+              "target": "der erste",
+              "translationAr": "الأول",
+              "phonetic": "دير إيرستِه",
+              "emoji": "🥇"
+            },
+            {
+              "id": "de_der_zweite",
+              "target": "der zweite",
+              "translationAr": "الثاني",
+              "phonetic": "دير تسفايتِه",
+              "emoji": "🥈"
+            },
+            {
+              "id": "de_der_letzte",
+              "target": "der letzte",
+              "translationAr": "الأخير",
+              "phonetic": "دير لِتسِتِه",
+              "emoji": "🔚"
+            },
+            {
+              "id": "de_einmal",
+              "target": "einmal",
+              "translationAr": "مرة واحدة",
+              "phonetic": "أينمال",
+              "emoji": "🔂"
+            },
+            {
+              "id": "de_zweimal",
+              "target": "zweimal",
+              "translationAr": "مرتين",
+              "phonetic": "تسڤايمال",
+              "emoji": "✌️"
+            },
+            {
+              "id": "de_genug",
+              "target": "genug",
+              "translationAr": "كفاية",
+              "phonetic": "غنوغ",
+              "emoji": "🛑"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u4",
+      "color": "#FF9600",
+      "titleAr": "الألوان والصفات",
+      "titleEn": "Colors & Adjectives",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u4_l1",
+          "titleAr": "الألوان",
+          "titleEn": "Colors",
+          "vocab": [
+            {
+              "id": "de_die_farbe",
+              "target": "die Farbe",
+              "translationAr": "اللون",
+              "phonetic": "دي فاربِه",
+              "emoji": "🎨"
+            },
+            {
+              "id": "de_rot",
+              "target": "rot",
+              "translationAr": "أحمر",
+              "phonetic": "روت",
+              "emoji": "🔴"
+            },
+            {
+              "id": "de_blau",
+              "target": "blau",
+              "translationAr": "أزرق",
+              "phonetic": "بلأو",
+              "emoji": "🔵"
+            },
+            {
+              "id": "de_gruen",
+              "target": "grün",
+              "translationAr": "أخضر",
+              "phonetic": "غرون",
+              "emoji": "🟢"
+            },
+            {
+              "id": "de_gelb",
+              "target": "gelb",
+              "translationAr": "أصفر",
+              "phonetic": "غيلب",
+              "emoji": "🟡"
+            },
+            {
+              "id": "de_schwarz",
+              "target": "schwarz",
+              "translationAr": "أسود",
+              "phonetic": "شفتس",
+              "emoji": "⚫"
+            },
+            {
+              "id": "de_weiss",
+              "target": "weiß",
+              "translationAr": "أبيض",
+              "phonetic": "ڤايس",
+              "emoji": "⚪"
+            },
+            {
+              "id": "de_orange",
+              "target": "orange",
+              "translationAr": "برتقالي",
+              "phonetic": "أورانش",
+              "emoji": "🟠"
+            },
+            {
+              "id": "de_lila",
+              "target": "lila",
+              "translationAr": "بنفسجي",
+              "phonetic": "ليلا",
+              "emoji": "🟣"
+            },
+            {
+              "id": "de_braun",
+              "target": "braun",
+              "translationAr": "بني",
+              "phonetic": "برأون",
+              "emoji": "🟤"
+            },
+            {
+              "id": "de_pink",
+              "target": "pink",
+              "translationAr": "وردي",
+              "phonetic": "بينك",
+              "emoji": "🌸"
+            },
+            {
+              "id": "de_grau",
+              "target": "grau",
+              "translationAr": "رمادي",
+              "phonetic": "غرأو",
+              "emoji": "🩶"
+            }
+          ]
+        },
+        {
+          "id": "de_u4_l2",
+          "titleAr": "الأشكال",
+          "titleEn": "Shapes",
+          "vocab": [
+            {
+              "id": "de_die_form",
+              "target": "die Form",
+              "translationAr": "الشكل",
+              "phonetic": "دي فورم",
+              "emoji": "🔷"
+            },
+            {
+              "id": "de_der_kreis",
+              "target": "der Kreis",
+              "translationAr": "الدائرة",
+              "phonetic": "دير كرايس",
+              "emoji": "⭕"
+            },
+            {
+              "id": "de_das_quadrat",
+              "target": "das Quadrat",
+              "translationAr": "المربع",
+              "phonetic": "داس كڤادات",
+              "emoji": "🟩"
+            },
+            {
+              "id": "de_das_dreieck",
+              "target": "das Dreieck",
+              "translationAr": "المثلث",
+              "phonetic": "داس دراياك",
+              "emoji": "🔺"
+            },
+            {
+              "id": "de_die_linie",
+              "target": "die Linie",
+              "translationAr": "الخط",
+              "phonetic": "دي لينيِه",
+              "emoji": "➖"
+            },
+            {
+              "id": "de_der_punkt",
+              "target": "der Punkt",
+              "translationAr": "النقطة",
+              "phonetic": "دير بونكت",
+              "emoji": "⚫️"
+            },
+            {
+              "id": "de_der_stern",
+              "target": "der Stern",
+              "translationAr": "النجمة",
+              "phonetic": "دير شتيرن",
+              "emoji": "⭐"
+            },
+            {
+              "id": "de_das_herz",
+              "target": "das Herz",
+              "translationAr": "القلب (الشكل)",
+              "phonetic": "داس هيرتس",
+              "emoji": "❤️"
+            }
+          ]
+        },
+        {
+          "id": "de_u4_l3",
+          "titleAr": "صفات الوصف",
+          "titleEn": "Describing Things",
+          "vocab": [
+            {
+              "id": "de_schoen",
+              "target": "schön",
+              "translationAr": "جميل",
+              "phonetic": "شون",
+              "emoji": "✨",
+              "exampleTarget": "Die Blume ist schön",
+              "exampleAr": "الزهرة جميلة"
+            },
+            {
+              "id": "de_gross",
+              "target": "groß",
+              "translationAr": "كبير",
+              "phonetic": "غروس",
+              "emoji": "🐘",
+              "exampleTarget": "Der Elefant ist groß",
+              "exampleAr": "الفيل كبير"
+            },
+            {
+              "id": "de_klein",
+              "target": "klein",
+              "translationAr": "صغير",
+              "phonetic": "كلين",
+              "emoji": "🐜",
+              "exampleTarget": "Die Maus ist klein",
+              "exampleAr": "الفأر صغير"
+            },
+            {
+              "id": "de_neu",
+              "target": "neu",
+              "translationAr": "جديد",
+              "phonetic": "نوي",
+              "emoji": "🆕",
+              "exampleTarget": "Das Auto ist neu",
+              "exampleAr": "السيارة جديدة"
+            },
+            {
+              "id": "de_alt",
+              "target": "alt",
+              "translationAr": "قديم / عجوز",
+              "phonetic": "ألت",
+              "emoji": "🏛️",
+              "exampleTarget": "Das Haus ist alt",
+              "exampleAr": "البيت قديم"
+            },
+            {
+              "id": "de_lang",
+              "target": "lang",
+              "translationAr": "طويل",
+              "phonetic": "لانغ",
+              "emoji": "📏",
+              "exampleTarget": "Der Fluss ist lang",
+              "exampleAr": "النهر طويل"
+            },
+            {
+              "id": "de_kurz",
+              "target": "kurz",
+              "translationAr": "قصير",
+              "phonetic": "كورتس",
+              "emoji": "✂️",
+              "exampleTarget": "Der Weg ist kurz",
+              "exampleAr": "الطريق قصير"
+            },
+            {
+              "id": "de_hell",
+              "target": "hell",
+              "translationAr": "فاتح / مضيء",
+              "phonetic": "هيل",
+              "emoji": "💡",
+              "exampleTarget": "Der Tag ist hell",
+              "exampleAr": "النهار مضيء"
+            },
+            {
+              "id": "de_dunkel",
+              "target": "dunkel",
+              "translationAr": "داكن",
+              "phonetic": "دونكِل",
+              "emoji": "🌑",
+              "exampleTarget": "Die Nacht ist dunkel",
+              "exampleAr": "الليل داكن"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u5",
+      "color": "#FF4B4B",
+      "titleAr": "العائلة",
+      "titleEn": "Family",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u5_l1",
+          "titleAr": "أفراد العائلة",
+          "titleEn": "Family Members",
+          "vocab": [
+            {
+              "id": "de_die_familie",
+              "target": "die Familie",
+              "translationAr": "العائلة",
+              "phonetic": "دي فاميليِه",
+              "emoji": "👨‍👩‍👧‍👦"
+            },
+            {
+              "id": "de_der_vater",
+              "target": "der Vater",
+              "translationAr": "الأب",
+              "phonetic": "دير فاتا",
+              "emoji": "👨"
+            },
+            {
+              "id": "de_die_mutter",
+              "target": "die Mutter",
+              "translationAr": "الأم",
+              "phonetic": "دي موتا",
+              "emoji": "👩"
+            },
+            {
+              "id": "de_der_sohn",
+              "target": "der Sohn",
+              "translationAr": "الابن",
+              "phonetic": "دير زون",
+              "emoji": "👦"
+            },
+            {
+              "id": "de_die_tochter",
+              "target": "die Tochter",
+              "translationAr": "الابنة",
+              "phonetic": "دي توختا",
+              "emoji": "👧"
+            },
+            {
+              "id": "de_der_bruder",
+              "target": "der Bruder",
+              "translationAr": "الأخ",
+              "phonetic": "دير برودا",
+              "emoji": "🧑"
+            },
+            {
+              "id": "de_die_schwester",
+              "target": "die Schwester",
+              "translationAr": "الأخت",
+              "phonetic": "دي شڤيستا",
+              "emoji": "👩‍🦰"
+            },
+            {
+              "id": "de_die_eltern",
+              "target": "die Eltern",
+              "translationAr": "الوالدان",
+              "phonetic": "دي إلتيرن",
+              "emoji": "👨‍👩‍👦"
+            },
+            {
+              "id": "de_der_grossvater",
+              "target": "der Großvater",
+              "translationAr": "الجد",
+              "phonetic": "دير غروسفاتا",
+              "emoji": "👴"
+            },
+            {
+              "id": "de_die_grossmutter",
+              "target": "die Großmutter",
+              "translationAr": "الجدة",
+              "phonetic": "دي غروسموتا",
+              "emoji": "👵"
+            }
+          ]
+        },
+        {
+          "id": "de_u5_l2",
+          "titleAr": "الحياة الأسرية",
+          "titleEn": "Family Life",
+          "vocab": [
+            {
+              "id": "de_verheiratet",
+              "target": "verheiratet",
+              "translationAr": "متزوج",
+              "phonetic": "فيرهايراتِت",
+              "emoji": "💍"
+            },
+            {
+              "id": "de_ledig",
+              "target": "ledig",
+              "translationAr": "أعزب",
+              "phonetic": "لايديش",
+              "emoji": "🧍"
+            },
+            {
+              "id": "de_das_kind",
+              "target": "das Kind",
+              "translationAr": "الطفل",
+              "phonetic": "داس كِنت",
+              "emoji": "👶"
+            },
+            {
+              "id": "de_die_kinder",
+              "target": "die Kinder",
+              "translationAr": "الأطفال",
+              "phonetic": "دي كِندا",
+              "emoji": "🧒"
+            },
+            {
+              "id": "de_der_onkel",
+              "target": "der Onkel",
+              "translationAr": "الخال / العم",
+              "phonetic": "دير أونكِل",
+              "emoji": "🧔"
+            },
+            {
+              "id": "de_die_tante",
+              "target": "die Tante",
+              "translationAr": "الخالة / العمة",
+              "phonetic": "دي تانتِه",
+              "emoji": "👩‍🦱"
+            },
+            {
+              "id": "de_der_cousin",
+              "target": "der Cousin",
+              "translationAr": "ابن العم / الخالة",
+              "phonetic": "دير كوزان",
+              "emoji": "🧑‍🍼"
+            },
+            {
+              "id": "de_der_enkel",
+              "target": "der Enkel",
+              "translationAr": "الحفيد",
+              "phonetic": "دير إنكِل",
+              "emoji": "🧒🏻"
+            },
+            {
+              "id": "de_die_schwiegermutter",
+              "target": "die Schwiegermutter",
+              "translationAr": "الحماة (أم الزوج أو الزوجة)",
+              "phonetic": "دي شڤيغرموتا",
+              "emoji": "🤱"
+            },
+            {
+              "id": "de_zusammen",
+              "target": "zusammen",
+              "translationAr": "معاً",
+              "phonetic": "تسوزامِن",
+              "emoji": "🫂"
+            }
+          ]
+        },
+        {
+          "id": "de_u5_l3",
+          "titleAr": "أفعال مع العائلة",
+          "titleEn": "Verbs for Family",
+          "vocab": [
+            {
+              "id": "de_besuchen",
+              "target": "besuchen",
+              "translationAr": "يزور",
+              "phonetic": "بِزوخِن",
+              "emoji": "🚪",
+              "exampleTarget": "Ich besuche meine Familie",
+              "exampleAr": "أزور عائلتي"
+            },
+            {
+              "id": "de_lieben",
+              "target": "lieben",
+              "translationAr": "يحب",
+              "phonetic": "ليبن",
+              "emoji": "❤️",
+              "exampleTarget": "Ich liebe meine Mutter",
+              "exampleAr": "أحب أمي"
+            },
+            {
+              "id": "de_helfen",
+              "target": "helfen",
+              "translationAr": "يساعد",
+              "phonetic": "هيلفِن",
+              "emoji": "🤝",
+              "exampleTarget": "Mein Bruder hilft mir",
+              "exampleAr": "أخي يساعدني"
+            },
+            {
+              "id": "de_wohnen",
+              "target": "wohnen",
+              "translationAr": "يسكن",
+              "phonetic": "ڤونِن",
+              "emoji": "🏡",
+              "exampleTarget": "Wir wohnen zusammen",
+              "exampleAr": "نسكن معاً"
+            },
+            {
+              "id": "de_kaufen",
+              "target": "kaufen",
+              "translationAr": "يشتري",
+              "phonetic": "كأوفن",
+              "emoji": "🛍️",
+              "exampleTarget": "Sie kauft ein Geschenk",
+              "exampleAr": "هي تشتري هدية"
+            },
+            {
+              "id": "de_das_geschenk",
+              "target": "das Geschenk",
+              "translationAr": "الهدية",
+              "phonetic": "داس غشينك",
+              "emoji": "🎁"
+            },
+            {
+              "id": "de_der_geburtstag",
+              "target": "der Geburtstag",
+              "translationAr": "عيد الميلاد",
+              "phonetic": "دير غبورتستاك",
+              "emoji": "🎂"
+            },
+            {
+              "id": "de_schenken",
+              "target": "schenken",
+              "translationAr": "يُهدي",
+              "phonetic": "شينكِن",
+              "emoji": "🎀",
+              "exampleTarget": "Er schenkt ihr Blumen",
+              "exampleAr": "هو يهديها زهوراً"
+            },
+            {
+              "id": "de_rufen",
+              "target": "rufen",
+              "translationAr": "ينادي / يتصل",
+              "phonetic": "روفن",
+              "emoji": "📞",
+              "exampleTarget": "Der Vater ruft die Kinder",
+              "exampleAr": "الأب ينادي الأطفال"
+            },
+            {
+              "id": "de_lachen",
+              "target": "lachen",
+              "translationAr": "يضحك",
+              "phonetic": "لاخِن",
+              "emoji": "😂",
+              "exampleTarget": "Die Kinder lachen",
+              "exampleAr": "الأطفال يضحكون"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u6",
+      "color": "#CE82FF",
+      "titleAr": "الطعام والشراب",
+      "titleEn": "Food & Drink",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u6_l1",
+          "titleAr": "أساسيات المائدة",
+          "titleEn": "Food Basics",
+          "vocab": [
+            {
+              "id": "de_das_essen",
+              "target": "das Essen",
+              "translationAr": "الطعام",
+              "phonetic": "داس إسن",
+              "emoji": "🍽️"
+            },
+            {
+              "id": "de_das_getraenk",
+              "target": "das Getränk",
+              "translationAr": "المشروب",
+              "phonetic": "داس غِترينك",
+              "emoji": "🥤"
+            },
+            {
+              "id": "de_das_brot",
+              "target": "das Brot",
+              "translationAr": "الخبز",
+              "phonetic": "داس بروت",
+              "emoji": "🍞"
+            },
+            {
+              "id": "de_das_wasser",
+              "target": "das Wasser",
+              "translationAr": "الماء",
+              "phonetic": "داس ڤاسا",
+              "emoji": "💧"
+            },
+            {
+              "id": "de_die_milch",
+              "target": "die Milch",
+              "translationAr": "الحليب",
+              "phonetic": "دي ميلش",
+              "emoji": "🥛"
+            },
+            {
+              "id": "de_der_kaffee",
+              "target": "der Kaffee",
+              "translationAr": "القهوة",
+              "phonetic": "دير كافي",
+              "emoji": "☕"
+            },
+            {
+              "id": "de_der_tee",
+              "target": "der Tee",
+              "translationAr": "الشاي",
+              "phonetic": "دير تي",
+              "emoji": "🍵"
+            },
+            {
+              "id": "de_der_kaese",
+              "target": "der Käse",
+              "translationAr": "الجبن",
+              "phonetic": "دير كايزِه",
+              "emoji": "🧀"
+            },
+            {
+              "id": "de_der_apfel",
+              "target": "der Apfel",
+              "translationAr": "التفاح",
+              "phonetic": "دير أپفِل",
+              "emoji": "🍎"
+            },
+            {
+              "id": "de_die_butter",
+              "target": "die Butter",
+              "translationAr": "الزبدة",
+              "phonetic": "دي بوتا",
+              "emoji": "🧈"
+            },
+            {
+              "id": "de_der_zucker",
+              "target": "der Zucker",
+              "translationAr": "السكر",
+              "phonetic": "دير تسوكا",
+              "emoji": "🍬"
+            },
+            {
+              "id": "de_das_salz",
+              "target": "das Salz",
+              "translationAr": "الملح",
+              "phonetic": "داس زالتس",
+              "emoji": "🧂"
+            }
+          ]
+        },
+        {
+          "id": "de_u6_l2",
+          "titleAr": "فواكه وخضار",
+          "titleEn": "Fruits & Vegetables",
+          "vocab": [
+            {
+              "id": "de_die_banane",
+              "target": "die Banane",
+              "translationAr": "الموز",
+              "phonetic": "دي بانانِه",
+              "emoji": "🍌"
+            },
+            {
+              "id": "de_die_orange",
+              "target": "die Orange",
+              "translationAr": "البرتقالة",
+              "phonetic": "دي أورانشِه",
+              "emoji": "🍊"
+            },
+            {
+              "id": "de_die_traube",
+              "target": "die Traube",
+              "translationAr": "العنب",
+              "phonetic": "دي ترأوبِه",
+              "emoji": "🍇"
+            },
+            {
+              "id": "de_die_erdbeere",
+              "target": "die Erdbeere",
+              "translationAr": "الفراولة",
+              "phonetic": "دي إيرتبيرِه",
+              "emoji": "🍓"
+            },
+            {
+              "id": "de_die_tomate",
+              "target": "die Tomate",
+              "translationAr": "الطماطم",
+              "phonetic": "دي تومااتِه",
+              "emoji": "🍅"
+            },
+            {
+              "id": "de_die_kartoffel",
+              "target": "die Kartoffel",
+              "translationAr": "البطاطس",
+              "phonetic": "دي كارتوفِل",
+              "emoji": "🥔"
+            },
+            {
+              "id": "de_die_gurke",
+              "target": "die Gurke",
+              "translationAr": "الخيار",
+              "phonetic": "دي غوركِه",
+              "emoji": "🥒"
+            },
+            {
+              "id": "de_die_zwiebel",
+              "target": "die Zwiebel",
+              "translationAr": "البصل",
+              "phonetic": "دي تسفيبِل",
+              "emoji": "🧅"
+            },
+            {
+              "id": "de_die_karotte",
+              "target": "die Karotte",
+              "translationAr": "الجزر",
+              "phonetic": "دي كاروتِه",
+              "emoji": "🥕"
+            },
+            {
+              "id": "de_der_salat",
+              "target": "der Salat",
+              "translationAr": "السلطة / الخضرة",
+              "phonetic": "دير زالات",
+              "emoji": "🥗"
+            }
+          ]
+        },
+        {
+          "id": "de_u6_l3",
+          "titleAr": "الوجبات والطهي",
+          "titleEn": "Meals & Cooking",
+          "vocab": [
+            {
+              "id": "de_das_fruehstueck",
+              "target": "das Frühstück",
+              "translationAr": "الفطور",
+              "phonetic": "داس فرُوشتوك",
+              "emoji": "🥐"
+            },
+            {
+              "id": "de_das_mittagessen",
+              "target": "das Mittagessen",
+              "translationAr": "الغداء",
+              "phonetic": "داس ميتاكإسن",
+              "emoji": "🍛"
+            },
+            {
+              "id": "de_das_abendessen",
+              "target": "das Abendessen",
+              "translationAr": "العشاء",
+              "phonetic": "داس آبنِتإسن",
+              "emoji": "🕯️"
+            },
+            {
+              "id": "de_der_hunger",
+              "target": "der Hunger",
+              "translationAr": "الجوع",
+              "phonetic": "دير هونغا",
+              "emoji": "😋",
+              "exampleTarget": "Ich habe Hunger",
+              "exampleAr": "أنا جائع"
+            },
+            {
+              "id": "de_der_durst",
+              "target": "der Durst",
+              "translationAr": "العطش",
+              "phonetic": "دير دوّرست",
+              "emoji": "🥵",
+              "exampleTarget": "Ich habe Durst",
+              "exampleAr": "أنا عطشان"
+            },
+            {
+              "id": "de_lecker",
+              "target": "lecker",
+              "translationAr": "لذيذ",
+              "phonetic": "ليكا",
+              "emoji": "😍"
+            },
+            {
+              "id": "de_der_kuchen",
+              "target": "der Kuchen",
+              "translationAr": "الكعكة",
+              "phonetic": "دير كوخِن",
+              "emoji": "🍰"
+            },
+            {
+              "id": "de_kochen",
+              "target": "kochen",
+              "translationAr": "يطبخ",
+              "phonetic": "كوخِن",
+              "emoji": "👨‍🍳",
+              "exampleTarget": "Wir kochen zusammen",
+              "exampleAr": "نطبخ معاً"
+            },
+            {
+              "id": "de_backen",
+              "target": "backen",
+              "translationAr": "يخبز",
+              "phonetic": "باكن",
+              "emoji": "🥖",
+              "exampleTarget": "Oma backt Brot",
+              "exampleAr": "الجدة تخبز خبزاً"
+            },
+            {
+              "id": "de_trinken",
+              "target": "trinken",
+              "translationAr": "يشرب",
+              "phonetic": "ترينكن",
+              "emoji": "🫗",
+              "exampleTarget": "Ich trinke Tee",
+              "exampleAr": "أشرب شاياً"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u7",
+      "color": "#2B70C9",
+      "titleAr": "الأيام والوقت",
+      "titleEn": "Days, Time & Calendar",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u7_l1",
+          "titleAr": "أيام الأسبوع",
+          "titleEn": "Days of the Week",
+          "vocab": [
+            {
+              "id": "de_der_tag",
+              "target": "der Tag",
+              "translationAr": "اليوم",
+              "phonetic": "دير تاك",
+              "emoji": "🔆"
+            },
+            {
+              "id": "de_die_woche",
+              "target": "die Woche",
+              "translationAr": "الأسبوع",
+              "phonetic": "دي ڤوخِه",
+              "emoji": "📅"
+            },
+            {
+              "id": "de_der_montag",
+              "target": "der Montag",
+              "translationAr": "الاثنين",
+              "phonetic": "دير مونتاك",
+              "emoji": "1️⃣"
+            },
+            {
+              "id": "de_der_dienstag",
+              "target": "der Dienstag",
+              "translationAr": "الثلاثاء",
+              "phonetic": "دير دينستاك",
+              "emoji": "2️⃣"
+            },
+            {
+              "id": "de_der_mittwoch",
+              "target": "der Mittwoch",
+              "translationAr": "الأربعاء",
+              "phonetic": "دير ميتڤوخ",
+              "emoji": "3️⃣"
+            },
+            {
+              "id": "de_der_donnerstag",
+              "target": "der Donnerstag",
+              "translationAr": "الخميس",
+              "phonetic": "دير دونِرستاك",
+              "emoji": "4️⃣"
+            },
+            {
+              "id": "de_der_freitag",
+              "target": "der Freitag",
+              "translationAr": "الجمعة",
+              "phonetic": "دير فرايتاك",
+              "emoji": "5️⃣"
+            },
+            {
+              "id": "de_der_samstag",
+              "target": "der Samstag",
+              "translationAr": "السبت",
+              "phonetic": "دير زامتاك",
+              "emoji": "6️⃣"
+            },
+            {
+              "id": "de_der_sonntag",
+              "target": "der Sonntag",
+              "translationAr": "الأحد",
+              "phonetic": "دير زونتاك",
+              "emoji": "7️⃣"
+            },
+            {
+              "id": "de_das_wochenende",
+              "target": "das Wochenende",
+              "translationAr": "نهاية الأسبوع",
+              "phonetic": "داس ڤوخينِندِه",
+              "emoji": "🎉"
+            }
+          ]
+        },
+        {
+          "id": "de_u7_l2",
+          "titleAr": "أوقات اليوم",
+          "titleEn": "Times of Day",
+          "vocab": [
+            {
+              "id": "de_die_zeit",
+              "target": "die Zeit",
+              "translationAr": "الوقت",
+              "phonetic": "دي تسايت",
+              "emoji": "⏰"
+            },
+            {
+              "id": "de_die_stunde",
+              "target": "die Stunde",
+              "translationAr": "الساعة (مدة)",
+              "phonetic": "دي شتوندِه",
+              "emoji": "⌛"
+            },
+            {
+              "id": "de_die_minute",
+              "target": "die Minute",
+              "translationAr": "الدقيقة",
+              "phonetic": "دي مينوتِه",
+              "emoji": "⏱️"
+            },
+            {
+              "id": "de_der_morgen",
+              "target": "der Morgen",
+              "translationAr": "الصباح",
+              "phonetic": "دير مورغن",
+              "emoji": "🌄"
+            },
+            {
+              "id": "de_der_nachmittag",
+              "target": "der Nachmittag",
+              "translationAr": "بعد الظهر",
+              "phonetic": "دير ناخميتاك",
+              "emoji": "🌞"
+            },
+            {
+              "id": "de_der_abend",
+              "target": "der Abend",
+              "translationAr": "المساء",
+              "phonetic": "دير آبنِت",
+              "emoji": "🌆"
+            },
+            {
+              "id": "de_die_nacht",
+              "target": "die Nacht",
+              "translationAr": "الليل",
+              "phonetic": "دي ناخت",
+              "emoji": "🌌"
+            },
+            {
+              "id": "de_heute",
+              "target": "heute",
+              "translationAr": "اليوم (ظرف)",
+              "phonetic": "هويِتِه",
+              "emoji": "📆"
+            },
+            {
+              "id": "de_morgen_adv",
+              "target": "morgen",
+              "translationAr": "غداً",
+              "phonetic": "مورغن",
+              "emoji": "➡️"
+            },
+            {
+              "id": "de_gestern",
+              "target": "gestern",
+              "translationAr": "أمس",
+              "phonetic": "غيستيرن",
+              "emoji": "⬅️"
+            }
+          ]
+        },
+        {
+          "id": "de_u7_l3",
+          "titleAr": "أسئلة الوقت",
+          "titleEn": "Asking the Time",
+          "vocab": [
+            {
+              "id": "de_wie_spaet",
+              "target": "Wie spät ist es?",
+              "translationAr": "كم الساعة؟",
+              "phonetic": "ڤي شبيت إست إس؟",
+              "emoji": "🕐"
+            },
+            {
+              "id": "de_die_uhr",
+              "target": "die Uhr",
+              "translationAr": "الساعة (الجهاز)",
+              "phonetic": "دي أوأ",
+              "emoji": "🕰️"
+            },
+            {
+              "id": "de_frueh",
+              "target": "früh",
+              "translationAr": "مبكراً",
+              "phonetic": "فرو",
+              "emoji": "🌅",
+              "exampleTarget": "Ich stehe früh auf",
+              "exampleAr": "أنهض مبكراً"
+            },
+            {
+              "id": "de_spaet",
+              "target": "spät",
+              "translationAr": "متأخر",
+              "phonetic": "شبيت",
+              "emoji": "🌠",
+              "exampleTarget": "Es ist spät",
+              "exampleAr": "الوقت متأخر"
+            },
+            {
+              "id": "de_jetzt",
+              "target": "jetzt",
+              "translationAr": "الآن",
+              "phonetic": "يِتست",
+              "emoji": "⚡"
+            },
+            {
+              "id": "de_spaeter",
+              "target": "später",
+              "translationAr": "لاحقاً",
+              "phonetic": "شبيتا",
+              "emoji": "🕓"
+            },
+            {
+              "id": "de_immer",
+              "target": "immer",
+              "translationAr": "دائماً",
+              "phonetic": "إما",
+              "emoji": "🔁"
+            },
+            {
+              "id": "de_nie",
+              "target": "nie",
+              "translationAr": "أبداً",
+              "phonetic": "ني",
+              "emoji": "🚫"
+            },
+            {
+              "id": "de_oft",
+              "target": "oft",
+              "translationAr": "غالباً",
+              "phonetic": "أوفت",
+              "emoji": "🔂"
+            },
+            {
+              "id": "de_manchmal",
+              "target": "manchmal",
+              "translationAr": "أحياناً",
+              "phonetic": "مانخمال",
+              "emoji": "🎲"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u8",
+      "color": "#00CD9C",
+      "titleAr": "المنزل والأثاث",
+      "titleEn": "Home & Furniture",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u8_l1",
+          "titleAr": "غرف المنزل",
+          "titleEn": "Rooms",
+          "vocab": [
+            {
+              "id": "de_das_haus",
+              "target": "das Haus",
+              "translationAr": "البيت",
+              "phonetic": "داس هاوس",
+              "emoji": "🏠"
+            },
+            {
+              "id": "de_die_wohnung",
+              "target": "die Wohnung",
+              "translationAr": "الشقة",
+              "phonetic": "دي ڤونونغ",
+              "emoji": "🏢"
+            },
+            {
+              "id": "de_das_zimmer",
+              "target": "das Zimmer",
+              "translationAr": "الغرفة",
+              "phonetic": "داس تسِما",
+              "emoji": "🚪"
+            },
+            {
+              "id": "de_die_kueche",
+              "target": "die Küche",
+              "translationAr": "المطبخ",
+              "phonetic": "دي كوخِه",
+              "emoji": "🍳"
+            },
+            {
+              "id": "de_das_bad",
+              "target": "das Bad",
+              "translationAr": "الحمّام",
+              "phonetic": "داس بات",
+              "emoji": "🛁"
+            },
+            {
+              "id": "de_das_schlafzimmer",
+              "target": "das Schlafzimmer",
+              "translationAr": "غرفة النوم",
+              "phonetic": "داس شلافتسِما",
+              "emoji": "🛏️"
+            },
+            {
+              "id": "de_das_wohnzimmer",
+              "target": "das Wohnzimmer",
+              "translationAr": "غرفة الجلوس",
+              "phonetic": "داس ڤونتسِما",
+              "emoji": "🛋️"
+            },
+            {
+              "id": "de_der_garten",
+              "target": "der Garten",
+              "translationAr": "الحديقة",
+              "phonetic": "دير غارتِن",
+              "emoji": "🌳"
+            },
+            {
+              "id": "de_der_balkon",
+              "target": "der Balkon",
+              "translationAr": "الشرفة",
+              "phonetic": "دير بالكون",
+              "emoji": "🪴"
+            },
+            {
+              "id": "de_die_tuer",
+              "target": "die Tür",
+              "translationAr": "الباب",
+              "phonetic": "دي توأ",
+              "emoji": "🚪"
+            },
+            {
+              "id": "de_das_fenster",
+              "target": "das Fenster",
+              "translationAr": "النافذة",
+              "phonetic": "داس فينستا",
+              "emoji": "🪟"
+            }
+          ]
+        },
+        {
+          "id": "de_u8_l2",
+          "titleAr": "الأثاث",
+          "titleEn": "Furniture",
+          "vocab": [
+            {
+              "id": "de_der_tisch",
+              "target": "der Tisch",
+              "translationAr": "الطاولة",
+              "phonetic": "دير تيش",
+              "emoji": "🪑"
+            },
+            {
+              "id": "de_der_stuhl",
+              "target": "der Stuhl",
+              "translationAr": "الكرسي",
+              "phonetic": "دير شتول",
+              "emoji": "💺"
+            },
+            {
+              "id": "de_das_bett",
+              "target": "das Bett",
+              "translationAr": "السرير",
+              "phonetic": "داس بِت",
+              "emoji": "🛌"
+            },
+            {
+              "id": "de_das_sofa",
+              "target": "das Sofa",
+              "translationAr": "الأريكة",
+              "phonetic": "داس زوفا",
+              "emoji": "🛋️"
+            },
+            {
+              "id": "de_der_schrank",
+              "target": "der Schrank",
+              "translationAr": "الخزانة",
+              "phonetic": "دير شرانك",
+              "emoji": "🗄️"
+            },
+            {
+              "id": "de_die_lampe",
+              "target": "die Lampe",
+              "translationAr": "المصباح",
+              "phonetic": "دي لمبِه",
+              "emoji": "💡"
+            },
+            {
+              "id": "de_der_spiegel",
+              "target": "der Spiegel",
+              "translationAr": "المرآة",
+              "phonetic": "دير شبيغِل",
+              "emoji": "🪞"
+            },
+            {
+              "id": "de_der_teppich",
+              "target": "der Teppich",
+              "translationAr": "السجادة",
+              "phonetic": "دير تِبيش",
+              "emoji": "🧶"
+            },
+            {
+              "id": "de_das_bild",
+              "target": "das Bild",
+              "translationAr": "الصورة / اللوحة",
+              "phonetic": "داس بيلت",
+              "emoji": "🖼️"
+            },
+            {
+              "id": "de_der_kuehlschrank",
+              "target": "der Kühlschrank",
+              "translationAr": "الثلاجة",
+              "phonetic": "دير كولشرانك",
+              "emoji": "🧊"
+            }
+          ]
+        },
+        {
+          "id": "de_u8_l3",
+          "titleAr": "أعمال المنزل",
+          "titleEn": "At Home",
+          "vocab": [
+            {
+              "id": "de_aufraeumen",
+              "target": "aufräumen",
+              "translationAr": "يرتّب المنزل",
+              "phonetic": "أوفرويمِن",
+              "emoji": "🧹",
+              "exampleTarget": "Ich räume mein Zimmer auf",
+              "exampleAr": "أرتّب غرفتي"
+            },
+            {
+              "id": "de_waschen",
+              "target": "waschen",
+              "translationAr": "يغسل",
+              "phonetic": "ڤاشِن",
+              "emoji": "🧼",
+              "exampleTarget": "Er wäscht die Teller",
+              "exampleAr": "هو يغسل الصحون"
+            },
+            {
+              "id": "de_schlafen",
+              "target": "schlafen",
+              "translationAr": "ينام",
+              "phonetic": "شلافِن",
+              "emoji": "😴",
+              "exampleTarget": "Das Kind schläft",
+              "exampleAr": "الطفل نائم"
+            },
+            {
+              "id": "de_lernen",
+              "target": "lernen",
+              "translationAr": "يتعلم / يدرس",
+              "phonetic": "ليرنِن",
+              "emoji": "📚",
+              "exampleTarget": "Sie lernt Deutsch",
+              "exampleAr": "هي تتعلم الألمانية"
+            },
+            {
+              "id": "de_lesen",
+              "target": "lesen",
+              "translationAr": "يقرأ",
+              "phonetic": "لايزِن",
+              "emoji": "📖",
+              "exampleTarget": "Ich lese ein Buch",
+              "exampleAr": "أقرأ كتاباً"
+            },
+            {
+              "id": "de_das_buch",
+              "target": "das Buch",
+              "translationAr": "الكتاب",
+              "phonetic": "داس بوخ",
+              "emoji": "📕"
+            },
+            {
+              "id": "de_der_schluessel",
+              "target": "der Schlüssel",
+              "translationAr": "المفتاح",
+              "phonetic": "دير شلوستسِل",
+              "emoji": "🔑"
+            },
+            {
+              "id": "de_der_muell",
+              "target": "der Müll",
+              "translationAr": "القمامة",
+              "phonetic": "دير مول",
+              "emoji": "🗑️"
+            },
+            {
+              "id": "de_sauber",
+              "target": "sauber",
+              "translationAr": "نظيف",
+              "phonetic": "زأوبا",
+              "emoji": "🧽",
+              "exampleTarget": "Die Küche ist sauber",
+              "exampleAr": "المطبخ نظيف"
+            },
+            {
+              "id": "de_gemuetlich",
+              "target": "gemütlich",
+              "translationAr": "دافئ ومريح (أجواء)",
+              "phonetic": "غِموتليش",
+              "emoji": "🕯️",
+              "exampleTarget": "Das Sofa ist gemütlich",
+              "exampleAr": "الأريكة مريحة"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u9",
+      "color": "#9333EA",
+      "titleAr": "جسم الإنسان",
+      "titleEn": "The Human Body",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u9_l1",
+          "titleAr": "الرأس والوجه",
+          "titleEn": "Head & Face",
+          "vocab": [
+            {
+              "id": "de_der_koerper",
+              "target": "der Körper",
+              "translationAr": "الجسم",
+              "phonetic": "دير كورپا",
+              "emoji": "🧍"
+            },
+            {
+              "id": "de_der_kopf",
+              "target": "der Kopf",
+              "translationAr": "الرأس",
+              "phonetic": "دير كوپف",
+              "emoji": "👤"
+            },
+            {
+              "id": "de_das_gesicht",
+              "target": "das Gesicht",
+              "translationAr": "الوجه",
+              "phonetic": "داس غِزيشْت",
+              "emoji": "🙂"
+            },
+            {
+              "id": "de_das_auge",
+              "target": "das Auge",
+              "translationAr": "العين",
+              "phonetic": "داس أأوغِه",
+              "emoji": "👁️"
+            },
+            {
+              "id": "de_die_nase",
+              "target": "die Nase",
+              "translationAr": "الأنف",
+              "phonetic": "دي نازِه",
+              "emoji": "👃"
+            },
+            {
+              "id": "de_der_mund",
+              "target": "der Mund",
+              "translationAr": "الفم",
+              "phonetic": "دير مونت",
+              "emoji": "👄"
+            },
+            {
+              "id": "de_das_ohr",
+              "target": "das Ohr",
+              "translationAr": "الأذن",
+              "phonetic": "داس أوأ",
+              "emoji": "👂"
+            },
+            {
+              "id": "de_die_haare",
+              "target": "die Haare",
+              "translationAr": "الشعر",
+              "phonetic": "دي هارِه",
+              "emoji": "💇"
+            },
+            {
+              "id": "de_der_zahn",
+              "target": "der Zahn",
+              "translationAr": "السن",
+              "phonetic": "دير تسان",
+              "emoji": "🦷"
+            },
+            {
+              "id": "de_der_hals",
+              "target": "der Hals",
+              "translationAr": "الرقبة",
+              "phonetic": "دير هالس",
+              "emoji": "🧣"
+            }
+          ]
+        },
+        {
+          "id": "de_u9_l2",
+          "titleAr": "الأطراف",
+          "titleEn": "Limbs",
+          "vocab": [
+            {
+              "id": "de_die_hand",
+              "target": "die Hand",
+              "translationAr": "اليد",
+              "phonetic": "دي هانت",
+              "emoji": "✋"
+            },
+            {
+              "id": "de_der_finger",
+              "target": "der Finger",
+              "translationAr": "الإصبع",
+              "phonetic": "دير فينغا",
+              "emoji": "☝️"
+            },
+            {
+              "id": "de_der_arm",
+              "target": "der Arm",
+              "translationAr": "الذراع",
+              "phonetic": "دير آرم",
+              "emoji": "💪"
+            },
+            {
+              "id": "de_das_bein",
+              "target": "das Bein",
+              "translationAr": "الساق",
+              "phonetic": "داس باين",
+              "emoji": "🦵"
+            },
+            {
+              "id": "de_der_fuss",
+              "target": "der Fuß",
+              "translationAr": "القدم",
+              "phonetic": "دير فوس",
+              "emoji": "🦶"
+            },
+            {
+              "id": "de_der_ruecken",
+              "target": "der Rücken",
+              "translationAr": "الظهر",
+              "phonetic": "دير روكِن",
+              "emoji": "🔙"
+            },
+            {
+              "id": "de_der_bauch",
+              "target": "der Bauch",
+              "translationAr": "البطن",
+              "phonetic": "دير بأوخ",
+              "emoji": "🫃"
+            },
+            {
+              "id": "de_die_haut",
+              "target": "die Haut",
+              "translationAr": "الجلد",
+              "phonetic": "دي هاوت",
+              "emoji": "🧴"
+            },
+            {
+              "id": "de_der_knochen",
+              "target": "der Knochen",
+              "translationAr": "العظم",
+              "phonetic": "دير كنوخِن",
+              "emoji": "🦴"
+            },
+            {
+              "id": "de_das_blut",
+              "target": "das Blut",
+              "translationAr": "الدم",
+              "phonetic": "داس بلوت",
+              "emoji": "🩸"
+            }
+          ]
+        },
+        {
+          "id": "de_u9_l3",
+          "titleAr": "الصحة والمرض",
+          "titleEn": "Health & Illness",
+          "vocab": [
+            {
+              "id": "de_gesund",
+              "target": "gesund",
+              "translationAr": "صحيح / معافى",
+              "phonetic": "غِزونت",
+              "emoji": "💚",
+              "exampleTarget": "Ich bin gesund",
+              "exampleAr": "أنا معافى"
+            },
+            {
+              "id": "de_krank",
+              "target": "krank",
+              "translationAr": "مريض",
+              "phonetic": "كرانك",
+              "emoji": "🤒",
+              "exampleTarget": "Der Patient ist krank",
+              "exampleAr": "المريض مريض"
+            },
+            {
+              "id": "de_die_kopfschmerzen",
+              "target": "die Kopfschmerzen",
+              "translationAr": "الصداع",
+              "phonetic": "دي كوپفتسمرتسِن",
+              "emoji": "🤕",
+              "exampleTarget": "Ich habe Kopfschmerzen",
+              "exampleAr": "رأسي يؤلمني"
+            },
+            {
+              "id": "de_das_fieber",
+              "target": "das Fieber",
+              "translationAr": "الحمّى",
+              "phonetic": "داس فيبا",
+              "emoji": "🌡️"
+            },
+            {
+              "id": "de_der_husten",
+              "target": "der Husten",
+              "translationAr": "الكحّة",
+              "phonetic": "دير هوستِن",
+              "emoji": "😷"
+            },
+            {
+              "id": "de_die_apotheke",
+              "target": "die Apotheke",
+              "translationAr": "الصيدلية",
+              "phonetic": "دي آپوتيكِه",
+              "emoji": "💊"
+            },
+            {
+              "id": "de_die_medizin",
+              "target": "die Medizin",
+              "translationAr": "الدواء",
+              "phonetic": "دي ميدتسين",
+              "emoji": "💉"
+            },
+            {
+              "id": "de_der_arzt",
+              "target": "der Arzt",
+              "translationAr": "الطبيب",
+              "phonetic": "دير آرتست",
+              "emoji": "🩺"
+            },
+            {
+              "id": "de_ruhig_bleiben",
+              "target": "ruhig bleiben",
+              "translationAr": "ابقَ هادئاً",
+              "phonetic": "رويش بلايبن",
+              "emoji": "😌"
+            },
+            {
+              "id": "de_der_termin",
+              "target": "der Termin",
+              "translationAr": "الموعد",
+              "phonetic": "دير ترمين",
+              "emoji": "🗓️"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u10",
+      "color": "#FF6FB5",
+      "titleAr": "الحيوانات",
+      "titleEn": "Animals",
+      "cefr": "A1",
+      "lessons": [
+        {
+          "id": "de_u10_l1",
+          "titleAr": "الحيوانات الأليفة",
+          "titleEn": "Pets",
+          "vocab": [
+            {
+              "id": "de_die_katze",
+              "target": "die Katze",
+              "translationAr": "القطة",
+              "phonetic": "دي كاتسِه",
+              "emoji": "🐱"
+            },
+            {
+              "id": "de_der_hund",
+              "target": "der Hund",
+              "translationAr": "الكلب",
+              "phonetic": "دير هونت",
+              "emoji": "🐶"
+            },
+            {
+              "id": "de_der_vogel",
+              "target": "der Vogel",
+              "translationAr": "الطائر",
+              "phonetic": "دير فوغِل",
+              "emoji": "🐦"
+            },
+            {
+              "id": "de_der_fisch",
+              "target": "der Fisch",
+              "translationAr": "السمكة",
+              "phonetic": "دير فيش",
+              "emoji": "🐟"
+            },
+            {
+              "id": "de_das_pferd",
+              "target": "das Pferd",
+              "translationAr": "الحصان",
+              "phonetic": "داس فِرت",
+              "emoji": "🐴"
+            },
+            {
+              "id": "de_der_hase",
+              "target": "der Hase",
+              "translationAr": "الأرنب",
+              "phonetic": "دير هازِه",
+              "emoji": "🐰"
+            },
+            {
+              "id": "de_die_maus",
+              "target": "die Maus",
+              "translationAr": "الفأر",
+              "phonetic": "دي ماوس",
+              "emoji": "🐭"
+            },
+            {
+              "id": "de_der_papagei",
+              "target": "der Papagei",
+              "translationAr": "الببغاء",
+              "phonetic": "دير باباغاي",
+              "emoji": "🦜"
+            },
+            {
+              "id": "de_der_goldfisch",
+              "target": "der Goldfisch",
+              "translationAr": "سمكة الزينة",
+              "phonetic": "دير غولتفيش",
+              "emoji": "🐠"
+            },
+            {
+              "id": "de_das_haustier",
+              "target": "das Haustier",
+              "translationAr": "حيوان الأليفة",
+              "phonetic": "داس هاوستير",
+              "emoji": "🐾"
+            }
+          ]
+        },
+        {
+          "id": "de_u10_l2",
+          "titleAr": "حيوانات المزرعة",
+          "titleEn": "Farm Animals",
+          "vocab": [
+            {
+              "id": "de_die_kuh",
+              "target": "die Kuh",
+              "translationAr": "البقرة",
+              "phonetic": "دي كو",
+              "emoji": "🐄"
+            },
+            {
+              "id": "de_das_schaf",
+              "target": "das Schaf",
+              "translationAr": "الخروف",
+              "phonetic": "داس شاف",
+              "emoji": "🐑"
+            },
+            {
+              "id": "de_die_ziege",
+              "target": "die Ziege",
+              "translationAr": "الماعز",
+              "phonetic": "دي تسيغِه",
+              "emoji": "🐐"
+            },
+            {
+              "id": "de_das_huhn",
+              "target": "das Huhn",
+              "translationAr": "الدجاجة",
+              "phonetic": "داس هون",
+              "emoji": "🐔"
+            },
+            {
+              "id": "de_der_hahn",
+              "target": "der Hahn",
+              "translationAr": "الديك",
+              "phonetic": "دير هان",
+              "emoji": "🐓"
+            },
+            {
+              "id": "de_die_ente",
+              "target": "die Ente",
+              "translationAr": "البطة",
+              "phonetic": "دي إنِتِه",
+              "emoji": "🦆"
+            },
+            {
+              "id": "de_die_biene",
+              "target": "die Biene",
+              "translationAr": "النحلة",
+              "phonetic": "دي بينِه",
+              "emoji": "🐝"
+            },
+            {
+              "id": "de_der_esel",
+              "target": "der Esel",
+              "translationAr": "الحمار",
+              "phonetic": "دير إيزِل",
+              "emoji": "🫏"
+            },
+            {
+              "id": "de_die_gans",
+              "target": "die Gans",
+              "translationAr": "الإوزة",
+              "phonetic": "دي غانس",
+              "emoji": "🦢"
+            },
+            {
+              "id": "de_der_bauer",
+              "target": "der Bauer",
+              "translationAr": "الفلاح",
+              "phonetic": "دير باوا",
+              "emoji": "🧑‍🌾"
+            }
+          ]
+        },
+        {
+          "id": "de_u10_l3",
+          "titleAr": "في البرية",
+          "titleEn": "Wild Animals",
+          "vocab": [
+            {
+              "id": "de_der_loewe",
+              "target": "der Löwe",
+              "translationAr": "الأسد",
+              "phonetic": "دير ليڤِه",
+              "emoji": "🦁"
+            },
+            {
+              "id": "de_der_tiger",
+              "target": "der Tiger",
+              "translationAr": "النمر",
+              "phonetic": "دير تيغا",
+              "emoji": "🐯"
+            },
+            {
+              "id": "de_der_elefant",
+              "target": "der Elefant",
+              "translationAr": "الفيل",
+              "phonetic": "دير إيليفانت",
+              "emoji": "🐘"
+            },
+            {
+              "id": "de_der_baer",
+              "target": "der Bär",
+              "translationAr": "الدب",
+              "phonetic": "دير بِر",
+              "emoji": "🐻"
+            },
+            {
+              "id": "de_der_fuchs",
+              "target": "der Fuchs",
+              "translationAr": "الثعلب",
+              "phonetic": "دير فوكس",
+              "emoji": "🦊"
+            },
+            {
+              "id": "de_die_giraffe",
+              "target": "die Giraffe",
+              "translationAr": "الزرافة",
+              "phonetic": "دي غيروفِه",
+              "emoji": "🦒"
+            },
+            {
+              "id": "de_der_affe",
+              "target": "der Affe",
+              "translationAr": "القرد",
+              "phonetic": "دير أفِه",
+              "emoji": "🐒"
+            },
+            {
+              "id": "de_die_schlange",
+              "target": "die Schlange",
+              "translationAr": "الثعبان",
+              "phonetic": "دي شلانغِه",
+              "emoji": "🐍"
+            },
+            {
+              "id": "de_das_tier",
+              "target": "das Tier",
+              "translationAr": "الحيوان (عموماً)",
+              "phonetic": "داس تير",
+              "emoji": "🦓"
+            },
+            {
+              "id": "de_der_zoo",
+              "target": "der Zoo",
+              "translationAr": "حديقة الحيوان",
+              "phonetic": "دير تسو",
+              "emoji": "🎪"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u11",
+      "color": "#2563EB",
+      "titleAr": "التسوق والمال",
+      "titleEn": "Shopping & Money",
+      "cefr": "A2",
+      "lessons": [
+        {
+          "id": "de_u11_l1",
+          "titleAr": "المال والأسعار",
+          "titleEn": "Money & Prices",
+          "vocab": [
+            {
+              "id": "de_das_geld",
+              "target": "das Geld",
+              "translationAr": "المال",
+              "phonetic": "داس غِلت",
+              "emoji": "💰"
+            },
+            {
+              "id": "de_der_euro",
+              "target": "der Euro",
+              "translationAr": "اليورو",
+              "phonetic": "دير أويرو",
+              "emoji": "💶"
+            },
+            {
+              "id": "de_teuer",
+              "target": "teuer",
+              "translationAr": "غالي",
+              "phonetic": "تويَا",
+              "emoji": "💸",
+              "exampleTarget": "Das ist zu teuer",
+              "exampleAr": "هذا غالٍ جداً"
+            },
+            {
+              "id": "de_billig",
+              "target": "billig",
+              "translationAr": "رخيص",
+              "phonetic": "بيليش",
+              "emoji": "📉",
+              "exampleTarget": "Die Äpfel sind billig",
+              "exampleAr": "التفاح رخيص"
+            },
+            {
+              "id": "de_der_preis",
+              "target": "der Preis",
+              "translationAr": "السعر",
+              "phonetic": "دير برايس",
+              "emoji": "🏷️"
+            },
+            {
+              "id": "de_bezahlen",
+              "target": "bezahlen",
+              "translationAr": "يدفع",
+              "phonetic": "بِتسالِن",
+              "emoji": "🏧",
+              "exampleTarget": "Ich bezahle mit Karte",
+              "exampleAr": "أدفع بالبطاقة"
+            },
+            {
+              "id": "de_die_kasse",
+              "target": "die Kasse",
+              "translationAr": "الكاشير / صندوق الدفع",
+              "phonetic": "دي كاسِه",
+              "emoji": "💳"
+            },
+            {
+              "id": "de_die_quittung",
+              "target": "die Quittung",
+              "translationAr": "الفاتورة / الإيصال",
+              "phonetic": "دي كڤيتونغ",
+              "emoji": "🧾"
+            },
+            {
+              "id": "de_das_wechselgeld",
+              "target": "das Wechselgeld",
+              "translationAr": "الباقي (من النقود)",
+              "phonetic": "داس ڤيكزِلغِلت",
+              "emoji": "🪙"
+            },
+            {
+              "id": "de_sparen",
+              "target": "sparen",
+              "translationAr": "يوفّر المال",
+              "phonetic": "شبارِن",
+              "emoji": "🏦",
+              "exampleTarget": "Ich spare für ein Auto",
+              "exampleAr": "أوفّر لسيارة"
+            }
+          ]
+        },
+        {
+          "id": "de_u11_l2",
+          "titleAr": "الملابس",
+          "titleEn": "Clothes",
+          "vocab": [
+            {
+              "id": "de_die_kleidung",
+              "target": "die Kleidung",
+              "translationAr": "الملابس",
+              "phonetic": "دي كلايدونغ",
+              "emoji": "👕"
+            },
+            {
+              "id": "de_das_hemd",
+              "target": "das Hemd",
+              "translationAr": "القميص",
+              "phonetic": "داس هيمت",
+              "emoji": "👔"
+            },
+            {
+              "id": "de_die_hose",
+              "target": "die Hose",
+              "translationAr": "البنطال",
+              "phonetic": "دي هوزِه",
+              "emoji": "👖"
+            },
+            {
+              "id": "de_das_kleid",
+              "target": "das Kleid",
+              "translationAr": "الفستان",
+              "phonetic": "داس كلايت",
+              "emoji": "👗"
+            },
+            {
+              "id": "de_der_schuh",
+              "target": "der Schuh",
+              "translationAr": "الحذاء",
+              "phonetic": "دير شو",
+              "emoji": "👟"
+            },
+            {
+              "id": "de_die_jacke",
+              "target": "die Jacke",
+              "translationAr": "السترة",
+              "phonetic": "دي ياكِه",
+              "emoji": "🧥"
+            },
+            {
+              "id": "de_der_hut",
+              "target": "der Hut",
+              "translationAr": "القبعة",
+              "phonetic": "دير هوت",
+              "emoji": "🎩"
+            },
+            {
+              "id": "de_der_pullover",
+              "target": "der Pullover",
+              "translationAr": "الكنزة",
+              "phonetic": "دير بولوڤا",
+              "emoji": "🧶"
+            },
+            {
+              "id": "de_die_muetze",
+              "target": "die Mütze",
+              "translationAr": "الطاقية",
+              "phonetic": "دي موتسِه",
+              "emoji": "🧢"
+            },
+            {
+              "id": "de_der_guertel",
+              "target": "der Gürtel",
+              "translationAr": "الحزام",
+              "phonetic": "دير غورتِل",
+              "emoji": "🪢"
+            }
+          ]
+        },
+        {
+          "id": "de_u11_l3",
+          "titleAr": "في المتجر",
+          "titleEn": "In the Shop",
+          "vocab": [
+            {
+              "id": "de_der_laden",
+              "target": "der Laden",
+              "translationAr": "المتجر",
+              "phonetic": "دير لادِن",
+              "emoji": "🏪"
+            },
+            {
+              "id": "de_der_supermarkt",
+              "target": "der Supermarkt",
+              "translationAr": "السوبرماركت",
+              "phonetic": "دير زوباماركت",
+              "emoji": "🏬"
+            },
+            {
+              "id": "de_die_groesse",
+              "target": "die Größe",
+              "translationAr": "المقاس / الحجم",
+              "phonetic": "دي غروسِه",
+              "emoji": "📐"
+            },
+            {
+              "id": "de_probieren",
+              "target": "probieren",
+              "translationAr": "يجرب",
+              "phonetic": "پروبيرِن",
+              "emoji": "🪞",
+              "exampleTarget": "Darf ich es probieren?",
+              "exampleAr": "أجوز أن أجربه؟"
+            },
+            {
+              "id": "de_umtauschen",
+              "target": "umtauschen",
+              "translationAr": "يستبدل / يبدّل",
+              "phonetic": "أومتأوشِن",
+              "emoji": "🔄",
+              "exampleTarget": "Ich möchte das umtauschen",
+              "exampleAr": "أريد استبدال هذا"
+            },
+            {
+              "id": "de_der_kunde",
+              "target": "der Kunde",
+              "translationAr": "الزبون",
+              "phonetic": "دير كوندِه",
+              "emoji": "🧑‍💼"
+            },
+            {
+              "id": "de_der_markt",
+              "target": "der Markt",
+              "translationAr": "السوق",
+              "phonetic": "دير ماركت",
+              "emoji": "🧺"
+            },
+            {
+              "id": "de_das_angebot",
+              "target": "das Angebot",
+              "translationAr": "العرض / التخفيض",
+              "phonetic": "داس أنغِبوت",
+              "emoji": "🔖",
+              "exampleTarget": "Das ist ein gutes Angebot",
+              "exampleAr": "هذا عرض جيد"
+            },
+            {
+              "id": "de_der_einkaufswagen",
+              "target": "der Einkaufswagen",
+              "translationAr": "عربة التسوق",
+              "phonetic": "دير أينكأوفسڤاغِن",
+              "emoji": "🛒"
+            },
+            {
+              "id": "de_brauchen",
+              "target": "brauchen",
+              "translationAr": "يحتاج",
+              "phonetic": "برأوخِن",
+              "emoji": "🆘",
+              "exampleTarget": "Ich brauche Hilfe",
+              "exampleAr": "أحتاج مساعدة"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u12",
+      "color": "#58CC02",
+      "titleAr": "السفر والمواصلات",
+      "titleEn": "Travel & Transport",
+      "cefr": "A2",
+      "lessons": [
+        {
+          "id": "de_u12_l1",
+          "titleAr": "وسائل المواصلات",
+          "titleEn": "Transport",
+          "vocab": [
+            {
+              "id": "de_der_zug",
+              "target": "der Zug",
+              "translationAr": "القطار",
+              "phonetic": "دير تسوغ",
+              "emoji": "🚆"
+            },
+            {
+              "id": "de_der_bus",
+              "target": "der Bus",
+              "translationAr": "الحافلة",
+              "phonetic": "دير بوس",
+              "emoji": "🚌"
+            },
+            {
+              "id": "de_das_auto",
+              "target": "das Auto",
+              "translationAr": "السيارة",
+              "phonetic": "داس أوطو",
+              "emoji": "🚗"
+            },
+            {
+              "id": "de_das_fahrrad",
+              "target": "das Fahrrad",
+              "translationAr": "الدراجة الهوائية",
+              "phonetic": "داس فاررات",
+              "emoji": "🚲"
+            },
+            {
+              "id": "de_das_flugzeug",
+              "target": "das Flugzeug",
+              "translationAr": "الطائرة",
+              "phonetic": "داس فلوگتسويغ",
+              "emoji": "✈️"
+            },
+            {
+              "id": "de_der_bahnhof",
+              "target": "der Bahnhof",
+              "translationAr": "محطة القطار",
+              "phonetic": "دير بانتسوف",
+              "emoji": "🚉"
+            },
+            {
+              "id": "de_die_haltestelle",
+              "target": "die Haltestelle",
+              "translationAr": "موقف الحافلة",
+              "phonetic": "دي هلِتاشتِلِه",
+              "emoji": "🚏"
+            },
+            {
+              "id": "de_der_flughafen",
+              "target": "der Flughafen",
+              "translationAr": "المطار",
+              "phonetic": "دير فلوهافِن",
+              "emoji": "🛫"
+            },
+            {
+              "id": "de_das_taxi",
+              "target": "das Taxi",
+              "translationAr": "سيارة الأجرة",
+              "phonetic": "داس تاكسي",
+              "emoji": "🚕"
+            },
+            {
+              "id": "de_die_ubahn",
+              "target": "die U-Bahn",
+              "translationAr": "المترو الأنفي",
+              "phonetic": "دي أوبان",
+              "emoji": "🚇"
+            }
+          ]
+        },
+        {
+          "id": "de_u12_l2",
+          "titleAr": "في الطريق",
+          "titleEn": "On the Way",
+          "vocab": [
+            {
+              "id": "de_fahren",
+              "target": "fahren",
+              "translationAr": "يسوق / يركب",
+              "phonetic": "فارِن",
+              "emoji": "🛣️",
+              "exampleTarget": "Wir fahren mit dem Bus",
+              "exampleAr": "نسافر بالحافلة"
+            },
+            {
+              "id": "de_fliegen",
+              "target": "fliegen",
+              "translationAr": "يطير",
+              "phonetic": "فليغِن",
+              "emoji": "🕊️",
+              "exampleTarget": "Er fliegt nach Berlin",
+              "exampleAr": "يطير إلى برلين"
+            },
+            {
+              "id": "de_die_karte",
+              "target": "die Karte",
+              "translationAr": "التذكرة / الخريطة",
+              "phonetic": "دي كارتِه",
+              "emoji": "🎫"
+            },
+            {
+              "id": "de_der_koffer",
+              "target": "der Koffer",
+              "translationAr": "حقيبة السفر",
+              "phonetic": "دير كوفا",
+              "emoji": "🧳"
+            },
+            {
+              "id": "de_der_pass",
+              "target": "der Pass",
+              "translationAr": "جواز السفر",
+              "phonetic": "دير پاس",
+              "emoji": "🛂"
+            },
+            {
+              "id": "de_die_grenze",
+              "target": "die Grenze",
+              "translationAr": "الحدود",
+              "phonetic": "دي غرِنتسِه",
+              "emoji": "🚧"
+            },
+            {
+              "id": "de_abfahren",
+              "target": "abfahren",
+              "translationAr": "يغادر (مركبة)",
+              "phonetic": "آبفارِن",
+              "emoji": "🚉",
+              "exampleTarget": "Der Zug fährt um acht ab",
+              "exampleAr": "يغادر القطار الساعة الثامنة"
+            },
+            {
+              "id": "de_ankommen",
+              "target": "ankommen",
+              "translationAr": "يصل",
+              "phonetic": "أنكومِن",
+              "emoji": "🛄",
+              "exampleTarget": "Wir kommen um fünf an",
+              "exampleAr": "نصل الساعة الخامسة"
+            },
+            {
+              "id": "de_links",
+              "target": "links",
+              "translationAr": "يساراً",
+              "phonetic": "لينكس",
+              "emoji": "⬅️"
+            },
+            {
+              "id": "de_rechts",
+              "target": "rechts",
+              "translationAr": "يميناً",
+              "phonetic": "ريختس",
+              "emoji": "➡️"
+            },
+            {
+              "id": "de_geradeaus",
+              "target": "geradeaus",
+              "translationAr": "على الأمام مباشرة",
+              "phonetic": "غي radأوس",
+              "emoji": "⬆️"
+            }
+          ]
+        },
+        {
+          "id": "de_u12_l3",
+          "titleAr": "الرحلات والإقامة",
+          "titleEn": "Trips & Stays",
+          "vocab": [
+            {
+              "id": "de_das_hotel",
+              "target": "das Hotel",
+              "translationAr": "الفندق",
+              "phonetic": "داس هوتيل",
+              "emoji": "🏨"
+            },
+            {
+              "id": "de_die_reise",
+              "target": "die Reise",
+              "translationAr": "الرحلة",
+              "phonetic": "دي رايزِه",
+              "emoji": "🧭",
+              "exampleTarget": "Die Reise war schön",
+              "exampleAr": "كانت الرحلة جميلة"
+            },
+            {
+              "id": "de_der_urlaub",
+              "target": "der Urlaub",
+              "translationAr": "العطلة",
+              "phonetic": "دير أوالوب",
+              "emoji": "🏖️"
+            },
+            {
+              "id": "de_buchen",
+              "target": "buchen",
+              "translationAr": "يحجز",
+              "phonetic": "بوخِن",
+              "emoji": "📝",
+              "exampleTarget": "Ich buche ein Zimmer",
+              "exampleAr": "أحجز غرفة"
+            },
+            {
+              "id": "de_die_rezeption",
+              "target": "die Rezeption",
+              "translationAr": "الاستقبال",
+              "phonetic": "دي ريتسيپتسيون",
+              "emoji": "🔔"
+            },
+            {
+              "id": "de_packen",
+              "target": "packen",
+              "translationAr": "يعبّئ الحقيبة",
+              "phonetic": "پاكِن",
+              "emoji": "📦",
+              "exampleTarget": "Ich packe meinen Koffer",
+              "exampleAr": "أعبّئ حقيبتي"
+            },
+            {
+              "id": "de_die_faehre",
+              "target": "die Fähre",
+              "translationAr": "العبّارة",
+              "phonetic": "دي فيرِه",
+              "emoji": "⛴️"
+            },
+            {
+              "id": "de_der_ausflug",
+              "target": "der Ausflug",
+              "translationAr": "رحلة قصيرة",
+              "phonetic": "دير أوسفلوغ",
+              "emoji": "🚡",
+              "exampleTarget": "Wir machen einen Ausflug",
+              "exampleAr": "نقوم برحلة قصيرة"
+            },
+            {
+              "id": "de_der_stadtbesuch",
+              "target": "der Stadtbesuch",
+              "translationAr": "زيارة المدينة",
+              "phonetic": "دير شتاتبوزوخ",
+              "emoji": "🏙️"
+            },
+            {
+              "id": "de_der_ticketautomat",
+              "target": "der Ticketautomat",
+              "translationAr": "آلة التذاكر",
+              "phonetic": "دير تيكِت أوطومات",
+              "emoji": "🎟️"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u13",
+      "color": "#1CB0F6",
+      "titleAr": "الطقس والفصول",
+      "titleEn": "Weather & Seasons",
+      "cefr": "A2",
+      "lessons": [
+        {
+          "id": "de_u13_l1",
+          "titleAr": "حالات الطقس",
+          "titleEn": "Weather",
+          "vocab": [
+            {
+              "id": "de_das_wetter",
+              "target": "das Wetter",
+              "translationAr": "الطقس",
+              "phonetic": "داس ڤيتا",
+              "emoji": "⛅"
+            },
+            {
+              "id": "de_die_sonne",
+              "target": "die Sonne",
+              "translationAr": "الشمس",
+              "phonetic": "دي زونِه",
+              "emoji": "☀️"
+            },
+            {
+              "id": "de_der_regen",
+              "target": "der Regen",
+              "translationAr": "المطر",
+              "phonetic": "دير ريغِن",
+              "emoji": "🌧️"
+            },
+            {
+              "id": "de_der_schnee",
+              "target": "der Schnee",
+              "translationAr": "الثلج",
+              "phonetic": "دير شنِي",
+              "emoji": "❄️"
+            },
+            {
+              "id": "de_der_wind",
+              "target": "der Wind",
+              "translationAr": "الريح",
+              "phonetic": "دير ڤينت",
+              "emoji": "🌬️"
+            },
+            {
+              "id": "de_die_wolke",
+              "target": "die Wolke",
+              "translationAr": "السحابة",
+              "phonetic": "دي ڤولكِه",
+              "emoji": "☁️"
+            },
+            {
+              "id": "de_der_nebel",
+              "target": "der Nebel",
+              "translationAr": "الضباب",
+              "phonetic": "دير نيبِل",
+              "emoji": "🌫️"
+            },
+            {
+              "id": "de_das_gewitter",
+              "target": "das Gewitter",
+              "translationAr": "العاصفة الرعدية",
+              "phonetic": "داس غِڤيتا",
+              "emoji": "⛈️"
+            },
+            {
+              "id": "de_der_blitz",
+              "target": "der Blitz",
+              "translationAr": "البرق",
+              "phonetic": "دير بليتس",
+              "emoji": "⚡"
+            },
+            {
+              "id": "de_der_sturm",
+              "target": "der Sturm",
+              "translationAr": "العاصفة",
+              "phonetic": "دير شتورم",
+              "emoji": "🌪️"
+            }
+          ]
+        },
+        {
+          "id": "de_u13_l2",
+          "titleAr": "الفصول الأربعة",
+          "titleEn": "Seasons",
+          "vocab": [
+            {
+              "id": "de_der_fruehling",
+              "target": "der Frühling",
+              "translationAr": "الربيع",
+              "phonetic": "دير فرولينغ",
+              "emoji": "🌸"
+            },
+            {
+              "id": "de_der_sommer",
+              "target": "der Sommer",
+              "translationAr": "الصيف",
+              "phonetic": "دير زوما",
+              "emoji": "😎"
+            },
+            {
+              "id": "de_der_herbst",
+              "target": "der Herbst",
+              "translationAr": "الخريف",
+              "phonetic": "دير هيرپست",
+              "emoji": "🍂"
+            },
+            {
+              "id": "de_der_winter",
+              "target": "der Winter",
+              "translationAr": "الشتاء",
+              "phonetic": "دير ڤينتا",
+              "emoji": "⛄"
+            },
+            {
+              "id": "de_die_temperatur",
+              "target": "die Temperatur",
+              "translationAr": "الحرارة",
+              "phonetic": "دي تِمپراتوأ",
+              "emoji": "🌡️"
+            },
+            {
+              "id": "de_das_eis",
+              "target": "das Eis",
+              "translationAr": "الجليد / الآيس كريم",
+              "phonetic": "داس أيس",
+              "emoji": "🧊"
+            },
+            {
+              "id": "de_der_grad",
+              "target": "der Grad",
+              "translationAr": "درجة (الحرارة)",
+              "phonetic": "دير غرات",
+              "emoji": "🔢"
+            },
+            {
+              "id": "de_der_wolkenbruch",
+              "target": "der Wolkenbruch",
+              "translationAr": "وابل مطري غزير",
+              "phonetic": "دير ڤولكِنبروخ",
+              "emoji": "☔"
+            },
+            {
+              "id": "de_der_regenschirm",
+              "target": "der Regenschirm",
+              "translationAr": "المظلة",
+              "phonetic": "دير ريغِنشيرم",
+              "emoji": "🌂"
+            },
+            {
+              "id": "de_das_klima",
+              "target": "das Klima",
+              "translationAr": "المناخ",
+              "phonetic": "داس كليما",
+              "emoji": "🌍"
+            }
+          ]
+        },
+        {
+          "id": "de_u13_l3",
+          "titleAr": "أحوال الجو",
+          "titleEn": "Weather Talk",
+          "vocab": [
+            {
+              "id": "de_es_regnet",
+              "target": "Es regnet",
+              "translationAr": "إنها تمطر",
+              "phonetic": "إس ريغنِت",
+              "emoji": "🌦️"
+            },
+            {
+              "id": "de_es_schneit",
+              "target": "Es schneit",
+              "translationAr": "إنها تثلج",
+              "phonetic": "إس شنايت",
+              "emoji": "🌨️"
+            },
+            {
+              "id": "de_die_sonne_scheint",
+              "target": "Die Sonne scheint",
+              "translationAr": "الشمس مشرقة",
+              "phonetic": "دي زونِه شاينت",
+              "emoji": "😎"
+            },
+            {
+              "id": "de_heiss",
+              "target": "heiß",
+              "translationAr": "حار",
+              "phonetic": "هايس",
+              "emoji": "🔥",
+              "exampleTarget": "Im Sommer ist es heiß",
+              "exampleAr": "الصيف حار"
+            },
+            {
+              "id": "de_kalt",
+              "target": "kalt",
+              "translationAr": "بارد",
+              "phonetic": "كالت",
+              "emoji": "🥶",
+              "exampleTarget": "Im Winter ist es kalt",
+              "exampleAr": "الشتاء بارد"
+            },
+            {
+              "id": "de_warm",
+              "target": "warm",
+              "translationAr": "دافئ",
+              "phonetic": "ڤارم",
+              "emoji": "♨️"
+            },
+            {
+              "id": "de_kuehl",
+              "target": "kühl",
+              "translationAr": "منعش بارد",
+              "phonetic": "كول",
+              "emoji": "🍃"
+            },
+            {
+              "id": "de_trocken",
+              "target": "trocken",
+              "translationAr": "جاف",
+              "phonetic": "تروكِن",
+              "emoji": "🏜️"
+            },
+            {
+              "id": "de_nass",
+              "target": "nass",
+              "translationAr": "مبلل",
+              "phonetic": "ناس",
+              "emoji": "💦"
+            },
+            {
+              "id": "de_der_himmel",
+              "target": "der Himmel",
+              "translationAr": "السماء",
+              "phonetic": "دير هيمِل",
+              "emoji": "🌌"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u14",
+      "color": "#FF9600",
+      "titleAr": "في المطعم",
+      "titleEn": "At the Restaurant",
+      "cefr": "A2",
+      "lessons": [
+        {
+          "id": "de_u14_l1",
+          "titleAr": "الحجز والطلب",
+          "titleEn": "Ordering",
+          "vocab": [
+            {
+              "id": "de_das_restaurant",
+              "target": "das Restaurant",
+              "translationAr": "المطعم",
+              "phonetic": "داس ريستوران",
+              "emoji": "🍴"
+            },
+            {
+              "id": "de_die_speisekarte",
+              "target": "die Speisekarte",
+              "translationAr": "قائمة الطعام",
+              "phonetic": "دي شبايزكارتِه",
+              "emoji": "📜"
+            },
+            {
+              "id": "de_bestellen",
+              "target": "bestellen",
+              "translationAr": "يطلب",
+              "phonetic": "بِشتِلِن",
+              "emoji": "🖊️",
+              "exampleTarget": "Ich möchte bestellen",
+              "exampleAr": "أريد أن أطلب"
+            },
+            {
+              "id": "de_der_kellner",
+              "target": "der Kellner",
+              "translationAr": "النادل",
+              "phonetic": "دير كِلنا",
+              "emoji": "🤵"
+            },
+            {
+              "id": "de_die_kellnerin",
+              "target": "die Kellnerin",
+              "translationAr": "النادلة",
+              "phonetic": "دي كِلنيرين",
+              "emoji": "💁‍♀️"
+            },
+            {
+              "id": "de_reservieren",
+              "target": "reservieren",
+              "translationAr": "يحجز مسبقاً",
+              "phonetic": "ريزيرڤيرِن",
+              "emoji": "📅",
+              "exampleTarget": "Wir haben einen Tisch reserviert",
+              "exampleAr": "حجزنا طاولة"
+            },
+            {
+              "id": "de_die_bestellung",
+              "target": "die Bestellung",
+              "translationAr": "الطلب",
+              "phonetic": "دي بِشتِلونغ",
+              "emoji": "🛎️"
+            },
+            {
+              "id": "de_der_gast",
+              "target": "der Gast",
+              "translationAr": "الضيف",
+              "phonetic": "دير غاست",
+              "emoji": "🪑"
+            },
+            {
+              "id": "de_das_menue",
+              "target": "das Menü",
+              "translationAr": "المنيو",
+              "phonetic": "داس مِنو",
+              "emoji": "📇"
+            },
+            {
+              "id": "de_die_vorspeise",
+              "target": "die Vorspeise",
+              "translationAr": "المقبلات",
+              "phonetic": "دي فورشبايزِه",
+              "emoji": "🫒"
+            }
+          ]
+        },
+        {
+          "id": "de_u14_l2",
+          "titleAr": "على المائدة",
+          "titleEn": "At the Table",
+          "vocab": [
+            {
+              "id": "de_der_teller",
+              "target": "der Teller",
+              "translationAr": "الطبق",
+              "phonetic": "دير تِلا",
+              "emoji": "🍽️"
+            },
+            {
+              "id": "de_die_gabel",
+              "target": "die Gabel",
+              "translationAr": "الشوكة",
+              "phonetic": "دي غابِل",
+              "emoji": "🍴"
+            },
+            {
+              "id": "de_das_messer",
+              "target": "das Messer",
+              "translationAr": "السكين",
+              "phonetic": "داس ميسا",
+              "emoji": "🔪"
+            },
+            {
+              "id": "de_der_loeffel",
+              "target": "der Löffel",
+              "translationAr": "الملعقة",
+              "phonetic": "دير لوفِل",
+              "emoji": "🥄"
+            },
+            {
+              "id": "de_die_tasse",
+              "target": "die Tasse",
+              "translationAr": "الفنجان",
+              "phonetic": "دي تسِسِه",
+              "emoji": "☕"
+            },
+            {
+              "id": "de_das_glas",
+              "target": "das Glas",
+              "translationAr": "الكأس / الزجاج",
+              "phonetic": "داس غلاس",
+              "emoji": "🫙"
+            },
+            {
+              "id": "de_der_pfeffer",
+              "target": "der Pfeffer",
+              "translationAr": "الفلفل الأسود",
+              "phonetic": "دير پيفا",
+              "emoji": "🌶️"
+            },
+            {
+              "id": "de_das_oel",
+              "target": "das Öl",
+              "translationAr": "الزيت",
+              "phonetic": "داس أول",
+              "emoji": "🫒"
+            },
+            {
+              "id": "de_der_essig",
+              "target": "der Essig",
+              "translationAr": "الخل",
+              "phonetic": "دير إسيش",
+              "emoji": "🧴"
+            },
+            {
+              "id": "de_der_strohhalm",
+              "target": "der Strohhalm",
+              "translationAr": "شفة الشرب",
+              "phonetic": "دير شتروهالم",
+              "emoji": "🥤"
+            }
+          ]
+        },
+        {
+          "id": "de_u14_l3",
+          "titleAr": "الأطباق والذوق",
+          "titleEn": "Dishes & Taste",
+          "vocab": [
+            {
+              "id": "de_die_suppe",
+              "target": "die Suppe",
+              "translationAr": "الحساء",
+              "phonetic": "دي زوبِه",
+              "emoji": "🍲"
+            },
+            {
+              "id": "de_der_reis",
+              "target": "der Reis",
+              "translationAr": "الأرز",
+              "phonetic": "دير رايس",
+              "emoji": "🍚"
+            },
+            {
+              "id": "de_das_huehnchen",
+              "target": "das Hühnchen",
+              "translationAr": "لحم الدجاج",
+              "phonetic": "داس هونشِن",
+              "emoji": "🍗"
+            },
+            {
+              "id": "de_das_fleisch",
+              "target": "das Fleisch",
+              "translationAr": "اللحم",
+              "phonetic": "داس فلايش",
+              "emoji": "🥩"
+            },
+            {
+              "id": "de_das_gemuese",
+              "target": "das Gemüse",
+              "translationAr": "الخضار",
+              "phonetic": "داس غِموزِه",
+              "emoji": "🥬"
+            },
+            {
+              "id": "de_die_nudeln",
+              "target": "die Nudeln",
+              "translationAr": "المعكرونة",
+              "phonetic": "دي نودِلن",
+              "emoji": "🍝"
+            },
+            {
+              "id": "de_suess",
+              "target": "süß",
+              "translationAr": "حلو المذاق",
+              "phonetic": "زوس",
+              "emoji": "🍰"
+            },
+            {
+              "id": "de_salzig",
+              "target": "salzig",
+              "translationAr": "مالح",
+              "phonetic": "زالتسيش",
+              "emoji": "🧂"
+            },
+            {
+              "id": "de_sauer",
+              "target": "sauer",
+              "translationAr": "حامض",
+              "phonetic": "زأوا",
+              "emoji": "🍋"
+            },
+            {
+              "id": "de_die_nachspeise",
+              "target": "die Nachspeise",
+              "translationAr": "الحلوى بعد الطعام",
+              "phonetic": "دي ناخشبايزِه",
+              "emoji": "🍮"
+            },
+            {
+              "id": "de_die_rechnung",
+              "target": "die Rechnung",
+              "translationAr": "الحساب / الفاتورة",
+              "phonetic": "دي ريخنونغ",
+              "emoji": "🧾",
+              "exampleTarget": "Die Rechnung, bitte!",
+              "exampleAr": "الحساب، من فضلك!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u15",
+      "color": "#FF4B4B",
+      "titleAr": "الصحة عند الطبيب",
+      "titleEn": "Health & Doctor",
+      "cefr": "A2",
+      "lessons": [
+        {
+          "id": "de_u15_l1",
+          "titleAr": "عند الطبيب",
+          "titleEn": "At the Doctor",
+          "vocab": [
+            {
+              "id": "de_die_praxis",
+              "target": "die Praxis",
+              "translationAr": "عيادة الطبيب",
+              "phonetic": "دي پراكتسِس",
+              "emoji": "🏥"
+            },
+            {
+              "id": "de_der_patient",
+              "target": "der Patient",
+              "translationAr": "المريض",
+              "phonetic": "دير باتسيِنت",
+              "emoji": "🧑‍🦽"
+            },
+            {
+              "id": "de_die_schmerzen",
+              "target": "die Schmerzen",
+              "translationAr": "الآلام",
+              "phonetic": "دي شمرتسِن",
+              "emoji": "😖",
+              "exampleTarget": "Ich habe Schmerzen im Bauch",
+              "exampleAr": "أشعر بألم في بطني"
+            },
+            {
+              "id": "de_untersuchen",
+              "target": "untersuchen",
+              "translationAr": "يفحص",
+              "phonetic": "أونتازوخِن",
+              "emoji": "🔍",
+              "exampleTarget": "Der Arzt untersucht den Patienten",
+              "exampleAr": "يفحص الطبيب المريض"
+            },
+            {
+              "id": "de_die_impfung",
+              "target": "die Impfung",
+              "translationAr": "التطعيم",
+              "phonetic": "دي إمپفونغ",
+              "emoji": "💉"
+            },
+            {
+              "id": "de_die_verschreibung",
+              "target": "die Verschreibung",
+              "translationAr": "وصفة الطبيب",
+              "phonetic": "دي فِرشرايبونغ",
+              "emoji": "📄"
+            },
+            {
+              "id": "de_die_krankenversicherung",
+              "target": "die Krankenversicherung",
+              "translationAr": "التأمين الصحي",
+              "phonetic": "دي كرانكِنفيرزيشيرونغ",
+              "emoji": "🛡️"
+            },
+            {
+              "id": "de_gesund_werden",
+              "target": "gesund werden",
+              "translationAr": "يستعيص / يشفى",
+              "phonetic": "غِزونت ڤيردِن",
+              "emoji": "🌿",
+              "exampleTarget": "Bald wirst du gesund",
+              "exampleAr": "سوف تُشفى قريباً"
+            },
+            {
+              "id": "de_die_behandlung",
+              "target": "die Behandlung",
+              "translationAr": "العلاج",
+              "phonetic": "دي بِهاندلونغ",
+              "emoji": "🩹"
+            },
+            {
+              "id": "de_die_untersuchung",
+              "target": "die Untersuchung",
+              "translationAr": "الفحص الطبي",
+              "phonetic": "دي أونتازوخونغ",
+              "emoji": "🩻"
+            }
+          ]
+        },
+        {
+          "id": "de_u15_l2",
+          "titleAr": "الطوارئ",
+          "titleEn": "Emergencies",
+          "vocab": [
+            {
+              "id": "de_der_notfall",
+              "target": "der Notfall",
+              "translationAr": "حالة طارئة",
+              "phonetic": "دير نوتفال",
+              "emoji": "🚨"
+            },
+            {
+              "id": "de_der_krankenwagen",
+              "target": "der Krankenwagen",
+              "translationAr": "سيارة الإسعاف",
+              "phonetic": "دير كرانكِنڤاگِن",
+              "emoji": "🚑"
+            },
+            {
+              "id": "de_das_krankenhaus",
+              "target": "das Krankenhaus",
+              "translationAr": "المستشفى",
+              "phonetic": "داس كرانكِنهاوس",
+              "emoji": "🏥"
+            },
+            {
+              "id": "de_rufen_112",
+              "target": "Rufen Sie 112!",
+              "translationAr": "اتصل بالطوارئ 112!",
+              "phonetic": "روفِن زي تسايْهوندرت ڤُولف",
+              "emoji": "📞"
+            },
+            {
+              "id": "de_verletzt",
+              "target": "verletzt",
+              "translationAr": "مصاب (بجرح)",
+              "phonetic": "فيرلاستست",
+              "emoji": "🩹"
+            },
+            {
+              "id": "de_der_blutdruck",
+              "target": "der Blutdruck",
+              "translationAr": "ضغط الدم",
+              "phonetic": "دير بلوتدروك",
+              "emoji": "🫀"
+            },
+            {
+              "id": "de_die_vergiftung",
+              "target": "die Vergiftung",
+              "translationAr": "التسمم",
+              "phonetic": "دي فيرغِپفونغ",
+              "emoji": "☠️"
+            },
+            {
+              "id": "de_die_op",
+              "target": "die Operation",
+              "translationAr": "العملية الجراحية",
+              "phonetic": "دي أوپيراتسيون",
+              "emoji": "🏥"
+            },
+            {
+              "id": "de_helfen_sie_mir",
+              "target": "Helfen Sie mir!",
+              "translationAr": "ساعدوني!",
+              "phonetic": "هِلفِن زي مير",
+              "emoji": "🙋"
+            },
+            {
+              "id": "de_passieren",
+              "target": "passieren",
+              "translationAr": "يحدث (أمر سيئ)",
+              "phonetic": "پاسييرن",
+              "emoji": "💥",
+              "exampleTarget": "Was ist passiert?",
+              "exampleAr": "ماذا حدث؟"
+            }
+          ]
+        },
+        {
+          "id": "de_u15_l3",
+          "titleAr": "عادات صحية",
+          "titleEn": "Healthy Habits",
+          "vocab": [
+            {
+              "id": "de_sport_treiben",
+              "target": "Sport treiben",
+              "translationAr": "يمارس الرياضة",
+              "phonetic": "شبورت ترايبن",
+              "emoji": "⚽",
+              "exampleTarget": "Ich treibe dreimal pro Woche Sport",
+              "exampleAr": "أمارس الرياضة ثلاث مرات أسبوعياً"
+            },
+            {
+              "id": "de_schlafen_gut",
+              "target": "gut schlafen",
+              "translationAr": "ينام جيداً",
+              "phonetic": "غوت شلافِن",
+              "emoji": "😴"
+            },
+            {
+              "id": "de_die_entspannung",
+              "target": "die Entspannung",
+              "translationAr": "الاسترخاء",
+              "phonetic": "دي إنتشبانونغ",
+              "emoji": "🧘"
+            },
+            {
+              "id": "de_der_stress",
+              "target": "der Stress",
+              "translationAr": "التوتر",
+              "phonetic": "دير شتريس",
+              "emoji": "😫"
+            },
+            {
+              "id": "de_das_rauchen",
+              "target": "das Rauchen",
+              "translationAr": "التدخين",
+              "phonetic": "داس رأوخِن",
+              "emoji": "🚬"
+            },
+            {
+              "id": "de_die_gewohnheit",
+              "target": "die Gewohnheit",
+              "translationAr": "العادة",
+              "phonetic": "دي غِڤونهايت",
+              "emoji": "🔁"
+            },
+            {
+              "id": "de_aufhoeren",
+              "target": "aufhören",
+              "translationAr": "يتوقف عن",
+              "phonetic": "أوفهورِن",
+              "emoji": "🛑",
+              "exampleTarget": "Hör auf zu rauchen!",
+              "exampleAr": "توقف عن التدخين!"
+            },
+            {
+              "id": "de_fit",
+              "target": "fit",
+              "translationAr": "لياق",
+              "phonetic": "فيت",
+              "emoji": "🏋️"
+            },
+            {
+              "id": "de_die_ernaehrung",
+              "target": "die Ernährung",
+              "translationAr": "التغذية",
+              "phonetic": "دي إرنايرونغ",
+              "emoji": "🥗"
+            },
+            {
+              "id": "de_die_waage",
+              "target": "die Waage",
+              "translationAr": "الميزان",
+              "phonetic": "دي ڤاغِه",
+              "emoji": "⚖️"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u16",
+      "color": "#2B70C9",
+      "titleAr": "العمل والمكتب",
+      "titleEn": "Work & Office",
+      "cefr": "B1",
+      "lessons": [
+        {
+          "id": "de_u16_l1",
+          "titleAr": "المهن",
+          "titleEn": "Professions",
+          "vocab": [
+            {
+              "id": "de_der_beruf",
+              "target": "der Beruf",
+              "translationAr": "المهنة",
+              "phonetic": "دير بِروف",
+              "emoji": "💼"
+            },
+            {
+              "id": "de_der_baecker",
+              "target": "der Bäcker",
+              "translationAr": "الخبّاز",
+              "phonetic": "دير بيكا",
+              "emoji": "🥖"
+            },
+            {
+              "id": "de_die_lehrerin",
+              "target": "die Lehrerin",
+              "translationAr": "المعلمة",
+              "phonetic": "دي لَيريرين",
+              "emoji": "👩‍🏫"
+            },
+            {
+              "id": "de_der_lehrer",
+              "target": "der Lehrer",
+              "translationAr": "المعلم",
+              "phonetic": "دير لَيرا",
+              "emoji": "👨‍🏫"
+            },
+            {
+              "id": "de_der_ingenieur",
+              "target": "der Ingenieur",
+              "translationAr": "المهندس",
+              "phonetic": "دير إنشِن يوّا",
+              "emoji": "👷"
+            },
+            {
+              "id": "de_der_polizist",
+              "target": "der Polizist",
+              "translationAr": "رجل الشرطة",
+              "phonetic": "دير بوليتسيست",
+              "emoji": "👮"
+            },
+            {
+              "id": "de_der_anwalt",
+              "target": "der Anwalt",
+              "translationAr": "المحامي",
+              "phonetic": "دير أنڤالت",
+              "emoji": "⚖️"
+            },
+            {
+              "id": "de_der_kaufmann",
+              "target": "der Kaufmann",
+              "translationAr": "التاجر",
+              "phonetic": "دير كأوفمان",
+              "emoji": "🤵"
+            },
+            {
+              "id": "de_der_fahrer",
+              "target": "der Fahrer",
+              "translationAr": "السائق",
+              "phonetic": "دير فارا",
+              "emoji": "🚙"
+            },
+            {
+              "id": "de_die_krankenschwester",
+              "target": "die Krankenschwester",
+              "translationAr": "الممرضة",
+              "phonetic": "دي كرانكِن شڤيستا",
+              "emoji": "👩‍⚕️"
+            }
+          ]
+        },
+        {
+          "id": "de_u16_l2",
+          "titleAr": "في المكتب",
+          "titleEn": "In the Office",
+          "vocab": [
+            {
+              "id": "de_das_buero",
+              "target": "das Büro",
+              "translationAr": "المكتب",
+              "phonetic": "داس بورو",
+              "emoji": "🏢"
+            },
+            {
+              "id": "de_der_computer",
+              "target": "der Computer",
+              "translationAr": "الحاسوب",
+              "phonetic": "دير كومبيوتا",
+              "emoji": "💻"
+            },
+            {
+              "id": "de_die_tastatur",
+              "target": "die Tastatur",
+              "translationAr": "لوحة المفاتيح",
+              "phonetic": "دي تاستاتوأ",
+              "emoji": "⌨️"
+            },
+            {
+              "id": "de_die_datei",
+              "target": "die Datei",
+              "translationAr": "الملف",
+              "phonetic": "دي داتاي",
+              "emoji": "📁"
+            },
+            {
+              "id": "de_der_drucker",
+              "target": "der Drucker",
+              "translationAr": "الطابعة",
+              "phonetic": "دير دروكا",
+              "emoji": "🖨️"
+            },
+            {
+              "id": "de_die_e_mail",
+              "target": "die E-Mail",
+              "translationAr": "البريد الإلكتروني",
+              "phonetic": "دي إيمايل",
+              "emoji": "📧"
+            },
+            {
+              "id": "de_das_treffen",
+              "target": "das Treffen",
+              "translationAr": "الاجتماع",
+              "phonetic": "داس تريفِن",
+              "emoji": "🤝"
+            },
+            {
+              "id": "de_der_kollege",
+              "target": "der Kollege",
+              "translationAr": "الزميل",
+              "phonetic": "دير كوليغِه",
+              "emoji": "🧑‍💼"
+            },
+            {
+              "id": "de_der_chef",
+              "target": "der Chef",
+              "translationAr": "المدير / الرئيس",
+              "phonetic": "دير شيف",
+              "emoji": "👔"
+            },
+            {
+              "id": "de_der_kalender",
+              "target": "der Kalender",
+              "translationAr": "التقويم",
+              "phonetic": "دير كالِندا",
+              "emoji": "🗓️"
+            }
+          ]
+        },
+        {
+          "id": "de_u16_l3",
+          "titleAr": "حياة العمل",
+          "titleEn": "Working Life",
+          "vocab": [
+            {
+              "id": "de_sich_bewerben",
+              "target": "sich bewerben",
+              "translationAr": "يتقدم لوظيفة",
+              "phonetic": "زيش بِڤيربن",
+              "emoji": "📄",
+              "exampleTarget": "Ich bewerbe mich um die Stelle",
+              "exampleAr": "أتقدم لهذه الوظيفة"
+            },
+            {
+              "id": "de_die_stelle",
+              "target": "die Stelle",
+              "translationAr": "الوظيفة",
+              "phonetic": "دي شتِلِه",
+              "emoji": "🧰"
+            },
+            {
+              "id": "de_der_lebenslauf",
+              "target": "der Lebenslauf",
+              "translationAr": "السيرة الذاتية",
+              "phonetic": "دير لايبِنستسلاوف",
+              "emoji": "📋"
+            },
+            {
+              "id": "de_der_vertrag",
+              "target": "der Vertrag",
+              "translationAr": "العقد",
+              "phonetic": "دير فيرتراك",
+              "emoji": "📝"
+            },
+            {
+              "id": "de_der_lohn",
+              "target": "der Lohn",
+              "translationAr": "الراتب / الأجر",
+              "phonetic": "دير لون",
+              "emoji": "💵"
+            },
+            {
+              "id": "de_die_ferien",
+              "target": "die Ferien",
+              "translationAr": "الإجازة",
+              "phonetic": "دي فيريِن",
+              "emoji": "🏝️"
+            },
+            {
+              "id": "de_die_besprechung",
+              "target": "die Besprechung",
+              "translationAr": "المناقشة / الاجتماع",
+              "phonetic": "دي بِشبريخونغ",
+              "emoji": "📊"
+            },
+            {
+              "id": "de_arbeiten",
+              "target": "arbeiten",
+              "translationAr": "يعمل",
+              "phonetic": "آربايتِن",
+              "emoji": "🖥️",
+              "exampleTarget": "Sie arbeitet im Büro",
+              "exampleAr": "هي تعمل في المكتب"
+            },
+            {
+              "id": "de_vorschlagen",
+              "target": "vorschlagen",
+              "translationAr": "يقترح",
+              "phonetic": "فورشلاگِن",
+              "emoji": "💡",
+              "exampleTarget": "Ich schlage eine Pause vor",
+              "exampleAr": "أقترح استراحة"
+            },
+            {
+              "id": "de_die_pause",
+              "target": "die Pause",
+              "translationAr": "الاستراحة",
+              "phonetic": "دي باوزِه",
+              "emoji": "☕"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u17",
+      "color": "#CE82FF",
+      "titleAr": "المدينة والاتجاهات",
+      "titleEn": "City & Directions",
+      "cefr": "B1",
+      "lessons": [
+        {
+          "id": "de_u17_l1",
+          "titleAr": "أماكن المدينة",
+          "titleEn": "City Places",
+          "vocab": [
+            {
+              "id": "de_die_strasse",
+              "target": "die Straße",
+              "translationAr": "الشارع",
+              "phonetic": "دي شتراسِه",
+              "emoji": "🏙️"
+            },
+            {
+              "id": "de_die_kreuzung",
+              "target": "die Kreuzung",
+              "translationAr": "التقاطع",
+              "phonetic": "دي كرويتسونغ",
+              "emoji": "🔀"
+            },
+            {
+              "id": "de_der_platz",
+              "target": "der Platz",
+              "translationAr": "الساحة / المكان",
+              "phonetic": "دير بلاتس",
+              "emoji": "⛲"
+            },
+            {
+              "id": "de_der_park",
+              "target": "der Park",
+              "translationAr": "الحديقة العامة",
+              "phonetic": "دير پارك",
+              "emoji": "🌳"
+            },
+            {
+              "id": "de_das_kino",
+              "target": "das Kino",
+              "translationAr": "السينما",
+              "phonetic": "داس كينو",
+              "emoji": "🎬"
+            },
+            {
+              "id": "de_das_museum",
+              "target": "das Museum",
+              "translationAr": "المتحف",
+              "phonetic": "داس موزِيوم",
+              "emoji": "🏛️"
+            },
+            {
+              "id": "de_die_bibliothek",
+              "target": "die Bibliothek",
+              "translationAr": "المكتبة العامة",
+              "phonetic": "دي بيبليوتيك",
+              "emoji": "📚"
+            },
+            {
+              "id": "de_das_theater",
+              "target": "das Theater",
+              "translationAr": "المسرح",
+              "phonetic": "داس تياتا",
+              "emoji": "🎭"
+            },
+            {
+              "id": "de_die_moschee",
+              "target": "die Moschee",
+              "translationAr": "المسجد",
+              "phonetic": "دي موشي",
+              "emoji": "🕌"
+            },
+            {
+              "id": "de_die_kirche",
+              "target": "die Kirche",
+              "translationAr": "الكنيسة",
+              "phonetic": "دي كيرشِه",
+              "emoji": "⛪"
+            }
+          ]
+        },
+        {
+          "id": "de_u17_l2",
+          "titleAr": "الاتجاهات",
+          "titleEn": "Directions",
+          "vocab": [
+            {
+              "id": "de_wo_ist",
+              "target": "Wo ist...?",
+              "translationAr": "أين ...؟",
+              "phonetic": "ڤو إست؟",
+              "emoji": "❓"
+            },
+            {
+              "id": "de_entlang",
+              "target": "entlang",
+              "translationAr": "على طول",
+              "phonetic": "إنتلانغ",
+              "emoji": "➰"
+            },
+            {
+              "id": "de_ueber",
+              "target": "über",
+              "translationAr": "فوق / عبر",
+              "phonetic": "أوبا",
+              "emoji": "⤴️"
+            },
+            {
+              "id": "de_unter",
+              "target": "unter",
+              "translationAr": "تحت",
+              "phonetic": "أونتا",
+              "emoji": "⤵️"
+            },
+            {
+              "id": "de_neben",
+              "target": "neben",
+              "translationAr": "بجانب",
+              "phonetic": "نيبن",
+              "emoji": "↔️"
+            },
+            {
+              "id": "de_zwischen",
+              "target": "zwischen",
+              "translationAr": "بين",
+              "phonetic": "تسڤيشِن",
+              "emoji": "🔘"
+            },
+            {
+              "id": "de_vor",
+              "target": "vor",
+              "translationAr": "أمام / قبل",
+              "phonetic": "فور",
+              "emoji": "🔜"
+            },
+            {
+              "id": "de_hinter",
+              "target": "hinter",
+              "translationAr": "خلف",
+              "phonetic": "هينتا",
+              "emoji": "🔙"
+            },
+            {
+              "id": "de_die_ecke",
+              "target": "die Ecke",
+              "translationAr": "الزاوية",
+              "phonetic": "دي إكِه",
+              "emoji": "📐"
+            },
+            {
+              "id": "de_der_stadtplan",
+              "target": "der Stadtplan",
+              "translationAr": "خريطة المدينة",
+              "phonetic": "دير شتاتبلاَن",
+              "emoji": "🗺️"
+            }
+          ]
+        },
+        {
+          "id": "de_u17_l3",
+          "titleAr": "التنقل اليومي",
+          "titleEn": "Getting Around",
+          "vocab": [
+            {
+              "id": "de_umziehen",
+              "target": "umziehen",
+              "translationAr": "ينتقل إلى سكن جديد",
+              "phonetic": "أومتسِيِن",
+              "emoji": "📦",
+              "exampleTarget": "Wir ziehen nach München um",
+              "exampleAr": "نتنقل إلى ميونخ"
+            },
+            {
+              "id": "de_die_umgebung",
+              "target": "die Umgebung",
+              "translationAr": "المحيط / الجوار",
+              "phonetic": "دي أومغِبونغ",
+              "emoji": "🏘️"
+            },
+            {
+              "id": "de_entfernt",
+              "target": "entfernt",
+              "translationAr": "بعيد",
+              "phonetic": "إنتفيرنت",
+              "emoji": "💨"
+            },
+            {
+              "id": "de_die_naehe",
+              "target": "die Nähe",
+              "translationAr": "القرب",
+              "phonetic": "دي نايِه",
+              "emoji": "📍",
+              "exampleTarget": "In der Nähe vom Bahnhof",
+              "exampleAr": "قرب محطة القطار"
+            },
+            {
+              "id": "de_der_verkehr",
+              "target": "der Verkehr",
+              "translationAr": "الحركة المرورية",
+              "phonetic": "دير فيركير",
+              "emoji": "🚦"
+            },
+            {
+              "id": "de_der_stau",
+              "target": "der Stau",
+              "translationAr": "الازدحام المروري",
+              "phonetic": "دير شتأو",
+              "emoji": "🛑"
+            },
+            {
+              "id": "de_fuehren",
+              "target": "führen",
+              "translationAr": "يقود / يؤدي إلى",
+              "phonetic": "فورِن",
+              "emoji": "🚸",
+              "exampleTarget": "Diese Straße führt zum Markt",
+              "exampleAr": "هذا الشارع يؤدي إلى السوق"
+            },
+            {
+              "id": "de_kreuzen",
+              "target": "kreuzen",
+              "translationAr": "يعبر / يتقاطع",
+              "phonetic": "كرويتسِن",
+              "emoji": "🔀"
+            },
+            {
+              "id": "de_der_fussweg",
+              "target": "der Fußweg",
+              "translationAr": "طريق المشي",
+              "phonetic": "دير فوسڤِك",
+              "emoji": "🚶"
+            },
+            {
+              "id": "de_der_eingang",
+              "target": "der Eingang",
+              "translationAr": "المدخل",
+              "phonetic": "دير أينغانغ",
+              "emoji": "🚪"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u18",
+      "color": "#00CD9C",
+      "titleAr": "الفندق والإقامة",
+      "titleEn": "Hotel & Accommodation",
+      "cefr": "B1",
+      "lessons": [
+        {
+          "id": "de_u18_l1",
+          "titleAr": "الحجز والاستقبال",
+          "titleEn": "Check-in",
+          "vocab": [
+            {
+              "id": "de_die_buchung",
+              "target": "die Buchung",
+              "translationAr": "الحجز",
+              "phonetic": "دي بوخونغ",
+              "emoji": "🛎️"
+            },
+            {
+              "id": "de_der_empfang",
+              "target": "der Empfang",
+              "translationAr": "الاستقبال",
+              "phonetic": "دير إمپفانك",
+              "emoji": "🪪"
+            },
+            {
+              "id": "de_der_aufzug",
+              "target": "der Aufzug",
+              "translationAr": "المصعد",
+              "phonetic": "دير أوفتسوغ",
+              "emoji": "🛗"
+            },
+            {
+              "id": "de_die_etage",
+              "target": "die Etage",
+              "translationAr": "الطابق",
+              "phonetic": "دي إيتاجِه",
+              "emoji": "🪜"
+            },
+            {
+              "id": "de_das_doppelzimmer",
+              "target": "das Doppelzimmer",
+              "translationAr": "غرفة مزدوجة",
+              "phonetic": "داس دوپلتسِما",
+              "emoji": "🛏️"
+            },
+            {
+              "id": "de_die_uebernachtung",
+              "target": "die Übernachtung",
+              "translationAr": "المبيت",
+              "phonetic": "دي أوبناختونغ",
+              "emoji": "🌃"
+            },
+            {
+              "id": "de_die_klimaanlage",
+              "target": "die Klimaanlage",
+              "translationAr": "المكيّف",
+              "phonetic": "دي كليمانلاگِه",
+              "emoji": "❄️"
+            },
+            {
+              "id": "de_die_heizung",
+              "target": "die Heizung",
+              "translationAr": "التدفئة",
+              "phonetic": "دي هايتسونغ",
+              "emoji": "🔥"
+            },
+            {
+              "id": "de_der_safe",
+              "target": "der Safe",
+              "translationAr": "الخزنة",
+              "phonetic": "دير سيف",
+              "emoji": "🔐"
+            },
+            {
+              "id": "de_der_portier",
+              "target": "der Portier",
+              "translationAr": "بواب الفندق",
+              "phonetic": "دير بورتيِ",
+              "emoji": "🎩"
+            }
+          ]
+        },
+        {
+          "id": "de_u18_l2",
+          "titleAr": "خدمات الفندق",
+          "titleEn": "Hotel Services",
+          "vocab": [
+            {
+              "id": "de_die_reinigung",
+              "target": "die Reinigung",
+              "translationAr": "التنظيف / المغسلة",
+              "phonetic": "دي راينِغونغ",
+              "emoji": "🧺"
+            },
+            {
+              "id": "de_die_waesche",
+              "target": "die Wäsche",
+              "translationAr": "الغسيل",
+              "phonetic": "دي ڤيشِه",
+              "emoji": "👕"
+            },
+            {
+              "id": "de_die_beschwerde",
+              "target": "die Beschwerde",
+              "translationAr": "الشكوى",
+              "phonetic": "دي بِشڤيردِه",
+              "emoji": "📢",
+              "exampleTarget": "Ich habe eine Beschwerde",
+              "exampleAr": "لدي شكوى"
+            },
+            {
+              "id": "de_der_komfort",
+              "target": "der Komfort",
+              "translationAr": "الرفاهية / الراحة",
+              "phonetic": "دير كومفورت",
+              "emoji": "🛋️"
+            },
+            {
+              "id": "de_die_aussicht",
+              "target": "die Aussicht",
+              "translationAr": "المنظر",
+              "phonetic": "دي أوسزيشْت",
+              "emoji": "🌄"
+            },
+            {
+              "id": "de_der_meerblick",
+              "target": "der Meerblick",
+              "translationAr": "إطلالة على البحر",
+              "phonetic": "دير ميربليك",
+              "emoji": "🌊"
+            },
+            {
+              "id": "de_der_parkplatz",
+              "target": "der Parkplatz",
+              "translationAr": "موقف السيارات",
+              "phonetic": "دير پاركپلاتس",
+              "emoji": "🅿️"
+            },
+            {
+              "id": "de_verlaengern",
+              "target": "verlängern",
+              "translationAr": "يمدّد الإقامة",
+              "phonetic": "فيرلينغيرن",
+              "emoji": "⏳",
+              "exampleTarget": "Wir verlängern den Aufenthalt",
+              "exampleAr": "نمدّد فترة الإقامة"
+            },
+            {
+              "id": "de_auschecken",
+              "target": "auschecken",
+              "translationAr": "يُسلّم الغرفة ويغادر",
+              "phonetic": "أوسشيكِن",
+              "emoji": "🚪"
+            },
+            {
+              "id": "de_der_wifi_code",
+              "target": "das WLAN-Passwort",
+              "translationAr": "كلمة سر الواي فاي",
+              "phonetic": "داس ڤيلان پاسڤورت",
+              "emoji": "📶"
+            }
+          ]
+        },
+        {
+          "id": "de_u18_l3",
+          "titleAr": "التأشيرة والسفر الطويل",
+          "titleEn": "Visa & Border",
+          "vocab": [
+            {
+              "id": "de_das_visum",
+              "target": "das Visum",
+              "translationAr": "التأشيرة",
+              "phonetic": "داس ڤيزوم",
+              "emoji": "🛂"
+            },
+            {
+              "id": "de_die_botschaft",
+              "target": "die Botschaft",
+              "translationAr": "السفارة",
+              "phonetic": "دي بوتشافت",
+              "emoji": "🏛️"
+            },
+            {
+              "id": "de_der_aufenthalt",
+              "target": "der Aufenthalt",
+              "translationAr": "الإقامة",
+              "phonetic": "دير أوفينتالت",
+              "emoji": "🗓️"
+            },
+            {
+              "id": "de_die_einreise",
+              "target": "die Einreise",
+              "translationAr": "الدخول إلى البلد",
+              "phonetic": "دي أينرايزِه",
+              "emoji": "🛬"
+            },
+            {
+              "id": "de_der_zoll",
+              "target": "der Zoll",
+              "translationAr": "الجمارك",
+              "phonetic": "دير تسول",
+              "emoji": "🛃"
+            },
+            {
+              "id": "de_das_formular",
+              "target": "das Formular",
+              "translationAr": "الاستمارة",
+              "phonetic": "داس فورمولا",
+              "emoji": "📃"
+            },
+            {
+              "id": "de_ausfuellen",
+              "target": "ausfüllen",
+              "translationAr": "يملأ الاستمارة",
+              "phonetic": "أوسفولِن",
+              "emoji": "✍️",
+              "exampleTarget": "Füllen Sie das Formular aus",
+              "exampleAr": "املأ الاستمارة"
+            },
+            {
+              "id": "de_die_unterschrift",
+              "target": "die Unterschrift",
+              "translationAr": "التوقيع",
+              "phonetic": "دي أونتاشريفْت",
+              "emoji": "🖊️"
+            },
+            {
+              "id": "de_gueltig",
+              "target": "gültig",
+              "translationAr": "صالح",
+              "phonetic": "غولتيش",
+              "emoji": "✔️",
+              "exampleTarget": "Der Pass ist noch gültig",
+              "exampleAr": "جواز السفر ما زال صالحاً"
+            },
+            {
+              "id": "de_der_umzug",
+              "target": "der Umzug",
+              "translationAr": "نقل الأثاث والانتقال",
+              "phonetic": "دير أومتسوغ",
+              "emoji": "🚚"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u19",
+      "color": "#9333EA",
+      "titleAr": "التقنية والإنترنت",
+      "titleEn": "Technology & Internet",
+      "cefr": "B2",
+      "lessons": [
+        {
+          "id": "de_u19_l1",
+          "titleAr": "الأجهزة",
+          "titleEn": "Devices",
+          "vocab": [
+            {
+              "id": "de_das_handy",
+              "target": "das Handy",
+              "translationAr": "الهاتف المحمول",
+              "phonetic": "داس هندي",
+              "emoji": "📱"
+            },
+            {
+              "id": "de_der_laptop",
+              "target": "der Laptop",
+              "translationAr": "الحاسوب المحمول",
+              "phonetic": "دير لابتوب",
+              "emoji": "💻"
+            },
+            {
+              "id": "de_der_bildschirm",
+              "target": "der Bildschirm",
+              "translationAr": "الشاشة",
+              "phonetic": "دير بيلتشيرم",
+              "emoji": "🖥️"
+            },
+            {
+              "id": "de_das_ladegeraet",
+              "target": "das Ladegerät",
+              "translationAr": "الشاحن",
+              "phonetic": "داس لادِغِرِيت",
+              "emoji": "🔌"
+            },
+            {
+              "id": "de_der_kopfhoerer",
+              "target": "der Kopfhörer",
+              "translationAr": "السماعات",
+              "phonetic": "دير كوپفهورا",
+              "emoji": "🎧"
+            },
+            {
+              "id": "de_die_computermaus",
+              "target": "die Computermaus",
+              "translationAr": "فأرة الحاسوب",
+              "phonetic": "دي كومبيوتاماوس",
+              "emoji": "🖱️"
+            },
+            {
+              "id": "de_der_speicher",
+              "target": "der Speicher",
+              "translationAr": "الذاكرة / التخزين",
+              "phonetic": "دير شبايشار",
+              "emoji": "💾"
+            },
+            {
+              "id": "de_die_kamera",
+              "target": "die Kamera",
+              "translationAr": "الكاميرا",
+              "phonetic": "دي كاميرا",
+              "emoji": "📷"
+            },
+            {
+              "id": "de_der_roboter",
+              "target": "der Roboter",
+              "translationAr": "الروبوت",
+              "phonetic": "دير روبوتا",
+              "emoji": "🤖"
+            },
+            {
+              "id": "de_der_akku",
+              "target": "der Akku",
+              "translationAr": "البطارية",
+              "phonetic": "دير أكو",
+              "emoji": "🔋"
+            }
+          ]
+        },
+        {
+          "id": "de_u19_l2",
+          "titleAr": "الإنترنت",
+          "titleEn": "Internet",
+          "vocab": [
+            {
+              "id": "de_das_internet",
+              "target": "das Internet",
+              "translationAr": "الإنترنت",
+              "phonetic": "داس إنتيرنِت",
+              "emoji": "🌐"
+            },
+            {
+              "id": "de_die_webseite",
+              "target": "die Webseite",
+              "translationAr": "الموقع الإلكتروني",
+              "phonetic": "دي ڤبزايتِه",
+              "emoji": "🧑‍💻"
+            },
+            {
+              "id": "de_der_link",
+              "target": "der Link",
+              "translationAr": "الرابط",
+              "phonetic": "دير لينك",
+              "emoji": "🔗"
+            },
+            {
+              "id": "de_das_passwort",
+              "target": "das Passwort",
+              "translationAr": "كلمة المرور",
+              "phonetic": "داس پاسڤورت",
+              "emoji": "🔑"
+            },
+            {
+              "id": "de_hochladen",
+              "target": "hochladen",
+              "translationAr": "يرفع (ملفات)",
+              "phonetic": "هوخلاسِن",
+              "emoji": "⬆️",
+              "exampleTarget": "Ich lade das Foto hoch",
+              "exampleAr": "أرفع الصورة"
+            },
+            {
+              "id": "de_herunterladen",
+              "target": "herunterladen",
+              "translationAr": "يُنزّل",
+              "phonetic": "هيراونتالاِسِن",
+              "emoji": "⬇️"
+            },
+            {
+              "id": "de_speichern",
+              "target": "speichern",
+              "translationAr": "يحفظ",
+              "phonetic": "شبايشارن",
+              "emoji": "🗄️"
+            },
+            {
+              "id": "de_loschen",
+              "target": "löschen",
+              "translationAr": "يحذف",
+              "phonetic": "لوفشِن",
+              "emoji": "🗑️"
+            },
+            {
+              "id": "de_die_nachricht",
+              "target": "die Nachricht",
+              "translationAr": "الرسالة / الخبر",
+              "phonetic": "دي ناخريشت",
+              "emoji": "✉️"
+            },
+            {
+              "id": "de_der_anhang",
+              "target": "der Anhang",
+              "translationAr": "المرفق",
+              "phonetic": "دير أنجانغ",
+              "emoji": "📎"
+            }
+          ]
+        },
+        {
+          "id": "de_u19_l3",
+          "titleAr": "العالم الرقمي",
+          "titleEn": "The Digital World",
+          "vocab": [
+            {
+              "id": "de_die_software",
+              "target": "die Software",
+              "translationAr": "البرمجيات",
+              "phonetic": "دي سُوفتڤير",
+              "emoji": "🧩"
+            },
+            {
+              "id": "de_die_hardware",
+              "target": "die Hardware",
+              "translationAr": "المكوّنات المادية",
+              "phonetic": "دي هاردڤير",
+              "emoji": "🧰"
+            },
+            {
+              "id": "de_der_virus",
+              "target": "der Virus",
+              "translationAr": "الفيروس",
+              "phonetic": "دير ڤيروس",
+              "emoji": "🦠"
+            },
+            {
+              "id": "de_die_sicherheit",
+              "target": "die Sicherheit",
+              "translationAr": "الأمان",
+              "phonetic": "دي زيشِرهايت",
+              "emoji": "🛡️"
+            },
+            {
+              "id": "de_das_programm",
+              "target": "das Programm",
+              "translationAr": "البرنامج",
+              "phonetic": "داس پروغلام",
+              "emoji": "⚙️"
+            },
+            {
+              "id": "de_aktualisieren",
+              "target": "aktualisieren",
+              "translationAr": "يحدّث",
+              "phonetic": "أكتواليزيزِن",
+              "emoji": "🔄"
+            },
+            {
+              "id": "de_der_datenschutz",
+              "target": "der Datenschutz",
+              "translationAr": "حماية البيانات",
+              "phonetic": "دير داتاشوتس",
+              "emoji": "🔏"
+            },
+            {
+              "id": "de_der_entwickler",
+              "target": "der Entwickler",
+              "translationAr": "المطوّر",
+              "phonetic": "دير إنتڤيكلَا",
+              "emoji": "👨‍💻"
+            },
+            {
+              "id": "de_die_ki",
+              "target": "die Künstliche Intelligenz",
+              "translationAr": "الذكاء الاصطناعي",
+              "phonetic": "دي كونشتليشِه إنتيلايِنتس",
+              "emoji": "🧠"
+            },
+            {
+              "id": "de_die_verbindung",
+              "target": "die Verbindung",
+              "translationAr": "الاتصال",
+              "phonetic": "دي فيربِندونغ",
+              "emoji": "📶"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "de_u20",
+      "color": "#A0522D",
+      "titleAr": "الاصطلاحات والتعبيرات",
+      "titleEn": "Idioms & Expressions",
+      "cefr": "C1",
+      "lessons": [
+        {
+          "id": "de_u20_l1",
+          "titleAr": "اصطلاحات يومية",
+          "titleEn": "Everyday Idioms",
+          "vocab": [
+            {
+              "id": "de_idiom_kein_blatt",
+              "target": "kein Blatt vor dem Mund nehmen",
+              "translationAr": "يتحدث بصراحة دون مجاملة",
+              "phonetic": "كاين بلات فور دِم مونت نيمن",
+              "emoji": "🍃",
+              "exampleTarget": "Sie nimmt kein Blatt vor den Mund",
+              "exampleAr": "هي تتحدث بصراحة تامة"
+            },
+            {
+              "id": "de_idiom_tomaten",
+              "target": "Tomaten auf den Augen haben",
+              "translationAr": "يغفل عما هو واضح",
+              "phonetic": "توماتِن أوف دِن أأوغِن هابِن",
+              "emoji": "🍅",
+              "exampleTarget": "Hast du Tomaten auf den Augen?",
+              "exampleAr": "هل غفلْت عن الواضح؟"
+            },
+            {
+              "id": "de_idiom_baer",
+              "target": "Da steppt der Bär",
+              "translationAr": "الجو رائع كالحفلات (الطقم حاضر)",
+              "phonetic": "دا شتِپت دير بِر",
+              "emoji": "🐻",
+              "exampleTarget": "Gestern steppte der Bär!",
+              "exampleAr": "كان الحفل لا يوصف!"
+            },
+            {
+              "id": "de_idiom_katze_sack",
+              "target": "die Katze im Sack kaufen",
+              "translationAr": "يشتري شيئاً دون معاينة (خدعة)",
+              "phonetic": "دي كاتسِه إم زاك كأوفن",
+              "emoji": "🛍️"
+            },
+            {
+              "id": "de_idiom_licht_auf",
+              "target": "jemandem geht ein Licht auf",
+              "translationAr": "ينوّر لَه المصباح — يفهم فجأة",
+              "phonetic": "يامِندِم غايت أين ليشت أوف",
+              "emoji": "💡",
+              "exampleTarget": "Jetzt geht mir ein Licht auf!",
+              "exampleAr": "الآن فهمت الأمر!"
+            },
+            {
+              "id": "de_idiom_grosse_klappe",
+              "target": "große Klappe, nichts dahinter",
+              "translationAr": "كلام كثير وشيء قليل",
+              "phonetic": "غروسِه كلاپِه نيشْتس داهينتا",
+              "emoji": "📢"
+            },
+            {
+              "id": "de_idiom_katze_mausen",
+              "target": "die Katze lässt das Mausen nicht",
+              "translationAr": "العادات لا تتغير (القطة لا تترك مكيدة)",
+              "phonetic": "دي كاتسِه لِست داس ماوزِن نيشْت",
+              "emoji": "🐱"
+            },
+            {
+              "id": "de_idiom_schwarzer_tag",
+              "target": "ein schwarzer Tag",
+              "translationAr": "يوم سيئ للغاية",
+              "phonetic": "أين شرافتسا تاك",
+              "emoji": "⚫"
+            }
+          ]
+        },
+        {
+          "id": "de_u20_l2",
+          "titleAr": "تمنيات ومجاملات",
+          "titleEn": "Wishes & Courtesies",
+          "vocab": [
+            {
+              "id": "de_idiom_gute_besserung",
+              "target": "Gute Besserung!",
+              "translationAr": "سلامات — شفاء عاجلاً!",
+              "phonetic": "غوتِه بيسترونغ",
+              "emoji": "🌷"
+            },
+            {
+              "id": "de_idiom_hals_bein",
+              "target": "Hals- und Beinbruch!",
+              "translationAr": "حظاً موفقاً! (تعبير مسرحي)",
+              "phonetic": "هالس أونت باينبروخ",
+              "emoji": "🍀"
+            },
+            {
+              "id": "de_idiom_toi_toi",
+              "target": "Toi, toi, toi!",
+              "translationAr": "دعاء بالحفظ من الحسد",
+              "phonetic": "توي توي توي",
+              "emoji": "👀"
+            },
+            {
+              "id": "de_idiom_glueckwunsch",
+              "target": "Herzlichen Glückwunsch!",
+              "translationAr": "ألف مبروك!",
+              "phonetic": "هيرتسليشِن غلوكڤونش",
+              "emoji": "🎊"
+            },
+            {
+              "id": "de_idiom_guten_appetit",
+              "target": "Guten Appetit!",
+              "translationAr": "بالهنا والشفا!",
+              "phonetic": "غوتِن أپيتيت",
+              "emoji": "😋"
+            },
+            {
+              "id": "de_idiom_guten_rutsch",
+              "target": "Guten Rutsch ins neue Jahr!",
+              "translationAr": "سنة جديدة سعيدة!",
+              "phonetic": "غوتِن روتش إنس نويِه يار",
+              "emoji": "🎆"
+            },
+            {
+              "id": "de_idiom_alles_klare",
+              "target": "Alles klar?",
+              "translationAr": "كل شيء تمام؟",
+              "phonetic": "ألِس كلا؟",
+              "emoji": "👌"
+            },
+            {
+              "id": "de_idiom_machst_gut",
+              "target": "Mach's gut!",
+              "translationAr": "اعتنت بنفسك — وداعاً!",
+              "phonetic": "ماخس غوت",
+              "emoji": "👋"
+            }
+          ]
+        },
+        {
+          "id": "de_u20_l3",
+          "titleAr": "حكمة وأمثال",
+          "titleEn": "Proverbs & Wisdom",
+          "vocab": [
+            {
+              "id": "de_idiom_kleinvieh",
+              "target": "Kleinvieh macht auch Mist",
+              "translationAr": "المال الصغير يتراكم (القروش تُحصَّل)",
+              "phonetic": "كلاينفيه ماخت أُخ ميست",
+              "emoji": "🐖"
+            },
+            {
+              "id": "de_idiom_morgenstund",
+              "target": "Morgenstund hat Gold im Mund",
+              "translationAr": "الوقت الباكر ذهب",
+              "phonetic": "مورغِنشتوند هات غولت إم مونت",
+              "emoji": "🌅"
+            },
+            {
+              "id": "de_idiom_zwei_fliegen",
+              "target": "zwei Fliegen mit einer Klappe schlagen",
+              "translationAr": "يضرب عصفورين بحجر واحد",
+              "phonetic": "تسڤاي فليغِن ميت أينا كلاپِه شلاگِن",
+              "emoji": "🪰"
+            },
+            {
+              "id": "de_idiom_tropfen",
+              "target": "der Tropfen, der das Fass zum Überlaufen bringt",
+              "translationAr": "القشة التي قصمت ظهر البعير",
+              "phonetic": "دير تروپفِن دير داس فاس تسوم أوبلاوفِن برينغت",
+              "emoji": "🛢️"
+            },
+            {
+              "id": "de_idiom_kirche_dorf",
+              "target": "die Kirche im Dorf lassen",
+              "translationAr": "يُبقي الأمور في نصابها ولا يبالغ",
+              "phonetic": "دي كيرشِه إم دورف لاسِن",
+              "emoji": "⛪"
+            },
+            {
+              "id": "de_idiom_daumen_druecken",
+              "target": "die Daumen drücken",
+              "translationAr": "ندعو لك بالتوفيق (نضغط الأبهام)",
+              "phonetic": "دي دأومِن دروكِن",
+              "emoji": "👍",
+              "exampleTarget": "Ich drücke dir die Daumen!",
+              "exampleAr": "أدعو لك بالتوفيق!"
+            },
+            {
+              "id": "de_idiom_augen_zu",
+              "target": "Augen zu und durch",
+              "translationAr": "اغمض عينيك وامضِ (تغلب على الصعوبة)",
+              "phonetic": "أأوغِن تسو أونت دورخ",
+              "emoji": "😤"
+            },
+            {
+              "id": "de_idiom_schnee_gestern",
+              "target": "Schnee von gestern",
+              "translationAr": "أمر مضى وانقضى",
+              "phonetic": "شنِي فون غيستيرن",
+              "emoji": "⛄"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

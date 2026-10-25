@@ -57,7 +57,7 @@ void main() {
           CustomDeck.fromJson({
             'id': 'cd1',
             'name': 'x',
-            'courseId': 'de',
+            'courseId': 'xx',
           }),
           isNull);
       // Words with foreign id prefixes are dropped, the deck survives with

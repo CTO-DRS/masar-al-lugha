@@ -17,6 +17,10 @@ void main() {
       expect(directionOf('Cat'), TextDirection.ltr);
       // French accented letters are still Latin (Latin-1 supplement).
       expect(directionOf('Ça va très bien'), TextDirection.ltr);
+      // v5.0: German umlauts and ß live in the extended-Latin range —
+      // the fourth course keeps reading LTR.
+      expect(directionOf('Grüße'), TextDirection.ltr);
+      expect(directionOf('Wo ist der Bahnhof?'), TextDirection.ltr);
     });
 
     test('Arabic-script sentences are RTL (Urdu course included)', () {

@@ -128,7 +128,8 @@ class L {
       'badge_cards_200': 'أمير البطاقات — راجع 200 بطاقة',
       'badge_both_courses': 'ثنائي اللغات — أكملت الدورتين',
       'badge_all_fr_units': 'خبير الفرنسية — أكمل كل الوحدات',
-      'badge_polyglot': 'متعدد اللغات — أكملت الدورات الثلاث',
+      'badge_all_de_units': 'خبير الألمانية — أكمل كل الوحدات',
+      'badge_polyglot': 'متعدد اللغات — أكملت الدورات الأربع',
       // v4.0
       'darkMode': 'الوضع الليلي',
       'reduceMotion': 'تقليل الحركة والمؤثرات',
@@ -312,7 +313,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 4.13.1',
+      'version': 'الإصدار 5.0.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -439,7 +440,8 @@ class L {
       'badge_cards_200': 'Card Prince — review 200 cards',
       'badge_both_courses': 'Bilingual — finished both courses',
       'badge_all_fr_units': 'French Master — finish all units',
-      'badge_polyglot': 'Polyglot — finished all three courses',
+      'badge_all_de_units': 'German Master — finish all units',
+      'badge_polyglot': 'Polyglot — finished all four courses',
       // v4.0
       'darkMode': 'Dark mode',
       'reduceMotion': 'Reduce motion & effects',
@@ -628,7 +630,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 4.13.1',
+      'version': 'Version 5.0.0',
     },
   };
 

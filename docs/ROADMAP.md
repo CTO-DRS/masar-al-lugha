@@ -1,8 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v4.13.1+23** — see docs/PROJECT_AUDIT.md and the
-v4.13.1 section below for the RTL direction-safety fix (built sentences
-no longer render reversed inside the Arabic UI) with test evidence.
+**Current release: v5.0.0+24** — see the v5.0 section below for the
+German course (the fourth language) and the v4.13.1 section for the RTL
+direction-safety fix with test evidence.
 
 ## Where we are
 
@@ -31,6 +31,7 @@ no longer render reversed inside the Arabic UI) with test evidence.
 | v4.12 | **The placement test now AUTO-LINKS its result to the level: `Placement.recommendedTier` reuses the consecutive-pass prefix rule (nothing proven → مبتدئ, ≥ half → متوسط, all → خبير), `AppState.setPathTier` stores it keeping any chosen field, the result card shows a green "level detected" badge, and the setup wizard pre-fills + refreshes the level step from the test** |
 | v4.13 | **The placement result now suggests the FIELD too: `Placement.recommendedDomain` lets every correctly answered word vote for its unit's domain (majority wins, catalog-order ties, no signal → no guess), `AppState.setPathDomain` stores it keeping the detected tier — so confirming the test can complete a whole plan (مجال × مستوى) without the wizard; a second badge shows the suggestion and both wizard steps pre-fill + refresh from it** |
 | v4.13.1 | **RTL direction-safety fix (learner-reported): target-language tiles in the build (arrange) exercise inherited the Arabic UI's RTL and rendered English sentences REVERSED (`morning \| Good`) — new first-strong `directionOf` + `ScriptDirection` widget lay every target-language surface (build rows, cloze prompt, dictation field, mcq/tf prompts, feedback answer, option cards, flashcard front, example lines) in its OWN script direction; the Urdu course keeps flowing RTL — pinned in `test/rtl_direction_test.dart`** |
+| **v5.0** | **German joins — the fourth course: 20 units / 60 lessons / 599 words (CEFR A1→C1 monotonic, de-DE TTS, 100% Arabic phonetics + emoji) loaded through the same engines (path domains, placement, exercise generation, SRS, custom decks); `all_de_units` badge + polyglot now spans four courses; a substring trap fixed (`التعريف` contains the nature keyword `ريف` → retitled `التعرّف على النفس`); content gate scans all four courses — 4497 words / 126 units / 430 lessons, 199 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -419,6 +420,41 @@ target-language content inherits it — unless told otherwise.
    `ScriptDirection` widget tests (English→LTR and Urdu→RTL inside an
    RTL shell via `Directionality.of`), and `OptionCard` direction for
    English vs Arabic options inside an RTL shell.
+
+## v5.0 — German joins: the fourth course (SHIPPED)
+
+The roadmap's remaining v5.0 candidate ships: a fourth language course.
+German was chosen for its Latin script (the direction engine of v4.13.1
+already lays it out LTR with zero new code paths) and its demand among
+Arabic-speaking learners. The wave was resumed from an interrupted
+session's working tree and completed end-to-end.
+
+1. ✅ **`assets/data/course_de.json`** — id `de`, flag 🇩🇪, `ttsLang
+   de-DE`, 20 units / 60 lessons / 599 words, monotonic CEFR ladder
+   A1×10 → A2×5 → B1×3 → B2 → C1, every word carries an Arabic phonetic
+   transcription and an emoji (picture rounds work out of the box).
+2. ✅ **Zero new engine code** — `main.dart` loads the fourth course and
+   everything downstream is course-agnostic: onboarding picker iterates
+   `state.courses.values`, TTS reads `course.ttsLang`, placement /
+   path domains / exercise generation / SRS / dictionary / weak-words
+   all take the course as a parameter. Custom decks accept `de`.
+3. ✅ **Badges** — `all_de_units` (خبير الألمانية / German Master) and
+   `polyglot` now requires all FOUR courses (l10n updated in ar+en).
+4. ✅ **The domain-routing trap** — `التعريف بالنفس` (Introducing
+   Yourself) contains the substring `ريف` (countryside), so the frozen
+   Arabic keyword catalog routed the unit to *nature*. Retitled to
+   `التعرّف على النفس` (better Arabic anyway) → the course partitions
+   basics 3 / travel 2 / food 2 / health 2 / tech 1 / nature 2 /
+   culture 1 / business 2 / daily 5, pinned in `test/path_test.dart`.
+5. ✅ **Gates widened** — `scripts/validate_content.py` scans all four
+   courses (was three), `test/content_test.dart` pins de [20,60,599]
+   with the 4497 total, `test/exercise_v46_test.dart` corpus sweep and
+   `test/path_test.dart` domain partition include de, and a German pin
+   (umlauts/ß → LTR) joined `test/rtl_direction_test.dart`.
+6. ✅ **`scripts/domain_counts_sim.py`** — a Python mirror of
+   `PathEngine.domainOfUnit` to recompute the per-domain pins whenever
+   course data changes (the missing `domain_mapping_sim.py` twin the
+   engine comments referenced).
 
 ## Hard invariants (never break)
 

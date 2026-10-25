@@ -188,10 +188,12 @@ void main() {
   group('domain catalog over the real courses', () {
     late Course en;
     late Course ur;
+    late Course de;
 
     setUpAll(() async {
       en = await _load('en');
       ur = await _load('ur');
+      de = await _load('de');
     });
 
     test('regression pins — the exact keyword bugs stay fixed', () {
@@ -229,10 +231,22 @@ void main() {
       expect(count(ur, PathDomain.culture), 6);
       expect(count(ur, PathDomain.basics), 3);
       expect(count(ur, PathDomain.daily), 6);
+      // v5.0: the German course partitions cleanly out of the box — its
+      // English unit titles route through the SAME Latin keyword catalog.
+      expect(count(de, PathDomain.basics), 3); // Numbers / Colors / Days
+      expect(count(de, PathDomain.travel), 2); // Transport / Hotel
+      expect(count(de, PathDomain.food), 2); // Food / Restaurant
+      expect(count(de, PathDomain.health), 2); // Body / Doctor
+      expect(count(de, PathDomain.nature), 2); // Animals / Weather
+      expect(count(de, PathDomain.business), 2); // Shopping / Work
+      expect(count(de, PathDomain.tech), 1); // Technology
+      expect(count(de, PathDomain.culture), 1); // Idioms
+      expect(count(de, PathDomain.daily),
+          5); // greetings, intro, family, home, city
     });
 
     test('every unit lands in exactly one domain (partition)', () {
-      for (final c in [en, ur]) {
+      for (final c in [en, ur, de]) {
         final seen = <int, PathDomain>{};
         for (final d in PathDomain.values) {
           for (final i in PathEngine.domainUnits(c, d)) {
@@ -662,9 +676,23 @@ void main() {
   });
 
   group('l10n parity for v4.13.1 keys', () {
-    test('version bumped for the RTL direction-safety wave', () {
-      expect(L.t('ar', 'version'), contains('4.13.1'));
-      expect(L.t('en', 'version'), contains('4.13.1'));
+    test('RTL direction-safety wave kept its parity', () {
+      expect(L.t('ar', 'correctAnswerIs'), isNotEmpty);
+      expect(L.t('en', 'correctAnswerIs'), isNotEmpty);
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.0 keys', () {
+    test('German course keys exist in ar and en, version bumped', () {
+      expect(
+          L.t('ar', 'badge_all_de_units'), 'خبير الألمانية — أكمل كل الوحدات');
+      expect(
+          L.t('en', 'badge_all_de_units'), 'German Master — finish all units');
+      expect(L.t('ar', 'badge_polyglot'), contains('الأربع'));
+      expect(L.t('en', 'badge_polyglot'), contains('four'));
+      expect(L.t('ar', 'version'), contains('5.0.0'));
+      expect(L.t('en', 'version'), contains('5.0.0'));
     });
   });
 

@@ -72,7 +72,7 @@ class CustomWord {
 class CustomDeck {
   final String id; // 'cd1'.. monotonic, assigned by the store
   final String name; // 1..40 chars, trimmed
-  final String courseId; // 'en' | 'fr' | 'ur'
+  final String courseId; // 'en' | 'fr' | 'ur' | 'de'
   final List<CustomWord> words;
 
   /// Next word sequence for this deck — survives deletions so ids are
@@ -113,7 +113,9 @@ class CustomDeck {
     final name = _clean(j['name'], maxLen: 40);
     final course = j['courseId'];
     if (name == null) return null;
-    if (course is! String || !['en', 'fr', 'ur'].contains(course)) return null;
+    if (course is! String || !['en', 'fr', 'ur', 'de'].contains(course)) {
+      return null;
+    }
     var maxSeq = 0;
     final words = <CustomWord>[];
     final seenWordIds = <String>{};

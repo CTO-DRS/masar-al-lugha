@@ -121,6 +121,7 @@ class AppState extends ChangeNotifier {
     BadgeDef('all_en_units', icon: Icons.flag, color: AppColors.green),
     BadgeDef('all_ur_units', icon: Icons.flag, color: AppColors.green),
     BadgeDef('all_fr_units', icon: Icons.flag, color: AppColors.yellow),
+    BadgeDef('all_de_units', icon: Icons.flag, color: AppColors.blue),
     BadgeDef('both_courses', icon: Icons.verified, color: AppColors.blue),
     BadgeDef('polyglot', icon: Icons.translate, color: AppColors.purple),
   ];
@@ -630,8 +631,8 @@ class AppState extends ChangeNotifier {
     award('cards_50', cardsReviewed >= 50);
     award('cards_200', cardsReviewed >= 200);
 
-    // Course-completion badges (one per course + polyglot for all three).
-    for (final id in ['en', 'ur', 'fr']) {
+    // Course-completion badges (one per course + polyglot for all four).
+    for (final id in ['en', 'ur', 'fr', 'de']) {
       final c = courses[id];
       if (c == null) continue;
       final all = c.allLessons.every((l) => lessonStars.containsKey(l.id));
@@ -648,7 +649,13 @@ class AppState extends ChangeNotifier {
     }
 
     award('both_courses', courseDone('en') && courseDone('ur'));
-    award('polyglot', courseDone('en') && courseDone('ur') && courseDone('fr'));
+    // v5.0: German joins the polyglot requirement — all four courses.
+    award(
+        'polyglot',
+        courseDone('en') &&
+            courseDone('ur') &&
+            courseDone('fr') &&
+            courseDone('de'));
   }
 
   String consumePendingBadge() {

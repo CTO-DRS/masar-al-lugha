@@ -6,7 +6,7 @@
 // - normalizeTyped: case / punctuation / diacritics / tatweel / whitespace
 // - dictation exercises carry audio == answer and a meaning hint
 // - listenComp exercises offer 4 unique real meanings, answer included
-// - corpus-wide: every generated plan (3 modes x 3 courses sample) keeps
+// - corpus-wide: every generated plan (3 modes x 4 courses sample) keeps
 //   the invariants and stays playable
 import 'dart:convert';
 
@@ -182,7 +182,7 @@ void main() {
   group('corpus-wide plan validity (sampled real lessons)', () {
     test('every sampled lesson keeps v4.6 invariants in all three modes',
         () async {
-      for (final lang in ['en', 'fr', 'ur']) {
+      for (final lang in ['en', 'fr', 'ur', 'de']) {
         final course = await _load(lang);
         // First, middle and last lesson of the course — a cheap but real
         // sweep across the CEFR ladder.
