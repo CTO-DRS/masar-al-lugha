@@ -1,9 +1,9 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.8.0+32** — see the v5.8 section below for the
-reading skill, the v5.7 section for the grammar skill, the v5.6 section
-for the pronunciation practice skill, the v5.5 section for the adaptive
-placement probe, the v5.4 section for the content wave (German to full unit
+**Current release: v5.9.0+33** — see the v5.9 section below for the
+conversation trainer, the v5.8 section for the reading skill, the v5.7
+section for the grammar skill, the v5.6 section for the pronunciation
+practice skill, the v5.5 section for the adaptive placement probe, the v5.4 section for the content wave (German to full unit
 parity + 1022 new example sentences and enforced coverage floors), the v5.3
 section for the FSRS scheduler, the v5.2 section for the Urdu
 lesson-for-lesson parity, the v5.1 section for the Urdu unit expansion and
@@ -45,6 +45,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.6** | **New skill — PRONUNCIATION practice (Phase 4/1): a `PronScorer` engine (Flutter-free, tested) grades the speech-to-text TRANSCRIPT against the expected word (Levenshtein over tashkeel/punctuation-normalized text) with honest thresholds; `SttService` wraps the device recognizer (speech_to_text, de/en/fr/ur locales) behind graceful degradation; optional mic permission fires only on use; autocomplete word picker over the course corpus + TTS replay; every score labeled "approximate" — recognition quality is device-dependent and cannot be verified without hardware; new RECORD_AUDIO permission + speech_to_text dependency (justified)** |
 | **v5.7** | **New skill — GRAMMAR lessons explained in Arabic (Phase 4/2): `lib/grammar.dart` catalog (Flutter-free, tested) with 8 contrastive lessons — 2 per course (en articles+3rd-person-s, de der/die/das+V2 order, fr le/la/les+ne…pas, ur ergative نے+postpositions), each with Arabic-vs-target bullets and 4 MCQ drills with per-drill explanations; reader screen with expandable lesson cards from the learn path; content lives as Dart data (no course-JSON churn, `gr_` ids cannot collide with vocab ids); machine-authored and flagged "needs human review"** |
 | **v5.8** | **New skill — LEVELED READING (Phase 4/3): `lib/reading.dart` catalog with 2 texts per course (8 total, A1/A2 bands, machine-authored → "needs human review"); reader screen with per-word tap → meaning sheet (course-corpus lookup with punctuation stripping + singular fallback, honest null outside the corpus), TTS replay and one-tap add-to-review feeding the REAL SRS via rateCard(hard) — the same honest path as the flashcards; Arabic sentence glosses under every line; slim skill banners on the learn path (`_SkillBanner`)** |
+| **v5.9** | **New skill — CONVERSATION TRAINER (Phase 4/4): a role-play chat behind the `ConversationProvider` abstraction; the shipped `OfflineScriptedProvider` is deterministic, on-device, ZERO network (hard invariants intact) — 8 scripted scenarios (2 per course: café/hotel en, bakery/cinema de, café/directions fr, shop/directions ur) with 3 steps each, any-of keyword-group matching over tashkeel-stripped text, sample-reply hints, per-scenario restart; any future AI provider implements the same 4-method interface and wiring it is an explicit user decision because it would touch the no-network rule; machine-authored dialogues flagged "needs human review"** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -765,6 +766,40 @@ New skill in its own branch (`feature/skill-reading`, merged --no-ff).
    grammar and reading entries under the learn-path stats bar. l10n: 7
    new ar/en keys; version pin group moved to v5.8. Suite:
    255 → **262** tests.
+
+
+## v5.9 — conversation trainer (SHIPPED, Phase 4 skill 4/4)
+
+New skill in its own branch (`feature/skill-conversation`, merged
+--no-ff). The architecture answer comes FIRST: the feature ships behind
+a provider interface and works fully offline.
+
+1. **`lib/conversation.dart`** (Flutter-free, 10 tests) —
+   `ConversationProvider` (4-method seam: `reply(scenario, stepIndex,
+   userText) → ConversationResult` + provider label), implemented by
+   `OfflineScriptedProvider`: deterministic any-of keyword-GROUP
+   matching (every keyword of one group must appear, over
+   tashkeel/punctuation-stripped text). `ConversationCatalog.verify()`
+   pins integrity (unique `cv_` ids, real courses, ≥3 steps, non-empty
+   lines/accept-groups/sample-replies).
+2. **Scripted content (8 scenarios × 3 steps)** — en: café + hotel
+   check-in; de: bakery + cinema ticket; fr: café + asking directions;
+   ur: shopping + directions. Each step: partner line (target) + Arabic
+   gloss + accept groups + a sample reply with its Arabic (shown as a
+   hint). Machine-authored → "needs human review" in CONTENT_AUDIT.
+3. **`lib/screens/conversation_screen.dart`** — chat bubbles (partner
+   vs user) rendered in their OWN script direction via the v4.13.1
+   `directionOf` seam; scenario chips, step counter, hint button, restart;
+   wrong replies keep the step (the partner repeats) — a drill, not a
+   chatbot cosplay.
+4. **Honest scope + invariants** — matching is KEYWORD-based, not
+   understanding, and the provider badge says so ("يعمل بلا إنترنت —
+   تقييم بالكلمات المفتاحية"). No network, no paid APIs, no new
+   permissions. A future AI provider = implement the interface + an
+   explicit no-network-invariant decision by the user.
+5. **Wiring** — third `_SkillBanner` on the learn path. l10n: 6 new
+   ar/en keys; version pin group moved to v5.9. Suite:
+   262 → **273** tests.
 
 ## Hard invariants (never break)
 
