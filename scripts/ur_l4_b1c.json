@@ -1,0 +1,518 @@
+[
+ {
+  "id": "ur_u46_l4",
+  "titleAr": "المرصد والرصد",
+  "titleEn": "Observatory & observation",
+  "vocab": [
+   {
+    "id": "ur_rasdgah",
+    "target": "رصد گاہ",
+    "translationAr": "المرصد",
+    "phonetic": "رصد گاہ",
+    "emoji": "🔭"
+   },
+   {
+    "id": "ur_syarcha",
+    "target": "سیارچہ",
+    "translationAr": "الكويكب",
+    "phonetic": "سیارچہ",
+    "emoji": "☄️"
+   },
+   {
+    "id": "ur_space_telescope",
+    "target": "خلائی ٹیلی سکوپ",
+    "translationAr": "تلسكوب فضائي",
+    "phonetic": "خلائی ٹیلی سکوپ",
+    "emoji": "🛰️"
+   },
+   {
+    "id": "ur_rover",
+    "target": "روور",
+    "translationAr": "المركبة الجوالة",
+    "phonetic": "روور",
+    "emoji": "🤖"
+   },
+   {
+    "id": "ur_bay_wazni",
+    "target": "بے وزنی",
+    "translationAr": "انعدام الجاذبية",
+    "phonetic": "بے وزنی",
+    "emoji": "🎈"
+   },
+   {
+    "id": "ur_space_suit",
+    "target": "خلائی سوٹ",
+    "translationAr": "بذلة الفضاء",
+    "phonetic": "خلائی سوٹ",
+    "emoji": "🧑‍🚀"
+   },
+   {
+    "id": "ur_capsule",
+    "target": "کیپسل",
+    "translationAr": "الكبسولة الفضائية",
+    "phonetic": "کیپسل",
+    "emoji": "🚀"
+   },
+   {
+    "id": "ur_chand_ki_mitti",
+    "target": "چاند کی مٹی",
+    "translationAr": "تربة القمر",
+    "phonetic": "چاند کی مٹی",
+    "emoji": "🌑"
+   },
+   {
+    "id": "ur_nebula",
+    "target": "نیبولا",
+    "translationAr": "السديم",
+    "phonetic": "نیبولا",
+    "emoji": "🌫️"
+   },
+   {
+    "id": "ur_white_dwarf",
+    "target": "وائٹ ڈوارف",
+    "translationAr": "القزم الأبيض",
+    "phonetic": "وائٹ ڈوارف",
+    "emoji": "⭐"
+   },
+   {
+    "id": "ur_ufuq",
+    "target": "افق",
+    "translationAr": "الأفق",
+    "phonetic": "افق",
+    "emoji": "🌇",
+    "exampleTarget": "سورج افق پر ڈوب رہا ہے",
+    "exampleAr": "الشمس تغيب عند الأفق"
+   }
+  ]
+ },
+ {
+  "id": "ur_u47_l4",
+  "titleAr": "الخرائط والسكان",
+  "titleEn": "Maps & population",
+  "vocab": [
+   {
+    "id": "ur_globe",
+    "target": "گولائی نقشہ",
+    "translationAr": "الخريطة الكروية",
+    "phonetic": "گولائی نقشہ",
+    "emoji": "🌐"
+   },
+   {
+    "id": "ur_qutub_shumali",
+    "target": "قطب شمالی",
+    "translationAr": "القطب الشمالي",
+    "phonetic": "قطب شمالی",
+    "emoji": "🧊"
+   },
+   {
+    "id": "ur_qutub_janubi",
+    "target": "قطب جنوبی",
+    "translationAr": "القطب الجنوبي",
+    "phonetic": "قطب جنوبی",
+    "emoji": "🐧"
+   },
+   {
+    "id": "ur_toul_buld",
+    "target": "طول بلد",
+    "translationAr": "خط الطول",
+    "phonetic": "طول بلد",
+    "emoji": "🧭"
+   },
+   {
+    "id": "ur_sarhad",
+    "target": "سرحد",
+    "translationAr": "الحدود",
+    "phonetic": "سرحد",
+    "emoji": "🚧"
+   },
+   {
+    "id": "ur_shehriyat",
+    "target": "شہریت",
+    "translationAr": "الجنسية",
+    "phonetic": "شہریت",
+    "emoji": "🛂"
+   },
+   {
+    "id": "ur_panah_gazin",
+    "target": "پناہ گزین",
+    "translationAr": "اللاجئ",
+    "phonetic": "پناہ گزین",
+    "emoji": "🧳"
+   },
+   {
+    "id": "ur_abadi",
+    "target": "آبادی",
+    "translationAr": "السكان",
+    "phonetic": "آبادی",
+    "emoji": "👨‍👩‍👧‍👦"
+   },
+   {
+    "id": "ur_bara_sheher",
+    "target": "بڑا شہر",
+    "translationAr": "مدينة كبرى",
+    "phonetic": "بڑا شہر",
+    "emoji": "🏙️"
+   },
+   {
+    "id": "ur_ganjaan",
+    "target": "گنجان",
+    "translationAr": "مكتظّ بالسكان",
+    "phonetic": "گنجان",
+    "emoji": "👥"
+   },
+   {
+    "id": "ur_local",
+    "target": "لوکل",
+    "translationAr": "محلي",
+    "phonetic": "لوکل",
+    "emoji": "🏘️",
+    "exampleTarget": "لوکل زبان سیکھنا مفید ہے",
+    "exampleAr": "تعلّم اللغة المحلية مفيد"
+   }
+  ]
+ },
+ {
+  "id": "ur_u48_l4",
+  "titleAr": "عجائب الساحل",
+  "titleEn": "Coastal wonders",
+  "vocab": [
+   {
+    "id": "ur_samandari_ghar",
+    "target": "سمندری غار",
+    "translationAr": "كهف بحري",
+    "phonetic": "سمندری غار",
+    "emoji": "🕳️"
+   },
+   {
+    "id": "ur_qudrati_pul",
+    "target": "قدرتی پل",
+    "translationAr": "جسر طبيعي",
+    "phonetic": "قدرتی پل",
+    "emoji": "🌉"
+   },
+   {
+    "id": "ur_fawwara",
+    "target": "فوارہ",
+    "translationAr": "النافورة",
+    "phonetic": "فوارہ",
+    "emoji": "⛲"
+   },
+   {
+    "id": "ur_topu",
+    "target": "ٹاپو",
+    "translationAr": "جزيرة صغيرة",
+    "phonetic": "ٹاپو",
+    "emoji": "🏝️"
+   },
+   {
+    "id": "ur_pathreela_sahil",
+    "target": "پتھریلا ساحل",
+    "translationAr": "ساحل صخري",
+    "phonetic": "پتھریلا ساحل",
+    "emoji": "🗿"
+   },
+   {
+    "id": "ur_nariyal_ka_darakht",
+    "target": "ناریل کا درخت",
+    "translationAr": "نخلة الهند",
+    "phonetic": "ناریل کا درخت",
+    "emoji": "🌴"
+   },
+   {
+    "id": "ur_samandari_hawa",
+    "target": "سمندری ہوا",
+    "translationAr": "نسمة البحر",
+    "phonetic": "سمندری ہوا",
+    "emoji": "🌬️"
+   },
+   {
+    "id": "ur_tulu_aftab",
+    "target": "طلوع آفتاب",
+    "translationAr": "الشروق",
+    "phonetic": "طلوع آفتاب",
+    "emoji": "🌅"
+   },
+   {
+    "id": "ur_samandari_toofan",
+    "target": "سمندری طوفان",
+    "translationAr": "إعصار بحري",
+    "phonetic": "سمندری طوفان",
+    "emoji": "🌀"
+   },
+   {
+    "id": "ur_sahil_se_door",
+    "target": "ساحل سے دور",
+    "translationAr": "بعيد عن الشاطئ",
+    "phonetic": "ساحل سے دور",
+    "emoji": "🛥️"
+   },
+   {
+    "id": "ur_nariyal_ka_pani",
+    "target": "ناریل کا پانی",
+    "translationAr": "ماء جوز الهند",
+    "phonetic": "ناریل کا پانی",
+    "emoji": "🥥",
+    "exampleTarget": "ناریل کا پانی ٹھنڈا ہوتا ہے",
+    "exampleAr": "ماء جوز الهند بارد"
+   }
+  ]
+ },
+ {
+  "id": "ur_u49_l4",
+  "titleAr": "المحاصیل والحصاد",
+  "titleEn": "Crops & harvest",
+  "vocab": [
+   {
+    "id": "ur_katai",
+    "target": "کٹائی",
+    "translationAr": "الحصاد",
+    "phonetic": "کٹائی",
+    "emoji": "🚜"
+   },
+   {
+    "id": "ur_dranti",
+    "target": "درانتی",
+    "translationAr": "المنجل",
+    "phonetic": "درانتی",
+    "emoji": "⚔️"
+   },
+   {
+    "id": "ur_beej",
+    "target": "بیج",
+    "translationAr": "البذور",
+    "phonetic": "بیج",
+    "emoji": "🌱"
+   },
+   {
+    "id": "ur_aabpashi",
+    "target": "آبپاشی",
+    "translationAr": "الريّ",
+    "phonetic": "آبپاشی",
+    "emoji": "💧"
+   },
+   {
+    "id": "ur_gobar",
+    "target": "گوبر",
+    "translationAr": "الروث",
+    "phonetic": "گوبر",
+    "emoji": "💩"
+   },
+   {
+    "id": "ur_jo",
+    "target": "جو",
+    "translationAr": "الشعير",
+    "phonetic": "جو",
+    "emoji": "🌾"
+   },
+   {
+    "id": "ur_makai",
+    "target": "مکئی",
+    "translationAr": "الذرة",
+    "phonetic": "مکئی",
+    "emoji": "🌽"
+   },
+   {
+    "id": "ur_daal",
+    "target": "دال",
+    "translationAr": "البقوليات",
+    "phonetic": "دال",
+    "emoji": "🫘"
+   },
+   {
+    "id": "ur_tail",
+    "target": "تیل",
+    "translationAr": "الزيت النباتي",
+    "phonetic": "تیل",
+    "emoji": "🫗"
+   },
+   {
+    "id": "ur_chakki",
+    "target": "چکی",
+    "translationAr": "الرحى",
+    "phonetic": "چکی",
+    "emoji": "⚙️"
+   },
+   {
+    "id": "ur_kunwaan",
+    "target": "کنوئاں",
+    "translationAr": "البئر",
+    "phonetic": "کنوئاں",
+    "emoji": "🕳️",
+    "exampleTarget": "کنوئاں سے پانی نکالا جاتا ہے",
+    "exampleAr": "يُستخرج الماء من البئر"
+   }
+  ]
+ },
+ {
+  "id": "ur_u50_l4",
+  "titleAr": "في الغابة",
+  "titleEn": "In the forest",
+  "vocab": [
+   {
+    "id": "ur_chahchaha",
+    "target": "چہچہہ",
+    "translationAr": "الزقزقة",
+    "phonetic": "چہچہہ",
+    "emoji": "🎶"
+   },
+   {
+    "id": "ur_ghana_jangal",
+    "target": "گھنا جنگل",
+    "translationAr": "غابة كثيفة",
+    "phonetic": "گھنا جنگل",
+    "emoji": "🌳"
+   },
+   {
+    "id": "ur_shikari",
+    "target": "شکاری",
+    "translationAr": "صيّاد الجوارح",
+    "phonetic": "شکاری",
+    "emoji": "🏹"
+   },
+   {
+    "id": "ur_pinjra",
+    "target": "پنجرہ",
+    "translationAr": "القفص",
+    "phonetic": "پنجرہ",
+    "emoji": "🔒"
+   },
+   {
+    "id": "ur_khol",
+    "target": "خول",
+    "translationAr": "الصدفة",
+    "phonetic": "خول",
+    "emoji": "🐚"
+   },
+   {
+    "id": "ur_sundi",
+    "target": "سنڈی",
+    "translationAr": "يرقة الفراشة",
+    "phonetic": "سنڈی",
+    "emoji": "🐛"
+   },
+   {
+    "id": "ur_joka",
+    "target": "جوکہ",
+    "translationAr": "الدودة الأرضية",
+    "phonetic": "جوکہ",
+    "emoji": "🪱"
+   },
+   {
+    "id": "ur_moom",
+    "target": "موم",
+    "translationAr": "الشمع",
+    "phonetic": "موم",
+    "emoji": "🕯️"
+   },
+   {
+    "id": "ur_bagla",
+    "target": "بگلا",
+    "translationAr": "البلشون",
+    "phonetic": "بگلا",
+    "emoji": "🦢"
+   },
+   {
+    "id": "ur_saaras",
+    "target": "سارس",
+    "translationAr": "الكركي",
+    "phonetic": "سارس",
+    "emoji": "🦩"
+   },
+   {
+    "id": "ur_fakhta",
+    "target": "فاختہ",
+    "translationAr": "القمري",
+    "phonetic": "فاختہ",
+    "emoji": "🕊️",
+    "exampleTarget": "فاختہ ڈاک پر بیٹھی ہے",
+    "exampleAr": "جلس القمري على السدادة"
+   }
+  ]
+ },
+ {
+  "id": "ur_u51_l4",
+  "titleAr": "المهارات المهنية",
+  "titleEn": "Professional skills",
+  "vocab": [
+   {
+    "id": "ur_qaidana",
+    "target": "قائدانہ",
+    "translationAr": "القيادة",
+    "phonetic": "قائدانہ",
+    "emoji": "👑"
+   },
+   {
+    "id": "ur_teamwork",
+    "target": "ٹیم ورک",
+    "translationAr": "العمل الجماعي",
+    "phonetic": "ٹیم ورک",
+    "emoji": "🤝"
+   },
+   {
+    "id": "ur_nazm_o_zabt",
+    "target": "نظم و ضبط",
+    "translationAr": "الانضباط",
+    "phonetic": "نظم و ضبط",
+    "emoji": "⏱️"
+   },
+   {
+    "id": "ur_haq_goi",
+    "target": "حق گوئی",
+    "translationAr": "الصدق في القول",
+    "phonetic": "حق گوئی",
+    "emoji": "🏅"
+   },
+   {
+    "id": "ur_dianatdari",
+    "target": "دیانتداری",
+    "translationAr": "النزاهة",
+    "phonetic": "دیانتداری",
+    "emoji": "🙏"
+   },
+   {
+    "id": "ur_izhar_e_khayal",
+    "target": "اظہارِ خیال",
+    "translationAr": "التعبير عن الرأي",
+    "phonetic": "اظہارِ خیال",
+    "emoji": "💬"
+   },
+   {
+    "id": "ur_tahreer",
+    "target": "تحریر",
+    "translationAr": "الكتابة",
+    "phonetic": "تحریر",
+    "emoji": "✍️"
+   },
+   {
+    "id": "ur_guftagu",
+    "target": "گفتگو",
+    "translationAr": "الحوار",
+    "phonetic": "گفتگو",
+    "emoji": "🗣️"
+   },
+   {
+    "id": "ur_rabta",
+    "target": "رابطہ",
+    "translationAr": "التواصل",
+    "phonetic": "رابطہ",
+    "emoji": "📞"
+   },
+   {
+    "id": "ur_tajzia",
+    "target": "تجزیہ",
+    "translationAr": "التحليل",
+    "phonetic": "تجزیہ",
+    "emoji": "🔍"
+   },
+   {
+    "id": "ur_taawun",
+    "target": "تعاون",
+    "translationAr": "التعاون",
+    "phonetic": "تعاون",
+    "emoji": "🫂",
+    "exampleTarget": "تعاون سے کام آسان ہوتا ہے",
+    "exampleAr": "التعاون يجعل العمل أسهل"
+   }
+  ]
+ }
+]

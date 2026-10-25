@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.1
+# ARCHITECTURE — Masar Al-Lugha v5.2
 
 ## 1. Layered view (post-v4.0)
 
@@ -407,6 +407,25 @@ Invariants that made the append safe:
   `test/path_test.dart`;
 - `content_test.dart` pins the per-course shape (56/172/1669) and the
   global vocab total (5427), mirroring `validate_content.py`.
+
+### 4i. Urdu lesson-for-lesson parity (v5.2)
+
+v5.2 closed the last structural gap: `course_ur.json` now sits at
+**56 units / 216 lessons / 2328 words — digit-for-digit the English
+course's shape** (and the same 4-lesson-unit spread per level:
+A1 12 · A2 12 · B1 18 · B2 5 · C1 1). The wave added 44 themed `l4`
+lessons (one for every unit whose English twin has four lessons) plus
+exactly one densification word per existing l1/l2/l3 lesson (168
+words). Content was authored as `scripts/ur_l4_*.json` batch files +
+`scripts/ur_dense.json` and merged by `scripts/expand_urdu_l4.py`,
+which enforces four invariants before writing: the stay-at-three unit
+set (u7, u8, u24, u25, u32, u33, u55, u56), global id uniqueness
+across all four courses, per-lesson emoji uniqueness, and per-lesson
+target uniqueness. Not one pre-existing vocab/lesson id moved; the 12
+new-item ids that collided with legacy ids were renamed in the new
+content only, and 4 same-spelling/different-meaning targets were
+swapped for unambiguous words. `content_test.dart` now pins ur at
+[56, 216, 2328] with the global total at 6086.
 
 ## 5. Content pipeline
 

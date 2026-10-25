@@ -1,0 +1,110 @@
+[
+{
+ "id": "ur_u13_l4",
+ "titleAr": "على الماء",
+ "titleEn": "On the water",
+ "vocab": [
+  {"id": "ur_ghoas", "target": "غواص", "translationAr": "الغوّاص", "phonetic": "غواص", "emoji": "🤿"},
+  {"id": "ur_sayyad", "target": "صیاد", "translationAr": "الصيّاد", "phonetic": "صیاد", "emoji": "🎣"},
+  {"id": "ur_jheengar", "target": "جھینگر", "translationAr": "الروبيان", "phonetic": "جھینگر", "emoji": "🦐"},
+  {"id": "ur_qaiq", "target": "قایق", "translationAr": "الزورق", "phonetic": "قایق", "emoji": "🛶"},
+  {"id": "ur_lifeguard", "target": "لائف گارڈ", "translationAr": "حارس الشاطئ", "phonetic": "لائف گارڈ", "emoji": "🛟"},
+  {"id": "ur_badbani_kashti", "target": "بادبانی کشتی", "translationAr": "القارب الشراعي", "phonetic": "بادبانی کشتی", "emoji": "⛵"},
+  {"id": "ur_doobna", "target": "ڈوبنا", "translationAr": "يغرق", "phonetic": "ڈوبنا", "emoji": "🆘"},
+  {"id": "ur_tairaki_ka_pool", "target": "تیراکی کا پول", "translationAr": "المسبح", "phonetic": "تیراکی کا پول", "emoji": "🏊"},
+  {"id": "ur_mallah", "target": "ملاح", "translationAr": "البحّار", "phonetic": "ملاح", "emoji": "🧭"},
+  {"id": "ur_football_amreki", "target": "فٹ پاس", "translationAr": "كرة القدم الأمريكية", "phonetic": "فٹ پاس", "emoji": "🏈"},
+  {"id": "ur_baseball", "target": "بیس بال", "translationAr": "البيسبول", "phonetic": "بیس بال", "emoji": "⚾", "exampleTarget": "بیس بال امریکہ کا مقبول کھیل ہے", "exampleAr": "البيسبول لعبة شائعة في أمريكا"}
+ ]
+},
+{
+ "id": "ur_u14_l4",
+ "titleAr": "الذكاء الاصطناعي والأمان",
+ "titleEn": "AI & digital safety",
+ "vocab": [
+  {"id": "ur_ai", "target": "مصنوعی ذہانت", "translationAr": "الذكاء الاصطناعي", "phonetic": "مصنوعی ذہانت", "emoji": "🤖"},
+  {"id": "ur_robot", "target": "روبوٹ", "translationAr": "الروبوت", "phonetic": "روبوٹ", "emoji": "🦾"},
+  {"id": "ur_hacker", "target": "ہیکر", "translationAr": "المتسلل للمعلومات", "phonetic": "ہیکر", "emoji": "🕶️"},
+  {"id": "ur_cloud", "target": "کلاؤڈ", "translationAr": "التخزين السحابي", "phonetic": "کلاؤڈ", "emoji": "☁️"},
+  {"id": "ur_virus", "target": "وائرس", "translationAr": "الفيروس", "phonetic": "وائرس", "emoji": "🦠"},
+  {"id": "ur_antivirus", "target": "اینٹی وائرس", "translationAr": "مضاد الفيروسات", "phonetic": "اینٹی وائرس", "emoji": "🛡️"},
+  {"id": "ur_backup", "target": "بیک اپ", "translationAr": "النسخة الاحتياطية", "phonetic": "بیک اپ", "emoji": "💾"},
+  {"id": "ur_desktop", "target": "ڈیسک ٹاپ", "translationAr": "الحاسوب المكتبي", "phonetic": "ڈیسک ٹاپ", "emoji": "🖥️"},
+  {"id": "ur_scanner", "target": "اسکینر", "translationAr": "الماسح الضوئي", "phonetic": "اسکینر", "emoji": "📠"},
+  {"id": "ur_cable", "target": "کیبل", "translationAr": "الكابل", "phonetic": "کیبل", "emoji": "🔌"},
+  {"id": "ur_spam", "target": "اسپام", "translationAr": "الرسائل المزعجة", "phonetic": "اسپام", "emoji": "📧", "exampleTarget": "اسپام میل نہ کھولو", "exampleAr": "لا تفتح الرسائل المزعجة"}
+ ]
+},
+{
+ "id": "ur_u15_l4",
+ "titleAr": "أدوات المطبخ",
+ "titleEn": "Kitchen tools",
+ "vocab": [
+  {"id": "ur_karahi", "target": "کڑاہی", "translationAr": "المقلاة العميقة", "phonetic": "کڑاہی", "emoji": "🍳"},
+  {"id": "ur_patili", "target": "پتیلی", "translationAr": "القدر", "phonetic": "پتیلی", "emoji": "🥘"},
+  {"id": "ur_kafgeer", "target": "کفگیر", "translationAr": "الملعقة الكبيرة", "phonetic": "کفگیر", "emoji": "🥄"},
+  {"id": "ur_katori", "target": "کٹوری", "translationAr": "الزبدية", "phonetic": "کٹوری", "emoji": "🥣"},
+  {"id": "ur_paratha", "target": "پراٹھا", "translationAr": "البراتا (خبز مدهون)", "phonetic": "پراٹھا", "emoji": "🥞"},
+  {"id": "ur_aata", "target": "آٹا", "translationAr": "الطحين", "phonetic": "آٹا", "emoji": "🌾"},
+  {"id": "ur_khameer", "target": "خمیر", "translationAr": "العجين", "phonetic": "خمیر", "emoji": "🫓"},
+  {"id": "ur_bailan", "target": "بیلن", "translationAr": "النشّابة", "phonetic": "بیلن", "emoji": "🥖"},
+  {"id": "ur_seekh", "target": "سیخ", "translationAr": "السيخ", "phonetic": "سیخ", "emoji": "🍢"},
+  {"id": "ur_zeitoon", "target": "زیتون", "translationAr": "الزيتون", "phonetic": "زیتون", "emoji": "🫒"},
+  {"id": "ur_ubalna", "target": "ابلنا", "translationAr": "يغلي", "phonetic": "ابلنا", "emoji": "🌡️", "exampleTarget": "پانی ابل رہا ہے", "exampleAr": "الماء يغلي"}
+ ]
+},
+{
+ "id": "ur_u16_l4",
+ "titleAr": "الصفات العقلية",
+ "titleEn": "Mental traits",
+ "vocab": [
+  {"id": "ur_zahin", "target": "ذہین", "translationAr": "فطن", "phonetic": "ذہین", "emoji": "🧠"},
+  {"id": "ur_yaddasht", "target": "یادداشت", "translationAr": "الذاكرة والملاحظة", "phonetic": "یادداشت", "emoji": "📝"},
+  {"id": "ur_samajhdari", "target": "سمجھداری", "translationAr": "الحكمة", "phonetic": "سمجھداری", "emoji": "🦉"},
+  {"id": "ur_chaukas", "target": "چوکاس", "translationAr": "يقظ", "phonetic": "چوکاس", "emoji": "👀"},
+  {"id": "ur_khayali", "target": "خیالی", "translationAr": "خيالي", "phonetic": "خیالی", "emoji": "💭"},
+  {"id": "ur_siyana", "target": "سیانا", "translationAr": "ذكي من الحيلة", "phonetic": "سیانا", "emoji": "🦊"},
+  {"id": "ur_parha_likha", "target": "پڑھا لکھا", "translationAr": "متعلم", "phonetic": "پڑھا لکھا", "emoji": "🎓"},
+  {"id": "ur_jahil", "target": "جاہل", "translationAr": "جاهل", "phonetic": "جاہل", "emoji": "🙊"},
+  {"id": "ur_meharban", "target": "مہربان", "translationAr": "رحم لطيف", "phonetic": "مہربان", "emoji": "💗"},
+  {"id": "ur_batal", "target": "بطل", "translationAr": "بطل", "phonetic": "بطل", "emoji": "🦸"},
+  {"id": "ur_ghabra_hua", "target": "گھبرا ہوا", "translationAr": "مرتبك", "phonetic": "گھبرا ہوا", "emoji": "😵", "exampleTarget": "وہ گھبرا ہوا نظر آ رہا تھا", "exampleAr": "كان يبدو مرتبكاً"}
+ ]
+},
+{
+ "id": "ur_u17_l4",
+ "titleAr": "أعراس الزفاف",
+ "titleEn": "Wedding traditions",
+ "vocab": [
+  {"id": "ur_baraat", "target": "بارات", "translationAr": "موكب العريس", "phonetic": "بارات", "emoji": "🥁"},
+  {"id": "ur_dulhan", "target": "دلہن", "translationAr": "العروس", "phonetic": "دلہن", "emoji": "👰"},
+  {"id": "ur_dulha", "target": "دلہا", "translationAr": "العريس", "phonetic": "دلہا", "emoji": "🤵"},
+  {"id": "ur_mehndi", "target": "مہندی", "translationAr": "الحنّاء", "phonetic": "مہندی", "emoji": "🖐️"},
+  {"id": "ur_nikah", "target": "نکاح", "translationAr": "عقد الزواج", "phonetic": "نکاح", "emoji": "💍"},
+  {"id": "ur_mangni", "target": "منگنی", "translationAr": "الخطوبة", "phonetic": "منگنی", "emoji": "💒"},
+  {"id": "ur_jahez", "target": "جہیز", "translationAr": "المهر", "phonetic": "جہیز", "emoji": "📦"},
+  {"id": "ur_walima", "target": "ولیمہ", "translationAr": "وليمة الزفاف", "phonetic": "ولیمہ", "emoji": "🍽️"},
+  {"id": "ur_lehenga", "target": "لہنگا", "translationAr": "الثوب الزفافي", "phonetic": "لہنگا", "emoji": "👗"},
+  {"id": "ur_kangan", "target": "کنگن", "translationAr": "الأسورة", "phonetic": "کنگن", "emoji": "📿"},
+  {"id": "ur_phoolon_ka_haar", "target": "پھولوں کا ہار", "translationAr": "إكليل الزهور", "phonetic": "پھولوں کا ہار", "emoji": "🌺", "exampleTarget": "دلہن پر پھولوں کا ہار پڑا", "exampleAr": "على العروس إكليل من الزهور"}
+ ]
+},
+{
+ "id": "ur_u18_l4",
+ "titleAr": "الحواس والإدراك",
+ "titleEn": "Senses & perception",
+ "vocab": [
+  {"id": "ur_soonghna", "target": "سونگھنا", "translationAr": "يشم", "phonetic": "سونگھنا", "emoji": "👃"},
+  {"id": "ur_chakhna", "target": "چکھنا", "translationAr": "يتذوق", "phonetic": "چکھنا", "emoji": "👅"},
+  {"id": "ur_binai", "target": "بینائی", "translationAr": "البصر", "phonetic": "بینائی", "emoji": "👁️"},
+  {"id": "ur_samait", "target": "سماعت", "translationAr": "السمع", "phonetic": "سماعت", "emoji": "👂"},
+  {"id": "ur_lams", "target": "لمس", "translationAr": "اللمس", "phonetic": "لمس", "emoji": "🤚"},
+  {"id": "ur_chaska", "target": "چسکا", "translationAr": "النكهة الشهية", "phonetic": "چسکا", "emoji": "😋"},
+  {"id": "ur_badboo", "target": "بدبو", "translationAr": "الرائحة الكريهة", "phonetic": "بدبو", "emoji": "🤢"},
+  {"id": "ur_andhera", "target": "اندھیرا", "translationAr": "الظلام", "phonetic": "اندھیرا", "emoji": "🌑"},
+  {"id": "ur_goonj", "target": "گونج", "translationAr": "الصدى", "phonetic": "گونج", "emoji": "📢"},
+  {"id": "ur_aansoo", "target": "آنسو", "translationAr": "الدمعة", "phonetic": "آنسو", "emoji": "💧"},
+  {"id": "ur_hont", "target": "ہونٹ", "translationAr": "الشفاه", "phonetic": "ہونٹ", "emoji": "👄", "exampleTarget": "اس کے ہونٹ کانپ رہے تھے", "exampleAr": "كانت شفتاه ترتعش"}
+ ]
+}
+]

@@ -1,0 +1,516 @@
+[
+ {
+  "id": "ur_u9_l4",
+  "titleAr": "المقابلة والتوظيف",
+  "titleEn": "Interview & hiring",
+  "vocab": [
+   {
+    "id": "ur_job_interview",
+    "target": "جاب انٹرویو",
+    "translationAr": "مقابلة عمل",
+    "phonetic": "جاب انٹرویو",
+    "emoji": "🤝"
+   },
+   {
+    "id": "ur_cv",
+    "target": "سی وی",
+    "translationAr": "السيرة الذاتية",
+    "phonetic": "سی وی",
+    "emoji": "📄"
+   },
+   {
+    "id": "ur_umeedwar",
+    "target": "امیدوار",
+    "translationAr": "مترشّح للوظيفة",
+    "phonetic": "امیدوار",
+    "emoji": "🙋"
+   },
+   {
+    "id": "ur_bharti",
+    "target": "بھرتی",
+    "translationAr": "التوظيف",
+    "phonetic": "بھرتی",
+    "emoji": "📋"
+   },
+   {
+    "id": "ur_aajir",
+    "target": "آجر",
+    "translationAr": "رب العمل",
+    "phonetic": "آجر",
+    "emoji": "🧑‍💼"
+   },
+   {
+    "id": "ur_karnama",
+    "target": "کارنامہ",
+    "translationAr": "إنجاز",
+    "phonetic": "کارنامہ",
+    "emoji": "🏆"
+   },
+   {
+    "id": "ur_qabiliyat",
+    "target": "قابلیت",
+    "translationAr": "الكفاءة",
+    "phonetic": "قابلیت",
+    "emoji": "🎯"
+   },
+   {
+    "id": "ur_mulaazmat",
+    "target": "ملازمت",
+    "translationAr": "الوظيفة",
+    "phonetic": "ملازمت",
+    "emoji": "💼"
+   },
+   {
+    "id": "ur_maharat",
+    "target": "مہارت",
+    "translationAr": "المهارة",
+    "phonetic": "مہارت",
+    "emoji": "🛠️"
+   },
+   {
+    "id": "ur_pesha",
+    "target": "پیشہ",
+    "translationAr": "المهنة",
+    "phonetic": "پیشہ",
+    "emoji": "🧑‍🏭"
+   },
+   {
+    "id": "ur_wazifa",
+    "target": "وظیفہ",
+    "translationAr": "المعاش",
+    "phonetic": "وظیفہ",
+    "emoji": "💰"
+   }
+  ]
+ },
+ {
+  "id": "ur_u10_l4",
+  "titleAr": "الزمان والساعة",
+  "titleEn": "Time & the clock",
+  "vocab": [
+   {
+    "id": "ur_ghari",
+    "target": "گھڑی",
+    "translationAr": "الساعة",
+    "phonetic": "گھڑی",
+    "emoji": "⏰"
+   },
+   {
+    "id": "ur_lamha",
+    "target": "لمحہ",
+    "translationAr": "لحظة",
+    "phonetic": "لمحہ",
+    "emoji": "⏱️"
+   },
+   {
+    "id": "ur_pehlay",
+    "target": "پہلے",
+    "translationAr": "أولاً / قبل",
+    "phonetic": "پہلے",
+    "emoji": "⏮️"
+   },
+   {
+    "id": "ur_baad",
+    "target": "بعد",
+    "translationAr": "بعد",
+    "phonetic": "بعد",
+    "emoji": "⏭️"
+   },
+   {
+    "id": "ur_abhi",
+    "target": "ابھی",
+    "translationAr": "حالاً",
+    "phonetic": "ابھی",
+    "emoji": "⏲️"
+   },
+   {
+    "id": "ur_hamesha",
+    "target": "ہمیشہ",
+    "translationAr": "دائماً",
+    "phonetic": "ہمیشہ",
+    "emoji": "♾️"
+   },
+   {
+    "id": "ur_kabhi",
+    "target": "کبھی",
+    "translationAr": "أحياناً / قط",
+    "phonetic": "کبھی",
+    "emoji": "🎲"
+   },
+   {
+    "id": "ur_maheena",
+    "target": "مہینہ",
+    "translationAr": "شهر",
+    "phonetic": "مہینہ",
+    "emoji": "📆"
+   },
+   {
+    "id": "ur_saal",
+    "target": "سال",
+    "translationAr": "سنة",
+    "phonetic": "سال",
+    "emoji": "⏳"
+   },
+   {
+    "id": "ur_aaj_kal",
+    "target": "آج کل",
+    "translationAr": "هذه الأيام",
+    "phonetic": "آج کل",
+    "emoji": "📅"
+   },
+   {
+    "id": "ur_guzarna",
+    "target": "گزرنا",
+    "translationAr": "يمضي (الزمن)",
+    "phonetic": "گزرنا",
+    "emoji": "🍃",
+    "exampleTarget": "وقت بڑی تیزی سے گزرتا ہے",
+    "exampleAr": "ينطلق الزمن بسرعة كبيرة"
+   }
+  ]
+ },
+ {
+  "id": "ur_u11_l4",
+  "titleAr": "الجوار والحي",
+  "titleEn": "Neighborhood",
+  "vocab": [
+   {
+    "id": "ur_parosi",
+    "target": "پڑوسی",
+    "translationAr": "الجار",
+    "phonetic": "پڑوسی",
+    "emoji": "🤝",
+    "exampleTarget": "میرا پڑوسی نیک آدمی ہے",
+    "exampleAr": "جاري رجل طيب"
+   },
+   {
+    "id": "ur_mohalla",
+    "target": "محلہ",
+    "translationAr": "الحيّ",
+    "phonetic": "محلہ",
+    "emoji": "🏘️"
+   },
+   {
+    "id": "ur_bus_stop",
+    "target": "بس اسٹاپ",
+    "translationAr": "موقف الحافلة",
+    "phonetic": "بس اسٹاپ",
+    "emoji": "🚏"
+   },
+   {
+    "id": "ur_bijli_ka_khamba",
+    "target": "بجلی کا کھمبا",
+    "translationAr": "عمود الإنارة",
+    "phonetic": "بجلی کا کھمبا",
+    "emoji": "⚡"
+   },
+   {
+    "id": "ur_nala",
+    "target": "نالہ",
+    "translationAr": "مجرى المياه",
+    "phonetic": "نالہ",
+    "emoji": "💧"
+   },
+   {
+    "id": "ur_kooda_uthana",
+    "target": "کوڑا اٹھانا",
+    "translationAr": "جمع النفايات",
+    "phonetic": "کوڑا اٹھانا",
+    "emoji": "🗑️"
+   },
+   {
+    "id": "ur_safai_wala",
+    "target": "صفائی والا",
+    "translationAr": "عامل النظافة",
+    "phonetic": "صفائی والا",
+    "emoji": "🧽"
+   },
+   {
+    "id": "ur_gali_ki_roshni",
+    "target": "گلی کی روشنی",
+    "translationAr": "إنارة الشارع",
+    "phonetic": "گلی کی روشنی",
+    "emoji": "💡"
+   },
+   {
+    "id": "ur_hafta_bazar",
+    "target": "ہفتہ بازار",
+    "translationAr": "السوق الأسبوعي",
+    "phonetic": "ہفتہ بازار",
+    "emoji": "🧺"
+   },
+   {
+    "id": "ur_qabristan",
+    "target": "قبرستان",
+    "translationAr": "المقبرة",
+    "phonetic": "قبرستان",
+    "emoji": "🪦"
+   },
+   {
+    "id": "ur_khel_ka_maidaan",
+    "target": "کھیل کا میدان",
+    "translationAr": "ملعب الأطفال",
+    "phonetic": "کھیل کا میدان",
+    "emoji": "🛝"
+   }
+  ]
+ },
+ {
+  "id": "ur_u12_l4",
+  "titleAr": "الامتحان والنتيجة",
+  "titleEn": "Exams & results",
+  "vocab": [
+   {
+    "id": "ur_result_card",
+    "target": "ریزلٹ کارڈ",
+    "translationAr": "كشف النتائج",
+    "phonetic": "ریزلٹ کارڈ",
+    "emoji": "🧾"
+   },
+   {
+    "id": "ur_pass_hona",
+    "target": "پاس ہونا",
+    "translationAr": "ينجح",
+    "phonetic": "پاس ہونا",
+    "emoji": "🎉",
+    "exampleTarget": "میں امتحان میں پاس ہو گیا",
+    "exampleAr": "نجحت في الامتحان"
+   },
+   {
+    "id": "ur_fail_hona",
+    "target": "فیل ہونا",
+    "translationAr": "يرسب",
+    "phonetic": "فیل ہونا",
+    "emoji": "📉"
+   },
+   {
+    "id": "ur_parcha",
+    "target": "پرچہ",
+    "translationAr": "ورقة الامتحان",
+    "phonetic": "پرچہ",
+    "emoji": "📃"
+   },
+   {
+    "id": "ur_syllabus",
+    "target": "سلائیبس",
+    "translationAr": "المنهج",
+    "phonetic": "سلائیبس",
+    "emoji": "📚"
+   },
+   {
+    "id": "ur_lecturer",
+    "target": "لیکچرر",
+    "translationAr": "المحاضر",
+    "phonetic": "لیکچرر",
+    "emoji": "🧑‍🏫"
+   },
+   {
+    "id": "ur_classroom",
+    "target": "کلاس روم",
+    "translationAr": "قاعة الدرس",
+    "phonetic": "کلاس روم",
+    "emoji": "🏫"
+   },
+   {
+    "id": "ur_assignment",
+    "target": "اسائنمنٹ",
+    "translationAr": "الواجب المكلّف به",
+    "phonetic": "اسائنمنٹ",
+    "emoji": "📋"
+   },
+   {
+    "id": "ur_scholarship",
+    "target": "سکالرشپ",
+    "translationAr": "المنحة",
+    "phonetic": "سکالرشپ",
+    "emoji": "🎓"
+   },
+   {
+    "id": "ur_dakhla",
+    "target": "داخلہ",
+    "translationAr": "القبول",
+    "phonetic": "داخلہ",
+    "emoji": "✍️"
+   },
+   {
+    "id": "ur_nisabi_kitab",
+    "target": "نصابی کتاب",
+    "translationAr": "الكتاب المدرسي",
+    "phonetic": "نصابی کتاب",
+    "emoji": "📖"
+   }
+  ]
+ },
+ {
+  "id": "ur_u34_l4",
+  "titleAr": "المعالم والمزارات",
+  "titleEn": "Landmarks",
+  "vocab": [
+   {
+    "id": "ur_minar",
+    "target": "مینار",
+    "translationAr": "المئذنة",
+    "phonetic": "مینار",
+    "emoji": "🕌"
+   },
+   {
+    "id": "ur_qila",
+    "target": "قلعہ",
+    "translationAr": "القلعة",
+    "phonetic": "قلعہ",
+    "emoji": "🏰"
+   },
+   {
+    "id": "ur_mujassma",
+    "target": "مجسمہ",
+    "translationAr": "التمثال",
+    "phonetic": "مجسمہ",
+    "emoji": "🗿"
+   },
+   {
+    "id": "ur_ajaib_ghar",
+    "target": "عجائب گھر",
+    "translationAr": "المتحف",
+    "phonetic": "عجائب گھر",
+    "emoji": "🏛️"
+   },
+   {
+    "id": "ur_sayyah",
+    "target": "سیاح",
+    "translationAr": "السائح",
+    "phonetic": "سیاح",
+    "emoji": "🎒"
+   },
+   {
+    "id": "ur_burj",
+    "target": "برج",
+    "translationAr": "البرج",
+    "phonetic": "برج",
+    "emoji": "🗼"
+   },
+   {
+    "id": "ur_mahal",
+    "target": "محل",
+    "translationAr": "القصر",
+    "phonetic": "محل",
+    "emoji": "🏯"
+   },
+   {
+    "id": "ur_numaish",
+    "target": "نمائش",
+    "translationAr": "المعرض",
+    "phonetic": "نمائش",
+    "emoji": "🖼️"
+   },
+   {
+    "id": "ur_selfie",
+    "target": "سیلفی",
+    "translationAr": "صورة ذاتية",
+    "phonetic": "سیلفی",
+    "emoji": "🤳"
+   },
+   {
+    "id": "ur_sheher_ka_markaz",
+    "target": "شہر کا مرکز",
+    "translationAr": "وسط المدينة",
+    "phonetic": "شہر کا مرکز",
+    "emoji": "📍"
+   },
+   {
+    "id": "ur_yadgari",
+    "target": "یادگاری",
+    "translationAr": "تذكار",
+    "phonetic": "یادگاری",
+    "emoji": "🛍️",
+    "exampleTarget": "میں نے یادگاری خریدی",
+    "exampleAr": "اشتريت تذكاراً"
+   }
+  ]
+ },
+ {
+  "id": "ur_u35_l4",
+  "titleAr": "اللياقة والمنافسة",
+  "titleEn": "Fitness & competition",
+  "vocab": [
+   {
+    "id": "ur_marathon",
+    "target": "میراتھن",
+    "translationAr": "الماراثون",
+    "phonetic": "میراتھن",
+    "emoji": "🏃‍♂️"
+   },
+   {
+    "id": "ur_gym",
+    "target": "جم",
+    "translationAr": "الصالة الرياضية",
+    "phonetic": "جم",
+    "emoji": "🤸‍♂️"
+   },
+   {
+    "id": "ur_wazan_uthana",
+    "target": "وزن اٹھانا",
+    "translationAr": "رفع الأثقال",
+    "phonetic": "وزن اٹھانا",
+    "emoji": "🏋️"
+   },
+   {
+    "id": "ur_coach",
+    "target": "کوچ",
+    "translationAr": "المدرب",
+    "phonetic": "کوچ",
+    "emoji": "🧑‍🏫"
+   },
+   {
+    "id": "ur_team",
+    "target": "ٹیم",
+    "translationAr": "الفريق",
+    "phonetic": "ٹیم",
+    "emoji": "🧑‍🤝‍🧑"
+   },
+   {
+    "id": "ur_stadium",
+    "target": "سٹیڈیم",
+    "translationAr": "الملعب الكبير",
+    "phonetic": "سٹیڈیم",
+    "emoji": "🏟️"
+   },
+   {
+    "id": "ur_jersey_kit",
+    "target": "جرسی",
+    "translationAr": "قميص الفريق",
+    "phonetic": "جرسی",
+    "emoji": "🎽"
+   },
+   {
+    "id": "ur_medal",
+    "target": "میڈل",
+    "translationAr": "الميدالية",
+    "phonetic": "میڈل",
+    "emoji": "🏅"
+   },
+   {
+    "id": "ur_trophy",
+    "target": "ٹرافی",
+    "translationAr": "الكأس",
+    "phonetic": "ٹرافی",
+    "emoji": "🏆"
+   },
+   {
+    "id": "ur_tandrusti",
+    "target": "تندرستی",
+    "translationAr": "اللياقة",
+    "phonetic": "تندرستی",
+    "emoji": "💪",
+    "exampleTarget": "تندرستی زندگی کی اصل ہے",
+    "exampleAr": "اللياقة أصل الحياة"
+   },
+   {
+    "id": "ur_khel_tamasha",
+    "target": "کھیل تماشا",
+    "translationAr": "مشاهدة المباراة",
+    "phonetic": "کھیل تماشا",
+    "emoji": "📺"
+   }
+  ]
+ }
+]

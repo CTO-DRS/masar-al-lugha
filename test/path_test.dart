@@ -700,10 +700,10 @@ void main() {
     });
   });
 
-  group('l10n parity for v5.1 keys', () {
-    test('Urdu full-parity wave: version bumped', () {
-      expect(L.t('ar', 'version'), contains('5.1.0'));
-      expect(L.t('en', 'version'), contains('5.1.0'));
+  group('l10n parity for v5.2 keys', () {
+    test('Urdu lesson-for-lesson parity wave: version bumped', () {
+      expect(L.t('ar', 'version'), contains('5.2.0'));
+      expect(L.t('en', 'version'), contains('5.2.0'));
     });
   });
 

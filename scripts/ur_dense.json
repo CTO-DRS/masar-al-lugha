@@ -1,0 +1,1178 @@
+{
+ "ur_u1_l1": {
+  "id": "ur_khush_amdeed",
+  "target": "خوش آمدید",
+  "translationAr": "مرحباً بك",
+  "phonetic": "خوش آمدید",
+  "emoji": "🤗"
+ },
+ "ur_u1_l2": {
+  "id": "ur_aap_se_mil_kar",
+  "target": "آپ سے مل کر خوشی ہوئی",
+  "translationAr": "سُررتُ بلقائك",
+  "phonetic": "آپ سے مل کر خوشی ہوئی",
+  "emoji": "😊"
+ },
+ "ur_u1_l3": {
+  "id": "ur_tum",
+  "target": "تُم",
+  "translationAr": "أنتَ (مخاطب قريب)",
+  "phonetic": "تُم",
+  "emoji": "🫵"
+ },
+ "ur_u2_l1": {
+  "id": "ur_sifar",
+  "target": "صفر",
+  "translationAr": "صفر",
+  "phonetic": "صفر",
+  "emoji": "0️⃣"
+ },
+ "ur_u2_l2": {
+  "id": "ur_aadha",
+  "target": "آدھا",
+  "translationAr": "نصف",
+  "phonetic": "آدھا",
+  "emoji": "🌗"
+ },
+ "ur_u2_l3": {
+  "id": "ur_foran",
+  "target": "فوراً",
+  "translationAr": "فوراً",
+  "phonetic": "فوراً",
+  "emoji": "⚡"
+ },
+ "ur_u3_l1": {
+  "id": "ur_shadi_shuda",
+  "target": "شادی شدہ",
+  "translationAr": "متزوج",
+  "phonetic": "شادی شدہ",
+  "emoji": "💑"
+ },
+ "ur_u3_l2": {
+  "id": "ur_pota",
+  "target": "پوتا",
+  "translationAr": "حفيد",
+  "phonetic": "پوتا",
+  "emoji": "🧒"
+ },
+ "ur_u3_l3": {
+  "id": "ur_mere_walid_ustad",
+  "target": "میرے والد استاد ہیں",
+  "translationAr": "والدي معلم",
+  "phonetic": "میرے والد استاد ہیں",
+  "emoji": "🧑‍🏫"
+ },
+ "ur_u4_l1": {
+  "id": "ur_ghee",
+  "target": "گھی",
+  "translationAr": "السمن البلدي",
+  "phonetic": "گھی",
+  "emoji": "🧈"
+ },
+ "ur_u4_l2": {
+  "id": "ur_kali_mirch",
+  "target": "کالی مرچ",
+  "translationAr": "الفلفل الأسود",
+  "phonetic": "کالی مرچ",
+  "emoji": "🌶️"
+ },
+ "ur_u4_l3": {
+  "id": "ur_khana_khoob_tha",
+  "target": "شکریہ، کھانا خوب تھا",
+  "translationAr": "شكراً، كان الطعام رائعاً",
+  "phonetic": "شکریہ، کھانا خوب تھا",
+  "emoji": "🍜"
+ },
+ "ur_u5_l1": {
+  "id": "ur_bhura",
+  "target": "بھورا",
+  "translationAr": "بني",
+  "phonetic": "بھورا",
+  "emoji": "🟤"
+ },
+ "ur_u5_l2": {
+  "id": "ur_parson",
+  "target": "پرسوں",
+  "translationAr": "بعد غد / أمس",
+  "phonetic": "پرسوں",
+  "emoji": "🔜"
+ },
+ "ur_u5_l3": {
+  "id": "ur_pasandida_rang",
+  "target": "میرا پسندیدہ رنگ سرخ ہے",
+  "translationAr": "لوني المفضّل الأحمر",
+  "phonetic": "میرا پسندیدہ رنگ سرخ ہے",
+  "emoji": "🎨"
+ },
+ "ur_u6_l1": {
+  "id": "ur_bakri",
+  "target": "بکری",
+  "translationAr": "الماعز",
+  "phonetic": "بکری",
+  "emoji": "🐐"
+ },
+ "ur_u6_l2": {
+  "id": "ur_damba",
+  "target": "دنبہ",
+  "translationAr": "كبش",
+  "phonetic": "دنبہ",
+  "emoji": "🐏"
+ },
+ "ur_u6_l3": {
+  "id": "ur_gaye_ghas",
+  "target": "گائے گھاس کھاتی ہے",
+  "translationAr": "البقرة تأكل العشب",
+  "phonetic": "گائے گھاس کھاتی ہے",
+  "emoji": "🐄"
+ },
+ "ur_u26_l1": {
+  "id": "ur_jabra",
+  "target": "جبڑہ",
+  "translationAr": "الفكّ",
+  "phonetic": "جبڑہ",
+  "emoji": "🦴"
+ },
+ "ur_u26_l2": {
+  "id": "ur_rerh_ki_haddi",
+  "target": "ریڑھ کی ہڈی",
+  "translationAr": "العمود الفقري",
+  "phonetic": "ریڑھ کی ہڈی",
+  "emoji": "🧍"
+ },
+ "ur_u26_l3": {
+  "id": "ur_blood_pressure",
+  "target": "بلڈ پریشر",
+  "translationAr": "ضغط الدم",
+  "phonetic": "بلڈ پریشر",
+  "emoji": "💉"
+ },
+ "ur_u27_l1": {
+  "id": "ur_kamar_band",
+  "target": "کمر بند",
+  "translationAr": "الحزام",
+  "phonetic": "کمر بند",
+  "emoji": "⛓️"
+ },
+ "ur_u27_l2": {
+  "id": "ur_bunda_bandi",
+  "target": "بوندا باندی",
+  "translationAr": "رذاذ المطر",
+  "phonetic": "بوندا باندی",
+  "emoji": "🌦️"
+ },
+ "ur_u27_l3": {
+  "id": "ur_mausam_e_gul",
+  "target": "موسمِ گل",
+  "translationAr": "موسم الأزهار",
+  "phonetic": "موسمِ گل",
+  "emoji": "🌷"
+ },
+ "ur_u28_l1": {
+  "id": "ur_scooter",
+  "target": "اسکوٹر",
+  "translationAr": "السكوتر",
+  "phonetic": "اسکوٹر",
+  "emoji": "🛵"
+ },
+ "ur_u28_l2": {
+  "id": "ur_waiting_room",
+  "target": "ویٹنگ روم",
+  "translationAr": "قاعة الانتظار",
+  "phonetic": "ویٹنگ روم",
+  "emoji": "🛋️"
+ },
+ "ur_u28_l3": {
+  "id": "ur_waterproof_bag",
+  "target": "واٹر پروف بیگ",
+  "translationAr": "حقيبة مقاومة للماء",
+  "phonetic": "واٹر پروف بیگ",
+  "emoji": "🎫"
+ },
+ "ur_u29_l1": {
+  "id": "ur_kathal",
+  "target": "کٹھل",
+  "translationAr": "الجاكفروت",
+  "phonetic": "کٹھل",
+  "emoji": "🥝"
+ },
+ "ur_u29_l2": {
+  "id": "ur_bhindi",
+  "target": "بھنڈی",
+  "translationAr": "البامية",
+  "phonetic": "بھنڈی",
+  "emoji": "🫑"
+ },
+ "ur_u29_l3": {
+  "id": "ur_ganna_ka_juice",
+  "target": "گنا کا جوس",
+  "translationAr": "عصير القصب",
+  "phonetic": "گنا کا جوس",
+  "emoji": "🌾"
+ },
+ "ur_u30_l1": {
+  "id": "ur_baramda",
+  "target": "برآمدہ",
+  "translationAr": "الرواق",
+  "phonetic": "برآمدہ",
+  "emoji": "🪴"
+ },
+ "ur_u30_l2": {
+  "id": "ur_khut_kursi",
+  "target": "کھات کرسی",
+  "translationAr": "كرسي هزّاز",
+  "phonetic": "کھات کرسی",
+  "emoji": "🎠"
+ },
+ "ur_u30_l3": {
+  "id": "ur_mop",
+  "target": "مپ",
+  "translationAr": "الممسحة",
+  "phonetic": "مپ",
+  "emoji": "🧽"
+ },
+ "ur_u31_l1": {
+  "id": "ur_mol_bhao",
+  "target": "مول بھاؤ",
+  "translationAr": "المساومة",
+  "phonetic": "مول بھاؤ",
+  "emoji": "🤝"
+ },
+ "ur_u31_l2": {
+  "id": "ur_bachat_khata",
+  "target": "بچت کھاتہ",
+  "translationAr": "دفتر التوفير",
+  "phonetic": "بچت کھاتہ",
+  "emoji": "🧮"
+ },
+ "ur_u31_l3": {
+  "id": "ur_muft_namoona",
+  "target": "مفت نمونہ",
+  "translationAr": "عيّنة مجانية",
+  "phonetic": "مفت نمونہ",
+  "emoji": "🆓"
+ },
+ "ur_u32_l1": {
+  "id": "ur_rokna",
+  "target": "روکنا",
+  "translationAr": "يوقف / يمنع",
+  "phonetic": "روکنا",
+  "emoji": "🖐️"
+ },
+ "ur_u32_l2": {
+  "id": "ur_sajna",
+  "target": "سجنا",
+  "translationAr": "يتزيّن",
+  "phonetic": "سجنا",
+  "emoji": "🌟"
+ },
+ "ur_u32_l3": {
+  "id": "ur_dhundna",
+  "target": "ڈھونڈنا",
+  "translationAr": "يبحث",
+  "phonetic": "ڈھونڈنا",
+  "emoji": "🔎"
+ },
+ "ur_u33_l1": {
+  "id": "ur_narazgi",
+  "target": "ناراضگی",
+  "translationAr": "استياء",
+  "phonetic": "ناراضگی",
+  "emoji": "😒"
+ },
+ "ur_u33_l2": {
+  "id": "ur_be_dil",
+  "target": "بے دل",
+  "translationAr": "جبان فاتر",
+  "phonetic": "بے دل",
+  "emoji": "😞"
+ },
+ "ur_u33_l3": {
+  "id": "ur_yaqeen_dahani",
+  "target": "یقین دہانی",
+  "translationAr": "طمأنة و تأكيد",
+  "phonetic": "یقین دہانی",
+  "emoji": "🤝"
+ },
+ "ur_u7_l1": {
+  "id": "ur_colony",
+  "target": "کالونی",
+  "translationAr": "حيّ سكني",
+  "phonetic": "کالونی",
+  "emoji": "🏢"
+ },
+ "ur_u7_l2": {
+  "id": "ur_qalam_daan",
+  "target": "قلم دان",
+  "translationAr": "حافظة الأقلام",
+  "phonetic": "قلم دان",
+  "emoji": "✏️"
+ },
+ "ur_u7_l3": {
+  "id": "ur_darwaza_band",
+  "target": "دروازہ بند کرو",
+  "translationAr": "أغلق الباب",
+  "phonetic": "دروازہ بند کرو",
+  "emoji": "🔒"
+ },
+ "ur_u8_l1": {
+  "id": "ur_fruit_salad",
+  "target": "فروٹ سلاد",
+  "translationAr": "سلطة فواكه",
+  "phonetic": "فروٹ سلاد",
+  "emoji": "🍓"
+ },
+ "ur_u8_l2": {
+  "id": "ur_roti_tokri",
+  "target": "روٹی کی ٹوکری",
+  "translationAr": "سلة الخبز",
+  "phonetic": "روٹی کی ٹوکری",
+  "emoji": "🍚"
+ },
+ "ur_u8_l3": {
+  "id": "ur_bartan_la_do",
+  "target": "برتن لا دو",
+  "translationAr": "أحضر الأطباق",
+  "phonetic": "برتن لا دو",
+  "emoji": "🥘"
+ },
+ "ur_u9_l1": {
+  "id": "ur_technician",
+  "target": "ٹیکنیشن",
+  "translationAr": "فنّي",
+  "phonetic": "ٹیکنیشن",
+  "emoji": "🧑‍🔧"
+ },
+ "ur_u9_l2": {
+  "id": "ur_daftari_auqat",
+  "target": "دفتری اوقات",
+  "translationAr": "ساعات العمل",
+  "phonetic": "دفتری اوقات",
+  "emoji": "🕐"
+ },
+ "ur_u9_l3": {
+  "id": "ur_kaam_shuru",
+  "target": "کام شروع کریں",
+  "translationAr": "ابدأ العمل",
+  "phonetic": "کام شروع کریں",
+  "emoji": "▶️"
+ },
+ "ur_u10_l1": {
+  "id": "ur_mitter",
+  "target": "مٹر",
+  "translationAr": "حافلة نقل صغيرة",
+  "phonetic": "مٹر",
+  "emoji": "🚐"
+ },
+ "ur_u10_l2": {
+  "id": "ur_aadhi_raat",
+  "target": "آدھی رات",
+  "translationAr": "منتصف الليل",
+  "phonetic": "آدھی رات",
+  "emoji": "🌌"
+ },
+ "ur_u10_l3": {
+  "id": "ur_raste_mein",
+  "target": "راستے میں ملے گے",
+  "translationAr": "سنلتقي في الطريق",
+  "phonetic": "راستے میں ملے گے",
+  "emoji": "👋"
+ },
+ "ur_u11_l1": {
+  "id": "ur_chatai",
+  "target": "چٹائی",
+  "translationAr": "الحصيرة",
+  "phonetic": "چٹائی",
+  "emoji": "🎍"
+ },
+ "ur_u11_l2": {
+  "id": "ur_madrasa",
+  "target": "مدرسہ",
+  "translationAr": "مدرسة دينية",
+  "phonetic": "مدرسہ",
+  "emoji": "🕌"
+ },
+ "ur_u11_l3": {
+  "id": "ur_is_taraf",
+  "target": "اس طرف آئیں",
+  "translationAr": "تعالَ إلى هنا",
+  "phonetic": "اس طرف آئیں",
+  "emoji": "☝️"
+ },
+ "ur_u12_l1": {
+  "id": "ur_school_bag",
+  "target": "سکول بیگ",
+  "translationAr": "حقيبة المدرسة",
+  "phonetic": "سکول بیگ",
+  "emoji": "🎒"
+ },
+ "ur_u12_l2": {
+  "id": "ur_feherist",
+  "target": "فہرست",
+  "translationAr": "قائمة",
+  "phonetic": "فہرست",
+  "emoji": "📃"
+ },
+ "ur_u12_l3": {
+  "id": "ur_khoob_kaam",
+  "target": "خوب کام کیا",
+  "translationAr": "أحسنت العمل",
+  "phonetic": "خوب کام کیا",
+  "emoji": "🏆"
+ },
+ "ur_u34_l1": {
+  "id": "ur_taxi_stand",
+  "target": "ٹیکسی اسٹینڈ",
+  "translationAr": "موقف سيارات الأجرة",
+  "phonetic": "ٹیکسی اسٹینڈ",
+  "emoji": "🚕"
+ },
+ "ur_u34_l2": {
+  "id": "ur_bayan_janib",
+  "target": "بائیں جانب",
+  "translationAr": "على اليسار",
+  "phonetic": "بائیں جانب",
+  "emoji": "🧭"
+ },
+ "ur_u34_l3": {
+  "id": "ur_tang_rasta",
+  "target": "تنگ راستہ",
+  "translationAr": "طريق ضيّق",
+  "phonetic": "تنگ راستہ",
+  "emoji": "🛤️"
+ },
+ "ur_u35_l1": {
+  "id": "ur_golf",
+  "target": "گولف",
+  "translationAr": "الجولف",
+  "phonetic": "گولف",
+  "emoji": "⛳"
+ },
+ "ur_u35_l2": {
+  "id": "ur_guitar",
+  "target": "گٹار",
+  "translationAr": "القيثارة",
+  "phonetic": "گٹار",
+  "emoji": "🎸"
+ },
+ "ur_u35_l3": {
+  "id": "ur_practice",
+  "target": "پریکٹس",
+  "translationAr": "تدريب رياضي",
+  "phonetic": "پریکٹس",
+  "emoji": "🔁"
+ },
+ "ur_u36_l1": {
+  "id": "ur_parcel",
+  "target": "پارسل",
+  "translationAr": "طلب خارجي",
+  "phonetic": "پارسل",
+  "emoji": "🥡"
+ },
+ "ur_u36_l2": {
+  "id": "ur_tarkari",
+  "target": "ترکاری",
+  "translationAr": "خضار مقطّعة",
+  "phonetic": "ترکاری",
+  "emoji": "🥗"
+ },
+ "ur_u36_l3": {
+  "id": "ur_baqaya",
+  "target": "بقایا",
+  "translationAr": "المتبقّي",
+  "phonetic": "بقایا",
+  "emoji": "💵"
+ },
+ "ur_u37_l1": {
+  "id": "ur_piano",
+  "target": "پیانو",
+  "translationAr": "البيانو",
+  "phonetic": "پیانو",
+  "emoji": "🎚️"
+ },
+ "ur_u37_l2": {
+  "id": "ur_sequel",
+  "target": "سیکیوئل",
+  "translationAr": "الجزء الثاني من الفلم",
+  "phonetic": "سیکیوئل",
+  "emoji": "2️⃣"
+ },
+ "ur_u37_l3": {
+  "id": "ur_news_anchor",
+  "target": "نیوز اینکر",
+  "translationAr": "مذيّع الأخبار",
+  "phonetic": "نیوز اینکر",
+  "emoji": "🎙️"
+ },
+ "ur_u38_l1": {
+  "id": "ur_cheekhna",
+  "target": "چیخنا",
+  "translationAr": "يصرخ",
+  "phonetic": "چیخنا",
+  "emoji": "🗯️"
+ },
+ "ur_u38_l2": {
+  "id": "ur_kyun_nahin",
+  "target": "کیوں نہیں",
+  "translationAr": "لماذا لا",
+  "phonetic": "کیوں نہیں",
+  "emoji": "🤔"
+ },
+ "ur_u38_l3": {
+  "id": "ur_zaroor_hi",
+  "target": "ضرور ہی",
+  "translationAr": "بالتأكيد",
+  "phonetic": "ضرور ہی",
+  "emoji": "✅"
+ },
+ "ur_u39_l1": {
+  "id": "ur_jangli_billi",
+  "target": "جنگلی بلی",
+  "translationAr": "قط برّي",
+  "phonetic": "جنگلی بلی",
+  "emoji": "🐅"
+ },
+ "ur_u39_l2": {
+  "id": "ur_daryai_ghati",
+  "target": "دریائی گھاٹی",
+  "translationAr": "وادي نهرية",
+  "phonetic": "دریائی گھاٹی",
+  "emoji": "🛶"
+ },
+ "ur_u39_l3": {
+  "id": "ur_golden_fish",
+  "target": "سنہری مچھلی",
+  "translationAr": "سمكة ذهبية",
+  "phonetic": "سنہری مچھلی",
+  "emoji": "🐠"
+ },
+ "ur_u40_l1": {
+  "id": "ur_kulhaari",
+  "target": "کلچ",
+  "translationAr": "المجرفة الكبيرة",
+  "phonetic": "کلچ",
+  "emoji": "⛏️"
+ },
+ "ur_u40_l2": {
+  "id": "ur_bandhna",
+  "target": "باندھنا",
+  "translationAr": "يربط",
+  "phonetic": "باندھنا",
+  "emoji": "🪢"
+ },
+ "ur_u40_l3": {
+  "id": "ur_recharger",
+  "target": "ری چارجر",
+  "translationAr": "شاحن احتياطي",
+  "phonetic": "ری چارجر",
+  "emoji": "♻️"
+ },
+ "ur_u41_l1": {
+  "id": "ur_dilasa",
+  "target": "دلاسا",
+  "translationAr": "مواساة",
+  "phonetic": "دلاسا",
+  "emoji": "🫂"
+ },
+ "ur_u41_l2": {
+  "id": "ur_ehtaram",
+  "target": "احترام",
+  "translationAr": "الاحترام",
+  "phonetic": "احترام",
+  "emoji": "🙇"
+ },
+ "ur_u41_l3": {
+  "id": "ur_mehnat_kamyabi",
+  "target": "محنت سے کامیابی",
+  "translationAr": "النجاح بالمثابرة",
+  "phonetic": "محنت سے کامیابی",
+  "emoji": "🏅"
+ },
+ "ur_u13_l1": {
+  "id": "ur_taekwondo",
+  "target": "تائیکوانڈو",
+  "translationAr": "التايكواندو",
+  "phonetic": "تائیکوانڈو",
+  "emoji": "🥋"
+ },
+ "ur_u13_l2": {
+  "id": "ur_raqs",
+  "target": "رقص",
+  "translationAr": "الرقص",
+  "phonetic": "رقص",
+  "emoji": "💃"
+ },
+ "ur_u13_l3": {
+  "id": "ur_ji_bhar_gaya",
+  "target": "جی بھر گیا",
+  "translationAr": "شبعت النفس والهوى",
+  "phonetic": "جی بھر گیا",
+  "emoji": "😌"
+ },
+ "ur_u14_l1": {
+  "id": "ur_tablet",
+  "target": "ٹیبلٹ",
+  "translationAr": "الجهاز اللوحي",
+  "phonetic": "ٹیبلٹ",
+  "emoji": "📲"
+ },
+ "ur_u14_l2": {
+  "id": "ur_bluetooth",
+  "target": "بلو ٹوتھ",
+  "translationAr": "البلوتوث",
+  "phonetic": "بلو ٹوتھ",
+  "emoji": "📡"
+ },
+ "ur_u14_l3": {
+  "id": "ur_password_bhool",
+  "target": "پاس ورڈ بھول گیا",
+  "translationAr": "نسيت كلمة السر",
+  "phonetic": "پاس ورڈ بھول گیا",
+  "emoji": "🤦"
+ },
+ "ur_u15_l1": {
+  "id": "ur_zeera",
+  "target": "زیرہ",
+  "translationAr": "الكمّون",
+  "phonetic": "زیرہ",
+  "emoji": "🌿"
+ },
+ "ur_u15_l2": {
+  "id": "ur_khana_serve",
+  "target": "کھانا سرو کرنا",
+  "translationAr": "تقديم الطعام",
+  "phonetic": "کھانا سرو کرنا",
+  "emoji": "🍱"
+ },
+ "ur_u15_l3": {
+  "id": "ur_mirch_pasand",
+  "target": "مجھے مرچ پسند نہیں",
+  "translationAr": "لا أحبّ الفلفل الحارّ",
+  "phonetic": "مجھے مرچ پسند نہیں",
+  "emoji": "🚫"
+ },
+ "ur_u16_l1": {
+  "id": "ur_be_riya",
+  "target": "بے ریا",
+  "translationAr": "غير منافق",
+  "phonetic": "بے ریا",
+  "emoji": "😇"
+ },
+ "ur_u16_l2": {
+  "id": "ur_bad_zaban",
+  "target": "بد زبان",
+  "translationAr": "سابّ للناس",
+  "phonetic": "بد زبان",
+  "emoji": "🤐"
+ },
+ "ur_u16_l3": {
+  "id": "ur_khud_aitmadi",
+  "target": "خود اعتمادی",
+  "translationAr": "الثقة بالنفس",
+  "phonetic": "خود اعتمادی",
+  "emoji": "💪"
+ },
+ "ur_u17_l1": {
+  "id": "ur_naya_chand",
+  "target": "نئے چاند کی دیکھ",
+  "translationAr": "رؤية الهلال",
+  "phonetic": "نئے چاند کی دیکھ",
+  "emoji": "🌒"
+ },
+ "ur_u17_l2": {
+  "id": "ur_ameen",
+  "target": "آمین",
+  "translationAr": "آمين",
+  "phonetic": "آمین",
+  "emoji": "🤲"
+ },
+ "ur_u17_l3": {
+  "id": "ur_guldasta",
+  "target": "گلدستہ",
+  "translationAr": "باقة زهور",
+  "phonetic": "گلدستہ",
+  "emoji": "💐"
+ },
+ "ur_u18_l1": {
+  "id": "ur_peeth",
+  "target": "پیٹھ",
+  "translationAr": "الظهر",
+  "phonetic": "پیٹھ",
+  "emoji": "🧘"
+ },
+ "ur_u18_l2": {
+  "id": "ur_mudafiat",
+  "target": "مدافعت",
+  "translationAr": "مناعة الجسم",
+  "phonetic": "مدافعت",
+  "emoji": "🍊"
+ },
+ "ur_u18_l3": {
+  "id": "ur_tababat",
+  "target": "طبابت",
+  "translationAr": "ممارسة الطب",
+  "phonetic": "طبابت",
+  "emoji": "🩺"
+ },
+ "ur_u19_l1": {
+  "id": "ur_hawain",
+  "target": "ہوائیں",
+  "translationAr": "رياح",
+  "phonetic": "ہوائیں",
+  "emoji": "🌬️"
+ },
+ "ur_u19_l2": {
+  "id": "ur_aakash_ganga",
+  "target": "آکاش گنگا",
+  "translationAr": "درب التبّانة",
+  "phonetic": "آکاش گنگا",
+  "emoji": "🌌"
+ },
+ "ur_u19_l3": {
+  "id": "ur_pakka_anaaj",
+  "target": "پکا اناج",
+  "translationAr": "حبوب ناضجة",
+  "phonetic": "پکا اناج",
+  "emoji": "🌽"
+ },
+ "ur_u20_l1": {
+  "id": "ur_afwah",
+  "target": "افواہ",
+  "translationAr": "إشاعة",
+  "phonetic": "افواہ",
+  "emoji": "🤫"
+ },
+ "ur_u20_l2": {
+  "id": "ur_audio",
+  "target": "آڈیو",
+  "translationAr": "الصوت المسجّل",
+  "phonetic": "آڈیو",
+  "emoji": "🎧"
+ },
+ "ur_u20_l3": {
+  "id": "ur_sanad",
+  "target": "سند",
+  "translationAr": "وثيقة / مستند",
+  "phonetic": "سند",
+  "emoji": "📜"
+ },
+ "ur_u42_l1": {
+  "id": "ur_airport_bus",
+  "target": "ایئر پورٹ بس",
+  "translationAr": "حافلة المطار",
+  "phonetic": "ایئر پورٹ بس",
+  "emoji": "🚌"
+ },
+ "ur_u42_l2": {
+  "id": "ur_khidki_wali_seat",
+  "target": "کھڑکی کی سیٹ",
+  "translationAr": "مقعد قرب النافذة",
+  "phonetic": "کھڑکی کی سیٹ",
+  "emoji": "💺"
+ },
+ "ur_u42_l3": {
+  "id": "ur_visa_extension",
+  "target": "ویزہ کی توسیع",
+  "translationAr": "تمديد التأشيرة",
+  "phonetic": "ویزہ کی توسیع",
+  "emoji": "📆"
+ },
+ "ur_u43_l1": {
+  "id": "ur_peshgi_booking",
+  "target": "پیشگی بکنگ",
+  "translationAr": "حجز مسبق",
+  "phonetic": "پیشگی بکنگ",
+  "emoji": "📅"
+ },
+ "ur_u43_l2": {
+  "id": "ur_bistar_sheet",
+  "target": "بیڈ شیٹ",
+  "translationAr": "شرشف السرير",
+  "phonetic": "بیڈ شیٹ",
+  "emoji": "🧺"
+ },
+ "ur_u43_l3": {
+  "id": "ur_complaint",
+  "target": "کمپلینٹ",
+  "translationAr": "شكوى",
+  "phonetic": "کمپلینٹ",
+  "emoji": "📝"
+ },
+ "ur_u44_l1": {
+  "id": "ur_bank_khata",
+  "target": "بینک کھاتہ",
+  "translationAr": "حساب مصرفي",
+  "phonetic": "بینک کھاتہ",
+  "emoji": "📗"
+ },
+ "ur_u44_l2": {
+  "id": "ur_qaraz_utarna",
+  "target": "قرض اتارنا",
+  "translationAr": "تسديد القرض",
+  "phonetic": "قرض اتارنا",
+  "emoji": "🧾"
+ },
+ "ur_u44_l3": {
+  "id": "ur_note",
+  "target": "نوٹ",
+  "translationAr": "ورقة نقدية",
+  "phonetic": "نوٹ",
+  "emoji": "🏧"
+ },
+ "ur_u45_l1": {
+  "id": "ur_badan_dard",
+  "target": "بدن درد",
+  "translationAr": "أوجاع الجسد",
+  "phonetic": "بدن درد",
+  "emoji": "💊"
+ },
+ "ur_u45_l2": {
+  "id": "ur_goli",
+  "target": "گولی",
+  "translationAr": "حبة دواء",
+  "phonetic": "گولی",
+  "emoji": "🍬"
+ },
+ "ur_u45_l3": {
+  "id": "ur_checkup",
+  "target": "چیک اپ",
+  "translationAr": "فحص دوري",
+  "phonetic": "چیک اپ",
+  "emoji": "🩻"
+ },
+ "ur_u46_l1": {
+  "id": "ur_neptune",
+  "target": "نیپچون",
+  "translationAr": "نبتون",
+  "phonetic": "نیپچون",
+  "emoji": "🔵"
+ },
+ "ur_u46_l2": {
+  "id": "ur_siaron_ka_nizam",
+  "target": "سیاروں کا نظام",
+  "translationAr": "نظام كواكب",
+  "phonetic": "سیاروں کا نظام",
+  "emoji": "🪐"
+ },
+ "ur_u46_l3": {
+  "id": "ur_space_debris",
+  "target": "فضائی ملبہ",
+  "translationAr": "حطّام فضائي",
+  "phonetic": "فضائی ملبہ",
+  "emoji": "🪐"
+ },
+ "ur_u47_l1": {
+  "id": "ur_australia",
+  "target": "آسٹریلیا",
+  "translationAr": "أستراليا",
+  "phonetic": "آسٹریلیا",
+  "emoji": "🦘"
+ },
+ "ur_u47_l2": {
+  "id": "ur_jal_thal",
+  "target": "جل تھل",
+  "translationAr": "مستنقعات",
+  "phonetic": "جل تھل",
+  "emoji": "🐊"
+ },
+ "ur_u47_l3": {
+  "id": "ur_sahili_sheher",
+  "target": "ساحلی شہر",
+  "translationAr": "مدينة ساحلية",
+  "phonetic": "ساحلی شہر",
+  "emoji": "🏙️"
+ },
+ "ur_u48_l1": {
+  "id": "ur_sahil_chaon",
+  "target": "ساحل کی چھاؤں",
+  "translationAr": "ظلّ الشاطئ",
+  "phonetic": "ساحل کی چھاؤں",
+  "emoji": "🌴"
+ },
+ "ur_u48_l2": {
+  "id": "ur_sea_lion",
+  "target": "سمندری شیر",
+  "translationAr": "أسد البحر",
+  "phonetic": "سمندری شیر",
+  "emoji": "🦭"
+ },
+ "ur_u48_l3": {
+  "id": "ur_diving_tank",
+  "target": "ڈائیونگ ٹینک",
+  "translationAr": "أسطوانة الغوص",
+  "phonetic": "ڈائیونگ ٹینک",
+  "emoji": "🫧"
+ },
+ "ur_u49_l1": {
+  "id": "ur_hul_chalana",
+  "target": "ہل چلانا",
+  "translationAr": "حراثة الأرض",
+  "phonetic": "ہل چلانا",
+  "emoji": "🐂"
+ },
+ "ur_u49_l2": {
+  "id": "ur_ontni",
+  "target": "اونٹنی",
+  "translationAr": "ناقة",
+  "phonetic": "اونٹنی",
+  "emoji": "🐫"
+ },
+ "ur_u49_l3": {
+  "id": "ur_kacha_rasta",
+  "target": "کچا راستہ",
+  "translationAr": "طريق ترابي",
+  "phonetic": "کچا راستہ",
+  "emoji": "🛤️"
+ },
+ "ur_u50_l1": {
+  "id": "ur_murghabi",
+  "target": "مرغابی",
+  "translationAr": "البطّة",
+  "phonetic": "مرغابی",
+  "emoji": "🦆"
+ },
+ "ur_u50_l2": {
+  "id": "ur_tiddi",
+  "target": "ٹڈی",
+  "translationAr": "الجراد",
+  "phonetic": "ٹڈی",
+  "emoji": "🦗"
+ },
+ "ur_u50_l3": {
+  "id": "ur_teendwa",
+  "target": "تیندوا",
+  "translationAr": "النمر",
+  "phonetic": "تیندوا",
+  "emoji": "🐆"
+ },
+ "ur_u51_l1": {
+  "id": "ur_file_cabinet",
+  "target": "فائل کیبٹ",
+  "translationAr": "خزانة ملفّات",
+  "phonetic": "فائل کیبٹ",
+  "emoji": "🗂️"
+ },
+ "ur_u51_l2": {
+  "id": "ur_chairman",
+  "target": "چیرمین",
+  "translationAr": "رئيس الجلسة",
+  "phonetic": "چیرمین",
+  "emoji": "🪑"
+ },
+ "ur_u51_l3": {
+  "id": "ur_payroll",
+  "target": "پے رول",
+  "translationAr": "جدول الأجور",
+  "phonetic": "پے رول",
+  "emoji": "🧾"
+ },
+ "ur_u21_l1": {
+  "id": "ur_aasman_toot",
+  "target": "آسمان ٹوٹ پڑنا",
+  "translationAr": "أمطار غزيرة جداً",
+  "phonetic": "آسمان ٹوٹ پڑنا",
+  "emoji": "🌧️"
+ },
+ "ur_u21_l2": {
+  "id": "ur_doodh_dhal",
+  "target": "دودھ دھل جانا",
+  "translationAr": "خسر المقال والزلة",
+  "phonetic": "دودھ دھل جانا",
+  "emoji": "🫗"
+ },
+ "ur_u21_l3": {
+  "id": "ur_aankh_marna",
+  "target": "آنکھ مارنا",
+  "translationAr": "يغمز بالعين",
+  "phonetic": "آنکھ مارنا",
+  "emoji": "😉"
+ },
+ "ur_u22_l1": {
+  "id": "ur_naatt",
+  "target": "نعت",
+  "translationAr": "قصيدة مدح نبوية",
+  "phonetic": "نعت",
+  "emoji": "🕌"
+ },
+ "ur_u22_l2": {
+  "id": "ur_paon_pakarna",
+  "target": "پاؤں پکڑنا",
+  "translationAr": "التضرّع والتواضع",
+  "phonetic": "پاؤں پکڑنا",
+  "emoji": "🙇"
+ },
+ "ur_u22_l3": {
+  "id": "ur_dastaan",
+  "target": "داستان",
+  "translationAr": "سيرة ملحمية",
+  "phonetic": "داستان",
+  "emoji": "📜"
+ },
+ "ur_u52_l1": {
+  "id": "ur_qalmi",
+  "target": "قلمی",
+  "translationAr": "زرع ميكروبي",
+  "phonetic": "قلمی",
+  "emoji": "🦠"
+ },
+ "ur_u52_l2": {
+  "id": "ur_scientific_method",
+  "target": "سائنسی طریقہ",
+  "translationAr": "المنهج العلمي",
+  "phonetic": "سائنسی طریقہ",
+  "emoji": "🧠"
+ },
+ "ur_u52_l3": {
+  "id": "ur_lehar",
+  "target": "لہر",
+  "translationAr": "موجة (طول موجي)",
+  "phonetic": "لہر",
+  "emoji": "🌊"
+ },
+ "ur_u53_l1": {
+  "id": "ur_fire_station",
+  "target": "فائر اسٹیشن",
+  "translationAr": "محطة الإطفاء",
+  "phonetic": "فائر اسٹیشن",
+  "emoji": "🚒"
+ },
+ "ur_u53_l2": {
+  "id": "ur_rok_tok",
+  "target": "روک ٹوک",
+  "translationAr": "نقاط تفتيش",
+  "phonetic": "روک ٹوک",
+  "emoji": "🛑"
+ },
+ "ur_u53_l3": {
+  "id": "ur_jlay_huye",
+  "target": "جلے ہوئے",
+  "translationAr": "محروق",
+  "phonetic": "جلے ہوئے",
+  "emoji": "♨️"
+ },
+ "ur_u54_l1": {
+  "id": "ur_mueeshat",
+  "target": "معیشت",
+  "translationAr": "الاقتصاد",
+  "phonetic": "معیشت",
+  "emoji": "🏦"
+ },
+ "ur_u54_l2": {
+  "id": "ur_transport",
+  "target": "ٹرانسپورٹ",
+  "translationAr": "النقل",
+  "phonetic": "ٹرانسپورٹ",
+  "emoji": "🚚"
+ },
+ "ur_u54_l3": {
+  "id": "ur_mayari",
+  "target": "معیاری",
+  "translationAr": "قياسي عالي الجودة",
+  "phonetic": "معیاری",
+  "emoji": "⭐"
+ },
+ "ur_u23_l1": {
+  "id": "ur_jazbati",
+  "target": "جذباتی",
+  "translationAr": "وجداني",
+  "phonetic": "جذباتی",
+  "emoji": "💗"
+ },
+ "ur_u23_l2": {
+  "id": "ur_chamakna",
+  "target": "چمکنا",
+  "translationAr": "يلمع",
+  "phonetic": "چمکنا",
+  "emoji": "✨"
+ },
+ "ur_u23_l3": {
+  "id": "ur_fiqray",
+  "target": "فقرے",
+  "translationAr": "جمل نصية",
+  "phonetic": "فقرے",
+  "emoji": "📄"
+ },
+ "ur_u24_l1": {
+  "id": "ur_matbooat",
+  "target": "مطبوعات",
+  "translationAr": "الصحافة المكتوبة",
+  "phonetic": "مطبوعات",
+  "emoji": "📚"
+ },
+ "ur_u24_l2": {
+  "id": "ur_dhoka",
+  "target": "دھوکہ",
+  "translationAr": "خدعة",
+  "phonetic": "دھوکہ",
+  "emoji": "🎭"
+ },
+ "ur_u24_l3": {
+  "id": "ur_muqabla",
+  "target": "مقابلہ",
+  "translationAr": "منافسة",
+  "phonetic": "مقابلہ",
+  "emoji": "🏁"
+ },
+ "ur_u25_l1": {
+  "id": "ur_daftari_mohar",
+  "target": "دفتری مہر",
+  "translationAr": "ختم رسمي",
+  "phonetic": "دفتری مہر",
+  "emoji": "📌"
+ },
+ "ur_u25_l2": {
+  "id": "ur_saza",
+  "target": "سزا",
+  "translationAr": "عقوبة",
+  "phonetic": "سزا",
+  "emoji": "🚔"
+ },
+ "ur_u25_l3": {
+  "id": "ur_istinbaat",
+  "target": "استنباط",
+  "translationAr": "استنباط واستنتاج",
+  "phonetic": "استنباط",
+  "emoji": "🔍"
+ },
+ "ur_u55_l1": {
+  "id": "ur_dean",
+  "target": "ڈین",
+  "translationAr": "عميد الكلية",
+  "phonetic": "ڈین",
+  "emoji": "👔"
+ },
+ "ur_u55_l2": {
+  "id": "ur_naql_lena",
+  "target": "نقل لینا",
+  "translationAr": "يغشّ في الامتحان",
+  "phonetic": "نقل لینا",
+  "emoji": "🙈"
+ },
+ "ur_u55_l3": {
+  "id": "ur_ishariye",
+  "target": "اشاریے",
+  "translationAr": "إحالات مرجعية",
+  "phonetic": "اشاریے",
+  "emoji": "👉"
+ },
+ "ur_u56_l1": {
+  "id": "ur_istisna",
+  "target": "استثنا",
+  "translationAr": "استثناء",
+  "phonetic": "استثنا",
+  "emoji": "➖"
+ },
+ "ur_u56_l2": {
+  "id": "ur_haan_karna",
+  "target": "ہاں کرنا",
+  "translationAr": "يوافق ويقول نعم",
+  "phonetic": "ہاں کرنا",
+  "emoji": "✅"
+ },
+ "ur_u56_l3": {
+  "id": "ur_jawabi_sawal",
+  "target": "جوابی سوال",
+  "translationAr": "سؤال مضاد",
+  "phonetic": "جوابی سوال",
+  "emoji": "🔄"
+ }
+}

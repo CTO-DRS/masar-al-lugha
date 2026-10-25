@@ -1,9 +1,9 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.1.0+25** — see the v5.1 section below for the
-Urdu course's full-parity expansion, the v5.0 section for the German
-course (the fourth language) and the v4.13.1 section for the RTL
-direction-safety fix with test evidence.
+**Current release: v5.2.0+26** — see the v5.2 section below for the
+Urdu course reaching lesson-for-lesson parity with English, the v5.1
+section for the Urdu unit expansion and the v5.0 section for the
+German course (the fourth language).
 
 ## Where we are
 
@@ -34,6 +34,7 @@ direction-safety fix with test evidence.
 | v4.13.1 | **RTL direction-safety fix (learner-reported): target-language tiles in the build (arrange) exercise inherited the Arabic UI's RTL and rendered English sentences REVERSED (`morning \| Good`) — new first-strong `directionOf` + `ScriptDirection` widget lay every target-language surface (build rows, cloze prompt, dictation field, mcq/tf prompts, feedback answer, option cards, flashcard front, example lines) in its OWN script direction; the Urdu course keeps flowing RTL — pinned in `test/rtl_direction_test.dart`** |
 | **v5.0** | **German joins — the fourth course: 20 units / 60 lessons / 599 words (CEFR A1→C1 monotonic, de-DE TTS, 100% Arabic phonetics + emoji) loaded through the same engines (path domains, placement, exercise generation, SRS, custom decks); `all_de_units` badge + polyglot now spans four courses; a substring trap fixed (`التعريف` contains the nature keyword `ريف` → retitled `التعرّف على النفس`); content gate scans all four courses — 4497 words / 126 units / 430 lessons, 199 tests** |
 | **v5.1** | **The Urdu course reaches FULL parity with English: +31 hand-authored units (A1 ×8, A2 ×8, B1 ×10, B2 ×3, C1 ×2), +93 lessons, +930 real Urdu words (Arabic glosses, Arabic-script phonetics, per-lesson unique emoji, ~30% example sentences) — now 56 units / 172 lessons / 1669 words with the same level spread as English (A1 14 · A2 14 · B1 18 · B2 5 · C1 5); new unit titles pre-checked against the domain-keyword catalog (domain spread: daily 16 · nature 8 · business 6 · culture 7 · travel 5 · food 5 · health 4 · basics 3 · tech 2); all pre-existing vocab ids untouched (append-only) — content gate: 5427 words / 157 units / 523 lessons** |
+| **v5.2** | **Urdu matches English LESSON-FOR-LESSON: +44 fourth lessons (one per unit whose English twin has four) and +659 words — 44 lesson-vocab sets of 10–12 themed words plus one densification word woven into every existing l1/l2/l3 lesson (each pre-checked against that lesson's words and emoji); Urdu now sits at exactly 56 units / 216 lessons / 2328 words = the English course's shape to the digit, with the same 4-lesson-unit spread (A1 12 · A2 12 · B1 18 · B2 5 · C1 1); content gate: 6086 words / 157 units / 567 lessons** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -461,6 +462,51 @@ Quality gates kept:
 
 Totals across the four courses: **5427 words / 157 units / 523
 lessons**.
+
+## v5.2 — Urdu matches English lesson-for-lesson (SHIPPED)
+
+v5.1 gave Urdu the English course's UNIT count; this wave closes the
+remaining structural gap: English has 216 lessons to Urdu's 172, and
+2328 words to 1669. Both gaps are now zero.
+
+What was added (44 lessons + 659 words):
+
+1. **44 fourth lessons** — every Urdu unit whose English twin carries
+   four lessons received a themed `l4` lesson (10–12 words each):
+   months, baby animals, wellness, dress & style, on-the-road,
+   traditional dishes, home appliances, the modern mall (A1);
+   hiring, daily routine→time & clock, neighborhood, exams,
+   landmarks, fitness, café, stage, daily verbs, plants & waters,
+   materials, understanding (A2); water sports, AI safety, kitchen
+   tools, mental traits, weddings, senses, climate, publishing,
+   customs, stays, digital banking, dental & vision, observatory,
+   maps & population, coastal wonders, crops, forest, professional
+   skills (B1); effort idioms, poetry craft, elements, preparedness,
+   international trade (B2); rhetoric (C1). The eight units whose
+   English twins have three lessons (u7, u8, u24, u25, u32, u33,
+   u55, u56) stay untouched, so the per-level 4-lesson-unit spread
+   now mirrors English exactly: A1 12 · A2 12 · B1 18 · B2 5 · C1 1.
+2. **168 densification words** — every existing l1/l2/l3 lesson
+   received exactly one new thematic word, closing the ~1-word-per-
+   lesson density gap versus English (same position totals to within
+   a few words: UR 608/606/596/518 vs EN 605/602/598/523 — grand
+   total identical at 2328). Each word was chosen against that
+   lesson's existing targets and emojis.
+3. **Zero regression on progress keys** — not one pre-existing vocab
+   or lesson id moved; 12 new-item ids that collided with legacy ids
+   were renamed in the new content only (`ur_haar` → `ur_galehaar`,
+   `ur_sona` → `ur_talai` target swapped to طلائی, `ur_qalam` →
+   `ur_dawaat`, `ur_talab` → `ur_talab_pond`, `ur_operation` →
+   `ur_operation_surgery`, `ur_atom` → `ur_atom_particle`, `ur_share`
+   → `ur_share_stocks`, `ur_takeoff` → `ur_takeoff_plane`,
+   `ur_bed_sheet` → `ur_bistar_sheet`, …), and 4 near-duplicate
+   TARGETS (اخلاق، سونا، قوت، ہار — different meanings, same
+   spelling) were swapped for unambiguous words. One legacy within-
+   lesson emoji duplicate (ur_u8_l2 دہی/لسی both 🥛) was repaired.
+
+Totals across the four courses: **6086 words / 157 units / 567
+lessons**. `content_test.dart` pins ur at [56, 216, 2328] — the same
+triple as en.
 
 ## v5.0 — German joins: the fourth course (SHIPPED)
 

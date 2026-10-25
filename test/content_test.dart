@@ -19,7 +19,7 @@ import 'package:masar_al_lugha/models.dart';
 const _expected = <String, List<int>>{
   'en': [56, 216, 2328],
   'fr': [25, 75, 831],
-  'ur': [56, 172, 1669],
+  'ur': [56, 216, 2328],
   'de': [20, 60, 599],
 };
 
@@ -48,7 +48,7 @@ void main() {
             reason: '$lang lesson count drifted');
         expect(words, _expected[lang]![2], reason: '$lang word count drifted');
       }
-      expect(totalWords, 5427);
+      expect(totalWords, 6086);
     });
 
     test('every unit has a valid monotonic CEFR tag', () async {
@@ -81,7 +81,7 @@ void main() {
               reason: '${v.id} has empty translationAr');
         }
       }
-      expect(seen.length, 5427);
+      expect(seen.length, 6086);
     });
 
     test('new v4.2 units keep per-lesson emoji uniqueness', () async {

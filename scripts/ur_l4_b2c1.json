@@ -1,0 +1,511 @@
+[
+ {
+  "id": "ur_u21_l4",
+  "titleAr": "محاورات الجهد والذكاء",
+  "titleEn": "Idioms of effort & wit",
+  "vocab": [
+   {
+    "id": "ur_paseena_bahana",
+    "target": "پسینہ بہانا",
+    "translationAr": "يذيب عرقه (يتعب كثيراً)",
+    "phonetic": "پسینہ بہانا",
+    "emoji": "💦"
+   },
+   {
+    "id": "ur_raton_ki_neend_urna",
+    "target": "راتوں کی نیند اڑنا",
+    "translationAr": "ينزع نومه (يقلق)",
+    "phonetic": "راتوں کی نیند اڑنا",
+    "emoji": "😵"
+   },
+   {
+    "id": "ur_kandha_dena",
+    "target": "کندھا دینا",
+    "translationAr": "يسند (يعاون)",
+    "phonetic": "کندھا دینا",
+    "emoji": "🤷"
+   },
+   {
+    "id": "ur_sar_aankhon_par",
+    "target": "سر آنکھوں پر بٹھانا",
+    "translationAr": "يرفع على الرأس (يعزّز)",
+    "phonetic": "سر آنکھوں پر بٹھانا",
+    "emoji": "🙆"
+   },
+   {
+    "id": "ur_idhar_udhar_ki_batain",
+    "target": "ادھر ادھر کی باتیں",
+    "translationAr": "كلام لا ذكر له (ثرثرة)",
+    "phonetic": "ادھر ادھر کی باتیں",
+    "emoji": "💭"
+   },
+   {
+    "id": "ur_dabang",
+    "target": "دبنگ",
+    "translationAr": "متعجرف قويّ",
+    "phonetic": "دبنگ",
+    "emoji": "😤"
+   },
+   {
+    "id": "ur_akhra",
+    "target": "اکھڑ",
+    "translationAr": "جافٍ متعسّر",
+    "phonetic": "اکھڑ",
+    "emoji": "😒"
+   },
+   {
+    "id": "ur_aaray_aana",
+    "target": "آڑے آنا",
+    "translationAr": "يعترض الطريق (يحمي)",
+    "phonetic": "آڑے آنا",
+    "emoji": "🛑"
+   },
+   {
+    "id": "ur_bat_pakarna",
+    "target": "بات پکڑنا",
+    "translationAr": "يلمح للفهم (يسريع الفهم)",
+    "phonetic": "بات پکڑنا",
+    "emoji": "👂"
+   },
+   {
+    "id": "ur_dil_khol_kar",
+    "target": "دل کھول کر",
+    "translationAr": "بكل قلب وبسع",
+    "phonetic": "دل کھول کر",
+    "emoji": "🫀"
+   },
+   {
+    "id": "ur_mitti_milana",
+    "target": "مِٹی میں ملانا",
+    "translationAr": "يدسّ الأرض (يهزم غالباً)",
+    "phonetic": "مِٹی میں ملانا",
+    "emoji": "🧎",
+    "exampleTarget": "مقابلے نے اسے مِٹی میں ملا دیا",
+    "exampleAr": "قهرمه خصمه وذلّه"
+   }
+  ]
+ },
+ {
+  "id": "ur_u22_l4",
+  "titleAr": "صناعة الشعر",
+  "titleEn": "The craft of poetry",
+  "vocab": [
+   {
+    "id": "ur_bahr",
+    "target": "بہر",
+    "translationAr": "الوزن العروضي",
+    "phonetic": "بہر",
+    "emoji": "🎼"
+   },
+   {
+    "id": "ur_bait",
+    "target": "بیت",
+    "translationAr": "البيت الشعري",
+    "phonetic": "بیت",
+    "emoji": "📜"
+   },
+   {
+    "id": "ur_matla",
+    "target": "مطلع",
+    "translationAr": "المطلع (مطلع القصيدة)",
+    "phonetic": "مطلع",
+    "emoji": "🌅"
+   },
+   {
+    "id": "ur_maqtta",
+    "target": "مقطع",
+    "translationAr": "الخاتمة الشعرية",
+    "phonetic": "مقطع",
+    "emoji": "⏹️"
+   },
+   {
+    "id": "ur_tashbeeh",
+    "target": "تشبیہ",
+    "translationAr": "التشبيه",
+    "phonetic": "تشبیہ",
+    "emoji": "🔗"
+   },
+   {
+    "id": "ur_isteara",
+    "target": "استعارہ",
+    "translationAr": "الاستعارة",
+    "phonetic": "استعارہ",
+    "emoji": "🎭"
+   },
+   {
+    "id": "ur_husne_taleel",
+    "target": "حسنِ تعلیل",
+    "translationAr": "التعليل الجميل (أسلوب بلاغي)",
+    "phonetic": "حسنِ تعلیل",
+    "emoji": "💡"
+   },
+   {
+    "id": "ur_taqtee",
+    "target": "تقطیع",
+    "translationAr": "التقطيع العروضي",
+    "phonetic": "تقطیع",
+    "emoji": "📐"
+   },
+   {
+    "id": "ur_kalaam",
+    "target": "کلام",
+    "translationAr": "الشعر المنظوم",
+    "phonetic": "کلام",
+    "emoji": "📖"
+   },
+   {
+    "id": "ur_marsiya",
+    "target": "مرثیہ",
+    "translationAr": "الرثاء",
+    "phonetic": "مرثیہ",
+    "emoji": "🖤"
+   },
+   {
+    "id": "ur_manaqib",
+    "target": "منقبت",
+    "translationAr": "المدح الدينية",
+    "phonetic": "منقبت",
+    "emoji": "📿",
+    "exampleTarget": "اُس نے اپنے استاد کی منقبت لکھی",
+    "exampleAr": "كتب مدحاً دينية في شيخه"
+   }
+  ]
+ },
+ {
+  "id": "ur_u52_l4",
+  "titleAr": "العناصر والمركبات",
+  "titleEn": "Elements & compounds",
+  "vocab": [
+   {
+    "id": "ur_atom_particle",
+    "target": "ایٹم",
+    "translationAr": "الذرة",
+    "phonetic": "ایٹم",
+    "emoji": "⚛️"
+   },
+   {
+    "id": "ur_proton",
+    "target": "پروٹون",
+    "translationAr": "البروتون",
+    "phonetic": "پروٹون",
+    "emoji": "🔴"
+   },
+   {
+    "id": "ur_neutron",
+    "target": "نیوٹران",
+    "translationAr": "النيوترون",
+    "phonetic": "نیوٹران",
+    "emoji": "⚪"
+   },
+   {
+    "id": "ur_electron",
+    "target": "الیکٹران",
+    "translationAr": "الإلكترون",
+    "phonetic": "الیکٹران",
+    "emoji": "⚡"
+   },
+   {
+    "id": "ur_dhaat",
+    "target": "دھات",
+    "translationAr": "المعدن",
+    "phonetic": "دھات",
+    "emoji": "🧲"
+   },
+   {
+    "id": "ur_ghair_dhaat",
+    "target": "غیر دھات",
+    "translationAr": "اللافلز",
+    "phonetic": "غیر دھات",
+    "emoji": "🧊"
+   },
+   {
+    "id": "ur_aameza",
+    "target": "آمیزہ",
+    "translationAr": "الخليط",
+    "phonetic": "آمیزہ",
+    "emoji": "🧪"
+   },
+   {
+    "id": "ur_tezab",
+    "target": "تیزاب",
+    "translationAr": "الحمض",
+    "phonetic": "تیزاب",
+    "emoji": "⚗️"
+   },
+   {
+    "id": "ur_khara",
+    "target": "کھارا",
+    "translationAr": "القلوي",
+    "phonetic": "کھارا",
+    "emoji": "🧂"
+   },
+   {
+    "id": "ur_oxygen",
+    "target": "آکسیجن",
+    "translationAr": "الأكسجين",
+    "phonetic": "آکسیجن",
+    "emoji": "💨"
+   },
+   {
+    "id": "ur_hydrogen",
+    "target": "ہائیڈروجن",
+    "translationAr": "الهيدروجين",
+    "phonetic": "ہائیڈروجن",
+    "emoji": "🫧",
+    "exampleTarget": "پانی آکسیجن اور ہائیڈروجن سے بنتا ہے",
+    "exampleAr": "يتكوّن الماء من الأكسجين والهيدروجين"
+   }
+  ]
+ },
+ {
+  "id": "ur_u53_l4",
+  "titleAr": "الوقاية والاستعداد",
+  "titleEn": "Prevention & preparedness",
+  "vocab": [
+   {
+    "id": "ur_drill",
+    "target": "ڈرل",
+    "translationAr": "تدريب الإخلاء",
+    "phonetic": "ڈرل",
+    "emoji": "🏃‍♀️"
+   },
+   {
+    "id": "ur_inkhalaa",
+    "target": "انخلاع",
+    "translationAr": "الإخلاء",
+    "phonetic": "انخلاع",
+    "emoji": "🚨"
+   },
+   {
+    "id": "ur_aafat_sain",
+    "target": "آفات سائیں",
+    "translationAr": "مقاوم للكوارث",
+    "phonetic": "آفات سائیں",
+    "emoji": "🛡️"
+   },
+   {
+    "id": "ur_ration",
+    "target": "راشن",
+    "translationAr": "حصة الغذاء",
+    "phonetic": "راشن",
+    "emoji": "🥫"
+   },
+   {
+    "id": "ur_torch",
+    "target": "ٹارچ",
+    "translationAr": "الكشّاف",
+    "phonetic": "ٹارچ",
+    "emoji": "🔦"
+   },
+   {
+    "id": "ur_fasfari",
+    "target": "فسفری",
+    "translationAr": "مضيء في الظلام",
+    "phonetic": "فسفری",
+    "emoji": "✨"
+   },
+   {
+    "id": "ur_help_line",
+    "target": "ہیلپ لائن",
+    "translationAr": "خط المساعدة",
+    "phonetic": "ہیلپ لائن",
+    "emoji": "☎️"
+   },
+   {
+    "id": "ur_safety_jacket",
+    "target": "سیفٹی جیکٹ",
+    "translationAr": "سترة السلامة",
+    "phonetic": "سیفٹی جیکٹ",
+    "emoji": "🦺"
+   },
+   {
+    "id": "ur_zalzala",
+    "target": "زلزلہ",
+    "translationAr": "الزلزال",
+    "phonetic": "زلزلہ",
+    "emoji": "🏚️"
+   },
+   {
+    "id": "ur_selabi_pani",
+    "target": "سیلابی پانی",
+    "translationAr": "مياه الفيضان",
+    "phonetic": "سیلابی پانی",
+    "emoji": "🌊"
+   },
+   {
+    "id": "ur_mutasira_ilaqa",
+    "target": "متاثرہ علاقہ",
+    "translationAr": "المنطقة المتضررة",
+    "phonetic": "متاثرہ علاقہ",
+    "emoji": "📍",
+    "exampleTarget": "فوج متاثرہ علاقہ پہنچی",
+    "exampleAr": "وصل الجيش إلى المنطقة المتضررة"
+   }
+  ]
+ },
+ {
+  "id": "ur_u54_l4",
+  "titleAr": "التجارة الدولية",
+  "titleEn": "International trade",
+  "vocab": [
+   {
+    "id": "ur_alami",
+    "target": "عالمی",
+    "translationAr": "عالمي",
+    "phonetic": "عالمی",
+    "emoji": "🌐"
+   },
+   {
+    "id": "ur_tijarati_tawazun",
+    "target": "تجارتی توازن",
+    "translationAr": "الميزان التجاري",
+    "phonetic": "تجارتی توازن",
+    "emoji": "🧮"
+   },
+   {
+    "id": "ur_tariff",
+    "target": "ٹیرف",
+    "translationAr": "الرسوم الجمركية",
+    "phonetic": "ٹیرف",
+    "emoji": "🧾"
+   },
+   {
+    "id": "ur_quota",
+    "target": "کوٹہ",
+    "translationAr": "الحصة التجارية",
+    "phonetic": "کوٹہ",
+    "emoji": "📊"
+   },
+   {
+    "id": "ur_supplier",
+    "target": "سپلائر",
+    "translationAr": "المورّد",
+    "phonetic": "سپلائر",
+    "emoji": "🏭"
+   },
+   {
+    "id": "ur_lein_dain",
+    "target": "لین دین",
+    "translationAr": "التبادل التجاري",
+    "phonetic": "لین دین",
+    "emoji": "💱"
+   },
+   {
+    "id": "ur_dewaliya",
+    "target": "دیوالیہ",
+    "translationAr": "الإفلاس",
+    "phonetic": "دیوالیہ",
+    "emoji": "📉"
+   },
+   {
+    "id": "ur_khsaray_mein",
+    "target": "خسارے میں",
+    "translationAr": "في الخسارة",
+    "phonetic": "خسارے میں",
+    "emoji": "➖"
+   },
+   {
+    "id": "ur_gharelu_sanaat",
+    "target": "گھریلو صنعتیں",
+    "translationAr": "الصناعات المحلية",
+    "phonetic": "گھریلو صنعتیں",
+    "emoji": "🏗️"
+   },
+   {
+    "id": "ur_demand",
+    "target": "ڈیمانڈ",
+    "translationAr": "الطلب",
+    "phonetic": "ڈیمانڈ",
+    "emoji": "🛒"
+   },
+   {
+    "id": "ur_supply",
+    "target": "سپلائی",
+    "translationAr": "التوريد",
+    "phonetic": "سپلائی",
+    "emoji": "🚛",
+    "exampleTarget": "ڈیمانڈ زیادہ، سپلائی کم ہے",
+    "exampleAr": "الطلب كبير والتوريد قليل"
+   }
+  ]
+ },
+ {
+  "id": "ur_u23_l4",
+  "titleAr": "البلاغة والمجاز",
+  "titleEn": "Rhetoric & figurative language",
+  "vocab": [
+   {
+    "id": "ur_lateefa",
+    "target": "لطیفہ",
+    "translationAr": "النكتة الظريفة",
+    "phonetic": "لطیفہ",
+    "emoji": "🤭"
+   },
+   {
+    "id": "ur_kinaya",
+    "target": "کنایہ",
+    "translationAr": "الكناية",
+    "phonetic": "کنایہ",
+    "emoji": "🫵"
+   },
+   {
+    "id": "ur_majaaz",
+    "target": "مجاز",
+    "translationAr": "المجاز",
+    "phonetic": "مجاز",
+    "emoji": "🪄"
+   },
+   {
+    "id": "ur_meani",
+    "target": "معنی",
+    "translationAr": "المعنى",
+    "phonetic": "معنی",
+    "emoji": "🔤"
+   },
+   {
+    "id": "ur_muqsad",
+    "target": "مقصد",
+    "translationAr": "المقصد",
+    "phonetic": "مقصد",
+    "emoji": "🎯"
+   },
+   {
+    "id": "ur_rasookh",
+    "target": "رسوخ",
+    "translationAr": "نفوذ",
+    "phonetic": "رسوخ",
+    "emoji": "🌀"
+   },
+   {
+    "id": "ur_rang_aimeezi",
+    "target": "رنگ آمیزی",
+    "translationAr": "التلوين الوصفي",
+    "phonetic": "رنگ آمیزی",
+    "emoji": "🖌️"
+   },
+   {
+    "id": "ur_taseer",
+    "target": "تاثیر",
+    "translationAr": "الانطباع",
+    "phonetic": "تاثیر",
+    "emoji": "😌"
+   },
+   {
+    "id": "ur_takhyeel",
+    "target": "تخیل",
+    "translationAr": "الخيال",
+    "phonetic": "تخیل",
+    "emoji": "🦄"
+   },
+   {
+    "id": "ur_sinf",
+    "target": "صنف",
+    "translationAr": "النوع الأدبي",
+    "phonetic": "صنف",
+    "emoji": "🗂️",
+    "exampleTarget": "غزل اردو شاعری کا مقبول صنف ہے",
+    "exampleAr": "الغزل نوع مقبول من الشعر الأردي"
+   }
+  ]
+ }
+]
