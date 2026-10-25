@@ -1,8 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.6.0+30** — see the v5.6 section below for the
-pronunciation practice skill, the v5.5 section for the adaptive
-placement probe, the v5.4 section for the content wave (German to full unit
+**Current release: v5.7.0+31** — see the v5.7 section below for the
+grammar skill, the v5.6 section for the pronunciation practice skill,
+the v5.5 section for the adaptive placement probe, the v5.4 section for the content wave (German to full unit
 parity + 1022 new example sentences and enforced coverage floors), the v5.3
 section for the FSRS scheduler, the v5.2 section for the Urdu
 lesson-for-lesson parity, the v5.1 section for the Urdu unit expansion and
@@ -42,6 +42,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.4** | **Content wave in the de→ur→en priority order: German backfill 522 sentences (12.9%→100%) + 5 new units (School A2, Bank B1, Media B2, Literature & Philosophy C1×2) = 25 units / 779 words — full parity with French's unit count; Urdu backfill 500 sentences (17.8%→39.3%); enforced example-coverage floors in validator + content tests (en≥18% · fr≥40% · ur≥35% · de≥95%), global ids 6086→6266; all generated content marked "needs human review" in CONTENT_AUDIT** |
 | **v5.5** | **The placement test goes ADAPTIVE: a new `PlacementProber` staircase (18 questions, band step 12%, start 30% depth) raises the sampled depth after correct answers and lowers it after wrong ones — questions concentrate at the learner's ceiling; the result adds a per-CEFR-level breakdown chips row, the skip honors every SOLID band (`recommendedFlatIndexSolid`) instead of a leading prefix, and the tier maps the final band; the fixed-probe v4.0 API stays untouched and the prober feeds it; 234 tests** |
 | **v5.6** | **New skill — PRONUNCIATION practice (Phase 4/1): a `PronScorer` engine (Flutter-free, tested) grades the speech-to-text TRANSCRIPT against the expected word (Levenshtein over tashkeel/punctuation-normalized text) with honest thresholds; `SttService` wraps the device recognizer (speech_to_text, de/en/fr/ur locales) behind graceful degradation; optional mic permission fires only on use; autocomplete word picker over the course corpus + TTS replay; every score labeled "approximate" — recognition quality is device-dependent and cannot be verified without hardware; new RECORD_AUDIO permission + speech_to_text dependency (justified)** |
+| **v5.7** | **New skill — GRAMMAR lessons explained in Arabic (Phase 4/2): `lib/grammar.dart` catalog (Flutter-free, tested) with 8 contrastive lessons — 2 per course (en articles+3rd-person-s, de der/die/das+V2 order, fr le/la/les+ne…pas, ur ergative نے+postpositions), each with Arabic-vs-target bullets and 4 MCQ drills with per-drill explanations; reader screen with expandable lesson cards from the learn path; content lives as Dart data (no course-JSON churn, `gr_` ids cannot collide with vocab ids); machine-authored and flagged "needs human review"** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -707,6 +708,35 @@ environment, which has no platform channel).
    OPTIONAL in the manifest comment; app otherwise unchanged. l10n:
    13 new ar/en keys; version pin group moved to v5.6. Suite:
    234 → **248** tests.
+
+
+## v5.7 — grammar lessons in Arabic (SHIPPED, Phase 4 skill 2/4)
+
+New skill in its own branch (`feature/skill-grammar`, merged --no-ff).
+Short contrastive lessons that explain the TARGET rule against Arabic —
+the angle the courses alone do not cover:
+
+1. **`lib/grammar.dart`** — Flutter-free catalog: `GrammarLesson`
+   (id/courseId/level/title/pointsAr/drills) + `GrammarDrill`
+   (blank prompt / 3-4 options / correct index / one-line Arabic why) +
+   `GrammarCatalog.verify()` (unique ids, real course ids, well-formed
+   drills) — pinned by 6 tests.
+2. **Starter content (8 lessons × 4 drills)** — en: articles
+   (a/an/the vs no-article Arabic) + present-simple 3rd person s;
+   de: der/die/das gender (with -ung/-chen heuristics) + V2 word order;
+   fr: le/la/les + elision (l'ami) + ne…pas surrounding; ur: ergative
+   نے agreement (verb matches the OBJECT) + postpositions کو/میں/سے/پر
+   with the oblique case. Levels are the same self-referenced bands —
+   NO CEFR certification claimed; the whole catalog is machine-authored
+   and flagged "needs human review" in CONTENT_AUDIT.
+3. **`lib/screens/grammar_screen.dart`** — course-scoped list of
+   expandable lesson cards (level pill + English subtitle) → Arabic
+   bullets → drill cards reusing `OptionCard` with instant explanations.
+   Entry: a slim banner under the learn-path stats bar.
+4. **No content-file churn** — lessons live as Dart data with `gr_`
+   ids, so the append-only course JSONs and the validator are untouched.
+   l10n: grammarTitle/grammarNone (ar+en); version pin group moved to
+   v5.7. Suite: 248 → **255** tests.
 
 ## Hard invariants (never break)
 

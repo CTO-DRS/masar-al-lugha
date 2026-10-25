@@ -168,6 +168,8 @@ class L {
       'pronMiss': 'لم أتعرّف عليها — جرّب في مكان هادئ',
       'pronUnavailable':
           'التعرف على الكلام غير متاح على هذا الجهاز — يمكنك الاستماع والتقليد بدلاً من ذلك',
+      'grammarTitle': 'القواعد بالعربية',
+      'grammarNone': 'لا توجد دروس قواعد لهذه اللغة بعد',
       'placementResult': 'ننصحك بالبدء من هنا',
       'placementConfirm': 'ابدأ من هذا المستوى',
       'placementSkip': 'تخطي الاختبار والبدء من البداية',
@@ -333,7 +335,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.6.0',
+      'version': 'الإصدار 5.7.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -501,6 +503,8 @@ class L {
       'pronMiss': 'Could not recognize it — try a quiet place',
       'pronUnavailable':
           'Speech recognition is unavailable on this device — you can still listen and imitate',
+      'grammarTitle': 'Grammar, explained in Arabic',
+      'grammarNone': 'No grammar lessons for this language yet',
       'placementResult': 'We suggest starting here',
       'placementConfirm': 'Start from this level',
       'placementSkip': 'Skip the test and start from zero',
@@ -670,7 +674,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.6.0',
+      'version': 'Version 5.7.0',
     },
   };
 

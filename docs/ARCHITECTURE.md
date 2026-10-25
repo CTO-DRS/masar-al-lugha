@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.6
+# ARCHITECTURE — Masar Al-Lugha v5.7
 
 ## 1. Layered view (post-v4.0)
 
@@ -471,6 +471,15 @@ explicit "unavailable" state on any platform failure (including tests).
 The mic permission is optional and only requested on first use of the
 screen. No network, no cloud recognizer — consistent with the hard
 invariants.
+
+## 4l. Grammar module (v5.7)
+
+`lib/grammar.dart` holds the lesson catalog as DATA (8 contrastive
+lessons across the four courses) with a `verify()` contract pinned by
+tests; `grammar_screen.dart` is a plain reader + MCQ drills over it. The
+catalog is machine-authored ("needs human review" in CONTENT_AUDIT) and
+lives outside the course JSONs on purpose — grammar ids are namespaced
+`gr_` and can never collide with the append-only vocab ids.
 
 ## 5. Content pipeline
 
