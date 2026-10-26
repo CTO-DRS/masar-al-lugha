@@ -832,8 +832,36 @@ void main() {
         expect(L.t('ar', k), isNot(k), reason: k);
         expect(L.t('en', k), isNot(k), reason: k);
       }
-      expect(L.t('ar', 'version'), contains('5.10.0'));
-      expect(L.t('en', 'version'), contains('5.10.0'));
+      // Version itself is pinned by the newest group below.
+    });
+  });
+
+  group('l10n parity for v5.11 keys', () {
+    test('smarter-review keys exist in ar and en, version bumped', () {
+      const keys = [
+        // quick review mode
+        'quickReviewTitle',
+        'quickReviewHint',
+        'quickReviewDueBadge',
+        'quickReviewNoneDue',
+        'quickReviewDone',
+        'quickReviewDueLeft',
+        // smart memory hints
+        'hintLapses',
+        'hintHard',
+        'hintLate',
+        'hintYoung',
+        // cross-slot backup restore
+        'importTargetSlot',
+        'importSlotCurrent',
+        'importSlotOverwrite',
+      ];
+      for (final k in keys) {
+        expect(L.t('ar', k), isNot(k), reason: k);
+        expect(L.t('en', k), isNot(k), reason: k);
+      }
+      expect(L.t('ar', 'version'), contains('5.11.0'));
+      expect(L.t('en', 'version'), contains('5.11.0'));
     });
   });
 

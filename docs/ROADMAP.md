@@ -1,6 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.10.0+34** — see the v5.10 section below for the
+**Current release: v5.11.0+35** — see the v5.11 section below for the
+smarter-review wave (per-card memory hints, quick review mode,
+cross-slot backup restore), the v5.10 section for the
 systems wave (local multi-profile slots, opt-in analytics, Play-signing
 prep), the v5.9 section for the conversation trainer, the v5.8 section
 for the reading skill, the v5.7 section for the grammar skill, the v5.6
@@ -49,6 +51,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.8** | **New skill — LEVELED READING (Phase 4/3): `lib/reading.dart` catalog with 2 texts per course (8 total, A1/A2 bands, machine-authored → "needs human review"); reader screen with per-word tap → meaning sheet (course-corpus lookup with punctuation stripping + singular fallback, honest null outside the corpus), TTS replay and one-tap add-to-review feeding the REAL SRS via rateCard(hard) — the same honest path as the flashcards; Arabic sentence glosses under every line; slim skill banners on the learn path (`_SkillBanner`)** |
 | **v5.9** | **New skill — CONVERSATION TRAINER (Phase 4/4): a role-play chat behind the `ConversationProvider` abstraction; the shipped `OfflineScriptedProvider` is deterministic, on-device, ZERO network (hard invariants intact) — 8 scripted scenarios (2 per course: café/hotel en, bakery/cinema de, café/directions fr, shop/directions ur) with 3 steps each, any-of keyword-group matching over tashkeel-stripped text, sample-reply hints, per-scenario restart; any future AI provider implements the same 4-method interface and wiring it is an explicit user decision because it would touch the no-network rule; machine-authored dialogues flagged "needs human review"** |
 | **v5.10** | **Systems wave (Phase 5): LOCAL multi-profile slots over ProfileStore — up to 3 independent learners per device with slot-scoped progress keys (slot 1 = the original key, byte-compatible with every older build), switch/rename UI in Settings, zero accounts and zero network; opt-in LOCAL analytics (OFF by default) with an honest next-day return metric derived from the existing xpLog — anonymous by construction, nothing leaves the device; `scripts/prepare_play_signing.sh` prepares the real Play upload keystore outside the repo (key.properties/*.jks already gitignored) with CI-secrets guidance** |
+| **v5.11** | **Smarter review: per-card memory hints from the card's OWN FSRS history (`Insights.memoryHint`, first-match rules, silence over noise) rendered under the card back on all three review surfaces; a quick review mode (`Insights.quickReviewQueue` — due-only, shuffled, capped at 12, never introduces new words) with a live due-count launcher on the learn path; cross-slot backup restore (`importProfileJson` gains `targetSlot`) — a v4.0 export can now land in any of the 3 local slots without switching, with the current slot provably untouched** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -831,6 +834,38 @@ a provider interface and works fully offline.
 4. Suite: 273 → **284** tests (slot isolation, clamps, name persistence
    + trimming, opt-in default/export, retention math). Version pin group
    moved to v5.10.
+
+## v5.11 — smarter review (SHIPPED)
+
+1. **Per-card smart memory hints** — `Insights.memoryHint` (Flutter-free,
+   8 tests): one rule-based, first-match hint derived ONLY from the
+   card's own review history — lapses ≥ 3 → "forgotten n times, anchor
+   it with the example", difficulty ≥ 7.5 → "say it aloud", a review
+   card overdue by MORE than 3 days → "n days late", young stability
+   under 3 days → "come back tomorrow"; when no rule fires NOTHING
+   renders (silence beats noise). The shared `MemoryHintLine` widget
+   shows the localized line under the card back on all three review
+   surfaces: Cards tab, tough-words lane, quick review.
+2. **Quick review mode** — `Insights.quickReviewQueue` (pure, 3 tests):
+   due-only (a card qualifies when it has been SEEN — `reps > 0` — and
+   the schedule says due), shuffled, hard-capped at 12 so the session
+   stays a one-minute habit; a quick review NEVER introduces new words
+   (that is the lessons' job). The new `QuickReviewScreen` rates through
+   the SAME `rateCard` engine and shows an honest empty state; the
+   launcher banner on the learn path carries the LIVE due count
+   (`Insights.dueWithinDays(cards, 0)`).
+3. **Cross-slot backup restore** — `importProfileJson` gains an optional
+   `targetSlot`: a v4.0-style export can now land in ANY local slot
+   (1..3) without switching first. Implementation routes the store's
+   keys at the target slot for the duration — the payload goes through
+   the exact same serializer as a normal save, so no validation logic is
+   duplicated — then reloads the original slot; the current slot's
+   payload key is provably never written (2 tests, including failure
+   atomicity). The import dialog grows a slot picker with the honest
+   "this slot's progress will be replaced" note; the export envelope
+   records the source slot (informational, ignored on import). Note: the
+   course/uiLocale stay device-global by the v5.10 design.
+4. Suite: 284 → **298** tests (incl. the per-wave l10n parity group, now pinning 5.11.0). Version pin moved to v5.11.
 
 ## Hard invariants (never break)
 

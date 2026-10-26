@@ -1,4 +1,4 @@
-# ARCHITECTURE — Masar Al-Lugha v5.10
+# ARCHITECTURE — Masar Al-Lugha v5.11
 
 ## 1. Layered view (post-v4.0)
 
@@ -171,6 +171,25 @@ ProfileStore additive keys (`insights`, `favorites`) → InsightsScreen reads
 through the engine. The engine has no dependency on Flutter, widgets, or
 l10n, so `test/insights_test.dart` exercises it as pure Dart with injected
 `DateTime` anchors.
+
+### 4p. Smarter review (v5.11)
+
+Three additive pieces over the same engine:
+
+- **`Insights.memoryHint(CardData)`** — first-match, per-card rules over
+  the card's OWN FSRS history (`lapses`, `difficulty`, `stability`, due
+  lateness): n-forgotten → example anchoring; D ≥ 7.5 → say it aloud;
+  review card overdue > 3 days → n-days-late; young S < 3d → come back
+  tomorrow. No rule → null, and `MemoryHintLine` (widgets/common.dart)
+  renders nothing — silence beats noise, the same evidence-gating
+  discipline as the dashboard tips.
+- **`Insights.quickReviewQueue`** — pure picker: seen cards (`reps > 0`)
+  that are due, shuffled, capped at `quickReviewCap` (12). A quick review
+  never introduces new words. `QuickReviewScreen` rates through the same
+  `rateCard`; the learn-path launcher shows the live due count via
+  `dueWithinDays(cards, 0)`.
+- Both engines stay Flutter-free and unit-tested; the screens only
+  render what the engines justify.
 
 ### 4b. Companion engine (v4.5)
 
@@ -507,6 +526,22 @@ byte-compatible with every older build — the default stays "no account".
 Profile display names are device-level and load unconditionally (a fresh
 slot has no payload yet). Opt-in analytics (`RetentionStats`) derive
 from the existing xpLog only and never leave the device.
+
+## 2c. Cross-slot backup restore (v5.11)
+
+`AppState.importProfileJson(raw, {targetSlot})` restores a v4.0-style
+export envelope into any local slot without switching. The implementation
+deliberately does NOT duplicate the sanitize/validate logic: it routes
+`ProfileStore` at the target slot for the duration of the import (flush
+the current slot first → `setSlot(target)` → apply the existing validated
+apply-path → `store.save()` writes the TARGET key → `setSlot(original)` →
+`_resetInMemory()` + `load()` restore the original view). The current
+slot's payload key is therefore never written by a cross-slot import,
+and a mid-import failure restores the original state before returning
+`importInvalid`. The export envelope records the source slot
+(informational). Course/uiLocale prefs remain device-global by the
+v5.10 design — an import moves them on purpose, because card ids only
+resolve against the payload's own course.
 
 ## 5. Content pipeline
 

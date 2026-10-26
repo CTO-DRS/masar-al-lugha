@@ -5,6 +5,7 @@ import '../models.dart';
 import '../scope.dart';
 import '../srs.dart';
 import '../theme.dart';
+import '../widgets/common.dart';
 import '../widgets/mascot.dart';
 import 'custom_decks_screen.dart';
 import 'home_shell.dart';
@@ -411,6 +412,9 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                   : context.tr('reviewCards'),
           style: TextStyle(color: context.mutedText, fontSize: 12),
         ),
+        // v5.11: one rule-based memory hint from the card's own review
+        // history — renders nothing when no rule fires.
+        MemoryHintLine(card: c),
       ],
     );
   }

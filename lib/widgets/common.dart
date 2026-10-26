@@ -1,9 +1,13 @@
 // Common small widgets: stat chip, hearts row, progress ring, top bar.
 // v4.0: dark-mode-aware surfaces; min 48dp touch targets (a11y).
+// v5.11: MemoryHintLine — one rule-based memory hint under a card back.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../insights.dart';
+import '../models.dart';
+import '../scope.dart';
 import '../theme.dart';
 
 class StatChip extends StatelessWidget {
@@ -147,4 +151,47 @@ class _RingPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _RingPainter old) =>
       old.progress != progress || old.color != color;
+}
+
+/// v5.11: one personalized memory hint, rendered under a card's back side
+/// when [Insights.memoryHint] fires for it. The rules are documented next
+/// to the engine; this widget only renders the localized template with its
+/// params. When no rule matches (or the card is unseen) it renders
+/// nothing — silence beats noise.
+class MemoryHintLine extends StatelessWidget {
+  final CardData? card;
+
+  const MemoryHintLine({super.key, this.card});
+
+  @override
+  Widget build(BuildContext context) {
+    if (card == null || card!.reps == 0) return const SizedBox.shrink();
+    final tip = Insights.memoryHint(card!);
+    if (tip == null) return const SizedBox.shrink();
+    // Engine-only params (confusion ids) never carry display text.
+    final params = <String, String>{...tip.params}
+      ..remove('idA')
+      ..remove('idB');
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.lightbulb_outline, size: 14, color: context.mutedText),
+          const SizedBox(width: 5),
+          Flexible(
+            child: Text(
+              context.trF(tip.key, params),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: context.mutedText,
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

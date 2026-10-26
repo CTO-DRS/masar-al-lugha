@@ -6,6 +6,8 @@
 // PROMPT forbids them and this engine never needed one.
 //
 // The engine is Flutter-free and unit-tested (test/insights_test.dart).
+import 'dart:math' as math;
+
 import 'models.dart';
 
 /// One confusion pair, normalized so [vocabIdA] < [vocabIdB] lexically —
@@ -275,6 +277,74 @@ class Insights {
     }
 
     return tips.take(maxTips).toList();
+  }
+
+  // ================= v5.11: per-card smart memory hints ==================
+
+  /// One personalized, rule-based memory hint for a single card, derived
+  /// ONLY from that card's own review history (FSRS memory states + the
+  /// rep/lapse counters) — no cohort data, no magic. Rules are ordered and
+  /// FIRST MATCH WINS; when no rule fires the result is null, because for
+  /// a hint engine silence beats noise.
+  ///
+  /// Rules (explainable by design):
+  ///  1. lapses >= 3           → "forgotten n times" — anchor via the example.
+  ///  2. difficulty >= 7.5     → "hard for your memory" — say it aloud.
+  ///  3. review card, overdue
+  ///     by more than 3 days    → "late by n days" — recalling now is worth
+  ///                              more than a fresh introduction.
+  ///  4. young card, stability
+  ///     under 3 days           → "still fresh" — come back tomorrow.
+  static TutorTip? memoryHint(CardData card, {DateTime? now}) {
+    final n = now ?? DateTime.now();
+    if (card.lapses >= 3) {
+      return TutorTip('hintLapses', {'n': '${card.lapses}'});
+    }
+    if (card.difficulty >= 7.5) {
+      return const TutorTip('hintHard', {});
+    }
+    if (card.state == 'review' && card.dueEpochMs < n.millisecondsSinceEpoch) {
+      final lateDays = (n.millisecondsSinceEpoch - card.dueEpochMs) / dayMs;
+      if (lateDays > 3) {
+        return TutorTip('hintLate', {'n': '${lateDays.floor()}'});
+      }
+    }
+    if (card.stability > 0 && card.stability < 3) {
+      return const TutorTip('hintYoung', {});
+    }
+    return null;
+  }
+
+  // ================= v5.11: quick review queue ============================
+
+  /// Hard cap of one quick-review session — by design a 1-minute habit,
+  /// not a chore. The Cards tab remains the full uncapped review lane.
+  static const int quickReviewCap = 12;
+
+  /// Picks a short, due-only review queue from [pool] (the caller passes
+  /// the vocab of lessons the learner already completed). Pure and pinned
+  /// by tests. Selection rules:
+  ///  - only cards SEEN before (`reps > 0`) — a quick review never
+  ///    introduces new words (that is the lessons' job);
+  ///  - only cards currently DUE (`dueEpochMs <= now`) — "quick" means the
+  ///    schedule says now, not a random sample;
+  ///  - shuffled with [random] (injectable for reproducible tests) and
+  ///    hard-capped at [cap] (bounded 1..50).
+  static List<Vocab> quickReviewQueue({
+    required List<Vocab> pool,
+    required Map<String, CardData> cards,
+    int cap = quickReviewCap,
+    DateTime? now,
+    math.Random? random,
+  }) {
+    final n = now ?? DateTime.now();
+    final nowMs = n.millisecondsSinceEpoch;
+    final due = pool.where((v) {
+      final c = cards[v.id];
+      return c != null && c.reps > 0 && c.dueEpochMs <= nowMs;
+    }).toList();
+    due.shuffle(random ?? math.Random());
+    return due.take(cap.clamp(1, 50)).toList();
   }
 }
 

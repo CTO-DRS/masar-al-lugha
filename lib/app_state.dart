@@ -861,11 +861,13 @@ class AppState extends ChangeNotifier {
 
   /// Serializes the full profile for backup / transfer between devices.
   /// Includes a content fingerprint so imports can be validated.
+  /// v5.11: records the source slot (informational — imports ignore it).
   String exportProfileJson() {
     final payload = {
       'app': 'masar-al-lugha',
       'exportVersion': 1,
       'exportedAt': DateTime.now().toIso8601String(),
+      'slot': profileSlot, // v5.11: informational
       'progress': {
         'schema': progressSchema,
         'xp': xp,
@@ -918,7 +920,17 @@ class AppState extends ChangeNotifier {
   /// Returns an error key (l10n) on failure, or null on success.
   /// Unknown vocab/lesson ids are dropped so foreign profiles cannot
   /// poison state.
-  Future<String?> importProfileJson(String raw) async {
+  ///
+  /// v5.11: [targetSlot] restores into ANY local profile slot (1..3),
+  /// not only the current one. Implementation routes the store's keys at
+  /// the target slot for the duration of the import — so the payload
+  /// goes through the exact same serializer as a normal save — then
+  /// reloads the original slot's state. The CURRENT slot's payload key
+  /// is never written by a cross-slot import; its in-memory state is
+  /// flushed first so nothing pending is lost. Note the device-global
+  /// prefs (course/uiLocale) follow the imported payload by design —
+  /// v5.10 keeps one course per device across slots.
+  Future<String?> importProfileJson(String raw, {int? targetSlot}) async {
     Map<String, dynamic> payload;
     try {
       final decoded = jsonDecode(raw);
@@ -930,6 +942,17 @@ class AppState extends ChangeNotifier {
     if (payload['app'] != 'masar-al-lugha') return 'importInvalid';
     final p = payload['progress'];
     if (p is! Map<String, dynamic>) return 'importInvalid';
+
+    // v5.11: optional cross-slot restore (see the doc comment above).
+    final origSlot = profileSlot;
+    final target = (targetSlot ?? origSlot).clamp(1, ProfileStore.maxProfiles);
+    final crossSlot = target != origSlot;
+    if (crossSlot) {
+      await save(); // flush the CURRENT slot so nothing pending is lost
+      await store.setSlot(target);
+      profileSlot = target;
+      _resetInMemory();
+    }
 
     // Validate against known ids before touching state.
     final validLessonIds = <String>{
@@ -1034,10 +1057,27 @@ class AppState extends ChangeNotifier {
         onboardingDone = (s['onboardingDone'] as bool?) ?? onboardingDone;
       }
     } catch (_) {
+      if (crossSlot) {
+        // Restore the original slot's state; the target key was never
+        // written on this failure path (save happens only on success).
+        await store.setSlot(origSlot);
+        profileSlot = origSlot;
+        _resetInMemory();
+        await load();
+        notifyListeners();
+      }
       return 'importInvalid';
     }
     ensureDaily();
-    await save();
+    if (crossSlot) {
+      await store.save(); // writes the TARGET slot key
+      await store.setSlot(origSlot);
+      profileSlot = origSlot;
+      _resetInMemory();
+      await load();
+    } else {
+      await save();
+    }
     notifyListeners();
     return null;
   }

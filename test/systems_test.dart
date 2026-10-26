@@ -2,10 +2,42 @@
 // (retention metric), and the honest OFF-by-default contract.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:masar_al_lugha/app_state.dart';
+import 'package:masar_al_lugha/models.dart';
 import 'package:masar_al_lugha/profile_store.dart';
 import 'package:masar_al_lugha/insights.dart';
 import 'package:masar_al_lugha/srs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+/// Minimal injected course — unit tests run without main.dart, so AppState
+/// starts with an empty course registry (same fixture pattern as
+/// weak_words_test.dart). Real-shaped ids keep the import id-guard happy.
+Course _course(String id, List<String> words) {
+  return Course(
+    id: id,
+    nameAr: 'دورة $id',
+    nameEn: 'Course $id',
+    flag: '🌍',
+    ttsLang: 'en-US',
+    units: [
+      Unit(
+        id: '${id}_u_1',
+        titleAr: 'وحدة 1',
+        titleEn: 'Unit 1',
+        colorHex: '#58CC02',
+        lessons: [
+          Lesson(
+            id: '${id}_l_1',
+            titleAr: 'درس 1',
+            titleEn: 'Lesson 1',
+            vocab: words
+                .map((w) => Vocab(id: w, target: w, translationAr: 'معنى $w'))
+                .toList(),
+          ),
+        ],
+      ),
+    ],
+  );
+}
 
 void main() {
   test('profiles: slots are isolated and switching preserves each one',
@@ -128,6 +160,69 @@ void main() {
       }
       // all consecutive → 1.0 regardless of the window
       expect(RetentionStats.dayReturnRate(log, DateTime(2026, 2, 20)), 1.0);
+    });
+  });
+
+  // ================= v5.11: cross-slot backup restore =====================
+  group('v5.11 cross-slot backup restore', () {
+    test('restoring into another slot leaves the current slot untouched',
+        () async {
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      final st = AppState();
+      await st.load();
+      st.courses['en'] = _course('en', ['apple', 'banana']);
+
+      // REAL vocab ids — the import drops unknown ids by design (the
+      // foreign-profile guard), so fixtures must use course ids.
+      final vidA = st.course.allVocab.first.id;
+      final vidB = st.course.allVocab[1].id;
+
+      // Slot 1: some progress, then take the backup snapshot.
+      st.rateCard(vidA, Srs.good);
+      st.addXp(30);
+      await st.save();
+      final backup = st.exportProfileJson();
+
+      // MORE progress lands in slot 1 AFTER the snapshot — the restore
+      // must not merge it into slot 2, and must not disturb slot 1.
+      st.rateCard(vidB, Srs.good);
+      st.addXp(5);
+      await st.save();
+
+      final err = await st.importProfileJson(backup, targetSlot: 2);
+      expect(err, isNull);
+
+      // Still the current slot, still the CURRENT data.
+      expect(st.profileSlot, 1);
+      expect(st.cards.containsKey(vidA), isTrue);
+      expect(st.cards.containsKey(vidB), isTrue);
+      expect(st.xp, 35);
+
+      // The snapshot landed in slot 2 — vidA + xp 30, never vidB.
+      await st.switchProfile(2);
+      expect(st.profileSlot, 2);
+      expect(st.cards.containsKey(vidA), isTrue);
+      expect(st.cards.containsKey(vidB), isFalse);
+      expect(st.xp, 30);
+    });
+
+    test('invalid payload fails without touching either slot', () async {
+      SharedPreferences.setMockInitialValues(<String, Object>{});
+      final st = AppState();
+      await st.load();
+      st.courses['en'] = _course('en', ['apple', 'banana']);
+      st.rateCard(st.course.allVocab.first.id, Srs.good);
+      await st.save();
+
+      final err = await st.importProfileJson('not json at all', targetSlot: 3);
+      expect(err, 'importInvalid');
+      expect(st.profileSlot, 1);
+      expect(st.cards, isNotEmpty);
+
+      // Slot 3 stayed fresh — the failure path wrote nothing there.
+      await st.switchProfile(3);
+      expect(st.cards, isEmpty);
+      expect(st.xp, 0);
     });
   });
 }

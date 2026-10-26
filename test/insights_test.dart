@@ -6,6 +6,7 @@
 //   recordConfusion normalizes pair keys and bounds the map, favorites
 //   toggle per course, persistence round-trip through the real store.
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -406,6 +407,124 @@ void main() {
       expect(st.xp, 55);
       expect(st.confusionPairs, isEmpty);
       expect(st.hourTotal.length, 24);
+    });
+  });
+
+  // ================= v5.11: per-card smart memory hints ==================
+  group('v5.11 memoryHint', () {
+    CardData card({
+      int lapses = 0,
+      double difficulty = 5,
+      double stability = 10,
+      String state = 'review',
+      int dueInDays = 1, // positive = still future
+    }) {
+      final c = CardData();
+      c.lapses = lapses;
+      c.difficulty = difficulty;
+      c.stability = stability;
+      c.state = state;
+      c.reps = 3;
+      c.dueEpochMs =
+          DateTime.now().millisecondsSinceEpoch + dueInDays * Insights.dayMs;
+      return c;
+    }
+
+    test('lapses >= 3 wins and carries the count', () {
+      final t = Insights.memoryHint(card(lapses: 4))!;
+      expect(t.key, 'hintLapses');
+      expect(t.params['n'], '4');
+    });
+
+    test('high difficulty fires when there are no lapses', () {
+      final t = Insights.memoryHint(card(difficulty: 8.1))!;
+      expect(t.key, 'hintHard');
+    });
+
+    test('review card overdue by more than 3 days reports the days', () {
+      final t = Insights.memoryHint(card(dueInDays: -5))!;
+      expect(t.key, 'hintLate');
+      expect(t.params['n'], '5');
+    });
+
+    test('overdue by exactly 3 days is NOT late — silence beats noise', () {
+      expect(Insights.memoryHint(card(dueInDays: -3)), isNull);
+    });
+
+    test('young card (stability under 3 days) asks for one more day', () {
+      final t = Insights.memoryHint(card(stability: 2))!;
+      expect(t.key, 'hintYoung');
+    });
+
+    test('no rule fires on a healthy card', () {
+      expect(Insights.memoryHint(card()), isNull);
+    });
+
+    test('a never-seen card gets no hint', () {
+      final c = CardData(); // reps 0, no FSRS state
+      expect(Insights.memoryHint(c), isNull);
+    });
+
+    test('precedence: lapses > difficulty > late > young', () {
+      expect(Insights.memoryHint(card(lapses: 3, difficulty: 9))!.key,
+          'hintLapses');
+      expect(Insights.memoryHint(card(difficulty: 9, dueInDays: -9))!.key,
+          'hintHard');
+      expect(Insights.memoryHint(card(stability: 2, dueInDays: -9))!.key,
+          'hintLate');
+    });
+  });
+
+  // ================= v5.11: quick review queue ============================
+  group('v5.11 quickReviewQueue', () {
+    Vocab v(int i) => Vocab(id: 'en_w$i', target: 'w$i', translationAr: 'ك$i');
+
+    CardData seenDue() => CardData()
+      ..reps = 2
+      ..dueEpochMs = DateTime.now().millisecondsSinceEpoch - 1000;
+
+    test('drops unseen (reps 0 / no card) and not-yet-due cards', () {
+      final pool = [v(1), v(2), v(3), v(4)];
+      final cards = <String, CardData>{
+        'en_w1': seenDue(), // in
+        'en_w2': CardData()..reps = 0, // unseen → out
+        'en_w3': CardData()
+          ..reps = 2
+          ..dueEpochMs =
+              DateTime.now().millisecondsSinceEpoch + Insights.dayMs, // future
+        // en_w4: no card at all → out
+      };
+      final q = Insights.quickReviewQueue(
+          pool: pool, cards: cards, random: Random(1));
+      expect(q.single.id, 'en_w1');
+    });
+
+    test('caps the queue and shuffles deterministically with a seed', () {
+      final pool = [for (var i = 1; i <= 30; i++) v(i)];
+      final cards = <String, CardData>{
+        for (final w in pool) w.id: seenDue(),
+      };
+      final a = Insights.quickReviewQueue(
+          pool: pool, cards: cards, random: Random(7));
+      final b = Insights.quickReviewQueue(
+          pool: pool, cards: cards, random: Random(7));
+      expect(a.length, Insights.quickReviewCap);
+      expect(a.map((e) => e.id).toList(), b.map((e) => e.id).toList());
+      // and the full pool, uncapped, returns everything
+      final all = Insights.quickReviewQueue(
+          pool: pool, cards: cards, cap: 50, random: Random(7));
+      expect(all.length, 30);
+    });
+
+    test('cap is clamped to at least 1', () {
+      final pool = [v(1), v(2)];
+      final cards = {
+        'en_w1': seenDue(),
+        'en_w2': seenDue(),
+      };
+      final q = Insights.quickReviewQueue(
+          pool: pool, cards: cards, cap: 0, random: Random(1));
+      expect(q.length, 1);
     });
   });
 }

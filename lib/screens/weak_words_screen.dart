@@ -10,6 +10,7 @@ import '../models.dart';
 import '../scope.dart';
 import '../srs.dart';
 import '../theme.dart';
+import '../widgets/common.dart';
 import '../widgets/mascot.dart';
 
 class WeakWordsScreen extends StatefulWidget {
@@ -271,6 +272,9 @@ class _WeakWordsScreenState extends State<WeakWordsScreen> {
             context.tr('newCards'),
             style: TextStyle(color: context.mutedText, fontSize: 12),
           ),
+        // v5.11: one rule-based memory hint from the card's own review
+        // history — renders nothing when no rule fires.
+        MemoryHintLine(card: c),
       ],
     );
   }

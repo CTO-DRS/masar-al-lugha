@@ -3,6 +3,7 @@
 // (M9), stable node sides (M7), and a weak-words practice launcher (H4).
 import 'package:flutter/material.dart';
 
+import '../insights.dart';
 import '../models.dart';
 import '../path.dart';
 import '../scope.dart';
@@ -15,6 +16,7 @@ import 'home_shell.dart';
 import 'lesson_screen.dart';
 import 'path_setup_screen.dart';
 import 'placement_screen.dart';
+import 'quick_review_screen.dart';
 
 class LearnPath extends StatelessWidget {
   final void Function(int tab)? openTab;
@@ -55,6 +57,8 @@ class LearnPath extends StatelessWidget {
       body: Column(
         children: [
           const TopStatsBar(),
+          // v5.11: quick review launcher — a one-minute, due-only sprint.
+          _QuickReviewBanner(),
           // v5.7 + v5.8: grammar & reading entries — slim banners.
           _SkillBanner(
             icon: Icons.school,
@@ -110,6 +114,63 @@ class LearnPath extends StatelessWidget {
 
   static int _flatStart(Course course, int unitIndex) =>
       course.units.take(unitIndex).fold(0, (n, u) => n + u.lessons.length);
+}
+
+// v5.11: quick review launcher. Shows the LIVE due count (cards the FSRS
+// schedule says are due right now) as a badge; the screen itself stays
+// honest with an empty state when the queue turns out empty (e.g. another
+// session drained it seconds ago).
+class _QuickReviewBanner extends StatelessWidget {
+  const _QuickReviewBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    final st = AppScope.of(context);
+    final due = Insights.dueWithinDays(st.cards, 0);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 6),
+      child: Material(
+        color: context.card,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const QuickReviewScreen()),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: Row(
+              children: [
+                const Icon(Icons.bolt, size: 20, color: AppColors.blue),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(context.tr('quickReviewTitle'),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900, fontSize: 13.5)),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: due > 0 ? AppColors.blue : context.softBg,
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    context.trF('quickReviewDueBadge', {'n': '$due'}),
+                    style: TextStyle(
+                      color: due > 0 ? Colors.white : context.mutedText,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 11,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 // v4.11: divider between the learner's planned units and the rest of the

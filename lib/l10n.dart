@@ -143,6 +143,22 @@ class L {
       'importInvalid': 'ملف غير صالح — تأكد من نسخ نص التصدير كاملاً',
       'importDone': 'تم استيراد التقدم بنجاح ✓',
       'copied': 'تم النسخ — احفظ النص في مكان آمن',
+      // v5.11: slot-aware restore
+      'importTargetSlot': 'استيراد إلى مقعد',
+      'importSlotCurrent': 'المقعد الحالي',
+      'importSlotOverwrite': 'سيُستبدل تقدم هذا المقعد',
+      // v5.11: quick review mode
+      'quickReviewTitle': 'المراجعة السريعة',
+      'quickReviewHint': 'البطاقات المستحقة الآن فقط — جلسة دقيقة واحدة',
+      'quickReviewDueBadge': '{n} مستحقة',
+      'quickReviewNoneDue': 'لا مراجعات مستحقة الآن',
+      'quickReviewDone': 'أحسنت! أنهيت المراجعة السريعة',
+      'quickReviewDueLeft': 'المتبقي المستحق: {n}',
+      // v5.11: smart memory hints (rule-based, from the card's own history)
+      'hintLapses': 'نسيتها {n} مرات — اربطها بجملة المثال',
+      'hintHard': 'صعبة على ذاكرتك — انطقها بصوت عالٍ ثلاث مرات',
+      'hintLate': 'متأخرة {n} يوماً — استرجاعها الآن أقوى للتثبيت',
+      'hintYoung': 'ما زالت حديثة — عُد إليها غداً لتثبت',
       'continueLearning': 'أكمل من حيث توقفت',
       'reviewDue': 'بطاقات جاهزة للمراجعة',
       'startReview': 'راجع الآن',
@@ -361,7 +377,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.10.0',
+      'version': 'الإصدار 5.11.0',
     },
     'en': {
       'appName': 'Language Path',
@@ -504,6 +520,22 @@ class L {
           'Invalid file — make sure you copied the whole export text',
       'importDone': 'Progress imported successfully ✓',
       'copied': 'Copied — keep this text somewhere safe',
+      // v5.11: slot-aware restore
+      'importTargetSlot': 'Restore into slot',
+      'importSlotCurrent': 'Current slot',
+      'importSlotOverwrite': "This slot's progress will be replaced",
+      // v5.11: quick review mode
+      'quickReviewTitle': 'Quick review',
+      'quickReviewHint': 'Due cards only — a one-minute session',
+      'quickReviewDueBadge': '{n} due',
+      'quickReviewNoneDue': 'Nothing due right now',
+      'quickReviewDone': 'Great! Quick review finished',
+      'quickReviewDueLeft': 'Still due: {n}',
+      // v5.11: smart memory hints (rule-based, from the card's own history)
+      'hintLapses': 'Forgotten {n}× — anchor it with the example sentence',
+      'hintHard': 'Hard for your memory — say it aloud three times',
+      'hintLate': '{n} days late — recalling now strengthens memory',
+      'hintYoung': 'Still fresh — come back tomorrow to lock it in',
       'continueLearning': 'Continue where you left off',
       'reviewDue': 'cards due for review',
       'startReview': 'Review now',
@@ -726,7 +758,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.10.0',
+      'version': 'Version 5.11.0',
     },
   };
 
