@@ -1,6 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.11.0+35** — see the v5.11 section below for the
+**Current release: v5.12.0+36** — see the v5.12 section below for the
+first wave of the 12-month plan (F1.1: confusion-driven distractors +
+exercise balancing), the v5.11 section for the
 smarter-review wave (per-card memory hints, quick review mode,
 cross-slot backup restore), the v5.10 section for the
 systems wave (local multi-profile slots, opt-in analytics, Play-signing
@@ -52,6 +54,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.9** | **New skill — CONVERSATION TRAINER (Phase 4/4): a role-play chat behind the `ConversationProvider` abstraction; the shipped `OfflineScriptedProvider` is deterministic, on-device, ZERO network (hard invariants intact) — 8 scripted scenarios (2 per course: café/hotel en, bakery/cinema de, café/directions fr, shop/directions ur) with 3 steps each, any-of keyword-group matching over tashkeel-stripped text, sample-reply hints, per-scenario restart; any future AI provider implements the same 4-method interface and wiring it is an explicit user decision because it would touch the no-network rule; machine-authored dialogues flagged "needs human review"** |
 | **v5.10** | **Systems wave (Phase 5): LOCAL multi-profile slots over ProfileStore — up to 3 independent learners per device with slot-scoped progress keys (slot 1 = the original key, byte-compatible with every older build), switch/rename UI in Settings, zero accounts and zero network; opt-in LOCAL analytics (OFF by default) with an honest next-day return metric derived from the existing xpLog — anonymous by construction, nothing leaves the device; `scripts/prepare_play_signing.sh` prepares the real Play upload keystore outside the repo (key.properties/*.jks already gitignored) with CI-secrets guidance** |
 | **v5.11** | **Smarter review: per-card memory hints from the card's OWN FSRS history (`Insights.memoryHint`, first-match rules, silence over noise) rendered under the card back on all three review surfaces; a quick review mode (`Insights.quickReviewQueue` — due-only, shuffled, capped at 12, never introduces new words) with a live due-count launcher on the learn path; cross-slot backup restore (`importProfileJson` gains `targetSlot`) — a v4.0 export can now land in any of the 3 local slots without switching, with the current slot provably untouched** |
+| **v5.12** | **12-month plan Wave 1 — F1.1: confusion-driven distractors + exercise balancing: the v4.4 confusion engine now feeds the exercise generator (`Distractors.pick` — learner pairs → profile pairs → look-alikes → seeded random → reserve), every lesson plan is per-lesson seeded deterministic, a post-generation balancer enforces a 40% per-type cap (re-type → remove fallback, ping-pong-proof) and an A2+ production floor (dictation/build always present), KPI measured by `Distractors.confusionShare` — zero JSON changes, 316 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -866,6 +869,85 @@ a provider interface and works fully offline.
    records the source slot (informational, ignored on import). Note: the
    course/uiLocale stay device-global by the v5.10 design.
 4. Suite: 284 → **298** tests (incl. the per-wave l10n parity group, now pinning 5.11.0). Version pin moved to v5.11.
+
+## v5.12 — F1.1: confusion-driven distractors + exercise balancing (SHIPPED, 12-month plan Q1)
+
+The first wave of the adopted 12-month development plan. It closes the
+loop that v4.4 left open: the app already RECORDED which words the
+learner confuses (`AppState.recordConfusion`, bounded top-60 map), but
+the exercise generator ignored that data and picked distractors
+uniformly at random. From this release the confusion engine drives the
+generator.
+
+1. **`Distractors.pick` (new `lib/distractors.dart`, Flutter-free)** —
+   priority ladder: (1) the learner's OWN confusion partners of the
+   tested word, sorted by miss count; (2) profile-level confusable
+   words (miss count >= 2 — evidence, not noise) from elsewhere in the
+   learner's history; (3) look-alikes (shared prefix+suffix >= 2 chars
+   with the tested string); (4) seeded random fill; (5) real-word
+   reserve for tiny pools (opt-in padding, passed by the generator).
+   Provenance is attached to every choice (`DistractorSource`), and
+   the same partner works for both option fields (word rounds and mcq
+   meaning rounds). Language-agnostic by construction: confusion pairs
+   are vocab-id based.
+2. **Wired into every option round** — mcq, reverse, listen, picToWord
+   (via `_optionsFor`) and fillblank (word blanks; sentence-blank
+   answers are re-filtered locally because pick() only knows the
+   target id). listenComp keeps its guarded maker (its meaning options
+   mix example and translation sources — documented exclusion).
+3. **Per-lesson determinism** — `ExerciseGen` seeds its RNG with an
+   FNV-1a hash of the lesson id (String.hashCode is not contractually
+   stable). Same lesson + same learner state ⇒ identical plan,
+   test-enforced at pick level and plan level.
+4. **Exercise balancing (`_balanced`)** — after capping, no exercise
+   type may exceed **40% of the lesson's rounds** (audio plans were
+   listen-heavy by construction). Over-cap rounds are re-typed in
+   place into the scarcest feasible core type (latest occurrence
+   first so each mode's opening survives); conversion targets need
+   ROOM for one more round (otherwise the violation just moves next
+   door — the ping-pong the corpus sampler caught); when every lane is
+   saturated (Arabic-script audio lessons: no build, and mcq is
+   banned there by design) the surplus round is REMOVED, and
+   removed-from types are frozen as conversion targets. Protected:
+   the match boss and listenComp. Audio plans never gain mcq.
+5. **Production floor** — CEFR A2+ units (the unit's own `cefr` tag,
+   resolved by the lesson screen from the course) always contain at
+   least one production round (dictation or build): converted when a
+   buildable round exists, else one dictation is inserted before the
+   match boss. A1 lessons stay recognition-first.
+6. **Screen wiring** — `LessonScreen` builds its plan lazily
+   (initState cannot read AppScope) so the generator receives the LIVE
+   `st.confusionPairs` and the unit's cefr band. No schema change, no
+   JSON change, no new dependency; confusion capture itself is
+   unchanged and stays the single source of the signal.
+7. **KPI measurement** — `Distractors.confusionShare` recomputes the
+   share of confusion-network-sourced distractor slots for a
+   generated plan (audited types: mcq/reverse/listen/picToWord/
+   fillblank; the network = direct partners ∪ any recorded pair
+   side; a documented lower bound of true provenance).
+
+**Acceptance criteria (plan §F1.1) — all four verified by test:**
+
+- ≥ 40% confusion-sourced distractors for a learner with recorded
+  pairs: PASS (`test/distractors_test.dart`, acceptance group,
+  measured on a full generated plan with a simulated 3-pair error
+  log).
+- No lesson breaks the 40% cap: PASS on a 100+ combination sample
+  (every 7th lesson + last of each course × all 3 modes × 4 courses;
+  audio invariants re-asserted per plan).
+- Determinism: PASS (same inputs + seed ⇒ identical picks and plans).
+- No vocab id / JSON change: PASS — zero asset diffs,
+  `scripts/validate_content.py` PASS with the same 25 known notices,
+  pre-existing 298 tests green.
+
+**Honest remainders (next waves):** the plan's F1.1 "fair difficulty"
+setting (normal/challenge — expanding distractors to nearby-domain
+vocab of previous units) is NOT in this wave and stays open as F1.1b;
+the confusion-driven lane covers lessons only — quick review and
+tough-words keep their own selection; the runtime KPI (accuracy drop
+−8%→−12% on confused pairs) needs field data and will be read from
+the opt-in local analytics once the wave reaches devices. Suite:
+298 → **316** tests. Version pin moved to v5.12.
 
 ## Hard invariants (never break)
 

@@ -3,32 +3,70 @@
 // and true/false alongside the classic mcq / reverse / listen / build / match.
 // v4.3: lesson styles — classic (unchanged mix), sentence-mining (cloze-first)
 // and audio-first (TTS-led). Same corpus, different exercise sequence.
+// v5.12 (F1.1): confusion-driven distractors (lib/distractors.dart) replace
+// the purely random option picks, every lesson gets a per-lesson seeded RNG
+// (same lesson + same learner state ⇒ same plan), and plans are balanced
+// afterwards: no exercise type above 40% of the rounds, and CEFR A2+
+// lessons always contain at least one production round (dictation/build).
 import 'dart:math';
 
+import 'distractors.dart';
 import 'models.dart';
 
 class ExerciseGen {
-  static final Random _rng = Random();
+  // F1.1: re-seeded at every forLesson call (see _stableSeed). A static is
+  // safe here because plan generation is synchronous within one isolate.
+  static Random _rng = Random();
 
   static const _fallbackEmojis = ['🎓', '🎨', '🎵', '⚽', '📚', '🌟'];
 
   /// Full exercise plan for a lesson in the requested style.
+  ///
+  /// F1.1 parameters:
+  ///  - [confusions]: the learner's confusion-pair map ("idA|idB" -> miss
+  ///    count, exactly AppState.confusionPairs) — drives distractor
+  ///    priorities 1 and 2 (learner's own pairs, then profile-level ones).
+  ///  - [cefr]: the lesson unit's CEFR band — A2+ lessons get the
+  ///    production floor (at least one dictation/build round).
   static List<Exercise> forLesson(Lesson lesson,
-      {LessonMode mode = LessonMode.classic}) {
+      {LessonMode mode = LessonMode.classic,
+      Map<String, int> confusions = const {},
+      String cefr = 'A1'}) {
+    _rng = Random(_stableSeed(lesson.id));
+    final List<Exercise> plan;
     switch (mode) {
       case LessonMode.sentences:
-        return _sentencePlan(lesson);
+        plan = _sentencePlan(lesson, confusions);
+        break;
       case LessonMode.audio:
-        return _audioPlan(lesson);
+        plan = _audioPlan(lesson, confusions);
+        break;
       case LessonMode.classic:
-        return _classicPlan(lesson);
+        plan = _classicPlan(lesson, confusions);
+        break;
     }
+    return _balanced(_capped(plan), lesson.vocab, confusions,
+        mode: mode, cefr: cefr);
+  }
+
+  /// FNV-1a over UTF-16 code units — stable across runs and devices
+  /// (String.hashCode is not contractually stable). Keeps whole plans
+  /// reproducible: same lesson id ⇒ same shuffle order, which is what the
+  /// determinism test and the 40%-cap sampler rely on.
+  static int _stableSeed(String s) {
+    var h = 0x811c9dc5;
+    for (final c in s.codeUnits) {
+      h ^= c & 0xff;
+      h = (h * 0x01000193) & 0x7fffffff;
+    }
+    return h;
   }
 
   /// v4.3 — sentence-mining plan: cloze first, then sentence building,
   /// then listen-to-the-whole-sentence, topped up with classic drills for
   /// lessons with little sentence material. Never returns an empty plan.
-  static List<Exercise> _sentencePlan(Lesson lesson) {
+  static List<Exercise> _sentencePlan(
+      Lesson lesson, Map<String, int> confusions) {
     final pool = lesson.vocab;
     final exercises = <Exercise>[];
 
@@ -39,7 +77,7 @@ class ExerciseGen {
     var cloze = 0;
     for (final v in candidates) {
       if (cloze >= 6) break;
-      final b = _makeBlank(v, pool);
+      final b = _makeBlank(v, pool, confusions);
       if (b == null) continue;
       exercises.add(b);
       cloze++;
@@ -118,7 +156,7 @@ class ExerciseGen {
       for (final v in pool) {
         if (exercises.length >= 6) break;
         if (covered.contains(v.id)) continue;
-        exercises.add(_make(cycle[i++ % cycle.length], v, pool));
+        exercises.add(_make(cycle[i++ % cycle.length], v, pool, confusions));
         covered.add(v.id);
       }
     }
@@ -133,7 +171,7 @@ class ExerciseGen {
   /// word, hear → pick the meaning), then audio sentence building and a
   /// listen-to-the-sentence round. Every exercise except the tap-to-speak
   /// match boss carries non-empty [Exercise.audioText] (test-enforced).
-  static List<Exercise> _audioPlan(Lesson lesson) {
+  static List<Exercise> _audioPlan(Lesson lesson, Map<String, int> confusions) {
     final pool = lesson.vocab;
     final vocab = List<Vocab>.from(pool)..shuffle(_rng);
     final exercises = <Exercise>[];
@@ -147,8 +185,7 @@ class ExerciseGen {
           type: ExerciseType.listen,
           prompt: '',
           answer: v.target,
-          options: _distractors(
-              correct: v.target, pool: pool.map((e) => e.target).toList()),
+          options: _optionsFor(v, pool, confusions, meanings: false),
           vocab: v,
           audioText: v.target,
         ));
@@ -158,9 +195,7 @@ class ExerciseGen {
           type: ExerciseType.listen,
           prompt: '',
           answer: v.translationAr,
-          options: _distractors(
-              correct: v.translationAr,
-              pool: pool.map((e) => e.translationAr).toList()),
+          options: _optionsFor(v, pool, confusions, meanings: true),
           vocab: v,
           audioText: v.target,
         ));
@@ -237,7 +272,8 @@ class ExerciseGen {
   }
 
   /// Classic mixed plan (v2.0 behaviour, unchanged).
-  static List<Exercise> _classicPlan(Lesson lesson) {
+  static List<Exercise> _classicPlan(
+      Lesson lesson, Map<String, int> confusions) {
     final vocab = List<Vocab>.from(lesson.vocab)..shuffle(_rng);
     final pool = lesson.vocab;
     final exercises = <Exercise>[];
@@ -256,7 +292,7 @@ class ExerciseGen {
       if (t == ExerciseType.build && !_canBuild(v)) {
         t = (i.isEven) ? ExerciseType.mcq : ExerciseType.reverse;
       }
-      exercises.add(_make(t, v, pool));
+      exercises.add(_make(t, v, pool, confusions));
     }
 
     // --- Interactive picture rounds (up to 2) ---
@@ -293,8 +329,7 @@ class ExerciseGen {
           type: ExerciseType.picToWord,
           prompt: v.emoji!,
           answer: v.target,
-          options: _distractors(
-              correct: v.target, pool: pool.map((e) => e.target).toList()),
+          options: _optionsFor(v, pool, confusions, meanings: false),
           vocab: v,
           audioText: '',
           hint: v.translationAr,
@@ -308,7 +343,7 @@ class ExerciseGen {
     final blankCandidates = pool.where(_canBlank).toList()..shuffle(_rng);
     for (final v in blankCandidates) {
       if (blanksAdded >= 2) break;
-      final blank = _makeBlank(v, pool);
+      final blank = _makeBlank(v, pool, confusions);
       if (blank != null) {
         exercises.add(blank);
         blanksAdded++;
@@ -523,7 +558,8 @@ class ExerciseGen {
       .where((t) => t.replaceAll(RegExp(r'[^\w\u0600-\u06FF]'), '').length >= 3)
       .toList();
 
-  static Exercise? _makeBlank(Vocab v, List<Vocab> pool) {
+  static Exercise? _makeBlank(
+      Vocab v, List<Vocab> pool, Map<String, int> confusions) {
     String sentence;
     String answer;
     if (v.isSentence) {
@@ -542,22 +578,29 @@ class ExerciseGen {
     }
     if (!sentence.contains('______')) return null;
 
-    // Distractors: single words of similar nature from the lesson.
-    final candidates = <String>{
-      for (final p in pool)
-        if (p != v && !p.isSentence && p.target.length >= 3) p.target,
-    }.toList()
-      ..remove(answer)
-      ..shuffle(_rng);
+    // F1.1 distractors: confusion partners first (words this learner mixes
+    // up), then look-alikes, then seeded random — single lesson words only,
+    // padded by the real-word reserve for tiny lessons. For sentence
+    // blanks the answer is a token of the sentence, so options that
+    // collide with it are filtered here (pick() only knows the target id).
+    final wordPool = pool
+        .where((p) => p.id != v.id && !p.isSentence && p.target.length >= 3)
+        .toList();
+    final picks = Distractors.pick(
+      target: v,
+      pool: wordPool,
+      fieldOf: (x) => x.target,
+      confusionPairs: confusions,
+      random: _rng,
+      reserve: realWordReserve,
+    );
     final opts = <String>[answer];
-    for (final c in candidates) {
-      if (opts.length >= 4) break;
-      opts.add(c);
+    for (final c in picks) {
+      if (c.option != answer && !opts.contains(c.option)) opts.add(c.option);
     }
-    final fallback = ['always', 'never', 'water', 'today'];
-    for (final f in fallback) {
+    for (final r in realWordReserve) {
       if (opts.length >= 4) break;
-      if (!opts.contains(f)) opts.add(f);
+      if (r != answer && !opts.contains(r)) opts.add(r);
     }
     opts.shuffle(_rng);
     return Exercise(
@@ -583,16 +626,15 @@ class ExerciseGen {
     return (wrong.translationAr, false);
   }
 
-  static Exercise _make(ExerciseType type, Vocab v, List<Vocab> pool) {
+  static Exercise _make(ExerciseType type, Vocab v, List<Vocab> pool,
+      Map<String, int> confusions) {
     switch (type) {
       case ExerciseType.mcq:
         return Exercise(
           type: type,
           prompt: v.target,
           answer: v.translationAr,
-          options: _distractors(
-              correct: v.translationAr,
-              pool: pool.map((e) => e.translationAr).toList()),
+          options: _optionsFor(v, pool, confusions, meanings: true),
           vocab: v,
           audioText: v.target,
         );
@@ -601,8 +643,7 @@ class ExerciseGen {
           type: type,
           prompt: v.translationAr,
           answer: v.target,
-          options: _distractors(
-              correct: v.target, pool: pool.map((e) => e.target).toList()),
+          options: _optionsFor(v, pool, confusions, meanings: false),
           vocab: v,
           audioText: '',
         );
@@ -611,8 +652,7 @@ class ExerciseGen {
           type: type,
           prompt: '', // hidden in listen mode
           answer: v.target,
-          options: _distractors(
-              correct: v.target, pool: pool.map((e) => e.target).toList()),
+          options: _optionsFor(v, pool, confusions, meanings: false),
           vocab: v,
           audioText: v.target,
         );
@@ -633,8 +673,7 @@ class ExerciseGen {
           type: type,
           prompt: v.emoji ?? '🎓',
           answer: v.target,
-          options: _distractors(
-              correct: v.target, pool: pool.map((e) => e.target).toList()),
+          options: _optionsFor(v, pool, confusions, meanings: false),
           vocab: v,
           audioText: '',
           hint: v.translationAr,
@@ -651,15 +690,13 @@ class ExerciseGen {
           audioText: v.target,
         );
       case ExerciseType.fillblank:
-        final generated = _makeBlank(v, pool);
+        final generated = _makeBlank(v, pool, confusions);
         return generated ??
             Exercise(
               type: ExerciseType.mcq,
               prompt: v.target,
               answer: v.translationAr,
-              options: _distractors(
-                  correct: v.translationAr,
-                  pool: pool.map((e) => e.translationAr).toList()),
+              options: _optionsFor(v, pool, confusions, meanings: true),
               vocab: v,
               audioText: v.target,
             );
@@ -691,32 +728,169 @@ class ExerciseGen {
           type: ExerciseType.mcq,
           prompt: v.target,
           answer: v.translationAr,
-          options: _distractors(
-              correct: v.translationAr,
-              pool: pool.map((e) => e.translationAr).toList()),
+          options: _optionsFor(v, pool, confusions, meanings: true),
           vocab: v,
           audioText: v.target,
         );
     }
   }
 
-  static List<String> _distractors(
-      {required String correct, required List<String> pool}) {
-    final candidates = pool.where((e) => e != correct).toSet().toList()
-      ..shuffle(_rng);
-    final opts = <String>[correct];
-    for (final c in candidates) {
-      if (opts.length >= 4) break;
-      opts.add(c);
-    }
-    // v4.0 audit (L4): pad with real words — never literal "___" placeholders
-    // that looked broken. Reserve covers both Latin and Arabic-script words.
-    for (final f in realWordReserve) {
-      if (opts.length >= 4) break;
-      if (!opts.contains(f)) opts.add(f);
-    }
+  /// F1.1: confusion-aware option list — [the tested string] first, then up
+  /// to three distractors from Distractors.pick (learner confusions →
+  /// profile confusions → look-alikes → seeded random → real-word reserve),
+  /// then a seeded shuffle of positions. Replaces the old purely-random
+  /// _distractors for every option-based round.
+  static List<String> _optionsFor(
+      Vocab v, List<Vocab> pool, Map<String, int> confusions,
+      {required bool meanings}) {
+    final String Function(Vocab) fieldOf =
+        meanings ? (Vocab x) => x.translationAr : (Vocab x) => x.target;
+    final picks = Distractors.pick(
+      target: v,
+      pool: pool,
+      fieldOf: fieldOf,
+      confusionPairs: confusions,
+      random: _rng,
+      reserve: realWordReserve,
+    );
+    final opts = <String>[fieldOf(v), ...picks.map((p) => p.option)];
     opts.shuffle(_rng);
     return opts;
+  }
+
+  /// F1.1 exercise balancing (plan §Q1 "توازن التمرين"):
+  ///  1. CAP — no exercise type may exceed 40% of the lesson's rounds.
+  ///     Over-cap rounds are first RE-TYPED in place into the scarcest
+  ///     feasible under-cap core type (mcq/reverse/listen/build), always
+  ///     the LATEST occurrence first so each mode's pedagogic opening
+  ///     survives. When every lane is saturated (e.g. audio plans for
+  ///     Arabic-script vocab: no build, no mcq), the surplus round is
+  ///     REMOVED instead — and types we removed from are frozen as
+  ///     conversion targets so the loop cannot ping-pong.
+  ///  2. PRODUCTION FLOOR — CEFR A2+ lessons must contain at least one
+  ///     production round (dictation or build); satisfied by converting an
+  ///     existing round when possible, else inserting one dictation before
+  ///     the match boss. A1 lessons are exempt (recognition first).
+  ///
+  /// Protected rounds: the match boss and listening comprehension (guarded
+  /// by their own makers). Dictation may be re-typed only as a cap
+  /// last resort — the floor below restores production coverage. Audio-first
+  /// plans never receive mcq targets — ears-first by design (test-enforced).
+  static List<Exercise> _balanced(
+      List<Exercise> plan, List<Vocab> pool, Map<String, int> confusions,
+      {required LessonMode mode, required String cefr}) {
+    const cap = 0.40;
+    const protected = {
+      ExerciseType.match,
+      ExerciseType.listenComp,
+    };
+
+    Exercise retype(Exercise e, ExerciseType t) {
+      final ne = _make(t, e.vocab, pool, confusions);
+      // Audio-first lessons are TTS-led: a converted round keeps audio.
+      if (mode == LessonMode.audio && ne.audioText.isEmpty) {
+        return Exercise(
+          type: ne.type,
+          prompt: ne.prompt,
+          answer: ne.answer,
+          options: ne.options,
+          tiles: ne.tiles,
+          matchLeft: ne.matchLeft,
+          matchRight: ne.matchRight,
+          vocab: ne.vocab,
+          audioText: ne.vocab.target,
+          hint: ne.hint,
+        );
+      }
+      return ne;
+    }
+
+    final out = List<Exercise>.from(plan);
+    final frozen = <ExerciseType>{}; // removed-from: never a target again
+    var guard = 0;
+    while (guard++ < out.length * out.length + 16) {
+      final counts = <ExerciseType, int>{};
+      for (final e in out) {
+        counts[e.type] = (counts[e.type] ?? 0) + 1;
+      }
+      final total = out.length;
+      ExerciseType? over;
+      var bestRatio = cap + 1e-9;
+      for (final t in ExerciseType.values) {
+        final r = (counts[t] ?? 0) / total;
+        if (r > bestRatio) {
+          over = t;
+          bestRatio = r;
+        }
+      }
+      if (over == null) break;
+
+      // Latest convertible occurrence of the over-cap type.
+      var idx = -1;
+      for (var i = out.length - 1; i >= 0; i--) {
+        if (out[i].type == over && !protected.contains(over)) {
+          idx = i;
+          break;
+        }
+      }
+      if (idx < 0) break; // protected type over cap (defensive)
+
+      // Scarcest feasible under-cap target for this vocab.
+      final feasible = <ExerciseType>[
+        if (mode != LessonMode.audio) ExerciseType.mcq,
+        ExerciseType.reverse,
+        ExerciseType.listen,
+        if (_canBuild(out[idx].vocab)) ExerciseType.build,
+      ];
+      ExerciseType? target;
+      for (final t in feasible) {
+        if (frozen.contains(t)) continue;
+        // The target needs ROOM for one more round — otherwise converting
+        // into it just pushes the violation next door (ping-pong).
+        if (((counts[t] ?? 0) + 1) / total > cap + 1e-9) continue;
+        if (t == over) continue;
+        if (target == null || (counts[t] ?? 0) < (counts[target] ?? 0)) {
+          target = t;
+        }
+      }
+      if (target != null) {
+        out[idx] = retype(out[idx], target);
+      } else {
+        // Every lane is saturated: drop the surplus round entirely.
+        frozen.add(over);
+        out.removeAt(idx);
+      }
+    }
+
+    // Production floor for A2+ lessons.
+    if (cefr != 'A1') {
+      final hasProduction = out.any((e) =>
+          e.type == ExerciseType.build || e.type == ExerciseType.dictation);
+      if (!hasProduction) {
+        final idx = out.indexWhere((e) =>
+            !protected.contains(e.type) &&
+            (e.type == ExerciseType.mcq ||
+                e.type == ExerciseType.reverse ||
+                e.type == ExerciseType.listen) &&
+            _canBuild(e.vocab));
+        if (idx >= 0) {
+          out[idx] = retype(out[idx], ExerciseType.build);
+        } else if (out.length < 14) {
+          for (final v in pool) {
+            final d = _makeDictation(v, pool);
+            if (d == null) continue;
+            final mi = out.indexWhere((e) => e.type == ExerciseType.match);
+            if (mi >= 0) {
+              out.insert(mi, d); // keep the match boss last
+            } else {
+              out.add(d);
+            }
+            break;
+          }
+        }
+      }
+    }
+    return out;
   }
 
   /// Real words used only as a last-resort option padding for very small

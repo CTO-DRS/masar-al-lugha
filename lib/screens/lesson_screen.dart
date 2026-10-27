@@ -26,7 +26,25 @@ class LessonScreen extends StatefulWidget {
 }
 
 class _LessonScreenState extends State<LessonScreen> {
-  late final List<Exercise> exercises;
+  /// F1.1: the plan is built lazily on first access (initState cannot read
+  /// AppScope) so the generator receives the learner's live confusion pairs
+  /// and the lesson's CEFR band — confusion partners become distractor
+  /// priorities 1+2, and A2+ lessons get the production floor.
+  late final List<Exercise> exercises = _buildExercises();
+
+  List<Exercise> _buildExercises() {
+    final st = AppScope.of(context);
+    var cefr = 'A1';
+    for (final u in st.course.units) {
+      if (u.lessons.any((l) => l.id == widget.lesson.id)) {
+        cefr = u.cefr;
+        break;
+      }
+    }
+    return ExerciseGen.forLesson(widget.lesson,
+        mode: widget.mode, confusions: st.confusionPairs, cefr: cefr);
+  }
+
   int index = 0;
   int hearts = 5;
   int mistakes = 0;
@@ -113,7 +131,6 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   void initState() {
     super.initState();
-    exercises = ExerciseGen.forLesson(widget.lesson, mode: widget.mode);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _speakIfNeeded();
       setState(() {});
