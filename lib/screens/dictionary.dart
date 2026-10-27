@@ -254,23 +254,37 @@ class _WordTileState extends State<_WordTile> {
                       children: [
                         GestureDetector(
                           onTap: () => st.toggleFavorite(v.id),
-                          child: Container(
-                            width: 38,
-                            height: 38,
-                            decoration: BoxDecoration(
-                              color: AppColors.yellow.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Icon(
-                              st.isFavorite(v.id)
-                                  ? Icons.star
-                                  : Icons.star_border,
-                              color: AppColors.yellow,
-                              size: 22,
+                          // v5.15 (F3.3): semantic label + 48dp target —
+                          // the favorite toggle was a 38dp mystery star.
+                          child: Semantics(
+                            label: context.tr('semFavorite'),
+                            button: true,
+                            selected: st.isFavorite(v.id),
+                            child: SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: Center(
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.yellow
+                                        .withValues(alpha: 0.15),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Icon(
+                                    st.isFavorite(v.id)
+                                        ? Icons.star
+                                        : Icons.star_border,
+                                    color: AppColors.yellow,
+                                    size: 22,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: 2),
                         // speak button
                         GestureDetector(
                           onTap: () {
@@ -279,15 +293,26 @@ class _WordTileState extends State<_WordTile> {
                                 .setLanguage(st.course.ttsLang)
                                 .then((_) => tts.speak(v.target));
                           },
-                          child: Container(
-                            width: 38,
-                            height: 38,
-                            decoration: BoxDecoration(
-                              color: AppColors.blueLight,
-                              borderRadius: BorderRadius.circular(10),
+                          // v5.15 (F3.3): semantic label + 48dp target.
+                          child: Semantics(
+                            label: context.tr('semSpeak'),
+                            button: true,
+                            child: SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: Center(
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.blueLight,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Icon(Icons.volume_up,
+                                      color: AppColors.blueText, size: 22),
+                                ),
+                              ),
                             ),
-                            child: const Icon(Icons.volume_up,
-                                color: AppColors.blue, size: 22),
                           ),
                         ),
                       ],

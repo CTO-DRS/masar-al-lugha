@@ -6,14 +6,17 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../exercise_gen.dart';
+import '../l10n.dart';
 import '../mascot.dart';
 import '../models.dart';
 import '../repair.dart';
 import '../scope.dart';
 import '../theme.dart';
+import '../warmup.dart';
 import '../widgets/common.dart';
 import '../widgets/confetti.dart';
 import '../widgets/mascot.dart';
+import 'path_setup_screen.dart';
 
 class LessonScreen extends StatefulWidget {
   final Lesson lesson;
@@ -21,8 +24,17 @@ class LessonScreen extends StatefulWidget {
   /// v4.3: lesson style — classic (default), sentence-mining or audio-first.
   final LessonMode mode;
 
+  /// v5.15 (F3.1): true when this lesson AUTO-STARTED from the first-run
+  /// journey — completing it is the learner's first win, so the result
+  /// screen shows the non-blocking "customize your path" card and records
+  /// the time-to-first-win for the opt-in local analytics.
+  final bool firstWin;
+
   const LessonScreen(
-      {super.key, required this.lesson, this.mode = LessonMode.classic});
+      {super.key,
+      required this.lesson,
+      this.mode = LessonMode.classic,
+      this.firstWin = false});
 
   @override
   State<LessonScreen> createState() => _LessonScreenState();
@@ -44,6 +56,18 @@ class _LessonScreenState extends State<LessonScreen> {
         break;
       }
     }
+    // v5.15 (F3.4): the learn path may have warmed this exact plan in a
+    // background isolate (same lesson + same mode + same cefr + same
+    // confusion fingerprint). A cache hit means the first round renders
+    // instantly; any mismatch falls through to the synchronous build.
+    final warm = LessonWarmup.take(WarmupRequest(
+      lessonId: widget.lesson.id,
+      lesson: widget.lesson,
+      mode: widget.mode,
+      cefr: cefr,
+      confusions: st.confusionPairs,
+    ));
+    if (warm != null) return warm;
     return ExerciseGen.forLesson(widget.lesson,
         mode: widget.mode, confusions: st.confusionPairs, cefr: cefr);
   }
@@ -1267,6 +1291,12 @@ class _LessonScreenState extends State<LessonScreen> {
         _repairPending = true;
       }
     }
+    // v5.15 (F3.3): simplified-audio mode announces the result aloud for
+    // low-vision learners (opt-in in Settings; rides the existing TTS).
+    if (st.simplifiedAudio) {
+      AppScope.ttsOf(context)
+          .speak(L.t(st.uiLocale, wasCorrect ? 'audioRight' : 'audioWrong'));
+    }
     setState(() => answered = true);
   }
 
@@ -1744,6 +1774,7 @@ class _LessonScreenState extends State<LessonScreen> {
         accuracy: accuracy,
         perfect: mistakes == 0,
         mascotEvent: mascotEvent,
+        firstWin: widget.firstWin, // v5.15 (F3.1)
       ),
     ));
   }
@@ -1797,6 +1828,10 @@ class LessonResultScreen extends StatefulWidget {
   /// milestone / level-up / lesson quality), computed in _showComplete.
   final MascotEvent mascotEvent;
 
+  /// v5.15 (F3.1): this result IS the learner's first win — shows the
+  /// non-blocking customize-path card + records the journey timer.
+  final bool firstWin;
+
   const LessonResultScreen({
     super.key,
     required this.lesson,
@@ -1804,6 +1839,7 @@ class LessonResultScreen extends StatefulWidget {
     required this.accuracy,
     required this.perfect,
     this.mascotEvent = MascotEvent.lessonGreat,
+    this.firstWin = false,
   });
 
   @override
@@ -1915,9 +1951,78 @@ class _LessonResultScreenState extends State<LessonResultScreen> {
                     _badgeCard(badgeShown!, tr),
                   ],
                   const Spacer(),
+                  // v5.15 (F3.1): the first-win screen — the journey's
+                  // celebration + a NON-BLOCKING path-customization card
+                  // (the plan wizard, one tap, skippable forever).
+                  if (widget.firstWin) ...[
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 14),
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: context.softBg,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: context.line, width: 2),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(tr('firstWinTitle'),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 17)),
+                          const SizedBox(height: 4),
+                          Text(tr('firstWinBody'),
+                              style: TextStyle(
+                                  color: context.mutedText,
+                                  fontSize: 12.5,
+                                  height: 1.35)),
+                          const SizedBox(height: 10),
+                          InkWell(
+                            borderRadius: BorderRadius.circular(12),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const PathSetupScreen(),
+                              ));
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.alt_route,
+                                    size: 20, color: AppColors.green),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(tr('firstWinCustomize'),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 13.5)),
+                                      Text(tr('firstWinCustomizeHint'),
+                                          style: TextStyle(
+                                              color: context.mutedText,
+                                              fontSize: 11.5)),
+                                    ],
+                                  ),
+                                ),
+                                Icon(Icons.chevron_right,
+                                    size: 20, color: context.mutedText),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                   ChunkyButton(
-                    label: tr('backHome'),
+                    key: ValueKey(
+                        widget.firstWin ? 'firstWinContinue' : 'backHome'),
+                    label:
+                        tr(widget.firstWin ? 'firstWinContinue' : 'backHome'),
                     onPressed: () {
+                      if (widget.firstWin) {
+                        // The journey timer closes here (recorded once).
+                        AppScope.of(context).markFirstWin();
+                      }
                       Navigator.of(context).popUntil((r) => r.isFirst);
                     },
                   ),

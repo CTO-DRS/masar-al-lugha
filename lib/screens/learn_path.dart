@@ -3,11 +3,14 @@
 // (M9), stable node sides (M7), and a weak-words practice launcher (H4).
 import 'package:flutter/material.dart';
 
+import '../app_state.dart';
 import '../insights.dart';
 import '../models.dart';
+import '../next_action.dart';
 import '../path.dart';
 import '../scope.dart';
 import '../theme.dart';
+import '../warmup.dart';
 import '../widgets/mascot.dart';
 import 'grammar_screen.dart';
 import 'conversation_screen.dart';
@@ -17,6 +20,7 @@ import 'lesson_screen.dart';
 import 'path_setup_screen.dart';
 import 'placement_screen.dart';
 import 'quick_review_screen.dart';
+import 'weak_words_screen.dart';
 
 class LearnPath extends StatelessWidget {
   final void Function(int tab)? openTab;
@@ -26,6 +30,23 @@ class LearnPath extends StatelessWidget {
   Widget build(BuildContext context) {
     final st = AppScope.of(context);
     final course = st.course;
+
+    // v5.15 (F3.4): warm up the next lesson's plan in a background
+    // isolate while the learner is still looking at the path — the tap
+    // then starts the first round instantly. Fire-and-forget; the lesson
+    // screen falls back to a synchronous build on any mismatch.
+    final warmAction = _nextActionFor(st);
+    if (warmAction.lessonFlat != null) {
+      final lesson = course.allLessons[warmAction.lessonFlat!];
+      LessonWarmup.warm(WarmupRequest(
+        lessonId: lesson.id,
+        lesson: lesson,
+        mode: LessonMode.classic,
+        cefr:
+            course.units[_unitIndexOfFlat(course, warmAction.lessonFlat!)].cefr,
+        confusions: st.confusionPairs,
+      ));
+    }
 
     // v4.11: when a path plan is active, its units lead the list in
     // pedagogical order; the remaining units follow a divider (never
@@ -57,23 +78,18 @@ class LearnPath extends StatelessWidget {
       body: Column(
         children: [
           const TopStatsBar(),
-          // v5.11: quick review launcher — a one-minute, due-only sprint.
-          _QuickReviewBanner(),
-          // v5.7 + v5.8: grammar & reading entries — slim banners.
+          // v5.15 (F3.2): ONE next-best-action card answers "what do I do
+          // now?" — the rich path below it stays browsable, never decisive.
+          _NextActionCard(action: _nextActionFor(st), openTab: openTab),
+          // v5.15 (F3.2) banner budget: at most TWO secondary banners stay
+          // visible (quick review when live + ONE rotating skill); the rest
+          // wait in the "more" sheet — nothing is hidden from the learner,
+          // only prioritized.
+          if (_nextActionFor(st).kind != 'review') _QuickReviewBanner(),
           _SkillBanner(
-            icon: Icons.school,
-            labelKey: 'grammarTitle',
-            builder: (_) => const GrammarScreen(),
-          ),
-          _SkillBanner(
-            icon: Icons.menu_book,
-            labelKey: 'readingTitle',
-            builder: (_) => const ReadingScreen(),
-          ),
-          _SkillBanner(
-            icon: Icons.forum,
-            labelKey: 'conversationTitle',
-            builder: (_) => const ConversationScreen(),
+            icon: _rotatingSkillIcon(),
+            labelKey: _rotatingSkillKey(),
+            builder: _rotatingSkillScreen,
           ),
           Expanded(
             child: ListView.builder(
@@ -102,6 +118,91 @@ class LearnPath extends StatelessWidget {
     );
   }
 
+  // v5.15 (F3.2) helpers for the banner budget + the action card.
+  static int _dueCount(AppState st) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    var n = 0;
+    for (final l in st.course.allLessons) {
+      if (!st.lessonStars.containsKey(l.id)) continue;
+      for (final v in l.vocab) {
+        final c = st.cardFor(v.id);
+        if (c != null && c.dueEpochMs <= now) n++;
+      }
+    }
+    return n;
+  }
+
+  static int _remediationCount(AppState st) {
+    try {
+      return st.remediationVocab(st.course).length;
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  // The visible skill banner rotates by epoch-day so the path stays fresh
+  // without crowding it — the other two skills are one tap away in the
+  // "more" sheet.
+  static int get _skillSlot =>
+      DateTime.now().millisecondsSinceEpoch ~/ 86400000 % 3;
+
+  static IconData _rotatingSkillIcon() => const [
+        Icons.school,
+        Icons.menu_book,
+        Icons.forum,
+      ][_skillSlot];
+
+  static String _rotatingSkillKey() =>
+      const ['grammarTitle', 'readingTitle', 'conversationTitle'][_skillSlot];
+
+  static Widget _rotatingSkillScreen(BuildContext _) {
+    switch (_skillSlot) {
+      case 0:
+        return const GrammarScreen();
+      case 1:
+        return const ReadingScreen();
+      default:
+        return const ConversationScreen();
+    }
+  }
+
+  /// The ONE recommended next step for the current course state (F3.2).
+  static NextAction _nextActionFor(AppState st) {
+    final course = st.course;
+    Lesson? next;
+    var flat = 0;
+    for (var i = 0; i < course.allLessons.length; i++) {
+      if (st.isLessonUnlocked(i) &&
+          !st.lessonStars.containsKey(course.allLessons[i].id)) {
+        next = course.allLessons[i];
+        flat = i;
+        break;
+      }
+    }
+    // Lessons remaining in the NEXT lesson's unit (the "current" unit).
+    var remaining = 0;
+    if (next != null) {
+      final unit = course.units[_unitIndexOfFlat(course, flat)];
+      remaining =
+          unit.lessons.where((l) => !st.lessonStars.containsKey(l.id)).length;
+    }
+    return NextBestAction.fromCounts(
+      dueCount: _dueCount(st),
+      remediationCount: _remediationCount(st),
+      remainingInCurrentUnit: remaining,
+      nextLessonFlat: next != null ? flat : null,
+    );
+  }
+
+  static int _unitIndexOfFlat(Course course, int flat) {
+    var acc = 0;
+    for (var u = 0; u < course.units.length; u++) {
+      acc += course.units[u].lessons.length;
+      if (flat < acc) return u;
+    }
+    return course.units.length - 1;
+  }
+
   static int _othersAfterDivider(List<Object> entries) {
     final idx = entries.indexOf('divider');
     if (idx < 0) return 0;
@@ -114,6 +215,237 @@ class LearnPath extends StatelessWidget {
 
   static int _flatStart(Course course, int unitIndex) =>
       course.units.take(unitIndex).fold(0, (n, u) => n + u.lessons.length);
+}
+
+// v5.15 (F3.2): the next-best-action card. The engine picked ONE lane;
+// this card shows it with its WHY (the explained algorithm) and a start
+// button, plus a "something else" row that opens the full lane sheet —
+// nothing is hidden, only prioritized.
+class _NextActionCard extends StatelessWidget {
+  final NextAction action;
+  final void Function(int tab)? openTab;
+
+  const _NextActionCard({required this.action, this.openTab});
+
+  @override
+  Widget build(BuildContext context) {
+    final st = AppScope.of(context);
+    final title = context.trF(action.titleKey, action.params);
+    final why = context.trF(action.whyKey, action.params);
+    final accent = switch (action.kind) {
+      'remediation' => AppColors.red,
+      'review' => AppColors.blue,
+      'unitFinish' => AppColors.yellow,
+      _ => AppColors.green,
+    };
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 6, 16, 4),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: context.card,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: accent, width: 2),
+          boxShadow: [
+            BoxShadow(
+                color: context.line, offset: const Offset(0, 4), blurRadius: 0),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(_iconOf(action.kind), color: accent, size: 26),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(title,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900, fontSize: 16.5)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(why,
+                style: TextStyle(
+                    color: context.mutedText,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12.5,
+                    height: 1.35)),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: ChunkyButton(
+                    key: const ValueKey('nbaStart'),
+                    label: context.tr('start'),
+                    icon: Icons.play_arrow,
+                    height: 46,
+                    onPressed: () => _start(context, st),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: ChunkyButton(
+                    key: const ValueKey('nbaMore'),
+                    label: context.tr('nbaMore'),
+                    color: Colors.transparent,
+                    colorDark: Colors.transparent,
+                    textColor: context.mutedText,
+                    height: 46,
+                    onPressed: () => _openMoreSheet(context, st),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static IconData _iconOf(String kind) => switch (kind) {
+        'remediation' => Icons.healing,
+        'review' => Icons.bolt,
+        'unitFinish' => Icons.flag,
+        _ => Icons.play_lesson,
+      };
+
+  void _start(BuildContext context, AppState st) {
+    final course = st.course;
+    switch (action.kind) {
+      case 'remediation':
+        final pool = st.remediationVocab(course);
+        if (pool.isNotEmpty) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) =>
+                WeakWordsScreen(fixedPool: pool, titleKey: 'remediationTitle'),
+          ));
+        } else {
+          // The window self-cleaned between pick and tap — safe fallback.
+          _pushNextLesson(context, st);
+        }
+      case 'review':
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => const QuickReviewScreen(),
+        ));
+      case 'unitFinish':
+      case 'lesson':
+        _pushNextLesson(context, st);
+    }
+  }
+
+  void _pushNextLesson(BuildContext context, AppState st) {
+    final course = st.course;
+    for (var i = 0; i < course.allLessons.length; i++) {
+      if (st.isLessonUnlocked(i) &&
+          !st.lessonStars.containsKey(course.allLessons[i].id)) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => LessonScreen(lesson: course.allLessons[i]),
+        ));
+        return;
+      }
+    }
+    // Course complete or nothing unlocked: fall back to the Cards tab,
+    // where review/smart-session lanes live (safe fallback, F3.2).
+    openTab?.call(1);
+  }
+
+  // Every alternative is two taps away: card -> "something else" -> lane.
+  void _openMoreSheet(BuildContext context, AppState st) {
+    final due = LearnPath._dueCount(st);
+    final rows = <_MoreRow>[
+      if (action.kind != 'lesson')
+        _MoreRow(Icons.play_lesson, 'nbaLessonTitle',
+            () => _pushNextLesson(context, st)),
+      if (action.kind != 'review' && due > 0)
+        _MoreRow(Icons.bolt, 'quickReviewTitle', () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const QuickReviewScreen()));
+        }),
+      _MoreRow(Icons.school, 'grammarTitle', () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => const GrammarScreen()));
+      }),
+      _MoreRow(Icons.menu_book, 'readingTitle', () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => const ReadingScreen()));
+      }),
+      _MoreRow(Icons.forum, 'conversationTitle', () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const ConversationScreen()));
+      }),
+      _MoreRow(Icons.fitness_center, 'weakPracticeTitle', () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => const WeakWordsScreen()));
+      }),
+      _MoreRow(Icons.alt_route, 'pathSetupBtn', () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => const PathSetupScreen()));
+      }),
+      if (st.placementDone[st.courseId] == true)
+        _MoreRow(Icons.refresh, 'placementRetest', () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const PlacementScreen()));
+        })
+      else if (st.lessonsCompleted == 0)
+        _MoreRow(Icons.quiz, 'placementTitle', () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const PlacementScreen()));
+        }),
+    ];
+
+    showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 18, 20, 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(ctx.tr('nbaMoreSheet'),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900, fontSize: 17)),
+              const SizedBox(height: 12),
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    for (final r in rows)
+                      ListTile(
+                        leading:
+                            Icon(r.icon, color: AppColors.blueText, size: 22),
+                        title: Text(ctx.tr(r.labelKey),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w800, fontSize: 14.5)),
+                        trailing: const Icon(Icons.chevron_right, size: 20),
+                        onTap: () {
+                          Navigator.pop(ctx);
+                          r.onTap();
+                        },
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MoreRow {
+  final IconData icon;
+  final String labelKey;
+  final VoidCallback onTap;
+  const _MoreRow(this.icon, this.labelKey, this.onTap);
 }
 
 // v5.11: quick review launcher. Shows the LIVE due count (cards the FSRS
@@ -311,27 +643,6 @@ class _HomeHero extends StatelessWidget {
     final course = st.course;
     final plan = st.activePathPlan; // v4.11
 
-    // Next lesson = first unlocked, not-yet-completed lesson.
-    Lesson? next;
-    var flat = 0;
-    for (var i = 0; i < course.allLessons.length; i++) {
-      if (st.isLessonUnlocked(i) &&
-          !st.lessonStars.containsKey(course.allLessons[i].id)) {
-        next = course.allLessons[i];
-        flat = i;
-        break;
-      }
-    }
-    // Due reviews among unlocked vocab.
-    final now = DateTime.now().millisecondsSinceEpoch;
-    var dueCount = 0;
-    for (final l in course.allLessons) {
-      if (!st.lessonStars.containsKey(l.id)) continue;
-      for (final v in l.vocab) {
-        final c = st.cardFor(v.id);
-        if (c != null && c.dueEpochMs <= now) dueCount++;
-      }
-    }
     final lessonsDone = st.lessonsCompleted;
 
     return Padding(
@@ -374,144 +685,14 @@ class _HomeHero extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            if (next != null) ...[
-              Text(
-                '${tr('unit')} ${_unitNoOf(course, flat)} · ${st.uiLocale == 'ar' ? next.titleAr : next.titleEn}',
-                style:
-                    const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: ChunkyButton(
-                      label: tr('start'),
-                      icon: Icons.play_arrow,
-                      height: 46,
-                      fontSize: 15,
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => LessonScreen(lesson: next!),
-                        ));
-                      },
-                    ),
-                  ),
-                  if (dueCount > 0) ...[
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: ChunkyButton(
-                        label: '$dueCount · ${tr('startReview')}',
-                        color: AppColors.blue,
-                        colorDark: AppColors.blueDark,
-                        height: 46,
-                        fontSize: 14,
-                        onPressed: () => openTab?.call(1),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ] else ...[
-              Text('🎉 ${tr('goalDone')}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w800, fontSize: 14)),
-            ],
-            // v4.11: path setup — always available, plan or not.
-            InkWell(
-              borderRadius: BorderRadius.circular(12),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => const PathSetupScreen(),
-                ));
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.alt_route, size: 18, color: context.mutedText),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: Text(tr('pathSetupBtn'),
-                        style: TextStyle(
-                            color: context.mutedText,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 13)),
-                  ),
-                  Icon(Icons.chevron_right, size: 18, color: context.mutedText),
-                ],
-              ),
-            ),
-            // Placement entry: only when this course is still untouched.
-            if (lessonsDone == 0 &&
-                (st.placementDone[st.courseId] != true)) ...[
-              const SizedBox(height: 10),
-              InkWell(
-                borderRadius: BorderRadius.circular(12),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => const PlacementScreen(),
-                  ));
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.quiz, size: 18, color: context.mutedText),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(tr('placementTitle'),
-                          style: TextStyle(
-                              color: context.mutedText,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 13)),
-                    ),
-                    Icon(Icons.chevron_right,
-                        size: 18, color: context.mutedText),
-                  ],
-                ),
-              ),
-            ],
-            // v4.1 (ROADMAP item 4): re-test lane for returning users who
-            // feel misplaced. Confirming a result overwrites placementSkip;
-            // completed lessons keep their stars either way.
-            if (st.placementDone[st.courseId] == true) ...[
-              const SizedBox(height: 8),
-              InkWell(
-                borderRadius: BorderRadius.circular(12),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => const PlacementScreen(),
-                  ));
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.refresh, size: 18, color: context.mutedText),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(tr('placementRetest'),
-                          style: TextStyle(
-                              color: context.mutedText,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 13)),
-                    ),
-                    Icon(Icons.chevron_right,
-                        size: 18, color: context.mutedText),
-                  ],
-                ),
-              ),
-            ],
+            // v5.15 (F3.2): the action rows moved to the next-best-action
+            // card at the top of the path (and its "more" sheet) — the hero
+            // keeps identity: plan, companion, progress. One decision per
+            // screen instead of five competing buttons.
           ],
         ),
       ),
     );
-  }
-
-  static int _unitNoOf(Course course, int flat) {
-    var acc = 0;
-    for (var u = 0; u < course.units.length; u++) {
-      acc += course.units[u].lessons.length;
-      if (flat < acc) return u + 1;
-    }
-    return course.units.length;
   }
 }
 
@@ -779,6 +960,7 @@ class PathNode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final st = AppScope.of(context);
     // v4.0 fix (audit M7): node side comes from the stable flat index — the
     // old formula used lessonStars.length so nodes jumped sides each lesson.
     final isEven = flatIndex.isEven;
@@ -788,51 +970,65 @@ class PathNode extends StatelessWidget {
       child: Column(
         children: [
           if (isCurrent) _startBubble(context),
-          GestureDetector(
-            onTap: onTap,
-            child: Container(
-              width: 74,
-              height: 70,
-              margin: const EdgeInsets.symmetric(vertical: 7),
-              decoration: BoxDecoration(
-                color: unlocked
-                    ? (stars != null ? AppColors.yellow : color)
-                    : context.lockedFill,
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: [
-                  BoxShadow(
-                    color: unlocked
-                        ? (stars != null
-                            ? AppColors.yellowDark
-                            : color.withValues(alpha: 0.6))
-                        : context.line,
-                    offset: const Offset(0, 5),
-                    blurRadius: 0,
-                  ),
-                ],
-              ),
-              child: Center(
-                child: unlocked
-                    ? (stars != null
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.star,
-                                  color: Colors.white, size: 30),
-                              const SizedBox(height: 2),
-                              Text(
-                                '$stars/3',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w900,
+          // v5.15 (F3.3): every path node reads as ONE sentence for screen
+          // readers — what it is, which lesson, and its state — instead of
+          // an unlabeled 74x70 grey circle.
+          Semantics(
+            button: unlocked,
+            enabled: unlocked,
+            label: context.tr(unlocked ? 'semStart' : 'semLocked'),
+            value: '${st.uiLocale == 'ar' ? lesson.titleAr : lesson.titleEn}'
+                '${stars != null ? ' · $stars/3' : ''}',
+            excludeSemantics: true,
+            child: GestureDetector(
+              onTap: onTap,
+              child: Container(
+                width: 74,
+                height: 70,
+                margin: const EdgeInsets.symmetric(vertical: 7),
+                decoration: BoxDecoration(
+                  color: unlocked
+                      ? (stars != null ? AppColors.yellow : color)
+                      : context.lockedFill,
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: unlocked
+                          ? (stars != null
+                              ? AppColors.yellowDark
+                              : color.withValues(alpha: 0.6))
+                          : context.line,
+                      offset: const Offset(0, 5),
+                      blurRadius: 0,
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: unlocked
+                      ? (stars != null
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // v5.15 (F3.3): INK on the yellow fill — the
+                                // white star/count pair was 1.55:1, ink is
+                                // 7.1:1.
+                                const Icon(Icons.star,
+                                    color: AppColors.ink, size: 30),
+                                const SizedBox(height: 2),
+                                Text(
+                                  '$stars/3',
+                                  style: const TextStyle(
+                                    color: AppColors.ink,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w900,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          )
-                        : const Icon(Icons.play_arrow,
-                            color: Colors.white, size: 34))
-                    : Icon(Icons.lock, color: context.lockedText, size: 28),
+                              ],
+                            )
+                          : const Icon(Icons.play_arrow,
+                              color: Colors.white, size: 34))
+                      : Icon(Icons.lock, color: context.lockedText, size: 28),
+                ),
               ),
             ),
           ),

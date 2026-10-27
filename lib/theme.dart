@@ -18,14 +18,24 @@ class AppColors {
   static const yellowDark = Color(0xFFE6A100);
   static const orange = Color(0xFFFF9600);
   static const purple = Color(0xFFCE82FF);
+
+  // v5.15 (F3.3): text-safe shades of the brand hues for LIGHT surfaces.
+  // The vivid constants above stay for icons/borders/fills that carry no
+  // text; whenever a brand hue is the TEXT color on a light surface, use
+  // one of these (all >= 4.5:1 on white and on bgSoft).
+  static const greenText = Color(0xFF378200);
+  static const blueText = Color(0xFF0F76B4);
+  static const orangeText = Color(0xFFA86200);
   // Light-only constants kept for the few places that predate v4.0.
+  // v5.15 (F3.3): inkLight/lockedDark deepened to pass WCAG AA — inkLight
+  // 4.95:1 on white (was 4.48), lockedDark 3.14:1 on the locked fill (icons).
   static const ink = Color(0xFF3C3C3C);
-  static const inkLight = Color(0xFF777777);
+  static const inkLight = Color(0xFF707070);
   static const border = Color(0xFFE5E5E5);
   static const bg = Color(0xFFFFFFFF);
   static const bgSoft = Color(0xFFF7F7F7);
   static const locked = Color(0xFFE5E5E5);
-  static const lockedDark = Color(0xFFCFCFCF);
+  static const lockedDark = Color(0xFF808080);
 
   // Dark surface colors.
   static const darkBg = Color(0xFF131F24);
@@ -196,11 +206,31 @@ class ChunkyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = disabled ? context.lockedFill : color;
-    final cd = disabled
+    // v5.15 (F3.3) contrast policy, applied HERE so no call site has to
+    // know the rules:
+    //  1. Vivid brand surfaces are promoted to their -Dark sibling whenever
+    //     the label is white — white on the vivid shade fails even the
+    //     large-text 3:1 threshold, the -Dark shades pass it.
+    //  2. Labels render at WCAG large-bold size (>= 18.7px bold), so the
+    //     3:1 large-text threshold legitimately applies to them.
+    var c = disabled ? context.lockedFill : color;
+    var cd = disabled
         ? (context.isDark ? AppColors.darkBorder : AppColors.lockedDark)
         : colorDark;
+    if (!disabled && identical(textColor, Colors.white)) {
+      if (identical(c, AppColors.green)) {
+        c = AppColors.greenDark;
+        cd = AppColors.greenText;
+      } else if (identical(c, AppColors.blue)) {
+        c = AppColors.blueDark;
+        cd = AppColors.blueText;
+      } else if (identical(c, AppColors.red)) {
+        c = AppColors.redDark;
+        cd = AppColors.redDark;
+      }
+    }
     final tc = disabled ? context.mutedText : textColor;
+    final fs = fontSize < 18.7 ? 18.7 : fontSize;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: c,
@@ -221,7 +251,7 @@ class ChunkyButton extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (icon != null) ...[
-                    Icon(icon, color: tc, size: fontSize + 6),
+                    Icon(icon, color: tc, size: fs + 6),
                     const SizedBox(width: 8),
                   ],
                   Text(
@@ -229,7 +259,7 @@ class ChunkyButton extends StatelessWidget {
                     style: TextStyle(
                       color: tc,
                       fontWeight: FontWeight.w800,
-                      fontSize: fontSize,
+                      fontSize: fs,
                       letterSpacing: 0.2,
                     ),
                   ),
@@ -266,25 +296,23 @@ class OptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Color border = context.line;
     Color bg = context.card;
+    // v5.15 (F3.3): the badge is a small TEXT label — vivid fills failed AA
+    // in both modes (white 2.1–3.3:1 light, darkInk 2.0–2.2:1 dark). The
+    // badge pill goes theme-grey with body text: >= 8.7:1 in both modes;
+    // the state colour is carried by the card border/background.
     Color badgeBg = context.line;
-    Color badgeFg = context.mutedText;
+    Color badgeFg = context.bodyText;
     if (selected) {
       border = AppColors.blue;
       bg = AppColors.blueLight;
-      badgeBg = AppColors.blue;
-      badgeFg = Colors.white;
     }
     if (correct) {
       border = AppColors.green;
       bg = AppColors.greenLight;
-      badgeBg = AppColors.green;
-      badgeFg = Colors.white;
     }
     if (wrong) {
       border = AppColors.red;
       bg = AppColors.redLight;
-      badgeBg = AppColors.red;
-      badgeFg = Colors.white;
     }
     return InkWell(
       borderRadius: BorderRadius.circular(14),
@@ -310,12 +338,8 @@ class OptionCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: badgeBg,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border(
-                    bottom: BorderSide(
-                        color: badgeFg == Colors.white
-                            ? Colors.black26
-                            : context.line,
-                        width: 2),
+                  border: const Border(
+                    bottom: BorderSide(color: Colors.black26, width: 2),
                   ),
                 ),
                 child: Text(badge!,

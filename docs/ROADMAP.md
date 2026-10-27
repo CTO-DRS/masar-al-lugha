@@ -1,8 +1,9 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.14.1+39** — see the v5.14.1 section for the
-reminder-delivery fix found in independent APK verification, the v5.14
-section for the learning-engine wave (mastery model, FSRS calibration report, smart
+**Current release: v5.15.0+40** — see the v5.15 section for the
+UI/UX quarter of the 12-month plan (F3.1-F3.5), the v5.14.1 section
+for the reminder-delivery fix found in independent APK verification,
+the v5.14 section for the learning-engine wave (mastery model, FSRS calibration report, smart
 session orchestration, 7-day remediation, streak freeze + local daily
 reminder), the v5.13 section for the
 second feature of the 12-month plan Wave 1 (F1.2: instant micro-repair),
@@ -64,6 +65,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.13** | **12-month plan Wave 1 — F1.2: instant micro-repair after mistakes: the first mistake on a word in a session opens a 3-step repair card inside the lesson (rule/distinction hint + the word's own example → a re-rolled question with DIFFERENT distractors → an easier 2-option pick), 2 cycles max then the lesson continues without embarrassment, dictation/listenComp get hint-then-retry only, the failed question is re-queued ≥3 rounds later as a normal scored round, repair rounds are XP-neutral by construction, dedicated 8-line bilingual companion bank, reduce-motion shows the card instantly — zero JSON changes, 346 tests** |
 | **v5.14** | **Learning-engine wave (12-month plan, Q2): an honest per-word mastery model from the FSRS memory states (mastery.dart, 0-100 with four labeled bands, learning-capped), an FSRS calibration report that closes the prediction loop (prediction-vs-reality buckets + Brier score, sampled at every real review, 400-sample rolling log), a deterministic smart-session orchestrator (due reviews → weak words → new words within the daily budget, replacing the shuffle on the Cards tab), a 7-day remediation window that spots chronically forgotten words (2+ distinct lapse days, self-cleaning bounded log, focused practice lane), and a streak freeze + local daily reminder (tokens earned every 7 consecutive days, one missed day bridged automatically; flutter_local_notifications — the wave's only new plugin, on-device scheduling, zero network) — 346 → 424 tests (+78)** |
 | **v5.14.1** | **Reminder-delivery fix: the two `flutter_local_notifications` receivers (`ScheduledNotificationReceiver` + `ActionBroadcastReceiver`, both not exported) added to the app manifest — the plugin stopped declaring them itself, so without them the daily reminder could not fire while the app process was dead (the normal case overnight); found by independent verification of the CI APK's merged manifest, not by a user. BOOT receiver still deliberately omitted (re-anchored each launch)** |
+| **v5.15** | **12-month plan Q3 — UI/UX: the first-run journey becomes 3 screens ending in an AUTO-STARTED first lesson (win <3 min, path customization deferred to a non-blocking first-win card, journey timer recorded once); a next-best-action card answers "what now?" with an EXPLAINED rule ladder (remediation > review >=8 > unit-finish > lesson) and a ≤2-banner budget with a "something else" sheet; a full accessibility pass (zero unlabeled interactive elements on the core screens by automated semantics scan, WCAG-AA theme audit with catalog fixes, 48dp targets, simplified-audio mode); a motion catalog + next-lesson warmup isolate + honest engine budgets in CI (real wall-clock: plan build p95 0.8ms vs 16ms budget — the tester's fake clock documented); settings reorganized into 4 titled sections + search, ZERO storage-key changes — 424 → 465 tests (+41)** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -1127,6 +1129,92 @@ RECEIVE_BOOT_COMPLETED. No code paths changed; the Dart-side orchestrator
 and its 19 tests are untouched (the manifest is verified by the
 release checklist, not by unit tests). Suite: 424 tests. Version pin
 moved to 5.14.1.
+
+
+## v5.15 — UI/UX quarter (SHIPPED, plan Q3)
+
+The 12-month plan's third quarter: remove the friction between the
+learner and the Q1/Q2 engines. Five features, all with Flutter-free
+engines where the logic is engine-shaped, widget tests where the flow is
+the feature.
+
+1. **F3.1 First-run journey (win <3 minutes)** — onboarding is THREE
+   screens: UI language -> target course (the only mandatory content
+   decision) -> one experience question. "From zero" starts the FIRST
+   lesson automatically; "some experience" keeps the adaptive placement
+   test fully available WITH a skip. Completing that first lesson IS the
+   first win: the result screen grows a non-blocking "customize your
+   path" card (the v4.11 wizard, one tap, skippable forever — no door
+   closes) and records the journey timer ONCE (additive
+   `journeyStartedAt`/`firstWinAt` keys, feeding the opt-in analytics
+   KPI time-to-first-win <= 3:00). A returning profile never sees the
+   journey (splash routes on `onboardingDone`, test-pinned).
+2. **F3.2 One next-best-action home** — `lib/next_action.dart`
+   (Flutter-free, 8 state-combination tests): an EXPLAINED rule ladder —
+   remediation (a live trap waits for nobody) > review when the due
+   backlog is real (>= 8) > unit-finish momentum (one lesson left; the
+   plan's "unit story" lane honestly substituted because F1.5 is not
+   shipped yet — recorded here) > next lesson, which is also the safe
+   fallback. The card shows the WHY line, one start button, and a
+   "something else" sheet where every alternative lane lives <= 2 taps
+   away. Secondary banners obey a <= 2 visible budget (quick review when
+   live + one rotating skill by epoch-day); the hero card keeps identity
+   (plan, companion, progress) and lost its competing action rows.
+3. **F3.3 Accessibility pass** — `lib/contrast.dart` (pure WCAG 2.1 AA
+   math) + `test/contrast_test.dart` pin EVERY text pair in the theme
+   catalog. Catalog fixes (once, reaching all screens): inkLight
+   #777770->#707070 (4.95:1), lockedDark #CFCFCF->#808080 (3.14:1
+   icon), new greenText/blueText/orangeText text-safe brand shades,
+   OptionCard badges go theme-grey + body text (vivid fills failed both
+   modes), ChunkyButton promotes vivid surfaces to -Dark under white
+   labels with a large-bold (>= 18.7px) label policy, yellow node counts
+   white->ink (1.55->7.1:1). Semantics: `test/a11y_test.dart` walks the
+   whole semantics tree and asserts ZERO tappable unlabeled nodes on
+   learn path / flashcards / dictionary / profile — fixed at the source:
+   Mascot poke (one wrap covers every screen), path nodes read as one
+   sentence, flashcard flip, dictionary favorite/speak (48dp), goal
+   chips, companion picker, course switcher. Touch targets >= 48dp on
+   the fixed controls. NEW simplified-audio mode (opt-in) speaks the
+   result after every lesson answer. Honest scope note: the manual
+   TalkBack walkthrough on real hardware stays a device-lab task.
+4. **F3.4 Perceived performance + motion** — `lib/motion.dart`: ONE
+   motion catalog (fast/standard/celebratory durations + fixed curves)
+   that collapses to zero under reduce-motion; screens stop inventing
+   timings. `lib/warmup.dart`: the learn path warms the next lesson's
+   plan in a REAL background isolate (compute), cache keyed by an exact
+   input fingerprint (lesson+mode+cefr+confusion pairs) — any mismatch
+   recomputes synchronously, so a warm plan is provably the same plan;
+   in-flight dedup, failures silent by design. CI budget gate
+   (`test/perf_budget_test.dart`) measures REAL wall-clock in plain
+   tests: worst synchronous plan build 8-9ms (budget 400ms), warm-open
+   take cycles 0.35ms, engine plan-build p95 0.7-0.9ms across the four
+   REAL courses (budget 16ms). **Honest platform note, proven by probe**:
+   the flutter tester's FakeAsync clock is fake (Stopwatch reads 0us
+   across a million-iteration busy loop), so per-frame p95 in widget
+   tests is unmeasurable — the gate enforces the engine-side budgets the
+   fake clock CAN judge, and true on-device frame timing is recorded as
+   a device-lab remainder rather than faked.
+5. **F3.5 Settings & profile IA** — the settings screen reorganizes
+   into FOUR titled sections (Profiles / Learning / Appearance &
+   accessibility / Data & about) plus a local search field filtering
+   sections by title. PURE display reorganization: no storage key
+   changed, every callback identical (old settings behavior pinned by
+   the existing tests). New in Appearance: simplified-audio (F3.3) and
+   larger-text switches — larger text scales the shell subtree by 15%
+   (additive `largerText` key, opt-in).
+6. **Storage & tests** — additive keys only (`journeyStartedAt`,
+   `firstWinAt`, `simplifiedAudio`, `largerText`), null-safe parsed.
+   Suite: 424 -> **465** tests (+41: next_action, contrast, warmup,
+   a11y, settings IA, first-run journey, perf gate), version pin moved
+   to 5.15.0.
+
+**Honest remainders (next waves):** the plan's KPI targets
+(first-lesson completion >= 90%, card-start share >= 60%) need field
+data from the opt-in local analytics once devices run this build; the
+on-device TalkBack walkthrough and true per-frame p95 need real
+hardware (the CI gate covers semantics + engine budgets; the tester's
+clock is fake — documented above); F1.1b "fair difficulty" and the Q1
+story lane (F1.5) remain open from earlier quarters.
 
 ## Hard invariants (never break)
 

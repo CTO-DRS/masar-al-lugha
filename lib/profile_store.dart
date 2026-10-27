@@ -225,6 +225,9 @@ class ProfileStore {
           s.darkMode = (settings['darkMode'] as bool?) ?? s.darkMode;
           s.reduceMotion =
               (settings['reduceMotion'] as bool?) ?? s.reduceMotion;
+          s.simplifiedAudio =
+              (settings['simplifiedAudio'] as bool?) ?? s.simplifiedAudio;
+          s.largerText = (settings['largerText'] as bool?) ?? s.largerText;
           s.ttsEnabled = (settings['ttsEnabled'] as bool?) ?? s.ttsEnabled;
           s.ttsRate = (settings['ttsRate'] as num?)?.toDouble() ?? s.ttsRate;
           s.analyticsOptIn =
@@ -304,6 +307,8 @@ class ProfileStore {
       'settings': {
         'darkMode': s.darkMode,
         'reduceMotion': s.reduceMotion,
+        'simplifiedAudio': s.simplifiedAudio,
+        'largerText': s.largerText,
         'ttsEnabled': s.ttsEnabled,
         'ttsRate': s.ttsRate,
         'analyticsOptIn': s.analyticsOptIn,

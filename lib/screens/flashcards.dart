@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../l10n.dart';
 import '../models.dart';
 import '../scope.dart';
 import '../session.dart';
@@ -409,42 +410,48 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
 
     return GestureDetector(
       onTap: () => setState(() => flipped = !flipped),
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 260),
-        transitionBuilder: (child, anim) => ScaleTransition(
-          scale: anim,
-          child: FadeTransition(opacity: anim, child: child),
-        ),
-        child: Container(
-          key: ValueKey(flipped ? 'back$v.id' : 'front$v.id'),
-          width: double.infinity,
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            // v4.0.1: dark-aware card surfaces — the front used a hardcoded
-            // white and the back a hardcoded light blue.
-            color: flipped
-                ? (context.isDark ? AppColors.darkSoft : AppColors.blueLight)
-                : context.card,
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              color: flipped ? AppColors.blue : context.line,
-              width: 2,
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: AppColors.border,
-                offset: Offset(0, 5),
-                blurRadius: 0,
-              ),
-            ],
+      // v5.15 (F3.3): the whole card is one tappable — give it a real name.
+      child: Semantics(
+        label: L.t(st.uiLocale, 'semFlip'),
+        button: true,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 260),
+          transitionBuilder: (child, anim) => ScaleTransition(
+            scale: anim,
+            child: FadeTransition(opacity: anim, child: child),
           ),
-          child: flipped ? _back(v, c) : _front(v),
+          child: Container(
+            key: ValueKey(flipped ? 'back$v.id' : 'front$v.id'),
+            width: double.infinity,
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              // v4.0.1: dark-aware card surfaces — the front used a hardcoded
+              // white and the back a hardcoded light blue.
+              color: flipped
+                  ? (context.isDark ? AppColors.darkSoft : AppColors.blueLight)
+                  : context.card,
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(
+                color: flipped ? AppColors.blue : context.line,
+                width: 2,
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  color: AppColors.border,
+                  offset: Offset(0, 5),
+                  blurRadius: 0,
+                ),
+              ],
+            ),
+            child: flipped ? _back(v, c) : _front(v),
+          ),
         ),
       ),
     );
   }
 
   Widget _front(Vocab v) {
+    final st = AppScope.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -462,22 +469,29 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
             style: TextStyle(color: context.mutedText, fontSize: 17),
           ),
         const SizedBox(height: 18),
+        // v5.15 (F3.3): semantic label on the speak button (icon-only tap
+        // target), 48dp minimum logical size.
         GestureDetector(
           onTap: () => _speak(v.target),
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: AppColors.blue,
-              borderRadius: BorderRadius.circular(999),
-              boxShadow: const [
-                BoxShadow(
-                  color: AppColors.blueDark,
-                  offset: Offset(0, 3),
-                  blurRadius: 0,
-                ),
-              ],
+          child: Semantics(
+            label: L.t(st.uiLocale, 'semSpeak'),
+            button: true,
+            child: Container(
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.blue,
+                borderRadius: BorderRadius.circular(999),
+                boxShadow: const [
+                  BoxShadow(
+                    color: AppColors.blueDark,
+                    offset: Offset(0, 3),
+                    blurRadius: 0,
+                  ),
+                ],
+              ),
+              child: const Icon(Icons.volume_up, color: Colors.white, size: 26),
             ),
-            child: const Icon(Icons.volume_up, color: Colors.white, size: 26),
           ),
         ),
       ],

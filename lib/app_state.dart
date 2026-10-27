@@ -56,9 +56,24 @@ class AppState extends ChangeNotifier {
   bool onboardingDone = false;
   bool loaded = false;
 
+  // v5.15 (F3.1): first-run journey timing — when onboarding finished and
+  // when the first lesson win landed. Both are epoch-ms, additive settings
+  // keys, recorded once and never overwritten; they feed the opt-in local
+  // analytics KPI (time-to-first-win <= 3:00). Nothing leaves the device.
+  int? journeyStartedAt;
+  int? firstWinAt;
+
   // ---- v4.0 settings & engine ----
   bool darkMode = false; // null-aware tri-state handled by settings UI
   bool reduceMotion = false;
+  bool simplifiedAudio = false;
+  bool largerText = false;
+
+  // v5.15 (F3.3 + F3.5): accessibility additions. simplifiedAudio speaks
+  // the result aloud after every answer (low-vision support, F3.3);
+  // largerText scales the interface text by 15% (F3.5). Both are additive
+  // settings keys, OFF by default — the app behaves byte-identically
+  // without them.
   bool ttsEnabled = true;
   double ttsRate = 0.9;
   // v5.3 FSRS target retention (0.70..0.98) — lower schedules longer intervals.
@@ -294,6 +309,19 @@ class AppState extends ChangeNotifier {
 
   void setReduceMotion(bool on) {
     reduceMotion = on;
+    save();
+    notifyListeners();
+  }
+
+  // v5.15 (F3.3/F3.5): simplified-audio + larger-text setters.
+  void setSimplifiedAudio(bool on) {
+    simplifiedAudio = on;
+    save();
+    notifyListeners();
+  }
+
+  void setLargerText(bool on) {
+    largerText = on;
     save();
     notifyListeners();
   }
@@ -581,6 +609,17 @@ class AppState extends ChangeNotifier {
 
   void finishOnboarding() {
     onboardingDone = true;
+    // v5.15 (F3.1): the journey clock starts when onboarding ends — the
+    // first-win timer measures onboarding-end -> lesson-complete.
+    journeyStartedAt ??= DateTime.now().millisecondsSinceEpoch;
+    save();
+    notifyListeners();
+  }
+
+  /// v5.15 (F3.1): called by the first-win result screen. Recorded ONCE —
+  /// later lessons never move it.
+  void markFirstWin() {
+    firstWinAt ??= DateTime.now().millisecondsSinceEpoch;
     save();
     notifyListeners();
   }
@@ -1019,10 +1058,14 @@ class AppState extends ChangeNotifier {
         'settings': {
           'darkMode': darkMode,
           'reduceMotion': reduceMotion,
+          'simplifiedAudio': simplifiedAudio,
+          'largerText': largerText,
           'ttsEnabled': ttsEnabled,
           'ttsRate': ttsRate,
           'retentionTarget': retentionTarget,
           'analyticsOptIn': analyticsOptIn,
+          if (journeyStartedAt != null) 'journeyStartedAt': journeyStartedAt,
+          if (firstWinAt != null) 'firstWinAt': firstWinAt,
           'uiLocale': uiLocale,
           'courseId': courseId,
           'onboardingDone': onboardingDone,
@@ -1162,6 +1205,8 @@ class AppState extends ChangeNotifier {
       if (s is Map) {
         darkMode = (s['darkMode'] as bool?) ?? darkMode;
         reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;
+        simplifiedAudio = (s['simplifiedAudio'] as bool?) ?? simplifiedAudio;
+        largerText = (s['largerText'] as bool?) ?? largerText;
         ttsEnabled = (s['ttsEnabled'] as bool?) ?? ttsEnabled;
         ttsRate = (s['ttsRate'] as num?)?.toDouble() ?? ttsRate;
         analyticsOptIn = (s['analyticsOptIn'] as bool?) ?? analyticsOptIn;
@@ -1171,6 +1216,8 @@ class AppState extends ChangeNotifier {
         final cid = s['courseId'] as String?;
         if (cid != null && courses.containsKey(cid)) courseId = cid;
         onboardingDone = (s['onboardingDone'] as bool?) ?? onboardingDone;
+        journeyStartedAt = (s['journeyStartedAt'] as num?)?.toInt();
+        firstWinAt = (s['firstWinAt'] as num?)?.toInt();
       }
     } catch (_) {
       if (crossSlot) {

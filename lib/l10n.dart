@@ -387,7 +387,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.14.1',
+      'version': 'الإصدار 5.15.0',
       // v5.12 — learning engine (F2.1 mastery / F2.2 calibration /
       // F2.3 smart session / F2.4 remediation / F2.5 freeze + reminders)
       'masteryTitle': 'مستوى التمكن',
@@ -428,6 +428,60 @@ class L {
       'reminderDenied': 'لم يُمنح إذن الإشعارات — فعّله من إعدادات النظام',
       'dailyReminderTitle': 'وقت التدريب!',
       'dailyReminderBody': '5 دقائق تكفي للحفاظ على تتابعك',
+
+      // v5.15 — Q3 UI/UX wave (F3.1 first-run / F3.2 next action /
+      // F3.3 accessibility / F3.5 settings IA)
+      'nbaRemediationTitle': 'ترميم الأسبوع ({n} كلمات)',
+      'nbaRemediationWhy':
+          'كلمات نسيتها أيامًا مختلفة هذا الأسبوع — نُصلح الفخ قبل إضافة الجديد',
+      'nbaReviewTitle': 'جلسة مراجعة ({n} بطاقات)',
+      'nbaReviewWhy':
+          'الذاكرة أولًا: {n} بطاقة استحقاقها الجدول — نراجعها قبل أي درس جديد',
+      'nbaUnitFinishTitle': 'أغلق الوحدة: درس واحد يبقى',
+      'nbaUnitFinishWhy': 'درس واحد فقط يفصلك عن إتمام الوحدة — زخم الذروة',
+      'nbaLessonTitle': 'الدرس التالي',
+      'nbaLessonWhy':
+          'خطوتك التالية على المسار — خطوة واحدة واضحة بدل لوحة مزدحمة',
+      'nbaGoalDoneTitle': 'هدف اليوم مكتمل',
+      'nbaGoalDoneWhy': 'أنجزت هدفك — كل مراجعة إضافية الآن تُثبّت ذاكرتك أكثر',
+      'nbaMore': 'شيء آخر…',
+      'nbaMoreSheet': 'المزيد على الطريق',
+      'experienceQuestion': 'هل تبدأ من الصفر أم لديك خبرة؟',
+      'fromZero': 'من الصفر',
+      'fromZeroHint': 'ابدأ الدرس الأول فورًا',
+      'withExperience': 'لدي خبرة',
+      'withExperienceHint': 'خذ الاختبار التكيّفي أو ابدأ مباشرة',
+      'startPlacement': 'اختبار التحديد التكيّفي',
+      'skipForNow': 'تخطَّ الآن',
+      'firstWinTitle': 'انتصار أول! 🎉',
+      'firstWinBody': 'أنهيت درسك الأول في أقل من 3 دقائق — هذا مجرد البداية',
+      'firstWinCustomize': 'خصّص مسارك (اختياري)',
+      'firstWinCustomizeHint': 'المجال والمستوى — يمكنك تغييرهما لاحقًا دائمًا',
+      'firstWinContinue': 'تابع رحلتك',
+      'semStart': 'ابدأ الدرس',
+      'semLocked': 'درس مقفل',
+      'semCourseSwitcher': 'تبديل لغة التعلم',
+      'semStreak': 'أيام التتابع',
+      'semXp': 'نقاط الخبرة',
+      'semSpeak': 'استمع إلى الكلمة',
+      'semFavorite': 'أضف إلى المفضلة',
+      'semFlip': 'اقلب البطاقة',
+      'semCompanion': 'رفيقك — اضغط للتشجيع',
+      'semGoalChip': 'هدف يومي {n} نقاط',
+      'semSettings': 'الإعدادات',
+      'semBack': 'رجوع',
+      'semSearchSettings': 'ابحث في الإعدادات',
+      'setSectionProfiles': 'الملفات',
+      'setSectionLearning': 'التعلّم',
+      'setSectionAppearance': 'المظهر والوصولية',
+      'setSectionData': 'البيانات وحول',
+      'simplifiedAudio': 'الوضع الصوتي المبسط',
+      'simplifiedAudioHint':
+          'نطق النتيجة صوتيًا بعد كل إجابة — للمعينين بصريًا',
+      'largerText': 'نص أكبر',
+      'largerTextHint': 'تكبير نص الواجهة بنسبة 15٪',
+      'audioRight': 'أحسنت، إجابة صحيحة',
+      'audioWrong': 'ليست صحيحة، حاول مجددًا',
     },
     'en': {
       'appName': 'Language Path',
@@ -818,7 +872,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.14.1',
+      'version': 'Version 5.15.0',
       // v5.12 — learning engine
       'masteryTitle': 'Mastery',
       'masteryAvg': 'Average score',
@@ -864,6 +918,64 @@ class L {
           'Notification permission was not granted — enable it from system settings',
       'dailyReminderTitle': 'Practice time!',
       'dailyReminderBody': '5 minutes is enough to keep your streak alive',
+
+      // v5.15 — Q3 UI/UX wave (F3.1 first-run / F3.2 next action /
+      // F3.3 accessibility / F3.5 settings IA)
+      'nbaRemediationTitle': 'Weekly repair ({n} words)',
+      'nbaRemediationWhy':
+          'Words you forgot on different days this week — fix the trap before adding load',
+      'nbaReviewTitle': 'Review session ({n} cards)',
+      'nbaReviewWhy':
+          'Memory first: {n} cards are due — review them before any new lesson',
+      'nbaUnitFinishTitle': 'Close the unit: one lesson left',
+      'nbaUnitFinishWhy':
+          'Just one lesson stands between you and a finished unit — peak momentum',
+      'nbaLessonTitle': 'Next lesson',
+      'nbaLessonWhy':
+          'Your next step on the path — one clear step instead of a crowded board',
+      'nbaGoalDoneTitle': 'Daily goal complete',
+      'nbaGoalDoneWhy':
+          'Goal done — every extra review now just hardens your memory',
+      'nbaMore': 'Something else…',
+      'nbaMoreSheet': 'More on the way',
+      'experienceQuestion': 'Starting from zero, or some experience?',
+      'fromZero': 'From zero',
+      'fromZeroHint': 'Jump into your first lesson right away',
+      'withExperience': 'I have experience',
+      'withExperienceHint': 'Take the adaptive test, or just start',
+      'startPlacement': 'Adaptive placement test',
+      'skipForNow': 'Skip for now',
+      'firstWinTitle': 'First win! 🎉',
+      'firstWinBody':
+          'You finished your first lesson in under 3 minutes — and this is only the start',
+      'firstWinCustomize': 'Customize your path (optional)',
+      'firstWinCustomizeHint':
+          'Field and level — you can always change them later',
+      'firstWinContinue': 'Continue your journey',
+      'semStart': 'Start lesson',
+      'semLocked': 'Locked lesson',
+      'semCourseSwitcher': 'Switch learning language',
+      'semStreak': 'Streak days',
+      'semXp': 'Experience points',
+      'semSpeak': 'Listen to the word',
+      'semFavorite': 'Add to favorites',
+      'semFlip': 'Flip the card',
+      'semCompanion': 'Your companion — tap for encouragement',
+      'semGoalChip': 'Daily goal {n} XP',
+      'semSettings': 'Settings',
+      'semBack': 'Back',
+      'semSearchSettings': 'Search settings',
+      'setSectionProfiles': 'Profiles',
+      'setSectionLearning': 'Learning',
+      'setSectionAppearance': 'Appearance & accessibility',
+      'setSectionData': 'Data & about',
+      'simplifiedAudio': 'Simplified audio mode',
+      'simplifiedAudioHint':
+          'Speak the result aloud after every answer — for low-vision learners',
+      'largerText': 'Larger text',
+      'largerTextHint': 'Scale the interface text by 15%',
+      'audioRight': 'Well done, correct answer',
+      'audioWrong': 'Not correct, try again',
     },
   };
 

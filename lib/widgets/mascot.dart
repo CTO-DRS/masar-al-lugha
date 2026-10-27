@@ -32,7 +32,9 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 
+import '../l10n.dart';
 import '../mascot.dart' show MascotEngine, MascotFacts, MascotMood;
+import '../scope.dart';
 import '../theme.dart';
 
 export '../mascot.dart' show MascotMood;
@@ -153,6 +155,14 @@ class _Pose {
 }
 
 // ---------------- the widget ----------------
+
+String _labelLocale(BuildContext context) {
+  try {
+    return AppScope.of(context).uiLocale;
+  } catch (_) {
+    return 'ar';
+  }
+}
 
 class Mascot extends StatefulWidget {
   final double size;
@@ -282,53 +292,62 @@ class _MascotState extends State<Mascot> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final live = widget.animated && !MediaQuery.of(context).disableAnimations;
     _setLive(live);
-    return GestureDetector(
-      onTap: _poke,
-      child: AnimatedBuilder(
-        animation: Listenable.merge([_bob, _blink, _talk, _action]),
-        builder: (context, _) {
-          final bob = live ? math.sin(_bob.value * 2 * math.pi) * 1.2 : 0.0;
-          final phase = _blink.value;
-          final blink = live && phase > 0.90 && phase < 0.945;
-          final speaking = widget.talking?.value ?? false;
-          final mouth = live && speaking
-              ? math.sin(_talk.value * 2 * math.pi) * 0.5 + 0.5
-              : 0.0;
-          var armL = 0.0;
-          var armR = 0.0;
-          var hop = 0.0;
-          if (widget.mood == MascotMood.celebrate) {
-            // Arms stay up while celebrating; the one-shot action adds a
-            // springy raise + a little hop.
-            final a = _action.isAnimating
-                ? Curves.easeOutBack.transform(_action.value)
-                : 1.0;
-            final lift = a.clamp(0.0, 1.35);
-            armL = 2.2 * lift;
-            armR = -2.2 * lift;
-            hop = _action.isAnimating
-                ? -math.sin(_action.value * math.pi) * 4.5
+    // v5.15 (F3.3): every mascot is tappable (tap = a fresh encouragement
+    // line) — announce it to screen readers once, here at the source, so
+    // every screen's companion is a named button instead of a mystery tap.
+    return Semantics(
+      button: true,
+      // Locale read defensively: bare Mascots in unit/widget tests run
+      // without an AppScope — the label falls back to the Arabic default.
+      label: L.t(_labelLocale(context), 'semCompanion'),
+      child: GestureDetector(
+        onTap: _poke,
+        child: AnimatedBuilder(
+          animation: Listenable.merge([_bob, _blink, _talk, _action]),
+          builder: (context, _) {
+            final bob = live ? math.sin(_bob.value * 2 * math.pi) * 1.2 : 0.0;
+            final phase = _blink.value;
+            final blink = live && phase > 0.90 && phase < 0.945;
+            final speaking = widget.talking?.value ?? false;
+            final mouth = live && speaking
+                ? math.sin(_talk.value * 2 * math.pi) * 0.5 + 0.5
                 : 0.0;
-          } else if (live && _action.isAnimating) {
-            // Wave: the right arm swings while the action plays.
-            final w = _action.value;
-            armR = -2.0 + 0.55 * math.sin(w * math.pi * 3);
-          }
-          return CustomPaint(
-            size: Size.square(widget.size),
-            painter: _HumanPainter(
-              widget.characterId,
-              widget.mood,
-              _Pose(
-                bobY: bob + hop,
-                blink: blink,
-                mouth: mouth,
-                armL: armL,
-                armR: armR,
+            var armL = 0.0;
+            var armR = 0.0;
+            var hop = 0.0;
+            if (widget.mood == MascotMood.celebrate) {
+              // Arms stay up while celebrating; the one-shot action adds a
+              // springy raise + a little hop.
+              final a = _action.isAnimating
+                  ? Curves.easeOutBack.transform(_action.value)
+                  : 1.0;
+              final lift = a.clamp(0.0, 1.35);
+              armL = 2.2 * lift;
+              armR = -2.2 * lift;
+              hop = _action.isAnimating
+                  ? -math.sin(_action.value * math.pi) * 4.5
+                  : 0.0;
+            } else if (live && _action.isAnimating) {
+              // Wave: the right arm swings while the action plays.
+              final w = _action.value;
+              armR = -2.0 + 0.55 * math.sin(w * math.pi * 3);
+            }
+            return CustomPaint(
+              size: Size.square(widget.size),
+              painter: _HumanPainter(
+                widget.characterId,
+                widget.mood,
+                _Pose(
+                  bobY: bob + hop,
+                  blink: blink,
+                  mouth: mouth,
+                  armL: armL,
+                  armR: armR,
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

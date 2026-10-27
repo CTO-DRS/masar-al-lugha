@@ -337,29 +337,37 @@ class ProfileScreen extends StatelessWidget {
                           spacing: 6,
                           children: [10, 20, 50].map((g) {
                             final sel = st.dailyGoal == g;
-                            return GestureDetector(
-                              onTap: () {
-                                st.setDailyGoal(g);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: sel ? AppColors.green : context.card,
-                                  borderRadius: BorderRadius.circular(999),
-                                  border: Border.all(
-                                    color: sel ? AppColors.green : context.line,
-                                    width: 2,
+                            return Semantics(
+                              button: true,
+                              selected: sel,
+                              label: context.trF('semGoalChip', {'n': '$g'}),
+                              child: GestureDetector(
+                                onTap: () {
+                                  st.setDailyGoal(g);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: sel ? AppColors.green : context.card,
+                                    borderRadius: BorderRadius.circular(999),
+                                    border: Border.all(
+                                      color:
+                                          sel ? AppColors.green : context.line,
+                                      width: 2,
+                                    ),
                                   ),
+                                  child: Text('$g',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        // v5.15 (F3.3): ink on the vivid green
+                                        // (5.28:1) — white was 2.09:1.
+                                        color: sel
+                                            ? AppColors.ink
+                                            : context.mutedText,
+                                      )),
                                 ),
-                                child: Text('$g',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 12,
-                                      color: sel
-                                          ? Colors.white
-                                          : context.mutedText,
-                                    )),
                               ),
                             );
                           }).toList(),
@@ -570,21 +578,26 @@ class _WeakWordsCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                final tts = AppScope.ttsOf(context);
-                                tts
-                                    .setLanguage(st.course.ttsLang)
-                                    .then((_) => tts.speak(v.target));
-                              },
-                              child: Text(
-                                '${v.target} — ${v.translationAr}',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14,
-                                    color: context.bodyText),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                            // v5.15 (F3.3): the speak line is a real button.
+                            child: Semantics(
+                              label: context.tr('semSpeak'),
+                              button: true,
+                              child: GestureDetector(
+                                onTap: () {
+                                  final tts = AppScope.ttsOf(context);
+                                  tts
+                                      .setLanguage(st.course.ttsLang)
+                                      .then((_) => tts.speak(v.target));
+                                },
+                                child: Text(
+                                  '${v.target} — ${v.translationAr}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14,
+                                      color: context.bodyText),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                           ),
@@ -803,66 +816,71 @@ class _CompanionCardState extends State<_CompanionCard> {
       hint = tr('mascotTapSelect');
     }
 
-    return GestureDetector(
-      onTap: unlocked ? () => st.selectMascot(c.id) : null,
-      child: Container(
-        width: 112,
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
-        decoration: BoxDecoration(
-          color: selected ? AppColors.greenLight : context.softBg,
-          border: Border.all(
-              color: selected ? AppColors.green : context.line, width: 2),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Mascot(
-                  size: 46,
-                  mood: selected
-                      ? MascotMood.celebrate
-                      : (unlocked ? MascotMood.happy : MascotMood.neutral),
-                  characterId: c.id,
-                ),
-                if (!unlocked)
-                  Positioned(
-                    top: -4,
-                    right: -4,
-                    child: Container(
-                      padding: const EdgeInsets.all(3),
-                      decoration: const BoxDecoration(
-                        color: AppColors.inkLight,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(Icons.lock, size: 10, color: Colors.white),
-                    ),
+    // v5.15 (F3.3): the companion picker card announces itself.
+    return Semantics(
+      button: unlocked,
+      label: '${st.uiLocale == 'ar' ? c.nameAr : c.nameEn} — $hint',
+      child: GestureDetector(
+        onTap: unlocked ? () => st.selectMascot(c.id) : null,
+        child: Container(
+          width: 112,
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.greenLight : context.softBg,
+            border: Border.all(
+                color: selected ? AppColors.green : context.line, width: 2),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Mascot(
+                    size: 46,
+                    mood: selected
+                        ? MascotMood.celebrate
+                        : (unlocked ? MascotMood.happy : MascotMood.neutral),
+                    characterId: c.id,
                   ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Text(c.name(st.uiLocale),
-                maxLines: 1,
+                  if (!unlocked)
+                    Positioned(
+                      top: -4,
+                      right: -4,
+                      child: Container(
+                        padding: const EdgeInsets.all(3),
+                        decoration: const BoxDecoration(
+                          color: AppColors.inkLight,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.lock, size: 10, color: Colors.white),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Text(c.name(st.uiLocale),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 13,
+                      color: context.bodyText)),
+              const SizedBox(height: 3),
+              Text(
+                hint,
+                textAlign: TextAlign.center,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13,
-                    color: context.bodyText)),
-            const SizedBox(height: 3),
-            Text(
-              hint,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  fontSize: 10,
-                  height: 1.25,
-                  fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
-                  color: selected ? AppColors.greenDark : context.mutedText),
-            ),
-          ],
+                    fontSize: 10,
+                    height: 1.25,
+                    fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
+                    color: selected ? AppColors.greenText : context.mutedText),
+              ),
+            ],
+          ),
         ),
       ),
     );

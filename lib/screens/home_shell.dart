@@ -25,6 +25,7 @@ class _HomeShellState extends State<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
+    final st = AppScope.of(context);
     String tr(String k) => context.tr(k);
     final pages = [
       LearnPath(openTab: switchTab),
@@ -33,41 +34,50 @@ class _HomeShellState extends State<HomeShell> {
       const ProfileScreen(),
     ];
 
-    return Scaffold(
-      body: pages[tab],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: context.line, width: 2)),
-        ),
-        child: SafeArea(
-          top: false,
-          child: SizedBox(
-            height: 66,
-            child: Row(
-              children: [
-                _navItem(
-                  context,
-                  0,
-                  Icons.school,
-                  tr('learn'),
-                  AppColors.green,
-                ),
-                _navItem(context, 1, Icons.style, tr('cards'), AppColors.blue),
-                _navItem(
-                  context,
-                  2,
-                  Icons.menu_book,
-                  tr('dictionary'),
-                  AppColors.purple,
-                ),
-                _navItem(
-                  context,
-                  3,
-                  Icons.person,
-                  tr('profile'),
-                  AppColors.orange,
-                ),
-              ],
+    // v5.15 (F3.5): the larger-text accessibility setting scales the whole
+    // shell subtree by 15% (opt-in, off by default).
+    final scaler = st.largerText
+        ? const TextScaler.linear(1.15)
+        : MediaQuery.textScalerOf(context);
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaler: scaler),
+      child: Scaffold(
+        body: pages[tab],
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            border: Border(top: BorderSide(color: context.line, width: 2)),
+          ),
+          child: SafeArea(
+            top: false,
+            child: SizedBox(
+              height: 66,
+              child: Row(
+                children: [
+                  _navItem(
+                    context,
+                    0,
+                    Icons.school,
+                    tr('learn'),
+                    AppColors.green,
+                  ),
+                  _navItem(
+                      context, 1, Icons.style, tr('cards'), AppColors.blue),
+                  _navItem(
+                    context,
+                    2,
+                    Icons.menu_book,
+                    tr('dictionary'),
+                    AppColors.purple,
+                  ),
+                  _navItem(
+                    context,
+                    3,
+                    Icons.person,
+                    tr('profile'),
+                    AppColors.orange,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -141,23 +151,30 @@ class TopStatsBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
         child: Row(
           children: [
-            GestureDetector(
-              onTap: () => _showCourseSwitcher(context, st),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: context.card,
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: context.line, width: 2),
-                ),
-                child: Row(
-                  children: [
-                    Text(st.course.flag, style: const TextStyle(fontSize: 18)),
-                    Icon(Icons.expand_more, size: 18, color: context.mutedText),
-                  ],
+            // v5.15 (F3.3): the flag pill is a real button to screen readers.
+            Semantics(
+              button: true,
+              label: context.tr('semCourseSwitcher'),
+              child: GestureDetector(
+                onTap: () => _showCourseSwitcher(context, st),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context.card,
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: context.line, width: 2),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(st.course.flag,
+                          style: const TextStyle(fontSize: 18)),
+                      Icon(Icons.expand_more,
+                          size: 18, color: context.mutedText),
+                    ],
+                  ),
                 ),
               ),
             ),
