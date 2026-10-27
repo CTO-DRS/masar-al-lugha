@@ -271,6 +271,13 @@ class MascotEngine {
     return locale == 'ar' ? tpl.$1 : tpl.$2;
   }
 
+  /// F1.2: calm teacher line spoken when a mistake opens the instant
+  /// micro-repair card — dedicated bank, neutral tone, never shaming.
+  static String repairLine(String locale, {required int salt}) {
+    final tpl = mascotRepairLines[salt % mascotRepairLines.length];
+    return locale == 'ar' ? tpl.$1 : tpl.$2;
+  }
+
   /// v4.10: ambient chatter — the self-spoken motivation line used by
   /// LiveCompanion between events. Personal: {s}/{lvl} are filled from
   /// the profile facts.
@@ -631,6 +638,48 @@ const List<MascotBiLine> mascotNudgeLines = [
     'A small slip today = a word remembered tomorrow'
   ),
   ('استمر! المثابرة تصنع الفارق دائماً', 'Keep going! Persistence always wins'),
+];
+
+// ---------------------------------------------------------------------------
+// F1.2 — repair moment (ar, en): spoken when a mistake opens the instant
+// micro-repair card. Dedicated bank (8 lines) so the repair never reuses a
+// generic nudge: the tone is a calm teacher joining the learner at the exact
+// point of confusion — neutral, no shame, no fake urgency. Same contract as
+// the other banks: bilingual parity, no placeholders, deterministic rotation.
+// ---------------------------------------------------------------------------
+const List<MascotBiLine> mascotRepairLines = [
+  (
+    'لا بأس — لنلقِ نظرة على القاعدة سريعاً معاً',
+    'No worries — let us look at the rule together, quickly'
+  ),
+  (
+    'عشرون ثانية الآن توفّر عليك مراجعة لاحقة طويلة',
+    'Twenty seconds now saves a long review later'
+  ),
+  (
+    'سنميّز الفرق معاً — أنت على بعد خطوة واحدة',
+    'We will tell them apart together — you are one step away'
+  ),
+  (
+    'الأخطاء الذكية هي التي تُبنى عليها الطلاقة',
+    'Fluency is built on exactly these smart mistakes'
+  ),
+  (
+    'خذ نفساً، انظر إلى المثال، ثم جرّب سؤالاً جديداً',
+    'Take a breath, look at the example, then try a new question'
+  ),
+  (
+    'سأساعدك على التمييز — هذه كلمتان فقط',
+    'I will help you tell them apart — it is just two words'
+  ),
+  (
+    'التركيز الآن يجعل هذه الكلمة ملكك للأبد',
+    'Focus now and this word becomes yours for good'
+  ),
+  (
+    'لنُصلحها هنا بدل أن تعود لتطاردك لاحقاً',
+    'Let us fix it here instead of it chasing you later'
+  ),
 ];
 
 // ---------------------------------------------------------------------------

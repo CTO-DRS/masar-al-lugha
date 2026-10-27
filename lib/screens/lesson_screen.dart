@@ -1,11 +1,14 @@
 // Lesson runner: MCQ / reverse / listen / build / match + v2.0 picture,
-// fill-blank and true-false exercises.
+// fill-blank and true-false exercises. F1.2: instant micro-repair card.
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../exercise_gen.dart';
 import '../mascot.dart';
 import '../models.dart';
+import '../repair.dart';
 import '../scope.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
@@ -114,11 +117,45 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   bool get isLast => index >= exercises.length - 1;
-  Exercise get ex => exercises[index];
+
+  /// F1.2: during a repair's question steps the body renders the REPAIR
+  /// exercise (re-rolled question / quick pick), not the lesson round.
+  Exercise get ex {
+    if (_repairActive && _repairEx != null) return _repairEx!;
+    return exercises[index];
+  }
 
   // v4.10: the feedback-bar companion's mouth is driven by its bubble's
   // typewriter while it praises/nudges after every answer.
   final ValueNotifier<bool> _fbTalking = ValueNotifier(false);
+
+  // ---- F1.2: instant micro-repair state ----------------------------------
+  /// Words answered wrong at least once this session (first-mistake rule).
+  final Set<String> _mistakenWords = {};
+
+  /// Words whose repair already ran this session (the "repaired" flag the
+  /// plan reserves for F2.4's later reuse).
+  final Set<String> _repairedWords = {};
+
+  /// A repair is due when the feedback bar's continue is tapped.
+  bool _repairPending = false;
+  bool _repairActive = false;
+  RepairSession? _repair;
+
+  /// The exercise rendered by the current repair step (null on the hint).
+  Exercise? _repairEx;
+
+  /// The vocab the learner actually picked on the failed round (when the
+  /// wrong option mapped to a real corpus word) — feeds the repair hint.
+  String? _lastWrongPickId;
+
+  /// Match-boss bookkeeping: words missed inside the current pairing game
+  /// (the game has no mid-round checkpoint, so its repair opens on finish).
+  final Set<String> _matchMistakeIds = {};
+
+  /// F1.2: stable intro tween — see _repairBody (a fresh Tween per build
+  /// would restart the entrance animation on every setState).
+  final Tween<double> _repairIntroTween = Tween(begin: 0, end: 1);
 
   /// v4.10: the in-prompt companion reacts to the answer LIVE — it hops
   /// with raised arms on a correct answer and shows a worried face on a
@@ -221,6 +258,14 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   Widget _body(String Function(String) tr) {
+    // F1.2: the repair card replaces the round body entirely.
+    if (_repairActive) return _repairBody(tr);
+    return _roundBody(tr);
+  }
+
+  /// The plain per-type round renderer (no repair branching) — also used by
+  /// the repair's question steps, which read `ex` (the repair exercise).
+  Widget _roundBody(String Function(String) tr) {
     switch (ex.type) {
       case ExerciseType.mcq:
       case ExerciseType.reverse:
@@ -1045,7 +1090,11 @@ class _LessonScreenState extends State<LessonScreen> {
             final rightId = _idByText[matchSelRight!];
             if (rightId != null && rightId != leftWordId) {
               st.recordConfusion(leftWordId, rightId);
+              _lastWrongPickId = rightId; // F1.2: repair hint material
             }
+            // F1.2: the repair opens when the whole board is done (the
+            // game has no mid-round checkpoint).
+            _matchMistakeIds.add(leftWordId);
           }
           st.recordAnswer(false);
           mistakes++;
@@ -1071,10 +1120,27 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   Widget _bottomAction(String Function(String) tr) {
-    final canCheck = _canCheck();
-    if (answered) {
+    // F1.2: repair mode owns the bottom bar entirely — hint CTA, check
+    // button for its questions, or the reused success feedback bar.
+    if (_repairActive) {
+      if (answered) return _feedbackBar(tr); // success green bar
+      if (_repair!.step == RepairStep.hint) {
+        final retry = _repair!.plan.retryOriginalOnly;
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+          child: ChunkyButton(
+            key: const ValueKey('repairHintCta'),
+            label: tr(retry ? 'repairRetryCta' : 'repairHintCta'),
+            color: AppColors.yellow,
+            colorDark: AppColors.yellowDark,
+            onPressed: _repairHintDone,
+          ),
+        );
+      }
+    } else if (answered) {
       return _feedbackBar(tr);
     }
+    final canCheck = _canCheck();
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
       child: Row(
@@ -1113,32 +1179,41 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
-  void _check(String Function(String) tr) {
-    final st = AppScope.of(context);
-    String userAnswer = '';
-    if (ex.type == ExerciseType.build) {
-      userAnswer = placed
-          .map((i) => ex.tiles[i])
-          .join(ex.tiles.join(' ').contains(' ') ? ' ' : '');
-      // Compare case-insensitively without spaces for letter builds.
-      String norm(String s) => s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
-      wasCorrect = norm(userAnswer) == norm(ex.answer);
-    } else if (ex.type == ExerciseType.fillblank) {
-      userAnswer = selected != null ? ex.options[selected!] : '';
-      String norm(String s) => s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
-      wasCorrect = norm(userAnswer) == norm(ex.answer);
-    } else if (ex.type == ExerciseType.dictation) {
-      // v4.6: tolerant compare — case / punctuation / diacritics / spacing.
-      userAnswer = _typed.text;
-      wasCorrect = ExerciseGen.normalizeTyped(userAnswer) ==
-          ExerciseGen.normalizeTyped(ex.answer);
-    } else {
-      userAnswer = selected != null ? ex.options[selected!] : '';
-      wasCorrect = userAnswer == ex.answer;
+  /// F1.2: pure correctness evaluation of the current round — shared by the
+  /// scored check (normal rounds) and the XP-neutral repair check.
+  bool _evaluate() {
+    switch (ex.type) {
+      case ExerciseType.build:
+        String norm(String s) => s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
+        final userAnswer = placed
+            .map((i) => ex.tiles[i])
+            .join(ex.tiles.join(' ').contains(' ') ? ' ' : '');
+        return norm(userAnswer) == norm(ex.answer);
+      case ExerciseType.fillblank:
+        String norm(String s) => s.toUpperCase().replaceAll(RegExp(r'\s+'), '');
+        final userAnswer = selected != null ? ex.options[selected!] : '';
+        return norm(userAnswer) == norm(ex.answer);
+      case ExerciseType.dictation:
+        return ExerciseGen.normalizeTyped(_typed.text) ==
+            ExerciseGen.normalizeTyped(ex.answer);
+      default:
+        return selected != null && ex.options[selected!] == ex.answer;
     }
+  }
+
+  void _check(String Function(String) tr) {
+    // F1.2: inside a repair the same check button must NOT score the round —
+    // correctness only drives the repair state machine (XP-neutral).
+    if (_repairActive) {
+      _checkRepair();
+      return;
+    }
+    final st = AppScope.of(context);
+    wasCorrect = _evaluate();
     st.recordAnswer(wasCorrect);
     // v4.0 (H4): remember how this specific word went. A word that was ever
     // answered wrong in this lesson stays flagged as shaky.
+    _lastWrongPickId = null;
     if (!wasCorrect || wordResults[ex.vocab.id] == false) {
       wordResults[ex.vocab.id] = false;
       if (!wasCorrect) {
@@ -1157,6 +1232,7 @@ class _LessonScreenState extends State<LessonScreen> {
               final other = _idByText[ex.options[selected!]];
               if (other != null && other != ex.vocab.id) {
                 st.recordConfusion(ex.vocab.id, other);
+                _lastWrongPickId = other; // F1.2: repair hint material
               }
               break;
             default:
@@ -1169,6 +1245,7 @@ class _LessonScreenState extends State<LessonScreen> {
               _idByNormTarget[ExerciseGen.normalizeTyped(_typed.text)];
           if (other != null && other != ex.vocab.id) {
             st.recordConfusion(ex.vocab.id, other);
+            _lastWrongPickId = other; // F1.2: repair hint material
           }
         }
       }
@@ -1183,6 +1260,12 @@ class _LessonScreenState extends State<LessonScreen> {
     } else {
       mistakes++;
       hearts--;
+      // F1.2: the FIRST mistake on a word in this session opens the instant
+      // micro-repair after the feedback bar (unless the lesson just died).
+      if (hearts > 0 &&
+          RepairEngine.isFirstMistake(ex.vocab.id, _mistakenWords)) {
+        _repairPending = true;
+      }
     }
     setState(() => answered = true);
   }
@@ -1195,9 +1278,16 @@ class _LessonScreenState extends State<LessonScreen> {
     // v4.10: the companion speaks AUTOMATICALLY after every answer —
     // praise after a correct one, a gentle nudge after a wrong one.
     final st = AppScope.of(context);
-    final spoken = wasCorrect
-        ? MascotEngine.praiseLine(st.uiLocale, salt: correctCount)
-        : MascotEngine.nudgeLine(st.uiLocale, salt: mistakes);
+    // F1.2: a due repair swaps the nudge for the dedicated repair line and
+    // the continue button for the repair opener; a repair success reuses the
+    // normal green bar, but its continue resumes the lesson via _finishRepair.
+    final repairDue = !wasCorrect && _repairPending;
+    final repairSuccess = wasCorrect && _repairActive;
+    final spoken = repairDue
+        ? MascotEngine.repairLine(st.uiLocale, salt: mistakes)
+        : wasCorrect
+            ? MascotEngine.praiseLine(st.uiLocale, salt: correctCount)
+            : MascotEngine.nudgeLine(st.uiLocale, salt: mistakes);
 
     return Container(
       color: bg,
@@ -1263,14 +1353,310 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
           const SizedBox(height: 12),
           ChunkyButton(
-            label: tr('continue'),
+            key: ValueKey(repairDue
+                ? 'repairOpen'
+                : (repairSuccess ? 'repairDone' : 'lessonContinue')),
+            label: repairDue
+                ? tr('repairFixIt')
+                : (repairSuccess ? tr('repairDone') : tr('continue')),
             color: btnColor,
             colorDark: btnDark,
-            onPressed: () => _next(tr),
+            onPressed: repairDue
+                ? _openRepair
+                : (repairSuccess ? _finishRepairSuccess : () => _next(tr)),
           ),
         ],
       ),
     );
+  }
+
+  // ---- F1.2: instant micro-repair -----------------------------------------
+
+  /// The repair card: hint step renders the dedicated hint card; question
+  /// steps reuse the normal exercise bodies (they read `ex`, which resolves
+  /// to the repair exercise). Entrance is instant under reduce-motion.
+  Widget _repairBody(String Function(String) tr) {
+    final st = AppScope.of(context);
+    final Widget card;
+    switch (_repair!.step) {
+      case RepairStep.hint:
+        card = _repairHintCard(tr);
+        break;
+      case RepairStep.reask:
+      case RepairStep.quickPick:
+        card = _roundBody(tr); // exercise body for the repair question
+        break;
+    }
+    final content = Column(
+      key: const ValueKey('repairPanel'),
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 4),
+          child: Row(
+            children: [
+              Icon(Icons.build_circle, color: AppColors.yellowDark, size: 22),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(tr('repairTitle'),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        color: AppColors.ink)),
+              ),
+            ],
+          ),
+        ),
+        Expanded(child: card),
+      ],
+    );
+    // Acceptance 3: reduce-motion shows the repair instantly, no animation.
+    if (st.reduceMotion) return content;
+    // NOTE: the tween must be a STABLE instance — a fresh Tween on every
+    // build would restart the intro on every step change (and make the
+    // content briefly untappable while it restarts).
+    return TweenAnimationBuilder<double>(
+      key: const ValueKey('repairIntro'),
+      tween: _repairIntroTween,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
+      builder: (_, v, child) => Opacity(
+          opacity: v,
+          child: Transform.translate(
+              offset: Offset(0, 12 * (1 - v)), child: child)),
+      child: content,
+    );
+  }
+
+  /// Step 1 — the rule/distinction + the word's own example as the neutral
+  /// anchor. Content comes from RepairPlan (confusion pair > memory hint >
+  /// generic; first match wins).
+  Widget _repairHintCard(String Function(String) tr) {
+    final st = AppScope.of(context);
+    final plan = _repair!.plan;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
+      children: [
+        MascotBubble(
+          characterId: st.mascotId,
+          mood: MascotMood.happy,
+          text: MascotEngine.repairLine(st.uiLocale, salt: mistakes),
+          size: 44,
+          animate: !st.reduceMotion,
+          talking: _fbTalking,
+        ),
+        const SizedBox(height: 14),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: context.softBg,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: context.line, width: 2),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                plan.word.target,
+                textDirection: directionOf(plan.word.target),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                context.trF(plan.hintKey, plan.hintArgs),
+                style: const TextStyle(fontSize: 16, height: 1.5),
+              ),
+            ],
+          ),
+        ),
+        if (plan.exampleTarget != null && plan.exampleTarget!.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: AppColors.yellow.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                  color: AppColors.yellow.withValues(alpha: 0.5), width: 2),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(tr('repairExample'),
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: context.mutedText)),
+                const SizedBox(height: 4),
+                Text(
+                  plan.exampleTarget!,
+                  textDirection: directionOf(plan.exampleTarget!),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+                if (plan.exampleAr != null && plan.exampleAr!.isNotEmpty) ...[
+                  const SizedBox(height: 2),
+                  Text(plan.exampleAr!,
+                      style: TextStyle(fontSize: 14, color: context.mutedText)),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  /// Opens the repair for the round the learner just missed (feedback bar).
+  void _openRepair() {
+    final st = AppScope.of(context);
+    final original = exercises[index];
+    final plan = RepairEngine.buildPlan(
+      original: original,
+      word: original.vocab,
+      pool: widget.lesson.vocab,
+      confusions: st.confusionPairs,
+      card: st.cards[original.vocab.id],
+      confusedWithId: _lastWrongPickId,
+      courseVocab: st.course.allVocab,
+      random: math.Random(RepairEngine.seedFor(
+          widget.lesson.id, original.vocab.id, _repairedWords.length)),
+    );
+    setState(() {
+      _repairPending = false;
+      _repairActive = true;
+      _repair = RepairSession(plan);
+      _repairEx = null; // hint step first
+      answered = false; // the failed round's bar is dismissed
+      wasCorrect = false;
+      selected = null;
+      placed = [];
+      _typed.clear();
+      _matchMistakeIds.clear();
+    });
+  }
+
+  /// Opens the repair for a word missed inside a match boss — the pairing
+  /// game has no mid-round checkpoint, so the repair opens when it completes.
+  void _openRepairForMatchWord(String vocabId) {
+    final st = AppScope.of(context);
+    final word = widget.lesson.vocab
+        .firstWhere((v) => v.id == vocabId, orElse: () => ex.vocab);
+    final plan = RepairEngine.buildPlan(
+      original: ex, // the match exercise itself (provenance only)
+      word: word,
+      pool: widget.lesson.vocab,
+      confusions: st.confusionPairs,
+      card: st.cards[vocabId],
+      confusedWithId: _lastWrongPickId,
+      courseVocab: st.course.allVocab,
+      forMatch: true, // requeue the re-rolled round, not the whole boss
+      random: math.Random(RepairEngine.seedFor(
+          widget.lesson.id, vocabId, _repairedWords.length)),
+    );
+    setState(() {
+      _repairPending = false;
+      _repairActive = true;
+      _repair = RepairSession(plan);
+      _repairEx = null;
+      answered = false;
+      wasCorrect = false;
+      selected = null;
+      placed = [];
+      _typed.clear();
+    });
+  }
+
+  /// Hint CTA -> show the step-2 question (and speak it when it is audio-led).
+  void _repairHintDone() {
+    final action = _repair!.hintDone();
+    setState(() {
+      _repairEx = _repair!.plan.reask;
+      selected = null;
+      placed = [];
+      _typed.clear();
+    });
+    if (action == RepairAction.toReask && _repairEx!.audioText.isNotEmpty) {
+      _speakIfNeeded();
+    }
+  }
+
+  /// Repair answer check — drives the state machine ONLY. No recordAnswer,
+  /// no correctCount/mistakes, no hearts, no XP: repair rounds are
+  /// treatment, not scored rounds (plan acceptance 4).
+  void _checkRepair() {
+    final r = _repair!;
+    final ok = _evaluate();
+    final action =
+        r.step == RepairStep.reask ? r.answerReask(ok) : r.answerQuick(ok);
+    if (action == RepairAction.success) {
+      // Green feedback bar first (reused UI), then the continue button
+      // resumes the lesson via _finishRepairSuccess.
+      setState(() {
+        wasCorrect = true;
+        answered = true;
+        selected = null;
+        _typed.clear();
+      });
+      return;
+    }
+    if (action == RepairAction.giveUp) {
+      // Two cycles exhausted — continue without embarrassment. The failed
+      // question still comes back later as a normal scored round.
+      _finishRepair();
+      return;
+    }
+    setState(() {
+      switch (action) {
+        case RepairAction.toReask:
+        case RepairAction.toQuickPick:
+          _repairEx = action == RepairAction.toReask
+              ? _repair!.plan.reask
+              : _repair!.plan.quickPick;
+          selected = null;
+          placed = [];
+          _typed.clear();
+          break;
+        case RepairAction.toHint:
+          _repairEx = null;
+          selected = null;
+          placed = [];
+          _typed.clear();
+          break;
+        default:
+          break;
+      }
+    });
+    if (action == RepairAction.toReask || action == RepairAction.toQuickPick) {
+      final audio = _repairEx!.audioText;
+      if (audio.isNotEmpty) _speakIfNeeded();
+    }
+  }
+
+  /// Continue pressed on the repair-success green bar.
+  void _finishRepairSuccess() {
+    _finishRepair();
+  }
+
+  /// Ends the repair, requeues the failed question for >= 3 rounds later,
+  /// and resumes the lesson at the next round.
+  void _finishRepair() {
+    final plan = _repair!.plan;
+    _repairedWords.add(plan.word.id);
+    _repair = null;
+    _repairActive = false;
+    _repairEx = null;
+    selected = null;
+    placed = [];
+    _typed.clear();
+    // The re-queued round is a NORMAL scored round (original question for
+    // ordinary repairs; the re-rolled round for match-boss repairs).
+    exercises.insert(
+        RepairEngine.requeueIndex(justLeft: index, length: exercises.length),
+        plan.requeue);
+    _next((k) => context.tr(k));
   }
 
   void _next(String Function(String) tr) {
@@ -1293,11 +1679,24 @@ class _LessonScreenState extends State<LessonScreen> {
       matchSelRight = null;
       matchError = false;
       _typed.clear(); // v4.6: fresh field for the next dictation
+      _lastWrongPickId = null; // F1.2: hint material is per-round
+      _matchMistakeIds.clear(); // F1.2: per-match bookkeeping
     });
     _speakIfNeeded();
   }
 
   void _finishExercise() {
+    // F1.2: a first-mistake word inside the match boss still gets its
+    // repair — opened now that the pairing game is complete. The first
+    // missed word in board order goes (deterministic, no surprise).
+    if (ex.type == ExerciseType.match && hearts > 0) {
+      for (final id in _matchMistakeIds) {
+        if (!_repairedWords.contains(id)) {
+          _openRepairForMatchWord(id);
+          return;
+        }
+      }
+    }
     if (isLast) {
       _showComplete((k) => context.tr(k));
     } else {

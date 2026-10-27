@@ -735,6 +735,35 @@ class ExerciseGen {
     }
   }
 
+  /// F1.2: public rebuild entry for the repair flow — a fresh question on
+  /// the SAME word whose distractors avoid every string in [avoid] (the
+  /// failed round's distractor options), so the learner never faces the
+  /// same decoys twice. Pool entries whose target/meaning/emoji string sits
+  /// in [avoid] are dropped from the distractor source before rebuilding;
+  /// [seed] re-seeds the generator so the repair is reproducible in tests.
+  ///
+  /// dictation / listenComp never pass through here (the repair retries the
+  /// original question instead — see RepairEngine). truefalse degrades to a
+  /// meaning mcq when the filtered pool no longer supports a shown-word pair.
+  static Exercise remake(
+      Vocab v, ExerciseType type, List<Vocab> pool, Map<String, int> confusions,
+      {List<String> avoid = const [], int seed = 0}) {
+    _rng = Random(seed);
+    final banned = avoid.toSet();
+    final filtered = pool
+        .where((x) =>
+            x.id == v.id ||
+            (!banned.contains(x.target) &&
+                !banned.contains(x.translationAr) &&
+                (x.emoji == null || !banned.contains(x.emoji!))))
+        .toList();
+    var t = type;
+    if (t == ExerciseType.truefalse && _tfShown(v, filtered) == null) {
+      t = ExerciseType.mcq;
+    }
+    return _make(t, v, filtered, confusions);
+  }
+
   /// F1.1: confusion-aware option list — [the tested string] first, then up
   /// to three distractors from Distractors.pick (learner confusions →
   /// profile confusions → look-alikes → seeded random → real-word reserve),

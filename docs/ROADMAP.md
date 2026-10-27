@@ -1,6 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.12.0+36** — see the v5.12 section below for the
+**Current release: v5.13.0+37** — see the v5.13 section below for the
+second feature of the 12-month plan Wave 1 (F1.2: instant micro-repair),
+the v5.12 section for the
 first wave of the 12-month plan (F1.1: confusion-driven distractors +
 exercise balancing), the v5.11 section for the
 smarter-review wave (per-card memory hints, quick review mode,
@@ -54,6 +56,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.9** | **New skill — CONVERSATION TRAINER (Phase 4/4): a role-play chat behind the `ConversationProvider` abstraction; the shipped `OfflineScriptedProvider` is deterministic, on-device, ZERO network (hard invariants intact) — 8 scripted scenarios (2 per course: café/hotel en, bakery/cinema de, café/directions fr, shop/directions ur) with 3 steps each, any-of keyword-group matching over tashkeel-stripped text, sample-reply hints, per-scenario restart; any future AI provider implements the same 4-method interface and wiring it is an explicit user decision because it would touch the no-network rule; machine-authored dialogues flagged "needs human review"** |
 | **v5.10** | **Systems wave (Phase 5): LOCAL multi-profile slots over ProfileStore — up to 3 independent learners per device with slot-scoped progress keys (slot 1 = the original key, byte-compatible with every older build), switch/rename UI in Settings, zero accounts and zero network; opt-in LOCAL analytics (OFF by default) with an honest next-day return metric derived from the existing xpLog — anonymous by construction, nothing leaves the device; `scripts/prepare_play_signing.sh` prepares the real Play upload keystore outside the repo (key.properties/*.jks already gitignored) with CI-secrets guidance** |
 | **v5.11** | **Smarter review: per-card memory hints from the card's OWN FSRS history (`Insights.memoryHint`, first-match rules, silence over noise) rendered under the card back on all three review surfaces; a quick review mode (`Insights.quickReviewQueue` — due-only, shuffled, capped at 12, never introduces new words) with a live due-count launcher on the learn path; cross-slot backup restore (`importProfileJson` gains `targetSlot`) — a v4.0 export can now land in any of the 3 local slots without switching, with the current slot provably untouched** |
+| **v5.13** | **12-month plan Wave 1 — F1.2: instant micro-repair after mistakes: the first mistake on a word in a session opens a 3-step repair card inside the lesson (rule/distinction hint + the word's own example → a re-rolled question with DIFFERENT distractors → an easier 2-option pick), 2 cycles max then the lesson continues without embarrassment, dictation/listenComp get hint-then-retry only, the failed question is re-queued ≥3 rounds later as a normal scored round, repair rounds are XP-neutral by construction, dedicated 8-line bilingual companion bank, reduce-motion shows the card instantly — zero JSON changes, 346 tests** |
 | **v5.12** | **12-month plan Wave 1 — F1.1: confusion-driven distractors + exercise balancing: the v4.4 confusion engine now feeds the exercise generator (`Distractors.pick` — learner pairs → profile pairs → look-alikes → seeded random → reserve), every lesson plan is per-lesson seeded deterministic, a post-generation balancer enforces a 40% per-type cap (re-type → remove fallback, ping-pong-proof) and an A2+ production floor (dictation/build always present), KPI measured by `Distractors.confusionShare` — zero JSON changes, 316 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
@@ -948,6 +951,90 @@ tough-words keep their own selection; the runtime KPI (accuracy drop
 −8%→−12% on confused pairs) needs field data and will be read from
 the opt-in local analytics once the wave reaches devices. Suite:
 298 → **316** tests. Version pin moved to v5.12.
+
+## v5.13 — F1.2: instant micro-repair after mistakes (SHIPPED, 12-month plan Q1)
+
+**Problem (plan §F1.2):** a wrong answer showed the correct answer in the
+feedback bar and moved on — the mistake was COUNTED (`wordMistakes`) but
+never TREATED. The learner had to wait for a future SRS session to meet the
+word again, while the confusion that produced the error was still live on
+screen.
+
+**What shipped:**
+
+1. **`lib/repair.dart` (new, pure Dart, Flutter-free)** — `RepairEngine`
+   + `RepairSession` + `RepairPlan`:
+   - **First-mistake rule** — a word triggers exactly one repair per
+     session; later mistakes on the same word are only counted (test-
+     enforced, including the re-queued round failing again).
+   - **The 3-step card** — (1) hint: the confusion-pair distinction when
+     the wrong pick mapped to a real corpus word
+     (`repairHintPair`, strongest material first), else the v5.11
+     `Insights.memoryHint` rule for the card, else the generic look-again
+     line — always anchored by the word's own corpus example when it has
+     one; (2) a RE-ROLLED question on the same word whose distractors
+     exclude every decoy of the failed round (`ExerciseGen.remake` —
+     banned-string pool filtering, truefalse degrades to mcq when the
+     filtered pool can't support a shown-pair); (3) a deliberately easier
+     2-option pick whose decoy is drawn by `Distractors.pick`, so the
+     learner's own confusion partner is the quick-pick choice.
+   - **2 cycles max** — a failed cycle returns to the hint; after two the
+     lesson continues without embarrassment (the plan's "لا إحراج" rule).
+   - **dictation / listenComp exception** — hint then retry the SAME
+     question (identical instance), no re-rolled typing, no quick pick.
+   - **Requeue spacing** — `requeueIndex(justLeft: i) = i + 1 + 3`
+     (clamped to plan length): the failed question returns as a NORMAL
+     scored round only after ≥3 other rounds, never immediately —
+     plan acceptance 2 verified both as unit math and end-to-end in the
+     widget test (the 4th round after the repair IS the original, all four
+     options intact).
+   - **XP-neutral by construction** — repair rounds drive the state
+     machine only: no `recordAnswer`, no correctCount/mistakes, no hearts,
+     no XP. Widget-verified: `totalAnswers` frozen across the whole
+     mistake → repair → success cycle; the mistake stays counted
+     (`wordMistakes` unchanged) — repaired, not erased.
+   - **Determinism** — `seedFor(lessonId, vocabId, salt)` FNV-1a, same
+     inputs + seed ⇒ identical repair plan (test-enforced).
+   - **Match boss** — the pairing game has no mid-round checkpoint, so a
+     first-mistake word inside a match opens its repair when the board
+     completes; the requeue is the re-rolled recognition round, not the
+     whole boss.
+2. **`ExerciseGen.remake` (public)** — the re-roll entry: re-seeds the
+   generator, drops pool entries whose target/meaning/emoji string is a
+   banned decoy, rebuilds via the same `_make` pipeline.
+3. **`LessonScreen` integration** — repair state (pending/active/session),
+   `_evaluate()` extracted so scored rounds and repair checks share one
+   correctness path, the repair card reuses the real exercise bodies via
+   the `ex` getter override and `_roundBody` extraction, success reuses
+   the green feedback bar, the companion speaks from a dedicated bank.
+4. **Companion** — `mascotRepairLines`: 8 bilingual lines (ar/en parity,
+   no placeholders, same tone rules), `MascotEngine.repairLine` — a calm
+   teacher joining at the exact point of confusion, never shaming.
+5. **reduce-motion (plan acceptance 3)** — the card appears instantly with
+   no intro animation (test: the `repairIntro` animation widget is absent).
+   The intro uses a STABLE tween instance — a per-build Tween would restart
+   the animation on every step change and briefly make content untappable
+   (a real bug the widget test caught before it could ship).
+6. **No schema change, no JSON change, no new dependency** — the repair is
+   session-local state; the "repaired this session" flag
+   (`_repairedWords`) is the hook F2.4 will reuse later.
+
+**Acceptance criteria (plan §F1.2) — all four verified by test:**
+
+- Any first mistake opens the repair within one frame: PASS
+  (`test/lesson_repair_test.dart`, single-frame pump after the fix-it tap).
+- Step-2 success defers the original question by ≥3 rounds: PASS (unit
+  `requeueIndex` math + end-to-end widget drive to the re-queued round).
+- reduce-motion shows the repair instantly: PASS (no intro widget present).
+- XP unchanged across mistake → repair → success: PASS (`totalAnswers`
+  frozen during the repair; only scored rounds move it).
+
+**Honest remainders (next waves):** the KPI targets (repeat-mistake-in-
+session ≤25%, completion ≥80%) need field data from the opt-in local
+analytics once the wave reaches devices; the repair hint speaks but does
+not yet auto-play the word audio on the hint step; match-boss repairs
+repair only the first missed word per board (multi-word boards open one
+repair). Suite: 316 → **346** tests. Version pin moved to v5.13.
 
 ## Hard invariants (never break)
 
