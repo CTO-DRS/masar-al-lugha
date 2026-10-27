@@ -3,6 +3,10 @@
          permission dialog fires only when the learner opens the pronunciation
          screen and taps the mic. Everything else works without it. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- v5.12 (F2.5): local daily practice reminders. The dialog fires
+         only when the learner turns reminders ON in settings; the app
+         stays fully usable without it (offline-first invariant). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="مسار اللغة"
         android:name="${applicationName}"

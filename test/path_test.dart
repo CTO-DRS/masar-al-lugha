@@ -16,7 +16,9 @@ import 'package:masar_al_lugha/models.dart';
 import 'package:masar_al_lugha/path.dart';
 import 'package:masar_al_lugha/placement.dart';
 import 'package:masar_al_lugha/scope.dart';
+import 'package:masar_al_lugha/services/notifications.dart';
 import 'package:masar_al_lugha/services/tts.dart';
+import 'fake_notifications.dart';
 import 'package:masar_al_lugha/theme.dart';
 import 'package:masar_al_lugha/screens/path_setup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -860,8 +862,8 @@ void main() {
         expect(L.t('ar', k), isNot(k), reason: k);
         expect(L.t('en', k), isNot(k), reason: k);
       }
-      expect(L.t('ar', 'version'), contains('5.12.0'));
-      expect(L.t('en', 'version'), contains('5.12.0'));
+      expect(L.t('ar', 'version'), contains('5.14.0'));
+      expect(L.t('en', 'version'), contains('5.14.0'));
     });
   });
 
@@ -875,6 +877,7 @@ void main() {
       await tester.pumpWidget(AppScope(
         state: st,
         tts: TtsService(),
+        reminders: ReminderService(FakeNotificationApi()),
         child: MaterialApp(
           theme: buildMasarTheme(dark: false),
           home: const Scaffold(body: PathSetupScreen()),
@@ -925,6 +928,7 @@ void main() {
       await tester.pumpWidget(AppScope(
         state: st,
         tts: TtsService(),
+        reminders: ReminderService(FakeNotificationApi()),
         child: MaterialApp(
           theme: buildMasarTheme(dark: false),
           home: const Scaffold(body: PathSetupScreen()),

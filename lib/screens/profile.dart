@@ -114,6 +114,45 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
+            // v5.12 (F2.5): streak freeze wallet — visible whenever the
+            // learner holds at least one shield.
+            if (st.streakFreezes > 0)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.blue.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: AppColors.blue, width: 1.5),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.ac_unit,
+                          color: AppColors.blue, size: 20),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.trF(
+                                  'freezeChip', {'n': '${st.streakFreezes}'}),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 13),
+                            ),
+                            Text(
+                              tr('freezeHint'),
+                              style: TextStyle(
+                                  fontSize: 11.5, color: context.mutedText),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),

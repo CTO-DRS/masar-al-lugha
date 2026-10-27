@@ -3,14 +3,22 @@ import 'package:flutter/material.dart';
 
 import 'app_state.dart';
 import 'l10n.dart';
+import 'services/notifications.dart';
 import 'services/tts.dart';
 
 class AppScope extends InheritedNotifier<AppState> {
   final TtsService tts;
+
+  /// v5.12 (F2.5): the daily-reminder orchestrator, created once in main
+  /// and shared so settings toggles and app-launch syncs hit the same
+  /// notifier state.
+  final ReminderService reminders;
+
   const AppScope({
     super.key,
     required AppState state,
     required this.tts,
+    required this.reminders,
     required super.child,
   }) : super(notifier: state);
 
@@ -19,6 +27,9 @@ class AppScope extends InheritedNotifier<AppState> {
 
   static TtsService ttsOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<AppScope>()!.tts;
+
+  static ReminderService remindersOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<AppScope>()!.reminders;
 }
 
 extension L10nX on BuildContext {

@@ -6,12 +6,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'decks.dart';
+import 'calibration.dart';
 import 'insights.dart';
+import 'mastery.dart';
 import 'mascot.dart';
 import 'models.dart';
 import 'path.dart';
 import 'profile_store.dart';
+import 'remediation.dart';
 import 'srs.dart';
+import 'streak_freeze.dart';
 import 'theme.dart';
 
 class BadgeDef {
@@ -87,6 +91,26 @@ class AppState extends ChangeNotifier {
 
   /// dayKey -> [total, correct] answers (last 30 days) — accuracy trend.
   Map<String, List<int>> answerLog = {};
+
+  // ---- v5.12 learning engine (plan F2.1-F2.5) ----
+
+  /// F2.4 remediation window: vocabId -> epoch-day lapse log (bounded —
+  /// see Remediation). Records RECENT forgetting only, self-cleans.
+  Map<String, List<int>> lapseLog = {};
+
+  /// F2.2 calibration rolling log of [predictedR-milli, recalled] pairs
+  /// (bounded to Calibration.maxSamples — see Calibration).
+  List<List<int>> calibrationLog = [];
+
+  /// F2.5 streak freeze wallet (max 2, earned every 7 consecutive days).
+  int streakFreezes = 0;
+
+  /// Highest 7-day milestone already converted into a freeze token.
+  int lastFreezeAwardMark = 0;
+
+  /// F2.5 daily reminder preferences (persisted; the service applies them).
+  ReminderSettings reminders =
+      const ReminderSettings(enabled: false, hour: 20, minute: 0);
 
   /// courseId -> starred vocab ids (newest first) — favorites deck.
   Map<String, List<String>> favorites = {};
@@ -217,18 +241,43 @@ class AppState extends ChangeNotifier {
 
   /// Rolls daily counters and lazily resets a broken streak. Public since
   /// v4.1: ProfileStore.load() calls it after restoring the payload.
+  /// v5.12 (F2.5): a single missed day can be bridged by a freeze token —
+  /// the streak survives, the token is spent, the missed day is not
+  /// rewritten into study time.
   void ensureDaily() {
     final today = todayKey();
     if (dailyXpDay != today) {
       dailyXp = 0;
       dailyXpDay = today;
-      // Streak check: if the user skipped a day, reset streak lazily.
+      // Streak check: if the user skipped a day, reset streak lazily —
+      // unless a freeze token bridges exactly one missed day.
       if (lastActiveDay != null &&
           lastActiveDay != today &&
           lastActiveDay != yesterdayKey()) {
-        streak = 0;
+        final missed = missedDaysSince(lastActiveDay!, today);
+        if (StreakFreeze.canBridge(
+            freezes: streakFreezes, missedDays: missed)) {
+          streakFreezes = StreakFreeze.afterBridge(streakFreezes);
+          // Virtual bridge: treat yesterday as covered so the streak
+          // chain continues; no XP and no activeDay are granted.
+          lastActiveDay = yesterdayKey();
+        } else {
+          streak = 0;
+        }
       }
     }
+  }
+
+  /// Calendar days missed between two day keys (1 = yesterday was skipped,
+  /// 2 = the day before yesterday…). Malformed keys count as "far away".
+  static int missedDaysSince(String fromDayKey, String toDayKey) {
+    final a = DateTime.tryParse(fromDayKey);
+    final b = DateTime.tryParse(toDayKey);
+    if (a == null || b == null) return 99;
+    final diff = DateTime(b.year, b.month, b.day)
+        .difference(DateTime(a.year, a.month, a.day))
+        .inDays;
+    return diff <= 0 ? 0 : diff - 1;
   }
 
   void setLocale(String l) {
@@ -399,6 +448,39 @@ class AppState extends ChangeNotifier {
     return weakestWordIds.map((id) => byId[id]).whereType<Vocab>().toList();
   }
 
+  // ================= v5.12 learning engine helpers =================
+
+  /// F2.4: the current 7-day remediation targets that belong to [course],
+  /// most chronic first. Unknown/foreign ids are filtered out safely.
+  List<Vocab> remediationVocab(Course course) {
+    final byId = {for (final v in course.allVocab) v.id: v};
+    return Remediation.scan(lapseLog, now: DateTime.now())
+        .map((i) => byId[i.vocabId])
+        .whereType<Vocab>()
+        .toList();
+  }
+
+  /// F2.1: mastery summary for [course] (average + mastered count).
+  MasterySummary masterySummary(Course course, {DateTime? now}) =>
+      Mastery.summary(course.allVocab, cards, now: now);
+
+  /// F2.5: updates reminder preferences. The notification scheduling itself
+  /// is applied by the caller (ReminderService.sync) — state stays
+  /// notification-free.
+  void setReminders(ReminderSettings r) {
+    reminders = ReminderSettings(
+      enabled: r.enabled,
+      hour: r.hour.clamp(0, 23),
+      minute: r.minute.clamp(0, 59),
+    );
+    save();
+    notifyListeners();
+  }
+
+  /// F2.1: per-word mastery score convenience (0..100).
+  double masteryOf(String vocabId, {DateTime? now}) =>
+      Mastery.wordScore(cards[vocabId], now: now);
+
   void markPlacement(String courseId) {
     placementDone[courseId] = true;
     save();
@@ -542,6 +624,16 @@ class AppState extends ChangeNotifier {
       streak = 1; // first activity ever, or after a gap reset
     }
     if (streak > bestStreak) bestStreak = streak; // v4.8 record
+    // v5.12 (F2.5): one freeze token per 7-day milestone, stored only when
+    // the wallet has room — a full wallet defers the milestone instead of
+    // wasting it (see StreakFreeze.shouldAward).
+    if (StreakFreeze.shouldAward(
+        streak: streak,
+        lastAwardMark: lastFreezeAwardMark,
+        freezes: streakFreezes)) {
+      streakFreezes = StreakFreeze.afterAward(streakFreezes);
+      lastFreezeAwardMark = StreakFreeze.markAfter(streak);
+    }
   }
 
   void recordAnswer(bool correct) {
@@ -606,11 +698,28 @@ class AppState extends ChangeNotifier {
             now: now, requestRetention: retentionTarget);
         if (!correct) c.state = 'learning';
       } else if (!correct) {
+        // v5.12 (F2.2/F2.4): a seen word the learner missed is a real
+        // calibration datapoint and a remediation-window lapse event.
+        _logCalibration(c, false);
+        Remediation.recordLapse(lapseLog, vocabId, now);
         Srs.rate(c, Srs.again, now: now, requestRetention: retentionTarget);
+      } else {
+        // v5.12 (F2.2): the lesson re-tested a seen word even though the
+        // scheduler did not ask — still an honest prediction/outcome pair.
+        _logCalibration(c, true);
       }
       cards[vocabId] = c;
     });
     save();
+  }
+
+  /// F2.2: records one calibration sample BEFORE a rating mutates the
+  /// card's memory states — the prediction must be the pre-review one.
+  void _logCalibration(CardData card, bool recalled) {
+    if (!Calibration.isPredictable(card)) return;
+    final r = Srs.retrievability(
+        card.stability, card.lastReviewEpochMs, DateTime.now());
+    Calibration.addSample(calibrationLog, r, recalled);
   }
 
   void rateCard(String vocabId, int q) {
@@ -622,6 +731,13 @@ class AppState extends ChangeNotifier {
       newCardsDay = todayKey();
     }
     final card = c ?? CardData();
+    // v5.12 (F2.2/F2.4): sample the prediction BEFORE the rating mutates
+    // the memory states; only lapsed SEEN words enter the remediation
+    // window (first-encounter mistakes are the lessons' job, not traps).
+    _logCalibration(card, q != Srs.again);
+    if (q == Srs.again && card.reps > 0) {
+      Remediation.recordLapse(lapseLog, vocabId, DateTime.now());
+    }
     Srs.rate(card, q, requestRetention: retentionTarget);
     cards[vocabId] = card;
     cardsReviewed += 1;

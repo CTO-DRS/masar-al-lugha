@@ -7,7 +7,9 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../calibration.dart';
 import '../insights.dart';
+import '../mastery.dart';
 import '../models.dart';
 import '../scope.dart';
 import '../theme.dart';
@@ -45,6 +47,11 @@ class _InsightsScreenState extends State<InsightsScreen> {
       dailyGoal: st.dailyGoal,
       answerLog: st.answerLog,
     );
+    // v5.12 (F2.1/F2.2/F2.4): mastery summary, calibration report and the
+    // 7-day remediation queue — all computed on device by their engines.
+    final mastery = st.masterySummary(st.course);
+    final calibration = Calibration.report(st.calibrationLog);
+    final remediation = st.remediationVocab(st.course);
     final hasData = st.totalAnswers > 0;
 
     return Scaffold(
@@ -56,6 +63,12 @@ class _InsightsScreenState extends State<InsightsScreen> {
               children: [
                 _privacyBanner(tr),
                 const SizedBox(height: 16),
+                // v5.12 (F2.4): trapped words first — the most urgent,
+                // most actionable card on the dashboard.
+                if (remediation.isNotEmpty) ...[
+                  _remediationCard(context, tr, remediation),
+                  const SizedBox(height: 16),
+                ],
                 // v5.10: opt-in local retention card — OFF unless the
                 // learner explicitly enables it; nothing leaves the device.
                 _retentionCard(context, tr, st),
@@ -75,6 +88,12 @@ class _InsightsScreenState extends State<InsightsScreen> {
                   const SizedBox(height: 16),
                 ],
                 _forecastCard(tr, st),
+                const SizedBox(height: 16),
+                // v5.12 (F2.1): the honest mastery gauge.
+                _masteryCard(context, tr, mastery),
+                const SizedBox(height: 16),
+                // v5.12 (F2.2): predicted vs actual recall.
+                _calibrationCard(context, tr, calibration),
                 const SizedBox(height: 16),
                 if (tips.isNotEmpty) ...[
                   _tipsCard(tr, tips),
@@ -631,3 +650,287 @@ Widget _retentionCard(
     ),
   );
 }
+
+// ---------------- v5.12 (F2.4): weekly remediation ----------------
+
+/// The 7-day remediation banner: words forgotten on 2+ distinct days
+/// this week, with a one-tap entry into a focused practice round.
+Widget _remediationCard(
+    BuildContext context, String Function(String) tr, List<Vocab> words) {
+  return _v512Card(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _v512Title(context, tr('remCardTitle'), Icons.healing, AppColors.red),
+        const SizedBox(height: 10),
+        Text(
+          context.trF('remCardBody', {'n': '${words.length}'}),
+          style: TextStyle(
+              fontSize: 13.5,
+              fontWeight: FontWeight.w700,
+              color: context.bodyText),
+        ),
+        const SizedBox(height: 6),
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            for (final v in words.take(8))
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: AppColors.red.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(color: AppColors.red, width: 1.5),
+                ),
+                child: Text(
+                  v.target,
+                  textDirection: directionOf(v.target),
+                  style: const TextStyle(
+                      fontSize: 12.5, fontWeight: FontWeight.w800),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          width: double.infinity,
+          height: 44,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => WeakWordsScreen(
+                  fixedPool: words,
+                  titleKey: 'remediationTitle',
+                ),
+              ));
+            },
+            icon: const Icon(Icons.fitness_center, size: 18),
+            label: Text(tr('remPractice'),
+                style: const TextStyle(fontWeight: FontWeight.w900)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.red,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+// ---------------- v5.12 (F2.1): mastery gauge ----------------
+
+Widget _masteryCard(
+    BuildContext context, String Function(String) tr, MasterySummary summary) {
+  return _v512Card(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _v512Title(
+            context, tr('masteryTitle'), Icons.insights, AppColors.purple),
+        const SizedBox(height: 12),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              '${summary.averagePct}',
+              style: const TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.purple,
+                  height: 1),
+            ),
+            const SizedBox(width: 4),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 6),
+              child: Text('%',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.purple)),
+            ),
+            const Spacer(),
+            Text(
+              '${summary.mastered} ${tr('masteryMasteredCount')}',
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w800,
+                  color: context.mutedText),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(999),
+          child: LinearProgressIndicator(
+            value: summary.average / 100,
+            minHeight: 10,
+            backgroundColor: context.line,
+            valueColor: const AlwaysStoppedAnimation(AppColors.purple),
+          ),
+        ),
+        const SizedBox(height: 10),
+        // The four honest bands, always visible so the gauge means
+        // something without reading any docs.
+        Row(
+          children: [
+            for (final (key, color) in const [
+              ('masteryNew', AppColors.border),
+              ('masteryEmerging', AppColors.yellow),
+              ('masteryStrong', AppColors.blue),
+              ('masteryMastered', AppColors.green),
+            ])
+              Expanded(
+                child: Text(
+                  tr(key),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w800,
+                      color: color),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          tr('masteryEstimate'),
+          style:
+              TextStyle(fontSize: 11.5, color: context.mutedText, height: 1.4),
+        ),
+      ],
+    ),
+  );
+}
+
+// ---------------- v5.12 (F2.2): FSRS calibration ----------------
+
+Widget _calibrationCard(
+    BuildContext context, String Function(String) tr, CalibrationReport r) {
+  final brier = r.brier;
+  return _v512Card(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _v512Title(context, tr('calTitle'), Icons.balance, AppColors.blue),
+        const SizedBox(height: 4),
+        Text(tr('calSubtitle'),
+            style: TextStyle(fontSize: 12, color: context.mutedText)),
+        const SizedBox(height: 12),
+        if (r.total == 0)
+          Text(tr('calibrationNeedData'),
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: context.mutedText))
+        else ...[
+          Row(
+            children: [
+              Expanded(
+                  child: Text(tr('calPredicted'),
+                      style: const TextStyle(
+                          fontSize: 11.5, fontWeight: FontWeight.w900))),
+              Expanded(
+                  child: Text(tr('calActual'),
+                      style: const TextStyle(
+                          fontSize: 11.5, fontWeight: FontWeight.w900))),
+              Text(tr('calSamples'),
+                  style: const TextStyle(
+                      fontSize: 11.5, fontWeight: FontWeight.w900)),
+            ],
+          ),
+          const SizedBox(height: 6),
+          for (final b in r.buckets.where((b) => b.samples > 0)) ...[
+            const SizedBox(height: 6),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '${(b.predictedFrom * 100).round()}\u2013${(b.predictedTo * 100).round()}%',
+                    style: const TextStyle(
+                        fontSize: 13.5, fontWeight: FontWeight.w800),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    '${(b.actualRecall * 100).round()}%',
+                    style: TextStyle(
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w900,
+                        color: b.driftPct.abs() > 10
+                            ? AppColors.red
+                            : AppColors.green),
+                  ),
+                ),
+                Text('${b.samples}',
+                    style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: context.mutedText)),
+              ],
+            ),
+          ],
+          if (brier != null) ...[
+            const SizedBox(height: 10),
+            Text(
+              '${tr('calBrier')}: ${brier.toStringAsFixed(3)}',
+              style:
+                  const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800),
+            ),
+          ],
+          const SizedBox(height: 8),
+          Text(
+            tr(r.verdictKey),
+            style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w800,
+                color: r.verdictKey == 'calibrationGood'
+                    ? AppColors.green
+                    : r.verdictKey == 'calibrationOff'
+                        ? AppColors.red
+                        : context.mutedText),
+          ),
+        ],
+      ],
+    ),
+  );
+}
+
+// Shared chrome for the v5.12 cards — mirrors the class-internal _card and
+// _sectionTitle helpers, but top-level so all three new cards can use it
+// (the file keeps _retentionCard top-level too, for the same reason).
+Widget _v512Card({required Widget child}) => Builder(
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: context.card,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: context.line, width: 2),
+          boxShadow: [
+            BoxShadow(
+                color: context.line, offset: const Offset(0, 4), blurRadius: 0),
+          ],
+        ),
+        child: child,
+      ),
+    );
+
+Widget _v512Title(
+        BuildContext context, String text, IconData icon, Color color) =>
+    Row(
+      children: [
+        Icon(icon, size: 20, color: color),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(text,
+              style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 15.5,
+                  color: context.bodyText)),
+        ),
+      ],
+    );

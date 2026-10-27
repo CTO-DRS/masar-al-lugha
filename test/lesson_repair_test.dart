@@ -18,7 +18,10 @@ import 'package:masar_al_lugha/l10n.dart';
 import 'package:masar_al_lugha/models.dart';
 import 'package:masar_al_lugha/scope.dart';
 import 'package:masar_al_lugha/screens/lesson_screen.dart';
+import 'package:masar_al_lugha/services/notifications.dart';
 import 'package:masar_al_lugha/services/tts.dart';
+
+import 'fake_notifications.dart';
 
 const _lessonId = 'fx_repair';
 
@@ -95,6 +98,7 @@ Future<AppState> _state({bool reduceMotion = false}) async {
 Widget _harness(AppState st) => AppScope(
       state: st,
       tts: TtsService(),
+      reminders: ReminderService(FakeNotificationApi()),
       child: MaterialApp(home: LessonScreen(lesson: _lesson())),
     );
 

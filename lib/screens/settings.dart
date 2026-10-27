@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_state.dart';
+import '../l10n.dart';
 import '../scope.dart';
 import '../profile_store.dart';
 import '../srs.dart';
@@ -242,6 +243,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onPressed: _importProfile,
           ),
           const SizedBox(height: 24),
+          // v5.12 (F2.5): local daily practice reminder — on-device only,
+          // re-anchored on every app launch, never any network.
+          _sectionTitle(tr('reminderSection')),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            decoration: BoxDecoration(
+              color: context.card,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: context.line, width: 2),
+            ),
+            child: Column(
+              children: [
+                SwitchListTile(
+                  value: st.reminders.enabled,
+                  onChanged: (v) => _toggleReminder(v, tr),
+                  activeThumbColor: AppColors.green,
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(tr('reminderEnable'),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w800, fontSize: 14)),
+                ),
+                if (st.reminders.enabled)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    leading: const Icon(Icons.schedule, size: 20),
+                    title: Text(tr('reminderTime'),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w800, fontSize: 14)),
+                    trailing: Text(
+                      '${st.reminders.hour.toString().padLeft(2, '0')}:${st.reminders.minute.toString().padLeft(2, '0')}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900, fontSize: 15),
+                    ),
+                    onTap: () => _pickReminderTime(tr),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            tr('reminderRebootNote'),
+            style: TextStyle(
+                fontSize: 11.5, color: context.mutedText, height: 1.4),
+          ),
+          const SizedBox(height: 24),
           _sectionTitle(tr('resetProgress')),
           const SizedBox(height: 10),
           ChunkyButton(
@@ -439,6 +487,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: err == null ? AppColors.green : AppColors.red,
       ),
     );
+  }
+
+  /// v5.12 (F2.5): applies the reminder switch through the shared
+  /// ReminderService. If Android denies POST_NOTIFICATIONS, the switch is
+  /// reverted and the learner is told where to enable it.
+  Future<void> _toggleReminder(bool on, String Function(String) tr) async {
+    final st = AppScope.of(context);
+    final svc = AppScope.remindersOf(context);
+    final next = st.reminders.copyWith(enabled: on);
+    final ok = await svc.sync(
+      settings: next,
+      title: L.t(st.uiLocale, 'dailyReminderTitle'),
+      body: L.t(st.uiLocale, 'dailyReminderBody'),
+    );
+    if (!mounted) return;
+    if (!ok) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(tr('reminderDenied'))),
+      );
+      return; // state unchanged — switch snaps back on rebuild
+    }
+    st.setReminders(next);
+  }
+
+  /// v5.12 (F2.5): picks the reminder time and re-syncs the notifier.
+  Future<void> _pickReminderTime(String Function(String) tr) async {
+    final st = AppScope.of(context);
+    final svc = AppScope.remindersOf(context);
+    final picked = await showTimePicker(
+      context: context,
+      initialTime:
+          TimeOfDay(hour: st.reminders.hour, minute: st.reminders.minute),
+    );
+    if (picked == null || !mounted) return;
+    final next =
+        st.reminders.copyWith(hour: picked.hour, minute: picked.minute);
+    final ok = await svc.sync(
+      settings: next,
+      title: L.t(st.uiLocale, 'dailyReminderTitle'),
+      body: L.t(st.uiLocale, 'dailyReminderBody'),
+    );
+    if (!mounted) return;
+    if (!ok) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(tr('reminderDenied'))),
+      );
+      return;
+    }
+    st.setReminders(next);
   }
 
   void _confirmReset(String Function(String) tr) {

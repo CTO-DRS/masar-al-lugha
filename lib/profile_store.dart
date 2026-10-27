@@ -11,10 +11,12 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_state.dart';
+import 'calibration.dart';
 import 'decks.dart';
 import 'mascot.dart';
 import 'models.dart';
 import 'path.dart';
+import 'streak_freeze.dart';
 
 class ProfileStore {
   ProfileStore(this._state);
@@ -156,7 +158,44 @@ class ProfileStore {
                       .map((e) => (e as num).toInt())
                       .toList()));
           s.answerLog.removeWhere((_, e) => e.length < 2);
+          // v5.12 (F2.2): calibration samples — strict shape check, oldest
+          // first; malformed entries are dropped, valid ones clamped.
+          final cal = ins['calibration'];
+          if (cal is List) {
+            s.calibrationLog = cal
+                .whereType<List>()
+                .map((e) {
+                  if (e.length < 2) return null;
+                  final r = (e[0] as num?)?.toInt();
+                  final o = (e[1] as num?)?.toInt();
+                  if (r == null || o == null) return null;
+                  return [r.clamp(0, 1000), o == 0 ? 0 : 1];
+                })
+                .whereType<List<int>>()
+                .toList();
+            if (s.calibrationLog.length > Calibration.maxSamples) {
+              s.calibrationLog.removeRange(
+                  0, s.calibrationLog.length - Calibration.maxSamples);
+            }
+          }
         }
+        // v5.12 (F2.4): remediation lapse log — bounded, strict parse.
+        final ll = j['lapseLog'];
+        if (ll is Map) {
+          ll.forEach((k, v) {
+            if (k is! String || v is! List) return;
+            final days = v
+                .map((e) => (e is num) ? e.toInt() : null)
+                .whereType<int>()
+                .toList();
+            if (days.isEmpty) return;
+            s.lapseLog[k] = days;
+          });
+        }
+        // v5.12 (F2.5): streak freeze wallet (null-safe for old payloads).
+        s.streakFreezes = (j['streakFreezes'] as num?)?.toInt() ?? 0;
+        s.lastFreezeAwardMark =
+            (j['lastFreezeAwardMark'] as num?)?.toInt() ?? 0;
         s.favorites = ((j['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(
             k as String,
             ((v as List?) ?? []).map((e) => e as String).toList()));
@@ -193,6 +232,12 @@ class ProfileStore {
           s.retentionTarget =
               (settings['retentionTarget'] as num?)?.toDouble() ??
                   s.retentionTarget;
+          // v5.12 (F2.5): daily reminder preferences.
+          final rem = settings['reminders'];
+          if (rem is Map) {
+            s.reminders =
+                ReminderSettings.fromJson(Map<String, dynamic>.from(rem));
+          }
         }
         if (s.newCardsDay != AppState.todayKey()) {
           s.newCardsToday = 0;
@@ -248,7 +293,11 @@ class ProfileStore {
         'hourTotal': s.hourTotal,
         'hourCorrect': s.hourCorrect,
         'answerLog': s.answerLog,
+        'calibration': s.calibrationLog, // v5.12 F2.2
       },
+      'lapseLog': s.lapseLog, // v5.12 F2.4
+      'streakFreezes': s.streakFreezes, // v5.12 F2.5
+      'lastFreezeAwardMark': s.lastFreezeAwardMark, // v5.12 F2.5
       'favorites': s.favorites,
       'mascot': s.mascotId,
       'decks': s.customDecks.map((d) => d.toJson()).toList(),
@@ -259,6 +308,7 @@ class ProfileStore {
         'ttsRate': s.ttsRate,
         'analyticsOptIn': s.analyticsOptIn,
         'retentionTarget': s.retentionTarget,
+        'reminders': s.reminders.toJson(), // v5.12 F2.5
       },
     };
     await prefs.setString(_kProgressSlot, jsonEncode(j));

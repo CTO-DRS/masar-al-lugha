@@ -1,8 +1,10 @@
 // Smart flashcards with FSRS-lite spaced repetition.
 import 'package:flutter/material.dart';
 
+import '../app_state.dart';
 import '../models.dart';
 import '../scope.dart';
+import '../session.dart';
 import '../srs.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
@@ -24,6 +26,8 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
   bool showingAll = false;
   bool newCapped = false; // daily new-card budget exhausted (v4.0 H3)
   bool favMode = false; // v4.4: practice the starred (favorites) deck
+  bool smartMode = false; // v5.12 (F2.3): orchestrated session order
+  SessionPlan? smartPlan; // labeled segments for the smart-mode header
 
   @override
   void initState() {
@@ -44,7 +48,33 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
       final fav = st.favoriteVocab(course);
       setState(() {
         dueQueue = fav;
+        smartPlan = null;
         current = fav.isNotEmpty ? fav.first : null;
+        flipped = false;
+      });
+      return;
+    }
+
+    // v5.12 (F2.3): the orchestrated session — due reviews first (most
+    // overdue first), then weak words, then new words within the daily
+    // budget. Deterministic and explainable, replacing the old shuffle.
+    if (smartMode) {
+      final earned = <Vocab>[];
+      for (final l in course.allLessons) {
+        if (!st.lessonStars.containsKey(l.id)) continue;
+        earned.addAll(l.vocab);
+      }
+      final plan = SessionPlanner.plan(
+        pool: earned,
+        cards: st.cards,
+        wordMistakes: st.wordMistakes,
+        newBudget: st.newCardsRemainingToday,
+      );
+      setState(() {
+        smartPlan = plan;
+        newCapped = plan.newCount < _earnedNewCount(st, course);
+        dueQueue = plan.queue;
+        current = dueQueue.isNotEmpty ? dueQueue.first : null;
         flipped = false;
       });
       return;
@@ -72,10 +102,25 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
 
     due.shuffle();
     setState(() {
+      smartPlan = null;
       dueQueue = [...due, ...limitedNew];
       current = dueQueue.isNotEmpty ? dueQueue.first : null;
       flipped = false;
     });
+  }
+
+  /// Unseen-but-earned words of the current course (the budget baseline
+  /// the smart plan is compared against for the capped badge).
+  static int _earnedNewCount(AppState st, Course course) {
+    var n = 0;
+    for (final l in course.allLessons) {
+      if (!st.lessonStars.containsKey(l.id)) continue;
+      for (final v in l.vocab) {
+        final c = st.cardFor(v.id);
+        if (c == null || c.reps == 0) n++;
+      }
+    }
+    return n;
   }
 
   @override
@@ -114,6 +159,78 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
               ],
             ),
           ),
+          // v5.12 (F2.3): orchestrated smart session — due first, then
+          // weak, then new. Mutually exclusive with the favorites lane.
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 2, 20, 4),
+            child: SizedBox(
+              width: double.infinity,
+              height: 42,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  setState(() {
+                    smartMode = !smartMode;
+                    if (smartMode) favMode = false;
+                  });
+                  _refresh();
+                },
+                icon: Icon(
+                  smartMode ? Icons.close : Icons.auto_awesome,
+                  color: AppColors.purple,
+                  size: 20,
+                ),
+                label: Text(
+                  smartMode ? tr('smartSessionHint') : tr('smartSession'),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 13.5,
+                    color: AppColors.purple,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: AppColors.purple, width: 2),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // v5.12: smart-plan segment chips — WHY each part of the queue
+          // exists (due / weak / new counts).
+          if (smartMode && smartPlan != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 2, 20, 4),
+              child: Row(
+                children: [
+                  for (final (key, n, color) in [
+                    ('segReview', smartPlan!.reviewCount, AppColors.blue),
+                    ('segWeak', smartPlan!.weakCount, AppColors.orange),
+                    ('segNew', smartPlan!.newCount, AppColors.green),
+                  ])
+                    if (n > 0)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 6),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: color.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(999),
+                            border: Border.all(color: color, width: 1.5),
+                          ),
+                          child: Text(
+                            '${context.tr(key)} · $n',
+                            style: TextStyle(
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w900,
+                                color: color),
+                          ),
+                        ),
+                      ),
+                ],
+              ),
+            ),
           // v4.4: favorites deck toggle (only when there is something to show).
           if (favCount > 0 || favMode)
             Padding(
@@ -123,7 +240,10 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
                 height: 42,
                 child: OutlinedButton.icon(
                   onPressed: () {
-                    setState(() => favMode = !favMode);
+                    setState(() {
+                      favMode = !favMode;
+                      if (favMode) smartMode = false; // lanes are exclusive
+                    });
                     _refresh();
                   },
                   icon: Icon(

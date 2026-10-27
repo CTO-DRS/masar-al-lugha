@@ -1,6 +1,9 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.13.0+37** — see the v5.13 section below for the
+**Current release: v5.14.0+38** — see the v5.14 section below for the
+learning-engine wave (mastery model, FSRS calibration report, smart
+session orchestration, 7-day remediation, streak freeze + local daily
+reminder), the v5.13 section for the
 second feature of the 12-month plan Wave 1 (F1.2: instant micro-repair),
 the v5.12 section for the
 first wave of the 12-month plan (F1.1: confusion-driven distractors +
@@ -56,8 +59,9 @@ the v5.0 section for the German course (the fourth language).
 | **v5.9** | **New skill — CONVERSATION TRAINER (Phase 4/4): a role-play chat behind the `ConversationProvider` abstraction; the shipped `OfflineScriptedProvider` is deterministic, on-device, ZERO network (hard invariants intact) — 8 scripted scenarios (2 per course: café/hotel en, bakery/cinema de, café/directions fr, shop/directions ur) with 3 steps each, any-of keyword-group matching over tashkeel-stripped text, sample-reply hints, per-scenario restart; any future AI provider implements the same 4-method interface and wiring it is an explicit user decision because it would touch the no-network rule; machine-authored dialogues flagged "needs human review"** |
 | **v5.10** | **Systems wave (Phase 5): LOCAL multi-profile slots over ProfileStore — up to 3 independent learners per device with slot-scoped progress keys (slot 1 = the original key, byte-compatible with every older build), switch/rename UI in Settings, zero accounts and zero network; opt-in LOCAL analytics (OFF by default) with an honest next-day return metric derived from the existing xpLog — anonymous by construction, nothing leaves the device; `scripts/prepare_play_signing.sh` prepares the real Play upload keystore outside the repo (key.properties/*.jks already gitignored) with CI-secrets guidance** |
 | **v5.11** | **Smarter review: per-card memory hints from the card's OWN FSRS history (`Insights.memoryHint`, first-match rules, silence over noise) rendered under the card back on all three review surfaces; a quick review mode (`Insights.quickReviewQueue` — due-only, shuffled, capped at 12, never introduces new words) with a live due-count launcher on the learn path; cross-slot backup restore (`importProfileJson` gains `targetSlot`) — a v4.0 export can now land in any of the 3 local slots without switching, with the current slot provably untouched** |
-| **v5.13** | **12-month plan Wave 1 — F1.2: instant micro-repair after mistakes: the first mistake on a word in a session opens a 3-step repair card inside the lesson (rule/distinction hint + the word's own example → a re-rolled question with DIFFERENT distractors → an easier 2-option pick), 2 cycles max then the lesson continues without embarrassment, dictation/listenComp get hint-then-retry only, the failed question is re-queued ≥3 rounds later as a normal scored round, repair rounds are XP-neutral by construction, dedicated 8-line bilingual companion bank, reduce-motion shows the card instantly — zero JSON changes, 346 tests** |
 | **v5.12** | **12-month plan Wave 1 — F1.1: confusion-driven distractors + exercise balancing: the v4.4 confusion engine now feeds the exercise generator (`Distractors.pick` — learner pairs → profile pairs → look-alikes → seeded random → reserve), every lesson plan is per-lesson seeded deterministic, a post-generation balancer enforces a 40% per-type cap (re-type → remove fallback, ping-pong-proof) and an A2+ production floor (dictation/build always present), KPI measured by `Distractors.confusionShare` — zero JSON changes, 316 tests** |
+| **v5.13** | **12-month plan Wave 1 — F1.2: instant micro-repair after mistakes: the first mistake on a word in a session opens a 3-step repair card inside the lesson (rule/distinction hint + the word's own example → a re-rolled question with DIFFERENT distractors → an easier 2-option pick), 2 cycles max then the lesson continues without embarrassment, dictation/listenComp get hint-then-retry only, the failed question is re-queued ≥3 rounds later as a normal scored round, repair rounds are XP-neutral by construction, dedicated 8-line bilingual companion bank, reduce-motion shows the card instantly — zero JSON changes, 346 tests** |
+| **v5.14** | **Learning-engine wave (12-month plan, Q2): an honest per-word mastery model from the FSRS memory states (mastery.dart, 0-100 with four labeled bands, learning-capped), an FSRS calibration report that closes the prediction loop (prediction-vs-reality buckets + Brier score, sampled at every real review, 400-sample rolling log), a deterministic smart-session orchestrator (due reviews → weak words → new words within the daily budget, replacing the shuffle on the Cards tab), a 7-day remediation window that spots chronically forgotten words (2+ distinct lapse days, self-cleaning bounded log, focused practice lane), and a streak freeze + local daily reminder (tokens earned every 7 consecutive days, one missed day bridged automatically; flutter_local_notifications — the wave's only new plugin, on-device scheduling, zero network) — 346 → 424 tests (+78)** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -1035,6 +1039,73 @@ analytics once the wave reaches devices; the repair hint speaks but does
 not yet auto-play the word audio on the hint step; match-boss repairs
 repair only the first missed word per board (multi-word boards open one
 repair). Suite: 316 → **346** tests. Version pin moved to v5.13.
+
+## v5.14 — learning-engine wave (SHIPPED, plan Q2)
+
+The 12-month development plan's second quarter (learning engine):
+five features that make the existing FSRS data legible and the session
+composition honest. No new languages, no new units — everything is
+derived from data the app already tracks. Engines stay Flutter-free and
+unit-tested; persistence rides the additive schema-v2 keys.
+
+1. **F2.1 Mastery model** — `lib/mastery.dart` (13 tests): one
+   explainable 0..100 score per word = 60·stability (log scale,
+   saturating at 60 days) + 25·current retrievability from the real
+   forgetting curve + 15·lifetime recall ratio, capped at 55 while a
+   card is still `learning`. Four labeled bands (new/emerging/strong/
+   mastered at 75) always visible under the gauge, so the number means
+   something without docs. Surfaces: a mastery card on the Insights
+   dashboard (average + mastered count + band legend) and the honest
+   caption "an estimate, not a certificate". Unseen words count as 0 —
+   a half-learned course never shows 100%.
+2. **F2.2 FSRS calibration report** — `lib/calibration.dart` (13
+   tests): whenever a real review happens (rateCard, or a lesson
+   re-testing a seen word), the PRE-rating retrievability and the actual
+   outcome are stored as a [predicted-milli, recalled] pair in a bounded
+   400-sample rolling log (additive `insights.calibration` key). The
+   report buckets predictions (0-50/50-70/70-90/90-100%), shows actual
+   recall per bucket WITH sample counts, the Brier score, and a verdict
+   that stays silent under 30 samples and only compares buckets with
+   ≥20. What it is NOT: a parameter optimizer — the 17 FSRS weights are
+   untouched; the report only MEASURES how they fit this learner.
+3. **F2.3 Smart session orchestration** — `lib/session.dart` (13
+   tests): a deterministic session planner replacing the Cards tab
+   shuffle when the new "جلسة ذكية" lane is on — due reviews first
+   (most overdue first, ties by lowest stability), then weak words
+   (most-missed, never due-baiting healthy words), then new words
+   strictly within the remaining daily budget (audit H3 keeps its
+   teeth). Segment caps (30/8/10) keep a session finishable; labeled
+   segment chips show WHY each part of the queue exists.
+4. **F2.4 7-day remediation** — `lib/remediation.dart` (12 tests): a
+   rolling window over per-word lapse days (additive `lapseLog` key,
+   bounded at 8 events/word and 200 words, epoch-day math immune to
+   DST). A word becomes a remediation target when it was forgotten on
+   2+ DISTINCT days inside the window — same-day repeats collapse, old
+   events age out, recovery is automatic. The Insights dashboard grows
+   a "weekly remediation" banner (trapped words + one-tap focused
+   round through the tough-words lane); lapsed SEEN words are recorded
+   from both rating paths.
+5. **F2.5 Streak freeze + local daily reminder** — `lib/streak_freeze.dart`
+   + `lib/services/notifications.dart` (19 tests): freeze tokens are
+   EARNED by consistency (one per 7-day milestone, wallet cap 2, a
+   full wallet defers the milestone instead of wasting it) and spent
+   automatically to bridge exactly ONE missed day in `ensureDaily` —
+   a freeze never revives a dead streak, never covers multi-day gaps,
+   never grants XP. The profile shows the shield count. The daily
+   reminder is scheduled ON DEVICE via flutter_local_notifications
+   (the wave's only new dependency, + timezone for its scheduling API):
+   permission requested only when the learner enables it in Settings,
+   inexact alarm mode (no exact-alarm permission), re-anchored on every
+   app launch so a reboot self-heals, honest Etc/GMT±N timezone note
+   in code and a privacy note in Settings. Gradle gains core-library
+   desugaring (plugin requirement); the manifest gains
+   POST_NOTIFICATIONS only.
+6. **Storage & tests** — all new state rides additive schema-v2 keys
+   (`lapseLog`, `insights.calibration`, `streakFreezes`,
+   `lastFreezeAwardMark`, `settings.reminders`), null-safe and
+   strict-parsed on load (a hand-tampered payload falls back to
+   defaults, never crashes). Suite: 346 → **424** tests (+78), version
+   pin in the l10n parity group moved to 5.14.0.
 
 ## Hard invariants (never break)
 

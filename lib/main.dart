@@ -7,8 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_state.dart';
+import 'l10n.dart';
 import 'models.dart';
 import 'scope.dart';
+import 'services/notifications.dart';
 import 'services/tts.dart';
 import 'theme.dart';
 import 'screens/onboarding.dart';
@@ -21,6 +23,11 @@ Future<void> main() async {
 
   final tts = TtsService();
   await tts.init();
+
+  // v5.12 (F2.5): local daily-reminder orchestrator — created once, shared
+  // through AppScope. Scheduling is re-anchored on every launch so a
+  // reboot self-heals on the next open. Everything stays on-device.
+  final reminders = ReminderService(PluginNotificationApi());
 
   final state = AppState();
 
@@ -36,7 +43,18 @@ Future<void> main() async {
   tts.enabled = state.ttsEnabled;
   tts.rate = state.ttsRate;
 
-  runApp(MasarApp(state: state, tts: tts));
+  // v5.12 (F2.5): apply the persisted reminder preference (schedule when
+  // enabled, cancel when not). Best-effort — a failure must never block
+  // the app from starting.
+  try {
+    await reminders.sync(
+      settings: state.reminders,
+      title: L.t(state.uiLocale, 'dailyReminderTitle'),
+      body: L.t(state.uiLocale, 'dailyReminderBody'),
+    );
+  } catch (_) {}
+
+  runApp(MasarApp(state: state, tts: tts, reminders: reminders));
 }
 
 class AppTtsConfig {
@@ -48,8 +66,14 @@ class AppTtsConfig {
 class MasarApp extends StatefulWidget {
   final AppState state;
   final TtsService tts;
+  final ReminderService reminders;
 
-  const MasarApp({super.key, required this.state, required this.tts});
+  const MasarApp({
+    super.key,
+    required this.state,
+    required this.tts,
+    required this.reminders,
+  });
 
   @override
   State<MasarApp> createState() => _MasarAppState();
@@ -86,6 +110,7 @@ class _MasarAppState extends State<MasarApp> {
         return AppScope(
           state: widget.state,
           tts: widget.tts,
+          reminders: widget.reminders,
           child: MaterialApp(
             title: 'مسار اللغة',
             debugShowCheckedModeBanner: false,
