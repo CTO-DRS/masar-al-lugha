@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../models.dart';
 import '../pronunciation.dart';
+import '../pronunciation_pairs.dart';
 import '../scope.dart';
 import '../services/stt.dart';
 import '../theme.dart';
@@ -26,6 +27,11 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
   late Vocab _current;
   final TextEditingController _pickCtrl = TextEditingController();
 
+  /// Confusable pairs (F4.4) resolvable against THIS course's corpus —
+  /// both sides must be real single words, otherwise the pair is dropped
+  /// (a chip that opens nothing is a broken promise).
+  List<MapEntry<PronPair, (Vocab, Vocab)>> _pairs = const [];
+
   bool _engineReady = false;
   bool _engineChecked = false;
   bool _listening = false;
@@ -40,6 +46,16 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final st = AppScope.of(context);
       _words = st.course.allVocab.where((v) => !v.isSentence).toList();
+      final byTarget = {
+        for (final v in _words) v.target.toLowerCase(): v,
+      };
+      _pairs = [
+        for (final p in PronPairCatalog.forCourse(st.course.id))
+          if (byTarget[p.a.toLowerCase()] != null &&
+              byTarget[p.b.toLowerCase()] != null)
+            MapEntry(p,
+                (byTarget[p.a.toLowerCase()]!, byTarget[p.b.toLowerCase()]!)),
+      ];
       _current = _words.firstWhere(
         (v) => widget.initialWord != null && v.target == widget.initialWord,
         orElse: () => _words.first,
@@ -114,6 +130,61 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(color: context.mutedText, fontSize: 13.5)),
           const SizedBox(height: 16),
+          // F4.4: confusable sound pairs — one chip per pair, tap toggles
+          // between the two sides; both sides are real course words.
+          if (_pairs.isNotEmpty) ...[
+            Text(tr('pronPairs'),
+                style: TextStyle(
+                    color: context.mutedText,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600)),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 44,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: _pairs.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 8),
+                itemBuilder: (context, i) {
+                  final entry = _pairs[i];
+                  final active = entry.value.$1.id == _current.id ||
+                      entry.value.$2.id == _current.id;
+                  return Semantics(
+                    button: true,
+                    label: '${tr('pronPairs')}: '
+                        '${entry.value.$1.target} / ${entry.value.$2.target}',
+                    child: ActionChip(
+                      avatar: Icon(Icons.hearing,
+                          size: 18,
+                          color: active
+                              ? Theme.of(context).colorScheme.primary
+                              : context.mutedText),
+                      label: Text(
+                        '${entry.value.$1.target} / ${entry.value.$2.target}',
+                        style: TextStyle(
+                            fontSize: 12.5,
+                            fontWeight:
+                                active ? FontWeight.w700 : FontWeight.w500),
+                      ),
+                      backgroundColor: active ? context.softBg : null,
+                      onPressed: () {
+                        final sideA = _current.id != entry.value.$1.id;
+                        final v = sideA ? entry.value.$1 : entry.value.$2;
+                        setState(() {
+                          _current = v;
+                          _pickCtrl.text = v.target;
+                          _transcript = '';
+                          _score = null;
+                          _verdictKey = null;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
           // word picker with autocomplete over the course corpus
           RawAutocomplete<Vocab>(
             textEditingController: _pickCtrl,

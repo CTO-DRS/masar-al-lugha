@@ -1,0 +1,5 @@
+en	Patient	مريض	bank-duplicate
+ur	غریب	فقير	adj
+ur	امیر	غني	adj
+ur	بخیل	بخيل	adj
+ur	امیدوار	متفائل	adj

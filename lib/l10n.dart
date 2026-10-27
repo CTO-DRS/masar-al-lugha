@@ -182,6 +182,7 @@ class L {
       'pronTitle': 'تدريب النطق',
       'pronIntro':
           'اختر كلمة، استمع إليها، ثم كرّرها في الميكروفون — سيقارن التطبيق ما سمعه بالكلمة الصحيحة ويعطيك تقييماً تقريبياً.',
+      'pronPairs': 'أزواج يلتبس صوتها — انقر للتبديل',
       'pronPickWord': 'ابحث عن كلمة…',
       'pronSpeakFirst': 'استمع إلى الكلمة',
       'pronTapMic': 'اضغط الميكروفون وانطق الكلمة',
@@ -387,7 +388,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.15.0',
+      'version': 'الإصدار 5.16.0',
       // v5.12 — learning engine (F2.1 mastery / F2.2 calibration /
       // F2.3 smart session / F2.4 remediation / F2.5 freeze + reminders)
       'masteryTitle': 'مستوى التمكن',
@@ -663,6 +664,7 @@ class L {
       'pronTitle': 'Pronunciation practice',
       'pronIntro':
           'Pick a word, listen to it, then repeat it into the microphone — the app compares what it heard with the correct word and gives an approximate score.',
+      'pronPairs': 'Confusable sound pairs — tap to switch',
       'pronPickWord': 'Search for a word…',
       'pronSpeakFirst': 'Listen to the word',
       'pronTapMic': 'Tap the mic and say the word',
@@ -872,7 +874,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.15.0',
+      'version': 'Version 5.16.0',
       // v5.12 — learning engine
       'masteryTitle': 'Mastery',
       'masteryAvg': 'Average score',

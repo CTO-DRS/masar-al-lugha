@@ -162,6 +162,149 @@ class ReadingCatalog {
         'تعود للبيت وتطبخ أمي طعاماً لذيذاً.',
       ],
     ),
+    // ---------- v5.16 (Q4/F4.2): B1/B2 depth for every course ----------
+    // ---------- English ----------
+    ReadingText(
+      'rd_en_journey',
+      'en',
+      'B1',
+      'رحلة أحمد إلى لندن',
+      'Ahmed\'s Journey',
+      'Last summer, Ahmed traveled to London for the first time. The '
+          'flight took four hours, and he was nervous at the airport. In '
+          'the city, he visited a famous museum and practiced English '
+          'with local people. He says traveling is the best teacher, and '
+          'he wants to return next year.',
+      [
+        'في الصيف الماضي، سافر أحمد إلى لندن لأول مرة.',
+        'استغرقت الرحلة الجوية أربع ساعات، وكان متوتراً في المطار.',
+        'في المدينة زار متحفاً شهيراً وتدرب على الإنجليزية مع أهلها.',
+        'يقول إن السفر أفضل معلم، ويريد العودة السنة القادمة.',
+      ],
+    ),
+    ReadingText(
+      'rd_en_career',
+      'en',
+      'B2',
+      'مسار سارة المهني',
+      'Sara\'s Career',
+      'Sara works for a large company in the city center. Her salary is '
+          'good, but the schedule is busy and the pressure is real. Last '
+          'month, she got a promotion and now manages a small team. She '
+          'believes the secret of success is patience, honest work, and '
+          'respect for colleagues.',
+      [
+        'تعمل سارة في شركة كبيرة في وسط المدينة.',
+        'راتبها جيد، لكن جدولها مزدحم والضغط حقيقي.',
+        'الشهر الماضي حصلت على ترقية وتدير الآن فريقاً صغيراً.',
+        'تعتقد أن سر النجاح هو الصبر والعمل الأمين واحترام الزملاء.',
+      ],
+    ),
+    // ---------- German ----------
+    ReadingText(
+      'rd_de_arbeit',
+      'de',
+      'B1',
+      'علي في العمل',
+      'Alis neue Arbeit',
+      'Ali hat eine neue Arbeit in einem Büro gefunden. Er beginnt um '
+          'neun Uhr und endet um fünf. Nach der Arbeit geht er ins '
+          'Fitnessstudio oder liest in der Bibliothek. Am Wochenende '
+          'besucht er seine Familie und kocht für alle.',
+      [
+        'وجد علي عملاً جديداً في مكتب.',
+        'يبدأ العمل في التاسعة وينتهي في الخامسة.',
+        'بعد العمل يذهب إلى النادي الرياضي أو يقرأ في المكتبة.',
+        'في نهاية الأسبوع يزور عائلته ويطبخ للجميع.',
+      ],
+    ),
+    ReadingText(
+      'rd_de_umwelt',
+      'de',
+      'B2',
+      'البيئة تبدأ منك',
+      'Umwelt beginnt bei dir',
+      'Die Umwelt ist vielen Menschen heutzutage wichtig. Manche fahren '
+          'mit dem Fahrrad zur Arbeit, andere kaufen regionale Produkte '
+          'und sparen Energie. In unserer Stadt gibt es jetzt mehr '
+          'Fahrradwege und weniger Abfall. Jeder kann einen kleinen '
+          'Beitrag leisten, und zusammen zählt jeder Beitrag.',
+      [
+        'البيئة مهمة لكثير من الناس اليوم.',
+        'بعضهم يذهب إلى العمل بالدراجة، وآخرون يشترون منتجات محلية ويوفرون الطاقة.',
+        'في مدينتنا توجد الآن مسارات دراجات أكثر ونفايات أقل.',
+        'يمكن للجميع أن يقدم مساهمة صغيرة، ومعاً تحسب كل مساهمة.',
+      ],
+    ),
+    // ---------- French ----------
+    ReadingText(
+      'rd_fr_etudes',
+      'fr',
+      'B1',
+      'دراسة كريم',
+      'Les études de Karim',
+      'Karim étudie l\'informatique à l\'université. Il a des cours le '
+          'matin et travaille l\'après-midi dans un petit café. Ses '
+          'professeurs sont exigeants mais justes. Il espère trouver un '
+          'bon emploi l\'année prochaine et rester près de sa famille.',
+      [
+        'يدرس كريم علوم الحاسوب في الجامعة.',
+        'لديه دروس في الصباح ويعمل بعد الظهر في مقهى صغير.',
+        'أساتذته مطلبون لكنهم منصفون.',
+        'يأمل أن يجد عملاً جيداً السنة القادمة ويبقى قرب عائلته.',
+      ],
+    ),
+    ReadingText(
+      'rd_fr_voyage',
+      'fr',
+      'B2',
+      'رحلة إلى الجنوب',
+      'Voyage dans le sud',
+      'L\'année dernière, nous avons visité le sud de la France. Nous '
+          'avons loué une voiture et découvert de petits villages sur la '
+          'colline. Le climat était chaud, la nourriture délicieuse et '
+          'les gens très accueillants. Ce voyage reste notre meilleur '
+          'souvenir de famille.',
+      [
+        'في السنة الماضية زرنا جنوب فرنسا.',
+        'استأجرنا سيارة واكتشفنا قرى صغيرة على التلة.',
+        'كان المناخ حاراً والطعام لذيذاً والناس ترحيبيين جداً.',
+        'تبقى هذه الرحلة أجمل ذكرى عائلية لنا.',
+      ],
+    ),
+    // ---------- Urdu ----------
+    ReadingText(
+      'rd_ur_taleem',
+      'ur',
+      'B1',
+      'تعليم علي',
+      'علی کی تعلیم',
+      'علی یونیورسٹی میں کمپیوٹر سائنس پڑھتا ہے۔ اس کے کلاس روم صبح کو '
+          'ہوتے ہیں اور شام کو وہ کتابخانه میں پڑھتا ہے۔ اس کے استاد محنتی '
+          'اور مہربان ہیں۔ وہ اگلے سال ایک اچھی نوکری چاہتا ہے۔',
+      [
+        'يدرس علي علوم الحاسوب في الجامعة.',
+        'حصصه في الصباح ويقرأ في المكتبة في المساء.',
+        'أساتذته مجتهدون ولطيفون.',
+        'يريد وظيفة جيدة في السنة القادمة.',
+      ],
+    ),
+    ReadingText(
+      'rd_ur_sehat',
+      'ur',
+      'B2',
+      'الصحة أولاً',
+      'صحت سب سے پہلے',
+      'صحت ہر انسان کے لیے سب سے اہم چیز ہے۔ روزانہ ورزش اور اچھی غذا '
+          'ضروری ہے۔ ڈاکٹر کہتے ہیں کہ کافی سونا بھی جسم کے لیے ضروری ہے۔ '
+          'ہمیں چاہیے کہ زیادہ پانی پیں اور فون کا استعمال کم کریں۔',
+      [
+        'الصحة أهم شيء لكل إنسان.',
+        'الرياضة اليومية والغذاء الجيد ضروريان.',
+        'يقول الأطباء إن النوم الكافي ضروري أيضاً للجسد.',
+        'ينبغي أن نشرب ماءً أكثر ونقلل استخدام الهاتف.',
+      ],
+    ),
   ];
 
   static List<ReadingText> forCourse(String courseId) =>

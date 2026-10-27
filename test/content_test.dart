@@ -14,23 +14,36 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:masar_al_lugha/conversation.dart';
+import 'package:masar_al_lugha/grammar.dart';
 import 'package:masar_al_lugha/models.dart';
+import 'package:masar_al_lugha/reading.dart';
 
 const _expected = <String, List<int>>{
-  'en': [56, 216, 2328],
+  'en': [56, 220, 2368],
   'fr': [25, 75, 831],
-  'ur': [56, 216, 2328],
+  'ur': [56, 220, 2368],
   'de': [25, 75, 779],
 };
 
 // v5.4: minimum example-sentence coverage per course — the validator
 // (scripts/validate_content.py) mirrors this so content can never silently
-// regress. Floors rise as later waves backfill more examples.
+// regress. v5.16 (Q4/F4.1): the backfill is COMPLETE — every course at 100%.
 const _minExampleCoverage = <String, double>{
-  'en': 0.18,
-  'fr': 0.40,
-  'ur': 0.35,
-  'de': 0.95,
+  'en': 1.0,
+  'fr': 1.0,
+  'ur': 1.0,
+  'de': 1.0,
+};
+
+// v5.16 (Q4/F4.5): verbatim containment floors for single-word rows
+// (fill-blank's _canBlank gate). Legacy conjugated examples (FR/DE verbs)
+// are tolerated at the locked ratios; anything WORSE fails.
+const _minContainment = <String, double>{
+  'en': 0.99,
+  'ur': 0.99,
+  'fr': 0.85,
+  'de': 0.80,
 };
 
 const _cefr = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
@@ -58,7 +71,7 @@ void main() {
             reason: '$lang lesson count drifted');
         expect(words, _expected[lang]![2], reason: '$lang word count drifted');
       }
-      expect(totalWords, 6266);
+      expect(totalWords, 6346);
     });
 
     test('example-sentence coverage meets the enforced floor', () async {
@@ -75,6 +88,51 @@ void main() {
             reason: '$lang example coverage $withExample/${words.length} '
                 'fell below the ${_minExampleCoverage[lang]} floor');
       }
+    });
+
+    test(
+        'v5.16: single-word rows keep verbatim containment at the locked '
+        'floor (fill-blank gate)', () async {
+      for (final lang in _expected.keys) {
+        final course = await _load(lang);
+        final single = course.allVocab
+            .where((v) => !v.target.trim().contains(' '))
+            .toList();
+        final contained = single
+            .where((v) => (v.exampleTarget ?? '')
+                .trim()
+                .toLowerCase()
+                .contains(v.target.trim().toLowerCase()))
+            .length;
+        final ratio = contained / single.length;
+        expect(ratio, greaterThanOrEqualTo(_minContainment[lang]!),
+            reason: '$lang containment $contained/${single.length} fell '
+                'below the ${_minContainment[lang]} floor');
+      }
+    });
+
+    test(
+        'v5.16: skill corpora keep at least 4 items per course '
+        '(reading / conversation / grammar)', () async {
+      expect(ReadingCatalog.texts.length, 16);
+      expect(ConversationCatalog.scenarios.length, 16);
+      expect(GrammarCatalog.lessons.length, 16);
+      for (final lang in _expected.keys) {
+        expect(ReadingCatalog.forCourse(lang).length, greaterThanOrEqualTo(4),
+            reason: '$lang reading corpus below floor');
+        expect(
+            ConversationCatalog.forCourse(lang).length, greaterThanOrEqualTo(4),
+            reason: '$lang conversation corpus below floor');
+        expect(GrammarCatalog.forCourse(lang).length, greaterThanOrEqualTo(4),
+            reason: '$lang grammar corpus below floor');
+      }
+    });
+
+    test('v5.16: flagship courses keep lesson parity (en == ur)', () async {
+      final en = await _load('en');
+      final ur = await _load('ur');
+      expect(en.allLessons.length, ur.allLessons.length,
+          reason: 'en/ur lesson parity broken');
     });
 
     test('every unit has a valid monotonic CEFR tag', () async {
@@ -107,7 +165,7 @@ void main() {
               reason: '${v.id} has empty translationAr');
         }
       }
-      expect(seen.length, 6266);
+      expect(seen.length, 6346);
     });
 
     test('new v4.2 units keep per-lesson emoji uniqueness', () async {

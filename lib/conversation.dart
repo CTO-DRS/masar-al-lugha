@@ -518,6 +518,383 @@ class ConversationCatalog {
         ],
         'اللہ نہ کراڑے، خدا حافظ!',
         'بالتوفيق، مع السلامة!'),
+    // ---------- v5.16 (Q4/F4.2): B1/B2 scenarios for every course ----------
+    ConversationScenario(
+        'cv_en_doctor',
+        'en',
+        'B1',
+        'عند الطبيب',
+        'At the doctor',
+        '🩺',
+        'الطبيب',
+        [
+          ConversationStep(
+            'Good morning. What seems to be the problem?',
+            'صباح الخير. ما المشكلة؟',
+            [
+              ['headache'],
+              ['stomach'],
+              ['throat'],
+              ['pain']
+            ],
+            'I have a headache and a sore throat.',
+            'رأسي يؤلمني وحلقي ملتهب.',
+          ),
+          ConversationStep(
+            'I see. How long have you felt this way?',
+            'فهمت. منذ متى تشعر بهذا؟',
+            [
+              ['day'],
+              ['days'],
+              ['week'],
+              ['since']
+            ],
+            'For three days now.',
+            'منذ ثلاثة أيام.',
+          ),
+          ConversationStep(
+            'Take this medicine twice a day and get some rest.',
+            'خذ هذا الدواء مرتين يومياً واسترح.',
+            [
+              ['thank'],
+              ['ok'],
+              ['medicine']
+            ],
+            'Thank you, doctor. I will rest.',
+            'شكراً يا دكتور، سأستريح.',
+          ),
+        ],
+        'Get well soon! Come back if it does not improve.',
+        'شفاكاً عاجلاً! عد إن لم تتحسن.'),
+    ConversationScenario(
+        'cv_en_interview',
+        'en',
+        'B2',
+        'مقابلة عمل',
+        'Job interview',
+        '💼',
+        'مسؤول التوظيف',
+        [
+          ConversationStep(
+            'Welcome. Tell me a little about yourself.',
+            'أهلاً بك. حدثني قليلاً عن نفسك.',
+            [
+              ['experience'],
+              ['work'],
+              ['years'],
+              ['study']
+            ],
+            'I have three years of experience in marketing.',
+            'لدي ثلاث سنوات من الخبرة في التسويق.',
+          ),
+          ConversationStep(
+            'Interesting. Why do you want this job?',
+            'مثير للاهتمام. لماذا تريد هذه الوظيفة؟',
+            [
+              ['company'],
+              ['learn'],
+              ['grow'],
+              ['opportunity']
+            ],
+            'I want to grow and learn new skills in your company.',
+            'أريد أن أنمو وأتعلم مهارات جديدة في شركتكم.',
+          ),
+          ConversationStep(
+            'Good answer. When could you start?',
+            'إجابة جيدة. متى يمكنك البدء؟',
+            [
+              ['week'],
+              ['month'],
+              ['monday'],
+              ['immediately']
+            ],
+            'I can start next week.',
+            'يمكنني البدء الأسبوع القادم.',
+          ),
+        ],
+        'We will contact you within a week. Thanks for coming.',
+        'سنتصل بك خلال أسبوع. شكراً لمجيئك.'),
+    ConversationScenario(
+        'cv_de_arzt',
+        'de',
+        'B1',
+        'عند الطبيب',
+        'Beim Arzt',
+        '🩺',
+        'الطبيب',
+        [
+          ConversationStep(
+            'Guten Tag! Was fehlt Ihnen?',
+            'نهارك سعيد! ما بك؟',
+            [
+              ['kopf'],
+              ['bauch'],
+              ['hals'],
+              ['schmerzen']
+            ],
+            'Ich habe Kopfschmerzen.',
+            'رأسي يؤلمني.',
+          ),
+          ConversationStep(
+            'Seit wann haben Sie das?',
+            'منذ متى وأنت كذلك؟',
+            [
+              ['tag'],
+              ['tagen'],
+              ['woche'],
+              ['lange']
+            ],
+            'Seit zwei Tagen.',
+            'منذ يومين.',
+          ),
+          ConversationStep(
+            'Nehmen Sie diese Tabletten zweimal täglich.',
+            'خذ هذه الأقراص مرتين يومياً.',
+            [
+              ['danke'],
+              ['gut'],
+              ['einverstanden']
+            ],
+            'Danke, Herr Doktor.',
+            'شكراً يا دكتور.',
+          ),
+        ],
+        'Gute Besserung! Wenn es schlimmer wird, kommen Sie wieder.',
+        'شفاكاً عاجلاً! عد إن ساء الأمر.'),
+    ConversationScenario(
+        'cv_de_wohnung',
+        'de',
+        'B2',
+        'البحث عن شقة',
+        'Wohnungssuche',
+        '🏠',
+        'وكيل العقارات',
+        [
+          ConversationStep(
+            'Guten Tag! Sie haben wegen der Wohnung angerufen?',
+            'نهارك سعيد! اتصلت بخصوص الشقة؟',
+            [
+              ['wohnung'],
+              ['besichtigen'],
+              ['zimmer']
+            ],
+            'Ja, ich möchte die Wohnung gern besichtigen.',
+            'نعم، أود معاينة الشقة.',
+          ),
+          ConversationStep(
+            'Sie hat drei Zimmer, eine Küche und einen Balkon.',
+            'فيها ثلاث غرف ومطبخ وشرفة.',
+            [
+              ['miete'],
+              ['kostet'],
+              ['preis']
+            ],
+            'Wie hoch ist die Miete?',
+            'كم قيمة الإيجار؟',
+          ),
+          ConversationStep(
+            'Achthundert Euro warm, Nebenkosten inklusive.',
+            'ثمانمئة يورو بنفقات التدفئة المشمولة.',
+            [
+              ['termin'],
+              ['wann'],
+              ['besichtigen']
+            ],
+            'Wann können wir einen Termin machen?',
+            'متى يمكننا تحديد موعد للمعاينة؟',
+          ),
+        ],
+        'Morgen um vier? Bis dann!',
+        'غداً في الرابعة؟ إلى اللقاء!'),
+    ConversationScenario(
+        'cv_fr_medecin',
+        'fr',
+        'B1',
+        'عند الطبيب',
+        'Chez le médecin',
+        '🩺',
+        'الطبيب',
+        [
+          ConversationStep(
+            'Bonjour, qu\'est-ce qui vous arrive ?',
+            'صباح الخير، ماذا بك؟',
+            [
+              ['tête'],
+              ['ventre'],
+              ['gorge'],
+              ['mal']
+            ],
+            'J\'ai mal à la tête.',
+            'رأسي يؤلمني.',
+          ),
+          ConversationStep(
+            'Depuis quand avez-vous ce symptôme ?',
+            'منذ متى لديك هذا العرض؟',
+            [
+              ['jour'],
+              ['jours'],
+              ['semaine'],
+              ['matin']
+            ],
+            'Depuis trois jours.',
+            'منذ ثلاثة أيام.',
+          ),
+          ConversationStep(
+            'Voici une ordonnance. Reposez-vous bien.',
+            'هذه هي الوصفة. استرح جيداً.',
+            [
+              ['merci'],
+              ['d\'accord'],
+              ['docteur']
+            ],
+            'Merci beaucoup, docteur.',
+            'شكراً جزيلاً يا دكتور.',
+          ),
+        ],
+        'Bon rétablissement ! Revenez si ça continue.',
+        'شفاكاً عاجلاً! عد إن استمر الأمر.'),
+    ConversationScenario(
+        'cv_fr_entretien',
+        'fr',
+        'B2',
+        'مقابلة عمل',
+        'Entretien d\'embauche',
+        '💼',
+        'مسؤول التوظيف',
+        [
+          ConversationStep(
+            'Bonjour, entrez. Parlez-moi de vous.',
+            'صباح الخير، تفضل. حدثني عن نفسك.',
+            [
+              ['expérience'],
+              ['travail'],
+              ['ans'],
+              ['études']
+            ],
+            'J\'ai deux ans d\'expérience dans la vente.',
+            'لدي سنتان من الخبرة في البيع.',
+          ),
+          ConversationStep(
+            'Pourquoi voulez-vous ce poste ?',
+            'لماذا تريد هذا المنصب؟',
+            [
+              ['entreprise'],
+              ['apprendre'],
+              ['évoluer'],
+              ['défis']
+            ],
+            'Je veux évoluer et apprendre dans votre entreprise.',
+            'أريد أن أتطور وأتعلم في شركتكم.',
+          ),
+          ConversationStep(
+            'Très bien. Quand êtes-vous disponible ?',
+            'جيد جداً. متى تكون متاحاً؟',
+            [
+              ['lundi'],
+              ['semaine'],
+              ['mois'],
+              ['immédiatement']
+            ],
+            'Je suis disponible la semaine prochaine.',
+            'أنا متاح الأسبوع القادم.',
+          ),
+        ],
+        'On vous répond dans la semaine. Merci.',
+        'سنرد عليك خلال الأسبوع. شكراً.'),
+    ConversationScenario(
+        'cv_ur_daktar',
+        'ur',
+        'B1',
+        'عند الطبيب',
+        'ڈاکٹر کے پاس',
+        '🩺',
+        'الطبيب',
+        [
+          ConversationStep(
+            'السلام علیکم! آپ کو کیا تکلیف ہے؟',
+            'السلام عليكم! ماذا بك؟',
+            [
+              ['سر'],
+              ['پیٹ'],
+              ['گلا'],
+              ['درد']
+            ],
+            'میرا سر درد کر رہا ہے۔',
+            'رأسي يؤلمني.',
+          ),
+          ConversationStep(
+            'کب سے یہ تکلیف ہے؟',
+            'منذ متى وأنت كذلك؟',
+            [
+              ['دن'],
+              ['ہفتہ'],
+              ['صبح']
+            ],
+            'دو دن سے۔',
+            'منذ يومين.',
+          ),
+          ConversationStep(
+            'یہ دوا دن میں دو بار لیں اور آرام کریں۔',
+            'خذ هذا الدواء مرتين يومياً واسترح.',
+            [
+              ['شکریہ'],
+              ['ٹھیک'],
+              ['دوا']
+            ],
+            'شکریہ ڈاکٹر صاحب۔',
+            'شكراً يا دكتور.',
+          ),
+        ],
+        'جلد صحت یاب ہوں! تکلیف بڑھی تو آ جائیے۔',
+        'شفاكاً عاجلاً! عد إن ازداد الأمر.'),
+    ConversationScenario(
+        'cv_ur_interview',
+        'ur',
+        'B2',
+        'مقابلة عمل',
+        'ملازمت کا انٹرویو',
+        '💼',
+        'مسؤول التوظيف',
+        [
+          ConversationStep(
+            'خوش آمدید۔ اپنے بارے میں بتائیں۔',
+            'أهلاً بك. حدثني عن نفسك.',
+            [
+              ['تجربہ'],
+              ['کام'],
+              ['سال'],
+              ['تعلیم']
+            ],
+            'میرے پاس تین سال کا تجربہ ہے۔',
+            'لدي ثلاث سنوات من الخبرة.',
+          ),
+          ConversationStep(
+            'اچھا۔ آپ یہ نوکری کیوں چاہتے ہیں؟',
+            'جيد. لماذا تريد هذه الوظيفة؟',
+            [
+              ['سیکھ'],
+              ['کمپنی'],
+              ['ترقی'],
+              ['موقع']
+            ],
+            'میں ترقی اور نئی مہارتیں سیکھنا چاہتا ہوں۔',
+            'أريد التطور وتعلم مهارات جديدة.',
+          ),
+          ConversationStep(
+            'بہت خوب۔ آپ کب شروع کر سکتے ہیں؟',
+            'ممتاز. متى يمكنك البدء؟',
+            [
+              ['اتوار'],
+              ['ہفتہ'],
+              ['مہینہ'],
+              ['فوراً']
+            ],
+            'میں اگلے ہفتے شروع کر سکتا ہوں۔',
+            'يمكنني البدء الأسبوع القادم.',
+          ),
+        ],
+        'ہم ایک ہفتے میں رابطہ کریں گے۔ شکریہ۔',
+        'سنتصل بك خلال أسبوع. شكراً.'),
   ];
 
   static List<ConversationScenario> forCourse(String courseId) =>

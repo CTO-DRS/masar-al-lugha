@@ -126,7 +126,14 @@ def main() -> int:
     print("=== CONTENT VALIDATION ===")
     # v5.4: enforced minimum example-sentence coverage per course (mirrors
     # test/content_test.dart). Floors rise as later waves backfill examples.
-    MIN_EXAMPLE_COVERAGE = {"en": 0.18, "fr": 0.40, "ur": 0.35, "de": 0.95}
+    # v5.16 (Q4/F4.5): the backfill is complete — every course at 100%.
+    MIN_EXAMPLE_COVERAGE = {"en": 1.0, "fr": 1.0, "ur": 1.0, "de": 1.0}
+    # v5.16 (Q4/F4.5): verbatim containment of the target inside its example
+    # for single-word rows (what _canBlank needs for fill-blank). New rows are
+    # guaranteed by construction; the floor locks the CURRENT ratio so legacy
+    # conjugated examples (FR/DE verb forms) can neither regress nor silently
+    # multiply. Legacy-tolerant by design — counted as a notice below.
+    MIN_CONTAINMENT = {"en": 0.99, "ur": 0.99, "fr": 0.85, "de": 0.80}
     for lang, (nu, nl, nv, span) in stats.items():
         print(f"  {lang}: {nu} units, {nl} lessons, {nv} words "
               f"(CEFR {span})")
@@ -155,6 +162,86 @@ def main() -> int:
         if ratio < floor:
             fatal.append(f"{lang}: example coverage {ratio:.1%} below "
                          f"enforced floor {floor:.0%}")
+        # v5.16: containment ratio for single-word rows (fill-blank gate)
+        single = [v for v in words
+                  if ' ' not in (v.get('target') or '').strip()]
+        if single:
+            okc = sum(1 for v in single
+                      if v['target'].strip().lower()
+                      in (v.get('exampleTarget') or '').strip().lower())
+            rc = okc / len(single)
+            cf = MIN_CONTAINMENT[lang]
+            mark = "ok" if rc >= cf else "FAIL"
+            print(f"  {lang}: containment {okc}/{len(single)} = "
+                  f"{rc:.1%} (floor {cf:.0%}) [{mark}]")
+            if rc < cf:
+                fatal.append(f"{lang}: containment {rc:.1%} below "
+                             f"enforced floor {cf:.0%}")
+            else:
+                missed = len(single) - okc
+                if missed:
+                    notices.append(
+                        f"{lang}: {missed} single-word rows without verbatim "
+                        "containment (legacy conjugated examples, "
+                        "fill-blank skips them)")
+        # v5.16: duplicate examples inside a course are a notice (the same
+        # sentence teaching two words weakens both)
+        seen_ex = {}
+        dup_ex = []
+        for v in words:
+            ex = (v.get('exampleTarget') or '').strip().lower()
+            if not ex:
+                continue
+            if ex in seen_ex:
+                dup_ex.append(v['id'])
+            else:
+                seen_ex[ex] = v['id']
+        if dup_ex:
+            notices.append(f"{lang}: {len(dup_ex)} duplicate example "
+                           f"sentences e.g. {dup_ex[:5]}")
+        # v5.16: dictation word-count gate (2..8 words) for single-word rows
+        wc_bad = [v['id'] for v in single
+                  if not 2 <= len((v.get('exampleTarget') or '').split()) <= 8]
+        if wc_bad:
+            notices.append(f"{lang}: {len(wc_bad)} examples outside the "
+                           f"2-8 word dictation gate e.g. {wc_bad[:5]}")
+
+    # v5.16 (Q4/F4.5): skill-corpus floors — every course keeps at least four
+    # items per skill (reading / conversation / grammar), counted from the
+    # Dart catalog ids. Mirrors test/content_test.dart.
+    import re
+    repo = os.path.dirname(os.path.dirname(base))
+    lib = os.path.join(repo, 'lib')
+    corpus_counts = {}
+    for kind, fname in (("rd", "reading.dart"), ("cv", "conversation.dart"),
+                        ("gr", "grammar.dart")):
+        p = os.path.join(lib, fname)
+        if not os.path.exists(p):
+            continue
+        with open(p, encoding='utf-8') as f:
+            src = f.read()
+        found = {m.group(0).strip("'") for m in re.finditer(
+            r"'%s_(?:en|ur|fr|de)_[A-Za-z0-9_]+'" % kind, src)}
+        for cid in found:
+            key = (kind, cid.split('_')[1])
+            corpus_counts[key] = corpus_counts.get(key, 0) + 1
+    MIN_CORPUS_PER_COURSE = {"rd": 4, "cv": 4, "gr": 4}
+    print("  skill corpora (min 4 per course):")
+    for kind in ("rd", "cv", "gr"):
+        row = []
+        for lang in ("en", "ur", "fr", "de"):
+            n = corpus_counts.get((kind, lang), 0)
+            f = MIN_CORPUS_PER_COURSE[kind]
+            if n < f:
+                fatal.append(f"{lang}: {kind} corpus has {n} items, "
+                             f"floor is {f}")
+            row.append(f"{lang}={n}")
+        print(f"    {kind}: {' '.join(row)}")
+
+    # v5.16 (Q4/F4.5): KPI — lesson parity between the two flagship courses
+    if "en" in stats and "ur" in stats and stats["en"][1] != stats["ur"][1]:
+        notices.append(f"lesson parity: en {stats['en'][1]} vs "
+                       f"ur {stats['ur'][1]} lessons")
     ok = not fatal
     print(f"=== FATAL: {len(fatal)} | NOTICES: {len(notices)} ===")
     for p in fatal[:60]:

@@ -1,7 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.15.0+40** — see the v5.15 section for the
-UI/UX quarter of the 12-month plan (F3.1-F3.5), the v5.14.1 section
+**Current release: v5.16.0+41** — see the v5.16 section for the
+content-depth quarter of the 12-month plan (F4.1-F4.5), the v5.15
+section for the UI/UX quarter (F3.1-F3.5), the v5.14.1 section
 for the reminder-delivery fix found in independent APK verification,
 the v5.14 section for the learning-engine wave (mastery model, FSRS calibration report, smart
 session orchestration, 7-day remediation, streak freeze + local daily
@@ -66,6 +67,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.14** | **Learning-engine wave (12-month plan, Q2): an honest per-word mastery model from the FSRS memory states (mastery.dart, 0-100 with four labeled bands, learning-capped), an FSRS calibration report that closes the prediction loop (prediction-vs-reality buckets + Brier score, sampled at every real review, 400-sample rolling log), a deterministic smart-session orchestrator (due reviews → weak words → new words within the daily budget, replacing the shuffle on the Cards tab), a 7-day remediation window that spots chronically forgotten words (2+ distinct lapse days, self-cleaning bounded log, focused practice lane), and a streak freeze + local daily reminder (tokens earned every 7 consecutive days, one missed day bridged automatically; flutter_local_notifications — the wave's only new plugin, on-device scheduling, zero network) — 346 → 424 tests (+78)** |
 | **v5.14.1** | **Reminder-delivery fix: the two `flutter_local_notifications` receivers (`ScheduledNotificationReceiver` + `ActionBroadcastReceiver`, both not exported) added to the app manifest — the plugin stopped declaring them itself, so without them the daily reminder could not fire while the app process was dead (the normal case overnight); found by independent verification of the CI APK's merged manifest, not by a user. BOOT receiver still deliberately omitted (re-anchored each launch)** |
 | **v5.15** | **12-month plan Q3 — UI/UX: the first-run journey becomes 3 screens ending in an AUTO-STARTED first lesson (win <3 min, path customization deferred to a non-blocking first-win card, journey timer recorded once); a next-best-action card answers "what now?" with an EXPLAINED rule ladder (remediation > review >=8 > unit-finish > lesson) and a ≤2-banner budget with a "something else" sheet; a full accessibility pass (zero unlabeled interactive elements on the core screens by automated semantics scan, WCAG-AA theme audit with catalog fixes, 48dp targets, simplified-audio mode); a motion catalog + next-lesson warmup isolate + honest engine budgets in CI (real wall-clock: plan build p95 0.8ms vs 16ms budget — the tester's fake clock documented); settings reorganized into 4 titled sections + search, ZERO storage-key changes — 424 → 465 tests (+41)** |
+| **v5.16** | **12-month plan Q4 — content depth: EVERY word row in all four courses now carries a bilingual example sentence (6266 → 6346 rows at 100% coverage, backfilled by a deterministic bilingual frame engine + hand-authored banks, verbatim containment guaranteed for every new row so fill-blank works everywhere); the reading/conversation/grammar corpora double from 2 to 4 items per course (B1+B2 added: doctor visit, job interview, housing, past tenses, conditionals, relative clauses, object pronouns); a 4th lesson lands in each of the eight core A1/A2 three-lesson units (80 new words with full fields); a confusable sound-pairs bank (8 curated pairs per course, all sides verified against the real corpus) with a tap-to-switch chip lane in the pronunciation screen; the validator hardens: coverage floors at 100%, containment floors lock the legacy ratio, duplicate-example and word-count gates, corpus floors, en/ur lesson-parity KPI — 465 → 470 tests** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -1215,6 +1217,73 @@ on-device TalkBack walkthrough and true per-frame p95 need real
 hardware (the CI gate covers semantics + engine budgets; the tester's
 clock is fake — documented above); F1.1b "fair difficulty" and the Q1
 story lane (F1.5) remain open from earlier quarters.
+
+## v5.16 — Content depth quarter (SHIPPED, plan Q4)
+
+The 12-month plan's fourth quarter: deepen the content that the Q1-Q3
+engines teach with. HONEST NOTE: the original plan artifact (an HTML
+document) was lost in a container reset, so this quarter was re-derived
+from the plan's Q4 theme (content depth), its hard constraints (no new
+units, append-only vocab/lesson ids, every feature with acceptance
+criteria + tests + a local KPI), and a measured audit of the real
+content state. What the audit found, in numbers: example-sentence
+coverage sat at EN 21% / UR 39% / FR 42% / DE 100% (3,736 rows missing),
+every skill corpus held only 2 items per course (A1+A2 only), and the
+pronunciation skill had no curated practice data.
+
+1. **F4.1 Example backfill to 100%** — every one of the 6,266 word rows
+   now carries a natural `exampleTarget` + `exampleAr` pair. The engine
+   (`scripts/q4_gen_examples.py` + frame modules, committed and
+   reproducible) classifies each row (verb / noun / adj / adv / num /
+   phrase / sentence / imperative) via cross-lingual Arabic-shape
+   heuristics, routes nouns through semantic subtypes (person / place /
+   food / animal / vehicle / time, keyed on the ARABIC translation which
+   is Arabic in all four courses), and fills the rest from a
+   meaning-parallel frame system whose Arabic side locks the authored
+   3rd-masculine imperfect into grammatical carriers. Function words,
+   greetings, adjectives and every misfit went through hand-authored
+   override banks (`scripts/q4_bank_*.py`) until leftovers hit zero.
+   Hard rules: new examples contain the target VERBATIM (fill-blank's
+   `_canBlank` needs it), stay inside the 2-8 word dictation gate for
+   single words, are unique per course, and never touch existing
+   examples (append-only discipline).
+2. **F4.2 Skill corpora double (2 -> 4 per course)** — B1+B2 items in
+   every course: doctor visit + job interview (conversation, all four
+   languages), apartment hunting (DE), reading texts on travel, career,
+   environment, studies and health, and grammar lessons on past tenses,
+   conditionals, Perfekt, relative clauses, passé composé and object
+   pronouns — with contrastive Arabic explanations, matching the house
+   style of the v5.6-v5.9 skills.
+3. **F4.3 Lesson depth inside existing units** — the eight core A1/A2
+   three-lesson units (Jobs, Clothes, Body, Nature in EN; Basic Verbs,
+   Basic Feelings, Daily Life, Food in UR) each gain a 4th lesson with
+   10 new fully-figured words (id, target, translation, phonetic,
+   emoji; examples backfilled by the F4.1 engine). EN and UR stay at
+   220 lessons each (parity KPI). Honest remainder: the C1 tail units
+   (idioms, nuance, academic) keep 3 lessons — new advanced vocab is
+   queued for the next content wave.
+4. **F4.4 Confusable sound pairs** — `lib/pronunciation_pairs.dart`:
+   8 curated pairs per course (Along/Among, lait/lit, Nein/neun,
+   آلو/آڑو...), each pair referencing two REAL single-word targets of
+   its course (edit-distance-one neighbors picked for sound contrast).
+   The pronunciation screen grows a tap-to-switch chip lane; a chip
+   that opens nothing is impossible — the test pins resolvability
+   against the actual corpus, and the UI filters again at runtime.
+5. **F4.5 Validator + KPI hardening** — `scripts/validate_content.py`
+   and `test/content_test.dart` (mirrored): coverage floors at 100%,
+   per-course containment floors locking the legacy ratio (EN 99% /
+   UR 99% / FR 85% / DE 80% — legacy conjugated examples counted as
+   notices, never silently rewritten), duplicate-example and 2-8
+   word-count gates, skill-corpus floors (>= 4 per course per skill),
+   and an en/ur lesson-parity KPI. The Q4 acceptance criteria are now
+   enforced by BOTH the Python gate and `flutter test`.
+
+**Honest remainders (next waves):** C1-tail unit depth (a 4th lesson in
+the idiom/nuance/academic units); legacy containment notices (99 rows,
+mostly FR/DE conjugated examples) stay documented rather than silently
+rewritten; native-speaker review of the backfilled corpus rows is a
+human task the validator cannot replace; the plan's field-data KPIs
+(time-to-first-win, completion rates) still await real devices.
 
 ## Hard invariants (never break)
 
