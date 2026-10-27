@@ -11,6 +11,18 @@
         android:label="مسار اللغة"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- v5.14.1 (F2.5 fix, found in independent APK verification): the
+             plugin no longer injects these receivers, and without them a
+             scheduled alarm cannot be delivered when the app process is
+             dead — the normal case overnight. Both are NOT exported, so
+             nothing external can invoke them. The BOOT receiver is
+             deliberately omitted: reminders are re-anchored on every app
+             launch (a reboot self-heals on next open — documented
+             tradeoff, no extra permissions). -->
+        <receiver android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+        <receiver android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

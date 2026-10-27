@@ -1,7 +1,8 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.14.0+38** — see the v5.14 section below for the
-learning-engine wave (mastery model, FSRS calibration report, smart
+**Current release: v5.14.1+39** — see the v5.14.1 section for the
+reminder-delivery fix found in independent APK verification, the v5.14
+section for the learning-engine wave (mastery model, FSRS calibration report, smart
 session orchestration, 7-day remediation, streak freeze + local daily
 reminder), the v5.13 section for the
 second feature of the 12-month plan Wave 1 (F1.2: instant micro-repair),
@@ -62,6 +63,7 @@ the v5.0 section for the German course (the fourth language).
 | **v5.12** | **12-month plan Wave 1 — F1.1: confusion-driven distractors + exercise balancing: the v4.4 confusion engine now feeds the exercise generator (`Distractors.pick` — learner pairs → profile pairs → look-alikes → seeded random → reserve), every lesson plan is per-lesson seeded deterministic, a post-generation balancer enforces a 40% per-type cap (re-type → remove fallback, ping-pong-proof) and an A2+ production floor (dictation/build always present), KPI measured by `Distractors.confusionShare` — zero JSON changes, 316 tests** |
 | **v5.13** | **12-month plan Wave 1 — F1.2: instant micro-repair after mistakes: the first mistake on a word in a session opens a 3-step repair card inside the lesson (rule/distinction hint + the word's own example → a re-rolled question with DIFFERENT distractors → an easier 2-option pick), 2 cycles max then the lesson continues without embarrassment, dictation/listenComp get hint-then-retry only, the failed question is re-queued ≥3 rounds later as a normal scored round, repair rounds are XP-neutral by construction, dedicated 8-line bilingual companion bank, reduce-motion shows the card instantly — zero JSON changes, 346 tests** |
 | **v5.14** | **Learning-engine wave (12-month plan, Q2): an honest per-word mastery model from the FSRS memory states (mastery.dart, 0-100 with four labeled bands, learning-capped), an FSRS calibration report that closes the prediction loop (prediction-vs-reality buckets + Brier score, sampled at every real review, 400-sample rolling log), a deterministic smart-session orchestrator (due reviews → weak words → new words within the daily budget, replacing the shuffle on the Cards tab), a 7-day remediation window that spots chronically forgotten words (2+ distinct lapse days, self-cleaning bounded log, focused practice lane), and a streak freeze + local daily reminder (tokens earned every 7 consecutive days, one missed day bridged automatically; flutter_local_notifications — the wave's only new plugin, on-device scheduling, zero network) — 346 → 424 tests (+78)** |
+| **v5.14.1** | **Reminder-delivery fix: the two `flutter_local_notifications` receivers (`ScheduledNotificationReceiver` + `ActionBroadcastReceiver`, both not exported) added to the app manifest — the plugin stopped declaring them itself, so without them the daily reminder could not fire while the app process was dead (the normal case overnight); found by independent verification of the CI APK's merged manifest, not by a user. BOOT receiver still deliberately omitted (re-anchored each launch)** |
 
 ## v4.3 — lesson styles (SHIPPED)
 
@@ -1106,6 +1108,25 @@ unit-tested; persistence rides the additive schema-v2 keys.
    strict-parsed on load (a hand-tampered payload falls back to
    defaults, never crashes). Suite: 346 → **424** tests (+78), version
    pin in the l10n parity group moved to 5.14.0.
+
+
+## v5.14.1 — reminder-delivery fix (SHIPPED, hotfix)
+
+The independent APK verification of v5.14.0 (aapt2 dump of the CI
+artifact's merged manifest) found that the daily-reminder alarm had no
+delivery path: `flutter_local_notifications` 19.x declares only
+permissions in its own manifest, so its scheduled-notification
+receivers must come from the app — and v5.14.0 had added only
+POST_NOTIFICATIONS. `ScheduledNotificationReceiver` and
+`ActionBroadcastReceiver` are now declared in the app manifest
+(`exported=false` — same-uid alarm delivery only, nothing external can
+invoke them). The BOOT receiver stays deliberately omitted: reminders
+are re-anchored on every app launch, so a reboot self-heals on the
+next open — an honest, documented tradeoff that avoids
+RECEIVE_BOOT_COMPLETED. No code paths changed; the Dart-side orchestrator
+and its 19 tests are untouched (the manifest is verified by the
+release checklist, not by unit tests). Suite: 424 tests. Version pin
+moved to 5.14.1.
 
 ## Hard invariants (never break)
 
