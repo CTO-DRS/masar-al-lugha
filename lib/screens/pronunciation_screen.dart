@@ -106,6 +106,9 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
   }
 
   Future<void> _listen() async {
+    // Context is resolved ONCE at the top — every await below keeps a
+    // mounted guard, never a BuildContext across a gap.
+    final st = AppScope.of(context);
     if (_listening) {
       await _stt.stop();
       setState(() => _listening = false);
@@ -119,11 +122,9 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
     }
     // v5.18 (Phase-2 Batch E): stop any ongoing TTS BEFORE the mic opens —
     // the recognizer must hear the LEARNER, not the app's own replay of
-    // the same word (a real audio-resource conflict, not cosmetics). The
-    // service is resolved BEFORE any await (no BuildContext across gaps).
+    // the same word (a real audio-resource conflict, not cosmetics).
     final tts = AppScope.ttsOf(context);
     await tts.stop();
-    final st = AppScope.of(context);
     final locale = await _stt.localeFor(st.course.ttsLang);
     // v5.17 (Phase-1 audit M-3): the screen can close while the locale
     // query is in flight — never setState after dispose.
