@@ -4,11 +4,35 @@ on:
   push:
     branches: ["**"]
   workflow_dispatch:
+    inputs:
+      production:
+        description: "Production build (requires release signing config; fails without it)"
+        type: boolean
+        default: false
 
-# v5.18 Phase-2 (Batch A): verification and publishing are now SEPARATE jobs
-# with separate privilege scopes — the verify job runs every gate with
-# read-only permissions, and only the release job (which depends on verify
-# passing) holds `contents: write` for the GitHub Release step.
+# Phase-3 (Batch B) policy, machine-enforced by scripts/ci_policy_check.py
+# which runs inside the read-only verify job:
+#
+# 1. least privilege      — top-level deny-all; verify is contents:read only;
+#                           only the release job (needs: verify) holds
+#                           contents:write because publishing requires it.
+# 2. pinned actions       — every `uses:` is pinned to an immutable commit
+#                           SHA (no floating major tags, incl. third-party).
+# 3. no accidental release— a GitHub Release is only created when the
+#                           version tag does NOT exist yet; existing
+#                           published releases are never overwritten.
+# 4. honest signing       — without key.properties the build is a
+#                           DEBUG-SIGNED TESTING BUILD and is labelled as
+#                           such everywhere it appears. The production mode
+#                           (workflow_dispatch input) FAILS when the
+#                           release signing config is absent — a debug
+#                           artifact can never be presented as production.
+# 5. no secrets in logs   — no step echoes secret values; when a production
+#                           keystore is introduced it must arrive via
+#                           encrypted secrets written to files without echo.
+
+permissions: {}
+
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -16,16 +40,19 @@ jobs:
       contents: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: CI policy check (machine-enforced)
+        run: python3 scripts/ci_policy_check.py
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: temurin
           java-version: "17"
 
       - name: Set up Flutter 3.47.7
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           channel: stable
           flutter-version: "3.47.7"
@@ -53,16 +80,32 @@ jobs:
       contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Production signing gate
+        id: signmode
+        run: |
+          if [ "${{ inputs.production }}" = "true" ]; then
+            if [ -f android/key.properties ]; then
+              echo "mode=production" >> "$GITHUB_OUTPUT"
+              echo "Production signing config present."
+            else
+              echo "::error::Production build requested but android/key.properties is absent — refusing to produce a debug-signed artifact as production."
+              exit 1
+            fi
+          else
+            echo "mode=testing" >> "$GITHUB_OUTPUT"
+            echo "Testing build (debug-signed unless key.properties exists)."
+          fi
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: temurin
           java-version: "17"
 
       - name: Set up Flutter 3.47.7
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           channel: stable
           flutter-version: "3.47.7"
@@ -76,7 +119,19 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "build=$BUILD" >> $GITHUB_OUTPUT
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
-          echo "App version: $VERSION+$BUILD"
+
+      # Phase-3 (Batch B): never mutate an already-published release. If the
+      # version tag exists on the remote, the release step is skipped and the
+      # run only produces the downloadable CI artifact.
+      - name: Check release tag existence
+        id: tagcheck
+        run: |
+          if git ls-remote --tags origin "refs/tags/${{ steps.version.outputs.tag }}" | grep -q "${{ steps.version.outputs.tag }}"; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag ${{ steps.version.outputs.tag }} already published — release step will be skipped."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Install dependencies
         run: flutter pub get
@@ -84,25 +139,20 @@ jobs:
       - name: Build release APK
         run: flutter build apk --release
 
-      # v5.17 Phase-1 (security path): a release APK built without
-      # key.properties falls back to the DEBUG certificate. That fallback is
-      # fine for sideload testing but must never be silent — the summary and
-      # the log now state it explicitly so nobody mistakes this APK for a
-      # Play-Store-ready artifact.
       - name: Sign-check (no silent debug signing)
         run: |
           if [ -f android/key.properties ]; then
-            echo "Release keystore detected — production signing in use."
+            echo "SIGNED: release keystore in use (production signing)."
           else
-            echo "⚠️ **DEBUG-SIGNED BUILD** — no \`key.properties\` was provided to this run, so app-release.apk is signed with the DEBUG certificate. Sideload/testing only; NOT for Play Store distribution." >> $GITHUB_STEP_SUMMARY
-            echo "DEBUG-SIGNED: no key.properties in this run — the APK uses the debug certificate (sideload/testing only, not for Play Store)."
+            echo "⚠️ **DEBUG-SIGNED TESTING BUILD** — no \`key.properties\` in this run, so app-release.apk is signed with the DEBUG certificate. Sideload/testing only; NOT for Play Store and NOT an update over an existing production install." >> $GITHUB_STEP_SUMMARY
+            echo "DEBUG-SIGNED: testing build."
           fi
 
       - name: Show APK info
         run: ls -lh build/app/outputs/flutter-apk/
 
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: masar-al-lugha-apk
           path: build/app/outputs/flutter-apk/app-release.apk
@@ -113,22 +163,26 @@ jobs:
           mkdir -p release
           cp build/app/outputs/flutter-apk/app-release.apk "release/masar-al-lugha-v${{ steps.version.outputs.version }}.apk"
 
-      # v5.18 Phase-2: version-neutral release notes (Phase-1 remainder #5 —
-      # the body used to hard-code v4.x feature lists on every release).
+      # Creates a GitHub Release ONLY when the version tag is new. The body
+      # always states the real signing status — a debug-signed build is
+      # explicitly labelled a testing build, never production.
       - name: Create GitHub Release with APK
-        if: github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch'
-        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch' && steps.tagcheck.outputs.exists == 'false'
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: مسار اللغة v${{ steps.version.outputs.version }}
           body: |
             ## 🚀 مسار اللغة — الإصدار v${{ steps.version.outputs.version }} (بناء ${{ steps.version.outputs.build }})
 
+            ### 🔏 حالة التوقيع
+            ${{ steps.signmode.outputs.mode == 'production' && 'موقّع بشهادة الإصدار الرسمية (release keystore).' || '⚠️ **نسخة اختبار موقّعة بشهادة debug** — للتثبيت التجريبي فقط، وليست إصدار إنتاج، ولا تصلح للنشر على متجر Play ولا للتحديث فوق تثبيت إنتاجي قائم.' }}
+
             ### 📦 التحميل
             حمّل التطبيق من المرفقات بالأسفل: **masar-al-lugha-v${{ steps.version.outputs.version }}.apk**
 
             ### ✅ جودة هذا الإصدار
-            - اجتاز هذا البناء بوابات التحقق كاملة: تحقق المحتوى + التنسيق + التحليل الثابت + كل الاختبارات.
+            - اجتاز هذا البناء بوابات التحقق كاملة: سياسة CI + تحقق المحتوى + التنسيق + التحليل الثابت + كل الاختبارات.
             - تفاصيل ما الجديد في كل إصدار موثقة في `docs/ROADMAP.md` داخل المستودع.
 
             ### 📥 التثبيت
@@ -140,4 +194,3 @@ jobs:
             🔒 هذا البناء من الفرع `main` بعد نجاح مهمة التحقق المستقلة كاملة.
           files: release/masar-al-lugha-v${{ steps.version.outputs.version }}.apk
           fail_on_unmatched_files: true
-          overwrite_files: true
