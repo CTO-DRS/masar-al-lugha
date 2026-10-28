@@ -83,8 +83,7 @@ class _TextCard extends StatelessWidget {
           ),
           children: [
             _Reader(text: text),
-            if (text.questions.isNotEmpty)
-              _Comprehension(text: text),
+            if (text.questions.isNotEmpty) _Comprehension(text: text),
           ],
         ),
       ),
@@ -245,8 +244,8 @@ class _ComprehensionState extends State<_Comprehension> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(context.tr('readingCheckTitle'),
-              style: const TextStyle(
-                  fontWeight: FontWeight.w900, fontSize: 14.5)),
+              style:
+                  const TextStyle(fontWeight: FontWeight.w900, fontSize: 14.5)),
           const SizedBox(height: 8),
           for (var qi = 0; qi < widget.text.questions.length; qi++)
             _questionCard(qi),
