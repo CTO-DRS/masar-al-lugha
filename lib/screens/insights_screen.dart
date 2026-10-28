@@ -821,8 +821,7 @@ Widget _masteryCard(BuildContext context, String Function(String) tr,
               ('masteryWeak', AppColors.red),
             ])
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(999),
@@ -830,9 +829,7 @@ Widget _masteryCard(BuildContext context, String Function(String) tr,
                 child: Text(
                   '${tr(key)} ${stateCounts[key] ?? 0}',
                   style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w800,
-                      color: color),
+                      fontSize: 11, fontWeight: FontWeight.w800, color: color),
                 ),
               ),
           ],
