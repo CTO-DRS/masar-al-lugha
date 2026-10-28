@@ -446,6 +446,7 @@ class L {
       'nbaWeakWordsTitle': 'تثبيت الكلمات ({n} كلمات)',
       'nbaWeakWordsWhy':
           '{n} كلمات رأيتها وما زال إتقانها منخفضًا — تمارين تثبيت هادئة ترفعها قبل متابعة الجديد',
+      'grammarPrompt': 'أكمل الجملة — القاعدة مذكورة أعلاه',
       'nbaLessonTitle': 'الدرس التالي',
       'nbaLessonWhy':
           'خطوتك التالية على المسار — خطوة واحدة واضحة بدل لوحة مزدحمة',
@@ -944,6 +945,7 @@ class L {
       'nbaWeakWordsTitle': 'Strengthen words ({n} words)',
       'nbaWeakWordsWhy':
           '{n} words you have seen are still low-mastery — calm practice lifts them before new material',
+      'grammarPrompt': 'Complete the sentence — the rule is shown above',
       'nbaLessonTitle': 'Next lesson',
       'nbaLessonWhy':
           'Your next step on the path — one clear step instead of a crowded board',

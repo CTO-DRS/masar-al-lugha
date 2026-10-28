@@ -138,6 +138,7 @@ Future<void> _answerCorrectly(WidgetTester tester, Exercise ex) async {
     case ExerciseType.listenComp:
     case ExerciseType.picToWord:
     case ExerciseType.fillblank:
+    case ExerciseType.grammar: // v5.18: option pick like an mcq
       final f = find.widgetWithText(OptionCard, ex.answer);
       expect(f, findsOneWidget,
           reason: 'round ${ex.type} answer "${ex.answer}"');

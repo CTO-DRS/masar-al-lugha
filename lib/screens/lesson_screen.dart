@@ -316,6 +316,8 @@ class _LessonScreenState extends State<LessonScreen> {
         return _dictationBody(tr);
       case ExerciseType.listenComp:
         return _mcqBody(tr, isListen: true);
+      case ExerciseType.grammar: // v5.18: the drill renders like an mcq
+        return _mcqBody(tr, isListen: false);
     }
   }
 
@@ -354,7 +356,9 @@ class _LessonScreenState extends State<LessonScreen> {
                       ? _listenTitle(tr)
                       : ex.type == ExerciseType.reverse
                           ? tr('chooseWord')
-                          : tr('chooseTranslation'),
+                          : ex.type == ExerciseType.grammar
+                              ? tr('grammarPrompt')
+                              : tr('chooseTranslation'),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                 ),
               ),
@@ -414,6 +418,23 @@ class _LessonScreenState extends State<LessonScreen> {
                   // sentence — lay it out in its own direction.
                   textDirection: directionOf(ex.prompt),
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
+                ),
+              ),
+            ),
+          // v5.18 (Batch B4): the grammar round teaches BEFORE it asks —
+          // the rule reminder (drill.explainAr) rides in Exercise.hint and
+          // is rendered here, where the learner reads it pre-answer.
+          if (ex.type == ExerciseType.grammar && (ex.hint ?? '').isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 4),
+              child: Text(
+                ex.hint!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: context.mutedText,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  height: 1.4,
                 ),
               ),
             ),
@@ -1197,6 +1218,7 @@ class _LessonScreenState extends State<LessonScreen> {
       case ExerciseType.fillblank:
       case ExerciseType.truefalse:
       case ExerciseType.listenComp: // v4.6: option pick
+      case ExerciseType.grammar: // v5.18: option pick
         return selected != null;
       case ExerciseType.dictation: // v4.6: something typed
         return _typed.text.trim().isNotEmpty;

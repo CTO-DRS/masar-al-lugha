@@ -138,6 +138,7 @@ enum ExerciseType {
   truefalse, // word + shown meaning -> true or false?
   dictation, // v4.6: hear it -> type it (tolerant checking)
   listenComp, // v4.6: hear the sentence -> pick its Arabic meaning
+  grammar, // v5.18: one grammar-drill round from GrammarCatalog (rule in hint)
 }
 
 class Exercise {
