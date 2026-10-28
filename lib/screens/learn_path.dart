@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../insights.dart';
+import '../mastery.dart';
 import '../models.dart';
 import '../next_action.dart';
 import '../path.dart';
@@ -195,7 +196,28 @@ class LearnPath extends StatelessWidget {
       remediationCount: _remediationCount(st),
       remainingInCurrentUnit: remaining,
       nextLessonFlat: next != null ? flat : null,
+      // v5.18 (Batch B2): seen words still sitting in the low-mastery
+      // bands (score < 50) — the same honest data the weak-words lane
+      // practices. Capped at 20 like the practice queue itself.
+      weakCount: _weakCount(st),
     );
+  }
+
+  /// v5.18 (Batch B2): seen words of completed lessons whose mastery score
+  /// is still below the emerging band (0 < score < 50). Unseen words are
+  /// the lessons' job, not a weakness signal.
+  static int _weakCount(AppState st) {
+    var n = 0;
+    for (final l in st.course.allLessons) {
+      if (!st.lessonStars.containsKey(l.id)) continue;
+      for (final v in l.vocab) {
+        final c = st.cardFor(v.id);
+        if (c == null || c.reps == 0) continue;
+        final s = Mastery.wordScore(c);
+        if (s > 0 && s < 50) n++;
+      }
+    }
+    return n;
   }
 
   static int _unitIndexOfFlat(Course course, int flat) {
@@ -239,6 +261,7 @@ class _NextActionCard extends StatelessWidget {
     final accent = switch (action.kind) {
       'remediation' => AppColors.red,
       'review' => AppColors.blue,
+      'weakWords' => AppColors.orange,
       'unitFinish' => AppColors.yellow,
       _ => AppColors.green,
     };
@@ -312,6 +335,7 @@ class _NextActionCard extends StatelessWidget {
   static IconData _iconOf(String kind) => switch (kind) {
         'remediation' => Icons.healing,
         'review' => Icons.bolt,
+        'weakWords' => Icons.fitness_center,
         'unitFinish' => Icons.flag,
         _ => Icons.play_lesson,
       };
@@ -351,6 +375,11 @@ class _NextActionCard extends StatelessWidget {
       case 'review':
         Navigator.of(context).push(MaterialPageRoute(
           builder: (_) => const QuickReviewScreen(),
+        ));
+      case 'weakWords':
+        // v5.18 (Batch B2): consolidation lane over the low-mastery cluster.
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => const WeakWordsScreen(),
         ));
       case 'unitFinish':
       case 'lesson':

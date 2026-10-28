@@ -70,6 +70,9 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
         cards: st.cards,
         wordMistakes: st.wordMistakes,
         newBudget: st.newCardsRemainingToday,
+        // v5.18 (Batch B3): the live 7-day remediation window keeps its
+        // members in the weak segment even after their score recovers.
+        remediationIds: st.remediationVocab(course).map((v) => v.id).toSet(),
       );
       setState(() {
         smartPlan = plan;

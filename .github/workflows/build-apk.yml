@@ -5,12 +5,52 @@ on:
     branches: ["**"]
   workflow_dispatch:
 
-permissions:
-  contents: write
-
+# v5.18 Phase-2 (Batch A): verification and publishing are now SEPARATE jobs
+# with separate privilege scopes — the verify job runs every gate with
+# read-only permissions, and only the release job (which depends on verify
+# passing) holds `contents: write` for the GitHub Release step.
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Flutter 3.47.7
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "3.47.7"
+          cache: true
+
+      - name: Validate course content (v4.0 gate)
+        run: python3 scripts/validate_content.py
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting (v4.0 gate)
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Run tests
+        run: flutter test --concurrency=1
+
+  release:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,20 +78,8 @@ jobs:
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
           echo "App version: $VERSION+$BUILD"
 
-      - name: Validate course content (v4.0 gate)
-        run: python3 scripts/validate_content.py
-
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Verify formatting (v4.0 gate)
-        run: dart format --output=none --set-exit-if-changed .
-
-      - name: Analyze
-        run: flutter analyze --fatal-infos
-
-      - name: Run tests
-        run: flutter test
 
       - name: Build release APK
         run: flutter build apk --release
@@ -85,6 +113,8 @@ jobs:
           mkdir -p release
           cp build/app/outputs/flutter-apk/app-release.apk "release/masar-al-lugha-v${{ steps.version.outputs.version }}.apk"
 
+      # v5.18 Phase-2: version-neutral release notes (Phase-1 remainder #5 —
+      # the body used to hard-code v4.x feature lists on every release).
       - name: Create GitHub Release with APK
         if: github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
@@ -97,12 +127,9 @@ jobs:
             ### 📦 التحميل
             حمّل التطبيق من المرفقات بالأسفل: **masar-al-lugha-v${{ steps.version.outputs.version }}.apk**
 
-            ### ✅ ما الجديد في هذا الإصدار
-            - **قوائمي (v4.7)**: أنشئ قوائم كلماتك الخاصة وتدرّب عليها ببطاقات القلب
-            - **موجة الإتقان (v4.6)**: إملاء + استماع تفهمي + 180 كلمة CEFR
-            - **رفيق وأصدقاؤه (v4.5)**: شخصيات تفاعلية مرافقة للتعلّم
-            - **ذكاء محلي + المفضلة (v4.4)**: اقتراحات ذكية تعمل بدون إنترنت
-            - **أنماط دروس جديدة (v4.3)**: استخراج الجمل (cloze) + دروس صوتية
+            ### ✅ جودة هذا الإصدار
+            - اجتاز هذا البناء بوابات التحقق كاملة: تحقق المحتوى + التنسيق + التحليل الثابت + كل الاختبارات.
+            - تفاصيل ما الجديد في كل إصدار موثقة في `docs/ROADMAP.md` داخل المستودع.
 
             ### 📥 التثبيت
             1. حمّل ملف APK
@@ -110,7 +137,7 @@ jobs:
             3. ثبّت التطبيق واستمتع بالتعلّم!
 
             ---
-            🔒 هذا البناء من الفرع `main` بعد نجاح جميع الاختبارات (تحقق المحتوى + التنسيق + التحليل + الاختبارات).
+            🔒 هذا البناء من الفرع `main` بعد نجاح مهمة التحقق المستقلة كاملة.
           files: release/masar-al-lugha-v${{ steps.version.outputs.version }}.apk
           fail_on_unmatched_files: true
           overwrite_files: true

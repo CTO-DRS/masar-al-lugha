@@ -443,6 +443,9 @@ class L {
           'الذاكرة أولًا: {n} بطاقة استحقاقها الجدول — نراجعها قبل أي درس جديد',
       'nbaUnitFinishTitle': 'أغلق الوحدة: درس واحد يبقى',
       'nbaUnitFinishWhy': 'درس واحد فقط يفصلك عن إتمام الوحدة — زخم الذروة',
+      'nbaWeakWordsTitle': 'تثبيت الكلمات ({n} كلمات)',
+      'nbaWeakWordsWhy':
+          '{n} كلمات رأيتها وما زال إتقانها منخفضًا — تمارين تثبيت هادئة ترفعها قبل متابعة الجديد',
       'nbaLessonTitle': 'الدرس التالي',
       'nbaLessonWhy':
           'خطوتك التالية على المسار — خطوة واحدة واضحة بدل لوحة مزدحمة',
@@ -938,6 +941,9 @@ class L {
       'nbaUnitFinishTitle': 'Close the unit: one lesson left',
       'nbaUnitFinishWhy':
           'Just one lesson stands between you and a finished unit — peak momentum',
+      'nbaWeakWordsTitle': 'Strengthen words ({n} words)',
+      'nbaWeakWordsWhy':
+          '{n} words you have seen are still low-mastery — calm practice lifts them before new material',
       'nbaLessonTitle': 'Next lesson',
       'nbaLessonWhy':
           'Your next step on the path — one clear step instead of a crowded board',

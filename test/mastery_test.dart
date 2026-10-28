@@ -14,6 +14,7 @@ CardData _seen({
   int lapses = 0,
   String state = 'review',
   int lastDaysAgo = 1,
+  int? dueInDays,
   DateTime? at,
 }) {
   final n = at ?? _fixedNow;
@@ -25,6 +26,9 @@ CardData _seen({
     difficulty: difficulty,
     lastReviewEpochMs:
         n.subtract(Duration(days: lastDaysAgo)).millisecondsSinceEpoch,
+    // Explicit due on the FIXED timeline (CardData's default due is
+    // DateTime.now() at construction, which drifts past _fixedNow).
+    dueEpochMs: n.add(Duration(days: dueInDays ?? 3)).millisecondsSinceEpoch,
   );
   return c;
 }
@@ -165,5 +169,50 @@ void main() {
     expect(sum.total, 0);
     expect(sum.mastered, 0);
     expect(sum.averagePct, 0);
+  });
+
+  // ===== v5.18 (Phase-2 Batch B1): six honest word states =====
+  group('mastery states (v5.18 stateKey)', () {
+    test('unseen / null cards are new', () {
+      expect(Mastery.stateKey(null, now: n()), Mastery.stateMasteryNew);
+      expect(Mastery.stateKey(CardData(), now: n()), Mastery.stateMasteryNew);
+    });
+
+    test('a live remediation target is weak, whatever its states say', () {
+      final c = _seen(stability: 40, reps: 12);
+      expect(Mastery.stateKey(c, remediationTarget: true, now: n()),
+          Mastery.stateMasteryWeak);
+      // Learning-state cards are outranked by the live trap too.
+      final l = _seen(state: 'learning', stability: 2);
+      expect(Mastery.stateKey(l, remediationTarget: true, now: n()),
+          Mastery.stateMasteryWeak);
+    });
+
+    test('learning-state cards read as learning', () {
+      final c = _seen(state: 'learning', stability: 2);
+      expect(Mastery.stateKey(c, now: n()), Mastery.stateMasteryLearning);
+    });
+
+    test('a due review card needs review even when its score is high', () {
+      // Healthy long-term card that came due right now.
+      final c = _seen(stability: 40, reps: 12, lastDaysAgo: 40, dueInDays: -1);
+      expect(Mastery.wordScore(c, now: n()), greaterThanOrEqualTo(75));
+      expect(Mastery.stateKey(c, now: n()), Mastery.stateMasteryNeedsReview);
+    });
+
+    test(
+        'a not-due, healthy review card is mastered at high score, consolidating otherwise',
+        () {
+      final strong = _seen(stability: 40, reps: 12, lastDaysAgo: 1);
+      expect(Mastery.stateKey(strong, now: n()), Mastery.stateMasteryMastered);
+      final young = _seen(stability: 3, reps: 2, lastDaysAgo: 1);
+      expect(
+          Mastery.stateKey(young, now: n()), Mastery.stateMasteryConsolidating);
+    });
+
+    test('stateKey never throws on partial data (empty card fields)', () {
+      final c = CardData(state: 'review', reps: 1);
+      expect(Mastery.stateKey(c, now: n()), isNotEmpty);
+    });
   });
 }

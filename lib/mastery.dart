@@ -88,6 +88,66 @@ class Mastery {
     return 'masteryMastered';
   }
 
+  // ================= v5.18: six honest word states =================
+
+  /// A card whose predicted recall has decayed this far below the 90%
+  /// target is treated as genuinely needing a review even if its due
+  /// timestamp drifted ahead (e.g. after a retention-target change).
+  static const double needsReviewRetrievability = 0.60;
+
+  /// Six distinguishable, EXPLAINABLE word states for the learner.
+  ///
+  /// v5.18 (Phase-2 Batch B1) — refines the four score bands above with the
+  /// state the FSRS scheduler and the remediation log already track. The
+  /// rules are ordered FIRST MATCH WINS over real data — no new counters,
+  /// no invented statistics:
+  ///
+  ///   1. [stateMasteryNew]           never seen (no card / zero reps);
+  ///   2. [stateMasteryWeak]          a remediation target — lapsed on 2+
+  ///                                  distinct days inside the 7-day window
+  ///                                  (lib/remediation.dart's own rule);
+  ///   3. [stateMasteryLearning]      still in the `learning` state — has
+  ///                                  not graduated to the review schedule;
+  ///   4. [stateMasteryNeedsReview]   a review card that is due now (or has
+  ///                                  decayed far below the target curve —
+  ///                                  see [needsReviewRetrievability]);
+  ///   5. [stateMasteryMastered]      score >= [masteredThreshold];
+  ///   6. [stateMasteryConsolidating] everything else: seen, scheduled,
+  ///                                  growing toward mastery.
+  ///
+  /// The engine returns stable keys; the UI maps key -> localized label +
+  /// color (same pattern as [bandKey]).
+  static const String stateMasteryNew = 'masteryNew';
+  static const String stateMasteryLearning = 'masteryLearning';
+  static const String stateMasteryConsolidating = 'masteryConsolidating';
+  static const String stateMasteryMastered = 'masteryMastered';
+  static const String stateMasteryNeedsReview = 'masteryNeedsReview';
+  static const String stateMasteryWeak = 'masteryWeak';
+
+  static String stateKey(
+    CardData? card, {
+    bool remediationTarget = false,
+    DateTime? now,
+  }) {
+    if (card == null || card.reps <= 0) return stateMasteryNew;
+    final n = now ?? DateTime.now();
+    // 2. A live trap outranks every other reading of the same card.
+    if (remediationTarget) return stateMasteryWeak;
+    // 3. Not yet graduated from the short-interval learning steps.
+    if (card.state == 'learning') return stateMasteryLearning;
+    // 4. The schedule itself says this card needs attention now.
+    if (card.state == 'review') {
+      final due = card.dueEpochMs <= n.millisecondsSinceEpoch;
+      final r = Srs.retrievability(card.stability, card.lastReviewEpochMs, n);
+      if (due || r < needsReviewRetrievability) return stateMasteryNeedsReview;
+    }
+    // 5/6. Score bands over healthy scheduled cards.
+    final s = wordScore(card, now: n);
+    return s >= masteredThreshold
+        ? stateMasteryMastered
+        : stateMasteryConsolidating;
+  }
+
   // ================= aggregates =================
 
   /// Average mastery across a vocab list (unseen words count as 0, so a
