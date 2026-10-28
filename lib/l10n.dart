@@ -195,6 +195,8 @@ class L {
       'pronMiss': 'لم أتعرّف عليها — جرّب في مكان هادئ',
       'pronUnavailable':
           'التعرف على الكلام غير متاح على هذا الجهاز — يمكنك الاستماع والتقليد بدلاً من ذلك',
+      'pronDeviceEngine':
+          'التعرف يعمل بمحرك جهازك وقد يعالج النظام الصوت داخلياً أو عبر خدمته — التطبيق نفسه لا يرفع صوتك لأي خادم',
       'grammarTitle': 'القواعد بالعربية',
       'grammarNone': 'لا توجد دروس قواعد لهذه اللغة بعد',
       'readingTitle': 'القراءة المتدرجة',
@@ -713,6 +715,8 @@ class L {
       'pronMiss': 'Could not recognize it — try a quiet place',
       'pronUnavailable':
           'Speech recognition is unavailable on this device — you can still listen and imitate',
+      'pronDeviceEngine':
+          'Recognition uses your device\'s own engine (the system may process audio on or off device) — the app itself never uploads your voice to any server',
       'grammarTitle': 'Grammar, explained in Arabic',
       'grammarNone': 'No grammar lessons for this language yet',
       'readingTitle': 'Leveled reading',
