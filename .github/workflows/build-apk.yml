@@ -56,6 +56,20 @@ jobs:
       - name: Build release APK
         run: flutter build apk --release
 
+      # v5.17 Phase-1 (security path): a release APK built without
+      # key.properties falls back to the DEBUG certificate. That fallback is
+      # fine for sideload testing but must never be silent — the summary and
+      # the log now state it explicitly so nobody mistakes this APK for a
+      # Play-Store-ready artifact.
+      - name: Sign-check (no silent debug signing)
+        run: |
+          if [ -f android/key.properties ]; then
+            echo "Release keystore detected — production signing in use."
+          else
+            echo "⚠️ **DEBUG-SIGNED BUILD** — no \`key.properties\` was provided to this run, so app-release.apk is signed with the DEBUG certificate. Sideload/testing only; NOT for Play Store distribution." >> $GITHUB_STEP_SUMMARY
+            echo "DEBUG-SIGNED: no key.properties in this run — the APK uses the debug certificate (sideload/testing only, not for Play Store)."
+          fi
+
       - name: Show APK info
         run: ls -lh build/app/outputs/flutter-apk/
 

@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.16.0+41** — see the v5.16 section for the
+**Current release: v5.17.0+42** (Phase-1 engineering foundation) — see the v5.17 section for the phase-1 foundation wave, the v5.16 section for the
 content-depth quarter of the 12-month plan (F4.1-F4.5), the v5.15
 section for the UI/UX quarter (F3.1-F3.5), the v5.14.1 section
 for the reminder-delivery fix found in independent APK verification,
@@ -27,6 +27,7 @@ the v5.0 section for the German course (the fourth language).
 
 | Version | Theme |
 |---|---|
+| **v5.17** | **Phase-1 engineering foundation: 3 HIGH + 5 MED integrity fixes (profile data bleed, lesson double-tap XP, pronunciation first-frame crash, failed-import healing, rating double-count), lazy IndexedStack tab state, 'فضاء مسار' design identity (31 WCAG-verified pairs), dictionary search memoization, 5 real 360dp overflows fixed, CI sign-check — 482 tests** |
 | v1.0 | Flutter app born: EN+UR, SRS flashcards, leveled lessons, gamification |
 | v2.0 | +170 words, picture rounds, fill-blank, true/false, dictionary tab, 16 badges |
 | v3.0 | French course; 1042 new words; new badges |
@@ -1291,3 +1292,95 @@ human task the validator cannot replace; the plan's field-data KPIs
 - Vocab/lesson IDs are append-only — renaming would orphan user progress.
 - No paid APIs, no network in release, no secrets in the repository.
 - All claims in docs must be reproducible by a command or a test.
+
+## v5.17 — Phase-1 engineering foundation (SHIPPED — audit, fixes, identity)
+
+The user commissioned a dedicated engineering phase (paths: system-safety
+audit, navigation/screens, visual identity, motion, accessibility, performance,
+security, tests) executed in batches A–F on the `phase1/foundation` branch,
+merged to main after every gate went green. Honest scope: this was a FIX and
+CONSOLIDATION wave — no new learning features, no content changes, no storage
+schema change (schema stays v2, byte-compatible with v5.x payloads).
+
+### What was found and fixed (each with a pinning test in
+`test/phase1_fixes_test.dart`)
+
+- **H-1 pronunciation first-frame crash (HIGH)**: the screen read a `late`
+  field in `build()` before its post-frame callback assigned it — every open
+  threw `LateInitializationError` for one frame. Fixed with the proven
+  started-gate pattern (same as quick review) + an honest empty-corpus state.
+  Also: the inline `FocusNode()` allocated per rebuild is now owned+disposed,
+  and an STT locale query can no longer `setState` after dispose.
+- **H-2 profile data bleed (HIGH)**: the F2.x engine fields
+  (`lapseLog`, `calibrationLog`, `streakFreezes`, `lastFreezeAwardMark`) were
+  missing from `_resetInMemory()` AND `ProfileStore.load()` merged `lapseLog`
+  over whatever the previous profile left — so a full reset kept the freeze
+  wallet and switching slots bled one learner's history into the next.
+  Fixed in both places; reset, switch and load-with-old-payload pinned by
+  four unit tests.
+- **H-3 lesson double-tap (HIGH)**: `Check` had no re-entrancy guard (one
+  answer could be counted twice within a frame) and the final `Continue`
+  could run completion twice — awarding the lesson XP twice. Fixed with
+  synchronous guards; pinned by a double-tap widget test and a full-lesson
+  driver asserting the exact expected XP.
+- **M-1 failed import healed (MED)**: a same-slot import that threw mid-parse
+  left half-applied fields in memory. The recovery now reloads the slot's
+  persisted snapshot — pinned by a test that corrupts a payload AFTER a valid
+  xp field and asserts the state rolls back.
+- **M-4 rating double-count (MED)**: flashcards/quick-review rating tiles
+  consumed the NEXT queue card on a same-frame double tap. Post-frame
+  re-entrancy locks; pinned by a widget test.
+- **M-5 double navigation pushes (MED)**: next-best-action start buttons now
+  share a nav debounce.
+- **M-6 five real 360dp overflows (MED, all pre-existing)**: ChunkyButton
+  label, flashcards deck-stat row, dictionary count row, learn-path hero row,
+  bottom-nav pill (3px clip). All wrap/expand correctly now; the phone-surface
+  tests would have failed before.
+- **D-1 tab state (UX)**: the home shell unmounted the previous tab on every
+  switch (scroll, card-session queue, dictionary query lost). Replaced with a
+  LAZY IndexedStack. The new round-trip test CAUGHT a regression during
+  development — the nav item bypassed `switchTab` and the lazy stack showed a
+  blank screen on first visit — fixed before shipping.
+- **P-1/P-2 perf**: dictionary search now memoizes results over a per-course
+  lowercase index (it previously rescanned the full corpus on EVERY
+  notifyListeners); the learn path computes its next-best-action once per
+  build instead of three times.
+- **Hygiene**: `_RingPainter` track repaint, two dialog controller leaks,
+  STT listen try/catch, mixed-script weak-words line direction,
+  clear-path-plan confirmation dialog (+2 l10n keys), guarded hex color parse.
+
+### Visual identity — "فضاء مسار" (space + glass)
+
+`AppColors` re-derived to the commissioned identity: electric cyan #42E8F5,
+aurora green #42E6A4, violet #9B7BFF on deep-space dark surfaces
+#080B16/#10182B with the #F4F7FF text, plus a coordinated LIGHT variant —
+both modes remain user-selectable and the saved appearance key is untouched.
+All 31 (text, background) pairs were verified with the WCAG formula BEFORE
+landing and re-pinned in `test/contrast_test.dart` (same thresholds, same
+negative assertions). New `lib/design_system.dart`: spacing/radius/tap
+tokens, semantic status colors with icon companions, and ONE selective glass
+recipe (`GlassSurface`) used on modal surfaces with a solid reduce-motion
+fallback. Details: `docs/PHASE_1_DESIGN_SYSTEM_AR.md`.
+
+### Security & CI
+
+- Secrets scan of lib/android/.github/pubspec: clean (known "password" vocab
+  false positive only).
+- CI gains an explicit sign-check step: a release APK built without
+  `key.properties` is announced as DEBUG-SIGNED in the run summary — no
+  silent debug signing. `contents: write` remains the only workflow
+  permission (the release job needs it).
+- Manifest permissions unchanged and minimal (RECORD_AUDIO, POST_NOTIFICATIONS,
+  VIBRATE). Dependency ranges + the committed pubspec.lock stay the effective
+  pin; no batch update was performed (27 newer majors are known-incompatible —
+  upgrading is deliberate later work).
+
+### Known remainders (honest)
+
+- The root `ListenableBuilder` rebuilds MaterialApp on every state change;
+  the double-rebuild chain is documented with code evidence in the phase-1
+  report as a measured-later item (no guess-based restructuring shipped).
+- The release-body text in the CI workflow still describes v4.x features —
+  cosmetic, noted for the next release.
+- `action-gh-release@v2` is pinned by tag, not by commit SHA (supply-chain
+  hardening candidate).

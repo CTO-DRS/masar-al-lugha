@@ -862,8 +862,8 @@ void main() {
         expect(L.t('ar', k), isNot(k), reason: k);
         expect(L.t('en', k), isNot(k), reason: k);
       }
-      expect(L.t('ar', 'version'), contains('5.16.0'));
-      expect(L.t('en', 'version'), contains('5.16.0'));
+      expect(L.t('ar', 'version'), contains('5.17.0'));
+      expect(L.t('en', 'version'), contains('5.17.0'));
     });
   });
 
