@@ -872,6 +872,37 @@ class AppState extends ChangeNotifier {
 
   CardData? cardFor(String vocabId) => cards[vocabId];
 
+  /// v5.18 (Batch F): the six honest word states over a course's vocab,
+  /// counted from the FSRS states + the remediation window (Mastery.stateKey).
+  /// Unseen words count as 'masteryNew' — the map ALWAYS carries all six
+  /// keys so the UI never renders a partial legend.
+  Map<String, int> masteryStateCounts([Course? courseArg]) {
+    final c = courseArg ?? course;
+    final counts = <String, int>{
+      Mastery.stateMasteryNew: 0,
+      Mastery.stateMasteryLearning: 0,
+      Mastery.stateMasteryConsolidating: 0,
+      Mastery.stateMasteryMastered: 0,
+      Mastery.stateMasteryNeedsReview: 0,
+      Mastery.stateMasteryWeak: 0,
+    };
+    var targets = const <String>{};
+    try {
+      targets = remediationVocab(c).map((v) => v.id).toSet();
+    } catch (_) {
+      // remediation scan is defensive anyway; empty targets never lie —
+      // the state key just falls back to the FSRS-only reading.
+    }
+    for (final v in c.allVocab) {
+      final key = Mastery.stateKey(
+        cards[v.id],
+        remediationTarget: targets.contains(v.id),
+      );
+      counts[key] = (counts[key] ?? 0) + 1;
+    }
+    return counts;
+  }
+
   // ================= badges =================
 
   void _checkBadges() {

@@ -411,6 +411,11 @@ class L {
       'masteryEmerging': 'ناشئة',
       'masteryStrong': 'قوية',
       'masteryMastered': 'متمكنة',
+      // v5.18 (Batch F): the six-state breakdown labels
+      'masteryLearning': 'قيد التعلم',
+      'masteryConsolidating': 'قيد التثبيت',
+      'masteryNeedsReview': 'تحتاج مراجعة',
+      'masteryWeak': 'متكررة الخطأ',
       'calTitle': 'معايرة الجدولة (FSRS)',
       'calSubtitle': 'التنبؤ مقابل الواقع في مراجعاتك الفعلية',
       'calPredicted': 'التنبؤ',
@@ -936,6 +941,11 @@ class L {
       'masteryEmerging': 'Emerging',
       'masteryStrong': 'Strong',
       'masteryMastered': 'Mastered',
+      // v5.18 (Batch F): the six-state breakdown labels
+      'masteryLearning': 'Learning',
+      'masteryConsolidating': 'Consolidating',
+      'masteryNeedsReview': 'Needs review',
+      'masteryWeak': 'Recurring',
       'calTitle': 'Schedule calibration (FSRS)',
       'calSubtitle': 'Prediction vs reality across your real reviews',
       'calPredicted': 'Predicted',
