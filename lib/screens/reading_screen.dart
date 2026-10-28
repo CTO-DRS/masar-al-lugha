@@ -81,7 +81,11 @@ class _TextCard extends StatelessWidget {
               ],
             ),
           ),
-          children: [_Reader(text: text)],
+          children: [
+            _Reader(text: text),
+            if (text.questions.isNotEmpty)
+              _Comprehension(text: text),
+          ],
         ),
       ),
     );
@@ -214,5 +218,83 @@ class _Reader extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// v5.18 (Phase-2 Batch D1): comprehension questions under the text.
+/// Answers enter the REAL stats (recordAnswer feeds accuracy/insights; a
+/// correct answer earns 1 XP — the same rate as weak-words practice and
+/// grammar drills). Each question answers at most once — the per-question
+/// answered gate makes rebuilds and re-taps incapable of double-counting.
+class _Comprehension extends StatefulWidget {
+  final ReadingText text;
+  const _Comprehension({required this.text});
+
+  @override
+  State<_Comprehension> createState() => _ComprehensionState();
+}
+
+class _ComprehensionState extends State<_Comprehension> {
+  final Map<int, int> _picked = {}; // question index -> picked option
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(context.tr('readingCheckTitle'),
+              style: const TextStyle(
+                  fontWeight: FontWeight.w900, fontSize: 14.5)),
+          const SizedBox(height: 8),
+          for (var qi = 0; qi < widget.text.questions.length; qi++)
+            _questionCard(qi),
+        ],
+      ),
+    );
+  }
+
+  Widget _questionCard(int qi) {
+    final q = widget.text.questions[qi];
+    final picked = _picked[qi];
+    final answered = picked != null;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: context.softBg,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: context.line, width: 1.5),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(q.promptAr,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w800, fontSize: 13.5, height: 1.5)),
+          const SizedBox(height: 8),
+          for (var oi = 0; oi < q.options.length; oi++)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: OptionCard(
+                text: q.options[oi],
+                selected: picked == oi,
+                correct: answered && oi == q.correct,
+                wrong: answered && picked == oi && oi != q.correct,
+                onTap: answered ? null : () => _pick(qi, oi),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  void _pick(int qi, int oi) {
+    final q = widget.text.questions[qi];
+    final st = AppScope.of(context);
+    setState(() => _picked[qi] = oi);
+    st.recordAnswer(oi == q.correct);
+    if (oi == q.correct) st.addXp(1);
   }
 }

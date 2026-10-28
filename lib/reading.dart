@@ -9,6 +9,19 @@
 // show no gloss (the UI says so) — no invented translations.
 import 'models.dart';
 
+/// v5.18 (Phase-2 Batch D1): one comprehension question for a reading
+/// text. Questions are authored AGAINST the text body (answerable from the
+/// text alone — no outside knowledge, no invented linguistics) and live as
+/// const DATA like the texts themselves.
+class ReadingQuestion {
+  final String promptAr;
+  final List<String> options;
+
+  /// Index into [options] of the correct answer.
+  final int correct;
+  const ReadingQuestion(this.promptAr, this.options, this.correct);
+}
+
 class ReadingText {
   final String id;
   final String courseId;
@@ -17,8 +30,13 @@ class ReadingText {
   final String titleEn;
   final String body; // target-language text, sentence-split by [.!?؟۔]
   final List<String> sentencesAr; // aligned with body sentences (best effort)
+
+  /// v5.18 (Batch D1): comprehension questions (0..2 per text). Empty for
+  /// older payloads is fine — the section simply does not render.
+  final List<ReadingQuestion> questions;
   const ReadingText(this.id, this.courseId, this.level, this.titleAr,
-      this.titleEn, this.body, this.sentencesAr);
+      this.titleEn, this.body, this.sentencesAr,
+      {this.questions = const []});
 
   /// Sentences of the body, trimmed, empty dropped.
   List<String> sentences() => body
@@ -49,6 +67,10 @@ class ReadingCatalog {
         'أخوه يذهب إلى المدرسة معه.',
         'سيراً على الأقدام لأن المدرسة قريبة.',
       ],
+      questions: [
+        ReadingQuestion('متى يستيقظ أحمد كل يوم؟', ['في السادسة', 'في السابعة', 'في الثامنة'], 0),
+        ReadingQuestion('لماذا يذهبون سيراً على الأقدام؟', ['لأن السيارة معطلة', 'لأن المدرسة قريبة', 'لأن الجو جميل'], 1),
+      ],
     ),
     ReadingText(
       'rd_en_market',
@@ -64,6 +86,10 @@ class ReadingCatalog {
         'تشتري خضاراً طازجة وخبزاً وجبناً.',
         'السعر جيد والبائع ودود.',
         'في البيت تطبخ وجبة عائلية كبيرة.',
+      ],
+      questions: [
+        ReadingQuestion('ماذا تشتري أمي من السوق؟', ['خضاراً طازجة وخبزاً وجبناً', 'لحماً وأرزاً', 'فطائراً وحلوى'], 0),
+        ReadingQuestion('كيف يكون البائع؟', ['غاضباً', 'ودوداً', 'متعباً'], 1),
       ],
     ),
     // ---------- German ----------
@@ -81,6 +107,10 @@ class ReadingCatalog {
         'لديه اليوم رياضيات وألمانية.',
         'في الاستراحة يلعب مع صديقه.',
       ],
+      questions: [
+        ReadingQuestion('متى تبدأ المدرسة؟', ['في الثامنة', 'في التاسعة', 'في السابعة'], 0),
+        ReadingQuestion('بمن يلعب علي في الاستراحة؟', ['وحده', 'مع صديقه', 'مع أخيه'], 1),
+      ],
     ),
     ReadingText(
       'rd_de_urlaub',
@@ -96,6 +126,10 @@ class ReadingCatalog {
         'الفندق له إطلالة على البحر والجو دافئ.',
         'على الشاطئ يلعب الأطفال ويسبحون.',
         'في المساء نأكل السمك في المطعم.',
+      ],
+      questions: [
+        ReadingQuestion('إلى أين نسافر في الصيف؟', ['إلى البحر', 'إلى الجبل', 'إلى المدينة'], 0),
+        ReadingQuestion('ماذا نأكل في المساء؟', ['الدجاج', 'السمك', 'اللحم'], 1),
       ],
     ),
     // ---------- French ----------
@@ -114,6 +148,10 @@ class ReadingCatalog {
         'أمها تطبخ بشكل رائع.',
         'في نهاية الأسبوع يزورون الحديقة معاً.',
       ],
+      questions: [
+        ReadingQuestion('أين يعمل والد ليلى؟', ['في مكتب', 'في مستشفى', 'في مدرسة'], 0),
+        ReadingQuestion('إلى أين يذهبون في نهاية الأسبوع؟', ['إلى الشاطئ', 'إلى الحديقة', 'إلى المتحف'], 1),
+      ],
     ),
     ReadingText(
       'rd_fr_ville',
@@ -129,6 +167,10 @@ class ReadingCatalog {
         'فيها متحف ومكتبة عامة وسوق كبير.',
         'في الصباح الحافلة سريعة وغير مكلفة.',
         'في المساء تكون الشوارع هادئة.',
+      ],
+      questions: [
+        ReadingQuestion('كيف هي الحافلة في الصباح؟', ['سريعة وغير مكلفة', 'بطيئة ومكلفة', 'مزدحمة وصاخبة'], 0),
+        ReadingQuestion('كيف تكون الشوارع في المساء؟', ['مزدحمة', 'هادئة', 'مغلقة'], 1),
       ],
     ),
     // ---------- Urdu ----------
@@ -146,6 +188,10 @@ class ReadingCatalog {
         'أخي يذهب إلى المدرسة.',
         'في المساء نأكل معاً جميعاً.',
       ],
+      questions: [
+        ReadingQuestion('كيف هو البيت؟', ['صغير لكنه نظيف', 'كبير لكنه قديم', 'بعيد لكنه جميل'], 0),
+        ReadingQuestion('ماذا تحضّر أمي في الصباح؟', ['القهوة', 'الشاي', 'العصير'], 1),
+      ],
     ),
     ReadingText(
       'rd_ur_bazar',
@@ -160,6 +206,10 @@ class ReadingCatalog {
         'تشتري أمي خضاراً وفواكه طازجة.',
         'يكون البائع لطيفاً.',
         'تعود للبيت وتطبخ أمي طعاماً لذيذاً.',
+      ],
+      questions: [
+        ReadingQuestion('متى يكون السوق مزدحماً؟', ['يوم الجمعة', 'يوم الاثنين', 'يوم الأربعاء'], 0),
+        ReadingQuestion('ماذا تشتري أمي؟', ['لحماً وخبزاً', 'خضاراً وفواكه طازجة', 'حليباً وجبناً'], 1),
       ],
     ),
     // ---------- v5.16 (Q4/F4.2): B1/B2 depth for every course ----------
@@ -181,6 +231,10 @@ class ReadingCatalog {
         'في المدينة زار متحفاً شهيراً وتدرب على الإنجليزية مع أهلها.',
         'يقول إن السفر أفضل معلم، ويريد العودة السنة القادمة.',
       ],
+      questions: [
+        ReadingQuestion('كم استغرقت الرحلة الجوية؟', ['أربع ساعات', 'ساعتين', 'ست ساعات'], 0),
+        ReadingQuestion('مع من تدرّب أحمد على الإنجليزية؟', ['مع عائلته', 'مع أهل المدينة', 'مع الطيارين'], 1),
+      ],
     ),
     ReadingText(
       'rd_en_career',
@@ -198,6 +252,10 @@ class ReadingCatalog {
         'راتبها جيد، لكن جدولها مزدحم والضغط حقيقي.',
         'الشهر الماضي حصلت على ترقية وتدير الآن فريقاً صغيراً.',
         'تعتقد أن سر النجاح هو الصبر والعمل الأمين واحترام الزملاء.',
+      ],
+      questions: [
+        ReadingQuestion('ماذا حصلت عليه سارة الشهر الماضي؟', ['ترقية', 'وظيفة جديدة', 'إجازة طويلة'], 0),
+        ReadingQuestion('ماذا تدير سارة الآن؟', ['شركة كاملة', 'فريقاً صغيراً', 'مكتباً في بيتها'], 1),
       ],
     ),
     // ---------- German ----------
@@ -217,6 +275,10 @@ class ReadingCatalog {
         'بعد العمل يذهب إلى النادي الرياضي أو يقرأ في المكتبة.',
         'في نهاية الأسبوع يزور عائلته ويطبخ للجميع.',
       ],
+      questions: [
+        ReadingQuestion('متى يبدأ علي عمله؟', ['في التاسعة', 'في الثامنة', 'في العاشرة'], 0),
+        ReadingQuestion('ماذا يفعل علي في نهاية الأسبوع؟', ['يسافر بعيداً', 'يزور عائلته ويطبخ للجميع', 'يعمل في المكتب'], 1),
+      ],
     ),
     ReadingText(
       'rd_de_umwelt',
@@ -234,6 +296,10 @@ class ReadingCatalog {
         'بعضهم يذهب إلى العمل بالدراجة، وآخرون يشترون منتجات محلية ويوفرون الطاقة.',
         'في مدينتنا توجد الآن مسارات دراجات أكثر ونفايات أقل.',
         'يمكن للجميع أن يقدم مساهمة صغيرة، ومعاً تحسب كل مساهمة.',
+      ],
+      questions: [
+        ReadingQuestion('كيف يذهب بعض الناس إلى العمل؟', ['بالدراجة', 'بالطائرة', 'بالقارب'], 0),
+        ReadingQuestion('ما الجديد في المدينة الآن؟', ['طرق أكثر ونفايات أكثر', 'مسارات دراجات أكثر ونفايات أقل', 'مسارات أقل وحدائق أقل'], 1),
       ],
     ),
     // ---------- French ----------
@@ -253,6 +319,10 @@ class ReadingCatalog {
         'أساتذته مطلبون لكنهم منصفون.',
         'يأمل أن يجد عملاً جيداً السنة القادمة ويبقى قرب عائلته.',
       ],
+      questions: [
+        ReadingQuestion('ماذا يدرس كريم في الجامعة؟', ['علوم الحاسوب', 'الطب', 'الحقوق'], 0),
+        ReadingQuestion('أين يعمل كريم بعد الظهر؟', ['في مكتبة', 'في مقهى صغير', 'في مطعم كبير'], 1),
+      ],
     ),
     ReadingText(
       'rd_fr_voyage',
@@ -271,6 +341,10 @@ class ReadingCatalog {
         'كان المناخ حاراً والطعام لذيذاً والناس ترحيبيين جداً.',
         'تبقى هذه الرحلة أجمل ذكرى عائلية لنا.',
       ],
+      questions: [
+        ReadingQuestion('ماذا استأجرت العائلة؟', ['سيارة', 'شقة', 'دراجات'], 0),
+        ReadingQuestion('أين كانت القرى الصغيرة؟', ['على الشاطئ', 'على التلة', 'في الغابة'], 1),
+      ],
     ),
     // ---------- Urdu ----------
     ReadingText(
@@ -288,6 +362,10 @@ class ReadingCatalog {
         'أساتذته مجتهدون ولطيفون.',
         'يريد وظيفة جيدة في السنة القادمة.',
       ],
+      questions: [
+        ReadingQuestion('متى تكون حصص علي؟', ['في الصباح', 'في المساء', 'بعد العشاء'], 0),
+        ReadingQuestion('ماذا يريد علي السنة القادمة؟', ['السفر للخارج', 'وظيفة جيدة', 'فتح متجر'], 1),
+      ],
     ),
     ReadingText(
       'rd_ur_sehat',
@@ -303,6 +381,10 @@ class ReadingCatalog {
         'الرياضة اليومية والغذاء الجيد ضروريان.',
         'يقول الأطباء إن النوم الكافي ضروري أيضاً للجسد.',
         'ينبغي أن نشرب ماءً أكثر ونقلل استخدام الهاتف.',
+      ],
+      questions: [
+        ReadingQuestion('ماذا يقول الأطباء عن النوم؟', ['الكافي منه ضروري للجسد', 'غير مهم إطلاقاً', 'ضار بالجسد'], 0),
+        ReadingQuestion('مما ينبغي أن نقلل؟', ['شرب الماء', 'استخدام الهاتف', 'الرياضة'], 1),
       ],
     ),
   ];
