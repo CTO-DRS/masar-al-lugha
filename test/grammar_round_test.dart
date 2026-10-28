@@ -34,8 +34,7 @@ void main() {
     test('every real A1 lesson gains exactly one grammar round before the boss',
         () {
       final plan = ExerciseGen.forLesson(_lesson('en_u1_l1', 'A1'));
-      final grammarIdx =
-          plan.indexWhere((e) => e.type == ExerciseType.grammar);
+      final grammarIdx = plan.indexWhere((e) => e.type == ExerciseType.grammar);
       expect(grammarIdx, greaterThanOrEqualTo(0),
           reason: 'the en catalog has an A1 lesson — the round must exist');
       final matchIdx = _matchIndex(plan);
@@ -63,12 +62,10 @@ void main() {
 
     test('an A1 lesson never drills a B1+ rule (content that fits)', () {
       final plan = ExerciseGen.forLesson(_lesson('de_u2_l1', 'A1'));
-      final g =
-          plan.firstWhere((e) => e.type == ExerciseType.grammar);
+      final g = plan.firstWhere((e) => e.type == ExerciseType.grammar);
       // The picked drill must belong to a catalog lesson at or below A1.
-      final candidates = GrammarCatalog.forCourse('de')
-          .where((l) => l.level == 'A1')
-          .toList();
+      final candidates =
+          GrammarCatalog.forCourse('de').where((l) => l.level == 'A1').toList();
       final prompts = candidates.expand((l) => l.drills.map((d) => d.prompt));
       expect(prompts.contains(g.prompt), isTrue);
     });

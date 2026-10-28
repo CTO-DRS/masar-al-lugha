@@ -333,7 +333,8 @@ class RepairEngine {
         return t;
       case ExerciseType.dictation:
       case ExerciseType.listenComp:
-      case ExerciseType.grammar: // v5.18: a failed grammar drill re-rolls as mcq
+      case ExerciseType
+            .grammar: // v5.18: a failed grammar drill re-rolls as mcq
       case ExerciseType.match:
         return ExerciseType.mcq; // unreachable via normal flow (guarded)
     }

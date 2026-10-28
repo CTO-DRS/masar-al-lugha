@@ -80,7 +80,8 @@ class ExerciseGen {
         .toList();
     if (pool.isEmpty) return plan;
     final gl = pool[_stableSeed('${lesson.id}|gr') % pool.length];
-    final drill = gl.drills[_stableSeed('${lesson.id}|drill') % gl.drills.length];
+    final drill =
+        gl.drills[_stableSeed('${lesson.id}|drill') % gl.drills.length];
     final grammarEx = Exercise(
       type: ExerciseType.grammar,
       prompt: drill.prompt,
