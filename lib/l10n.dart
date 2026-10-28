@@ -311,6 +311,9 @@ class L {
       'pathPlanBanner': 'مسارك',
       'pathEditPlan': 'تعديل المسار',
       'pathClearPlan': 'إلغاء المسار',
+      // v5.17 (Phase-1): the clear-plan button now confirms first.
+      'pathClearPlanBody':
+          'سيتم إلغاء خطتك الحالية (المجال والمستوى). يمكنك تحديد مسار جديد في أي وقت — هل تريد المتابعة؟',
       'pathOtherUnits': 'وحدات أخرى',
       'pathSetupBtn': 'حدد مسارك ومستواك',
       // v4.3 — lesson styles
@@ -796,6 +799,9 @@ class L {
       'pathPlanBanner': 'Your path',
       'pathEditPlan': 'Edit path',
       'pathClearPlan': 'Remove path',
+      // v5.17 (Phase-1): the clear-plan button now confirms first.
+      'pathClearPlanBody':
+          'Your current plan (field and level) will be removed. You can pick a new path anytime — continue?',
       'pathOtherUnits': 'Other units',
       'pathSetupBtn': 'Choose path & level',
       // v4.3 — lesson styles

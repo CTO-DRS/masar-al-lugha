@@ -31,19 +31,23 @@ class LearnPath extends StatelessWidget {
     final st = AppScope.of(context);
     final course = st.course;
 
+    // v5.17 (Phase-1 audit P-2): _nextActionFor used to run THREE times per
+    // build (warmup + NBA card + banner gate), each a full lessons×vocab
+    // walk plus a remediation scan — re-executed on every notifyListeners
+    // (every XP tick anywhere). Compute it once per build and reuse.
+    final action = _nextActionFor(st);
+
     // v5.15 (F3.4): warm up the next lesson's plan in a background
     // isolate while the learner is still looking at the path — the tap
     // then starts the first round instantly. Fire-and-forget; the lesson
     // screen falls back to a synchronous build on any mismatch.
-    final warmAction = _nextActionFor(st);
-    if (warmAction.lessonFlat != null) {
-      final lesson = course.allLessons[warmAction.lessonFlat!];
+    if (action.lessonFlat != null) {
+      final lesson = course.allLessons[action.lessonFlat!];
       LessonWarmup.warm(WarmupRequest(
         lessonId: lesson.id,
         lesson: lesson,
         mode: LessonMode.classic,
-        cefr:
-            course.units[_unitIndexOfFlat(course, warmAction.lessonFlat!)].cefr,
+        cefr: course.units[_unitIndexOfFlat(course, action.lessonFlat!)].cefr,
         confusions: st.confusionPairs,
       ));
     }
@@ -80,12 +84,12 @@ class LearnPath extends StatelessWidget {
           const TopStatsBar(),
           // v5.15 (F3.2): ONE next-best-action card answers "what do I do
           // now?" — the rich path below it stays browsable, never decisive.
-          _NextActionCard(action: _nextActionFor(st), openTab: openTab),
+          _NextActionCard(action: action, openTab: openTab),
           // v5.15 (F3.2) banner budget: at most TWO secondary banners stay
           // visible (quick review when live + ONE rotating skill); the rest
           // wait in the "more" sheet — nothing is hidden from the learner,
           // only prioritized.
-          if (_nextActionFor(st).kind != 'review') _QuickReviewBanner(),
+          if (action.kind != 'review') _QuickReviewBanner(),
           _SkillBanner(
             icon: _rotatingSkillIcon(),
             labelKey: _rotatingSkillKey(),
@@ -312,7 +316,25 @@ class _NextActionCard extends StatelessWidget {
         _ => Icons.play_lesson,
       };
 
+  /// v5.17 (Phase-1 audit M-5): same-frame double-tap lock shared by ALL
+  /// next-action cards and the next-lesson push. Static because the card
+  /// is a StatelessWidget (immutable by contract) and because the guard
+  /// is inherently global: only ONE navigation push may pass per window.
+  static DateTime _lastStart = DateTime.fromMillisecondsSinceEpoch(0);
+
+  static bool _navDebounced() {
+    final now = DateTime.now();
+    if (now.difference(_lastStart) < const Duration(milliseconds: 500)) {
+      return true;
+    }
+    _lastStart = now;
+    return false;
+  }
+
   void _start(BuildContext context, AppState st) {
+    // v5.17 (Phase-1 audit M-5): a same-frame double-tap pushed the target
+    // screen twice (two stacked lesson/review routes).
+    if (_navDebounced()) return;
     final course = st.course;
     switch (action.kind) {
       case 'remediation':
@@ -337,6 +359,7 @@ class _NextActionCard extends StatelessWidget {
   }
 
   void _pushNextLesson(BuildContext context, AppState st) {
+    if (_navDebounced()) return;
     final course = st.course;
     for (var i = 0; i < course.allLessons.length; i++) {
       if (st.isLessonUnlocked(i) &&
@@ -610,7 +633,29 @@ class _PlanBanner extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
                 icon: const Icon(Icons.close, size: 18),
                 color: context.mutedText,
-                onPressed: () => st.clearPathPlan(st.courseId),
+                // v5.17 (Phase-1 audit L-2): clearing the plan discards the
+                // learner's active path — it now asks first, like every
+                // other destructive action.
+                onPressed: () async {
+                  final ok = await showDialog<bool>(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text(context.tr('pathClearPlan')),
+                      content: Text(context.tr('pathClearPlanBody')),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(ctx, false),
+                          child: Text(context.tr('stay')),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(ctx, true),
+                          child: Text(context.tr('exit')),
+                        ),
+                      ],
+                    ),
+                  );
+                  if (ok == true) st.clearPathPlan(st.courseId);
+                },
               ),
             ],
           ),

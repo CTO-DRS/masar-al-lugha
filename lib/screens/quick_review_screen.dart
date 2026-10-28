@@ -54,7 +54,15 @@ class _QuickReviewScreenState extends State<QuickReviewScreen> {
     });
   }
 
+  /// v5.17 (Phase-1 audit M-4): same-frame re-entrancy lock — a double-tap
+  /// used to double-count practiced/xpGained and consume two queue entries.
+  /// Released after the frame so the next card's tiles start fresh.
+  bool _ratingBusy = false;
+
   void _rate(int q) {
+    if (_ratingBusy || current == null) return;
+    _ratingBusy = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _ratingBusy = false);
     final st = AppScope.of(context);
     final v = current!;
     st.rateCard(

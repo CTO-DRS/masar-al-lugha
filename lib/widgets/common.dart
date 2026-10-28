@@ -150,7 +150,11 @@ class _RingPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _RingPainter old) =>
-      old.progress != progress || old.color != color;
+      old.progress != progress ||
+      old.color != color ||
+      // v5.17 (Phase-1 audit L-3): the track was not compared, so a
+      // dark-mode flip with unchanged progress kept the old track color.
+      old.track != track;
 }
 
 /// v5.11: one personalized memory hint, rendered under a card's back side

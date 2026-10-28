@@ -27,6 +27,19 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
   late Vocab _current;
   final TextEditingController _pickCtrl = TextEditingController();
 
+  // v5.17 (Phase-1 audit H-1): the corpus resolve runs in a post-frame
+  // callback, but build() used to read `_current` unconditionally — the
+  // first frame crashed with LateInitializationError on every open. The
+  // body now waits for `_started` (same proven pattern as
+  // quick_review_screen), and an empty corpus shows an honest empty state.
+  bool _started = false;
+  bool _wordsEmpty = false;
+
+  /// v5.17 (Phase-1 audit M-2): was `FocusNode()` inline in build — a new
+  /// node leaked on every rebuild (this screen rebuilds on every STT
+  /// partial result). One node, owned by the State, disposed on exit.
+  final FocusNode _pickFocus = FocusNode();
+
   /// Confusable pairs (F4.4) resolvable against THIS course's corpus —
   /// both sides must be real single words, otherwise the pair is dropped
   /// (a chip that opens nothing is a broken promise).
@@ -56,11 +69,22 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
             MapEntry(p,
                 (byTarget[p.a.toLowerCase()]!, byTarget[p.b.toLowerCase()]!)),
       ];
+      if (_words.isEmpty) {
+        // Honest degradation: no practiceable words in this course.
+        if (mounted) {
+          setState(() {
+            _wordsEmpty = true;
+            _started = true;
+          });
+        }
+        return;
+      }
       _current = _words.firstWhere(
         (v) => widget.initialWord != null && v.target == widget.initialWord,
         orElse: () => _words.first,
       );
       if (widget.initialWord != null) _pickCtrl.text = _current.target;
+      if (mounted) setState(() => _started = true);
       _engineReady = await _stt.init();
       if (mounted) setState(() => _engineChecked = true);
     });
@@ -70,6 +94,7 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
   void dispose() {
     _stt.stop();
     _pickCtrl.dispose();
+    _pickFocus.dispose();
     super.dispose();
   }
 
@@ -93,6 +118,9 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
     }
     final st = AppScope.of(context);
     final locale = await _stt.localeFor(st.course.ttsLang);
+    // v5.17 (Phase-1 audit M-3): the screen can close while the locale
+    // query is in flight — never setState after dispose.
+    if (!mounted) return;
     setState(() {
       _listening = true;
       _transcript = '';
@@ -120,6 +148,24 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
   @override
   Widget build(BuildContext context) {
     String tr(String k) => context.tr(k);
+    // v5.17 (Phase-1 audit H-1): first frame renders a neutral shell until
+    // the corpus resolve completes (no more LateInitializationError).
+    if (!_started) {
+      return Scaffold(
+        appBar: AppBar(title: Text(tr('pronTitle'))),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (_wordsEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: Text(tr('pronTitle'))),
+        body: Center(
+          child: Text(tr('noResults'),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: context.mutedText, fontSize: 15)),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(tr('pronTitle'))),
@@ -188,7 +234,7 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
           // word picker with autocomplete over the course corpus
           RawAutocomplete<Vocab>(
             textEditingController: _pickCtrl,
-            focusNode: FocusNode(),
+            focusNode: _pickFocus,
             displayStringForOption: (v) => v.target,
             optionsBuilder: (TextEditingValue value) {
               final q = value.text.trim().toLowerCase();

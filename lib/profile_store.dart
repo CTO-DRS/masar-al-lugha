@@ -107,6 +107,14 @@ class ProfileStore {
       try {
         final j = jsonDecode(raw) as Map<String, dynamic>;
         _migrateSchema(j);
+        // v5.17 (Phase-1 audit H-2): the payload IS the profile — reset the
+        // engine-owned containers BEFORE applying so load() is deterministic
+        // even when an older payload lacks these keys. Without this, load()
+        // merged lapseLog over whatever the previous profile left in memory.
+        s.lapseLog = {};
+        s.calibrationLog = [];
+        s.streakFreezes = 0;
+        s.lastFreezeAwardMark = 0;
         s.xp = (j['xp'] as num?)?.toInt() ?? 0;
         s.streak = (j['streak'] as num?)?.toInt() ?? 0;
         // v4.8 records (additive, null-safe for old payloads).

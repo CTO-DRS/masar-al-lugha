@@ -61,21 +61,27 @@ class SttService {
     void Function(String text)? onPartial,
   }) async {
     if (!_available) return;
-    await _stt.listen(
-      listenOptions: SpeechListenOptions(
-        localeId: localeId,
-        partialResults: true,
-        cancelOnError: true,
-        listenMode: ListenMode.confirmation,
-      ),
-      onResult: (r) {
-        if (r.finalResult) {
-          onFinal(r.recognizedWords);
-        } else {
-          onPartial?.call(r.recognizedWords);
-        }
-      },
-    );
+    try {
+      await _stt.listen(
+        listenOptions: SpeechListenOptions(
+          localeId: localeId,
+          partialResults: true,
+          cancelOnError: true,
+          listenMode: ListenMode.confirmation,
+        ),
+        onResult: (r) {
+          if (r.finalResult) {
+            onFinal(r.recognizedWords);
+          } else {
+            onPartial?.call(r.recognizedWords);
+          }
+        },
+      );
+    } catch (_) {
+      // v5.17 (Phase-1 audit L-5): a mid-listen failure (permission revoked,
+      // channel gone) must not surface as an unhandled async error — the
+      // caller's _listening flag self-heals on the next tap via stop().
+    }
   }
 
   Future<void> stop() async {

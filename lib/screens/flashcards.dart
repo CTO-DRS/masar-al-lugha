@@ -349,21 +349,27 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
         children: [
           Icon(icon, color: color, size: 26),
           const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                value,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 17,
+          // v5.17 (Phase-1 audit M-6): the label overflowed this Row on
+          // 360dp phones — constrain it to the remaining width.
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 17,
+                  ),
                 ),
-              ),
-              Text(
-                label,
-                style: TextStyle(color: context.mutedText, fontSize: 11),
-              ),
-            ],
+                Text(
+                  label,
+                  style: TextStyle(color: context.mutedText, fontSize: 11),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -621,7 +627,17 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
     );
   }
 
+  /// v5.17 (Phase-1 audit M-4): same-frame re-entrancy lock — a double-tap
+  /// on a rating tile used to rate the NEXT queue card too, adding XP twice
+  /// and consuming two queue entries for one intended review. The lock is
+  /// released after the frame so the rebuilt tiles for the next card start
+  /// fresh.
+  bool _ratingBusy = false;
+
   void _rate(int q) {
+    if (_ratingBusy || current == null) return;
+    _ratingBusy = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _ratingBusy = false);
     final st = AppScope.of(context);
     final v = current!;
     st.rateCard(v.id, q);

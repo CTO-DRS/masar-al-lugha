@@ -591,6 +591,11 @@ class _WeakWordsCard extends StatelessWidget {
                                 },
                                 child: Text(
                                   '${v.target} — ${v.translationAr}',
+                                  // v5.17 (Phase-1 audit RTL-2): target word
+                                  // + Arabic in one line — lay the mixed run
+                                  // out by its first strong character.
+                                  textDirection: directionOf(
+                                      '${v.target} ${v.translationAr}'),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14,

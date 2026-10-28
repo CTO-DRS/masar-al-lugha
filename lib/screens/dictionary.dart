@@ -19,22 +19,51 @@ class DictionaryScreen extends StatefulWidget {
 class _DictionaryScreenState extends State<DictionaryScreen> {
   String query = '';
 
+  // v5.17 (Phase-1 audit P-1): the search used to rescan the whole corpus
+  // and allocate toLowerCase() per word on EVERY build — and AppScope
+  // notifies on every XP/favorite change, so the scan ran far more often
+  // than the user typed. The corpus is now indexed once per course object
+  // (lowercased targets) and the row list is memoized per (course, query);
+  // the cache is capped so long typing sessions cannot accumulate memory.
+  _SearchIndex? _index;
+  final Map<(Course, String), List<_Row>> _rowCache = {};
+
+  _SearchIndex _indexFor(Course course) {
+    final existing = _index;
+    if (existing == null || existing.course != course) {
+      _index = _SearchIndex(course);
+      _rowCache.clear();
+    }
+    return _index!;
+  }
+
+  List<_Row> _rowsFor(_SearchIndex ix, String q) {
+    final key = (ix.course, q);
+    final cached = _rowCache[key];
+    if (cached != null) return cached;
+    final rows = <_Row>[
+      for (final e in ix.entries)
+        if (q.isEmpty || _matchesEntry(e, q)) e.row,
+    ];
+    if (_rowCache.length > 8) _rowCache.clear(); // bounded memo
+    _rowCache[key] = rows;
+    return rows;
+  }
+
+  bool _matchesEntry(_SearchEntry e, String q) {
+    return e.targetLower.contains(q.toLowerCase()) ||
+        e.row.vocab.translationAr.contains(q) ||
+        (e.row.vocab.phonetic ?? '').contains(q);
+  }
+
   @override
   Widget build(BuildContext context) {
     final st = AppScope.of(context);
     String tr(String k) => context.tr(k);
     final course = st.course;
 
-    // Build rows grouped by unit.
-    final rows = <_Row>[];
-    for (final unit in course.units) {
-      for (final lesson in unit.lessons) {
-        for (final v in lesson.vocab) {
-          if (query.isNotEmpty && !_matches(v, query)) continue;
-          rows.add(_Row(unit: unit, lesson: lesson, vocab: v));
-        }
-      }
-    }
+    // Build rows grouped by unit (memoized — see _rowsFor above).
+    final rows = _rowsFor(_indexFor(course), query);
 
     return Scaffold(
       body: Column(
@@ -90,9 +119,16 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                       fontSize: 13),
                 ),
                 const Spacer(),
-                Text(
-                  tr('tapToListen'),
-                  style: TextStyle(color: context.mutedText, fontSize: 12),
+                // v5.17 (Phase-1 audit M-6): the hint overflowed this Row on
+                // 360dp phones — it now wraps instead of clipping.
+                Flexible(
+                  child: Text(
+                    tr('tapToListen'),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(color: context.mutedText, fontSize: 12),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
@@ -134,13 +170,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     );
   }
 
-  bool _matches(Vocab v, String q) {
-    final lq = q.toLowerCase();
-    return v.target.toLowerCase().contains(lq) ||
-        v.translationAr.contains(q) ||
-        (v.phonetic ?? '').contains(q);
-  }
-
   Widget _unitHeader(BuildContext context, _Row r) {
     final st = AppScope.of(context);
     final color = _hexToColor(r.unit.colorHex);
@@ -164,6 +193,30 @@ class _Row {
   final Lesson lesson;
   final Vocab vocab;
   _Row({required this.unit, required this.lesson, required this.vocab});
+}
+
+/// v5.17 (Phase-1 audit P-1): one lowercase index per course OBJECT —
+/// rebuilt only when the course instance changes (switchCourse / reload).
+class _SearchIndex {
+  final Course course;
+  final List<_SearchEntry> entries;
+  _SearchIndex(Course c)
+      : course = c,
+        entries = [
+          for (final unit in c.units)
+            for (final lesson in unit.lessons)
+              for (final v in lesson.vocab)
+                _SearchEntry(
+                  row: _Row(unit: unit, lesson: lesson, vocab: v),
+                  targetLower: v.target.toLowerCase(),
+                ),
+        ];
+}
+
+class _SearchEntry {
+  final _Row row;
+  final String targetLower;
+  _SearchEntry({required this.row, required this.targetLower});
 }
 
 class _WordTile extends StatefulWidget {
@@ -234,6 +287,10 @@ class _WordTileState extends State<_WordTile> {
                     children: [
                       Text(
                         v.target,
+                        // v5.17 (Phase-1 audit RTL-1): the headword is
+                        // TARGET-language text (Latin/Urdu) — it must lay
+                        // out in its own script, like the example below.
+                        textDirection: directionOf(v.target),
                         style: TextStyle(
                             fontWeight: FontWeight.w900, fontSize: 16),
                       ),
@@ -385,7 +442,13 @@ class _WordTileState extends State<_WordTile> {
 }
 
 Color _hexToColor(String hex) {
-  hex = hex.replaceAll('#', '');
-  if (hex.length == 6) hex = 'FF$hex';
-  return Color(int.parse(hex, radix: 16));
+  // v5.17 (Phase-1 audit L-1): malformed content data must not crash the
+  // dictionary build — degrade to the brand blue instead.
+  try {
+    hex = hex.replaceAll('#', '');
+    if (hex.length == 6) hex = 'FF$hex';
+    return Color(int.parse(hex, radix: 16));
+  } catch (_) {
+    return AppColors.blue;
+  }
 }

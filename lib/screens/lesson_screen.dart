@@ -169,6 +169,10 @@ class _LessonScreenState extends State<LessonScreen> {
   /// The exercise rendered by the current repair step (null on the hint).
   Exercise? _repairEx;
 
+  /// v5.17 (Phase-1 audit H-3): same-frame re-entrancy lock for the Check
+  /// button (covers the repair state machine steps).
+  bool _checkBusy = false;
+
   /// The vocab the learner actually picked on the failed round (when the
   /// wrong option mapped to a real corpus word) — feeds the repair hint.
   String? _lastWrongPickId;
@@ -1226,78 +1230,89 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _check(String Function(String) tr) {
-    // F1.2: inside a repair the same check button must NOT score the round —
-    // correctness only drives the repair state machine (XP-neutral).
-    if (_repairActive) {
-      _checkRepair();
-      return;
-    }
-    final st = AppScope.of(context);
-    wasCorrect = _evaluate();
-    st.recordAnswer(wasCorrect);
-    // v4.0 (H4): remember how this specific word went. A word that was ever
-    // answered wrong in this lesson stays flagged as shaky.
-    _lastWrongPickId = null;
-    if (!wasCorrect || wordResults[ex.vocab.id] == false) {
-      wordResults[ex.vocab.id] = false;
-      if (!wasCorrect) {
-        st.recordWordMistake(ex.vocab.id);
-        // v4.4: capture WHICH word was picked instead (when the chosen
-        // option maps to a real corpus word). true/false answers and
-        // emoji options never map, so they are excluded implicitly.
-        if (selected != null && selected! < ex.options.length) {
-          switch (ex.type) {
-            case ExerciseType.mcq:
-            case ExerciseType.reverse:
-            case ExerciseType.listen:
-            case ExerciseType.picToWord:
-            case ExerciseType.fillblank:
-            case ExerciseType.listenComp: // v4.6: options are real meanings
-              final other = _idByText[ex.options[selected!]];
-              if (other != null && other != ex.vocab.id) {
-                st.recordConfusion(ex.vocab.id, other);
-                _lastWrongPickId = other; // F1.2: repair hint material
-              }
-              break;
-            default:
-              break; // build/match/truefalse/wordToPic: no text option
-          }
-        } else if (ex.type == ExerciseType.dictation) {
-          // v4.6: a misheard dictation that exactly spells another known
-          // word is a true confusion pair ("their" for "there").
-          final other =
-              _idByNormTarget[ExerciseGen.normalizeTyped(_typed.text)];
-          if (other != null && other != ex.vocab.id) {
-            st.recordConfusion(ex.vocab.id, other);
-            _lastWrongPickId = other; // F1.2: repair hint material
+    // v5.17 (Phase-1 audit H-3): same-frame double-tap on Check used to run
+    // the whole scoring path twice (recordAnswer/mistakes/hearts). setState
+    // below flips `answered` synchronously, so this guard closes the window
+    // for scored rounds; _checkBusy covers the repair state machine, whose
+    // steps keep answered=false while advancing.
+    if (answered || _checkBusy) return;
+    _checkBusy = true;
+    try {
+      // F1.2: inside a repair the same check button must NOT score the round —
+      // correctness only drives the repair state machine (XP-neutral).
+      if (_repairActive) {
+        _checkRepair();
+        return;
+      }
+      final st = AppScope.of(context);
+      wasCorrect = _evaluate();
+      st.recordAnswer(wasCorrect);
+      // v4.0 (H4): remember how this specific word went. A word that was ever
+      // answered wrong in this lesson stays flagged as shaky.
+      _lastWrongPickId = null;
+      if (!wasCorrect || wordResults[ex.vocab.id] == false) {
+        wordResults[ex.vocab.id] = false;
+        if (!wasCorrect) {
+          st.recordWordMistake(ex.vocab.id);
+          // v4.4: capture WHICH word was picked instead (when the chosen
+          // option maps to a real corpus word). true/false answers and
+          // emoji options never map, so they are excluded implicitly.
+          if (selected != null && selected! < ex.options.length) {
+            switch (ex.type) {
+              case ExerciseType.mcq:
+              case ExerciseType.reverse:
+              case ExerciseType.listen:
+              case ExerciseType.picToWord:
+              case ExerciseType.fillblank:
+              case ExerciseType.listenComp: // v4.6: options are real meanings
+                final other = _idByText[ex.options[selected!]];
+                if (other != null && other != ex.vocab.id) {
+                  st.recordConfusion(ex.vocab.id, other);
+                  _lastWrongPickId = other; // F1.2: repair hint material
+                }
+                break;
+              default:
+                break; // build/match/truefalse/wordToPic: no text option
+            }
+          } else if (ex.type == ExerciseType.dictation) {
+            // v4.6: a misheard dictation that exactly spells another known
+            // word is a true confusion pair ("their" for "there").
+            final other =
+                _idByNormTarget[ExerciseGen.normalizeTyped(_typed.text)];
+            if (other != null && other != ex.vocab.id) {
+              st.recordConfusion(ex.vocab.id, other);
+              _lastWrongPickId = other; // F1.2: repair hint material
+            }
           }
         }
+      } else {
+        wordResults[ex.vocab.id] = true;
       }
-    } else {
-      wordResults[ex.vocab.id] = true;
-    }
-    if (wasCorrect) {
-      correctCount++;
-      if (ex.audioText.isNotEmpty) {
-        AppScope.ttsOf(context).speak(ex.audioText);
+      if (wasCorrect) {
+        correctCount++;
+        if (ex.audioText.isNotEmpty) {
+          AppScope.ttsOf(context).speak(ex.audioText);
+        }
+      } else {
+        mistakes++;
+        hearts--;
+        // F1.2: the FIRST mistake on a word in this session opens the instant
+        // micro-repair after the feedback bar (unless the lesson just died).
+        if (hearts > 0 &&
+            RepairEngine.isFirstMistake(ex.vocab.id, _mistakenWords)) {
+          _repairPending = true;
+        }
       }
-    } else {
-      mistakes++;
-      hearts--;
-      // F1.2: the FIRST mistake on a word in this session opens the instant
-      // micro-repair after the feedback bar (unless the lesson just died).
-      if (hearts > 0 &&
-          RepairEngine.isFirstMistake(ex.vocab.id, _mistakenWords)) {
-        _repairPending = true;
+      // v5.15 (F3.3): simplified-audio mode announces the result aloud for
+      // low-vision learners (opt-in in Settings; rides the existing TTS).
+      if (st.simplifiedAudio) {
+        AppScope.ttsOf(context)
+            .speak(L.t(st.uiLocale, wasCorrect ? 'audioRight' : 'audioWrong'));
       }
+      setState(() => answered = true);
+    } finally {
+      _checkBusy = false;
     }
-    // v5.15 (F3.3): simplified-audio mode announces the result aloud for
-    // low-vision learners (opt-in in Settings; rides the existing TTS).
-    if (st.simplifiedAudio) {
-      AppScope.ttsOf(context)
-          .speak(L.t(st.uiLocale, wasCorrect ? 'audioRight' : 'audioWrong'));
-    }
-    setState(() => answered = true);
   }
 
   Widget _feedbackBar(String Function(String) tr) {
@@ -1689,7 +1704,13 @@ class _LessonScreenState extends State<LessonScreen> {
     _next((k) => context.tr(k));
   }
 
+  /// v5.17 (Phase-1 audit H-3): true once the completion/failure route has
+  /// been pushed — a same-frame double-tap on the last Continue used to call
+  /// _showComplete twice, awarding the lesson XP twice.
+  bool _finished = false;
+
   void _next(String Function(String) tr) {
+    if (_finished) return;
     if (hearts <= 0) {
       _showFailed();
       return;
@@ -1735,6 +1756,10 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _showComplete(String Function(String) tr) {
+    // v5.17 (Phase-1 audit H-3): the XP award + pushReplacement must run
+    // exactly once per lesson, from every entry path (_next, _finishExercise).
+    if (_finished) return;
+    _finished = true;
     final st = AppScope.of(context);
     // v4.5: capture pre-lesson evidence so the companion can celebrate
     // level-ups and fresh streak milestones on the result screen.
@@ -1780,6 +1805,8 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _showFailed() {
+    if (_finished) return;
+    _finished = true;
     AppScope.ttsOf(context).stop();
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (_) =>

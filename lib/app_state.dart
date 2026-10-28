@@ -980,6 +980,15 @@ class AppState extends ChangeNotifier {
     customDecks = [];
     _deckCounter = 0;
     mascotId = 'rafiq';
+    // v5.17 (Phase-1 audit H-2): the F2.x engine fields are per-profile
+    // progress too. They were missed here, so a full reset kept the freeze
+    // wallet, lapse history and calibration samples, and switchProfile
+    // bled them into the next learner's payload (load() only overwrites
+    // what the payload carries).
+    lapseLog = {};
+    calibrationLog = [];
+    streakFreezes = 0;
+    lastFreezeAwardMark = 0;
   }
 
   // ================= v5.10: local multi-profile slots ==================
@@ -1225,6 +1234,14 @@ class AppState extends ChangeNotifier {
         // written on this failure path (save happens only on success).
         await store.setSlot(origSlot);
         profileSlot = origSlot;
+        _resetInMemory();
+        await load();
+        notifyListeners();
+      } else {
+        // v5.17 (Phase-1 audit M-1): a failed same-slot import used to leave
+        // half-applied fields in memory (the parse mutates field by field).
+        // The payload is only persisted on success, so reloading the slot's
+        // last snapshot restores the exact pre-import state.
         _resetInMemory();
         await load();
         notifyListeners();

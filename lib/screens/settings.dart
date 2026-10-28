@@ -514,87 +514,94 @@ class _SettingsScreenState extends State<SettingsScreen> {
     String tr(String k) => context.tr(k);
     final st = AppScope.of(context);
     final controller = TextEditingController();
-    // v5.11: the learner picks WHICH local slot receives the backup —
-    // the current one (default, v4.0 behavior) or another slot on this
-    // device. Cross-slot restore never touches the current slot's data.
-    int chosenSlot = st.profileSlot;
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setDialogState) => AlertDialog(
-          title: Text(tr('importProfile')),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(tr('importHint'), style: const TextStyle(fontSize: 13)),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: controller,
-                  maxLines: 6,
-                  style: const TextStyle(fontSize: 12, fontFamily: 'monospace'),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+    // v5.17 (Phase-1 audit L-4): the dialog-scoped controller is disposed
+    // when the dialog closes instead of leaking until GC.
+    try {
+      // v5.11: the learner picks WHICH local slot receives the backup —
+      // the current one (default, v4.0 behavior) or another slot on this
+      // device. Cross-slot restore never touches the current slot's data.
+      int chosenSlot = st.profileSlot;
+      final ok = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => StatefulBuilder(
+          builder: (ctx, setDialogState) => AlertDialog(
+            title: Text(tr('importProfile')),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(tr('importHint'), style: const TextStyle(fontSize: 13)),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: controller,
+                    maxLines: 6,
+                    style:
+                        const TextStyle(fontSize: 12, fontFamily: 'monospace'),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                Text(tr('importTargetSlot'),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w900, fontSize: 13)),
-                RadioGroup<int>(
-                  groupValue: chosenSlot,
-                  onChanged: (v) => setDialogState(() => chosenSlot = v ?? 1),
-                  child: Column(
-                    children: [
-                      for (var slot = 1;
-                          slot <= ProfileStore.maxProfiles;
-                          slot++)
-                        RadioListTile<int>(
-                          value: slot,
-                          dense: true,
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(
-                            st.profileNames[slot] ??
-                                '${tr('profileDefault')} $slot',
-                            style: const TextStyle(fontSize: 13.5),
+                  const SizedBox(height: 12),
+                  Text(tr('importTargetSlot'),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900, fontSize: 13)),
+                  RadioGroup<int>(
+                    groupValue: chosenSlot,
+                    onChanged: (v) => setDialogState(() => chosenSlot = v ?? 1),
+                    child: Column(
+                      children: [
+                        for (var slot = 1;
+                            slot <= ProfileStore.maxProfiles;
+                            slot++)
+                          RadioListTile<int>(
+                            value: slot,
+                            dense: true,
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              st.profileNames[slot] ??
+                                  '${tr('profileDefault')} $slot',
+                              style: const TextStyle(fontSize: 13.5),
+                            ),
+                            subtitle: slot == st.profileSlot
+                                ? Text(tr('importSlotCurrent'),
+                                    style: const TextStyle(fontSize: 11.5))
+                                : Text(tr('importSlotOverwrite'),
+                                    style: const TextStyle(fontSize: 11.5)),
                           ),
-                          subtitle: slot == st.profileSlot
-                              ? Text(tr('importSlotCurrent'),
-                                  style: const TextStyle(fontSize: 11.5))
-                              : Text(tr('importSlotOverwrite'),
-                                  style: const TextStyle(fontSize: 11.5)),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: Text(tr('cancel')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: Text(tr('importProfile')),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(tr('cancel')),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(tr('importProfile')),
-            ),
-          ],
         ),
-      ),
-    );
-    if (ok != true || !mounted) return;
+      );
+      if (ok != true || !mounted) return;
 
-    final err =
-        await st.importProfileJson(controller.text, targetSlot: chosenSlot);
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(err == null ? tr('importDone') : tr(err)),
-        backgroundColor: err == null ? AppColors.green : AppColors.red,
-      ),
-    );
+      final err =
+          await st.importProfileJson(controller.text, targetSlot: chosenSlot);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(err == null ? tr('importDone') : tr(err)),
+          backgroundColor: err == null ? AppColors.green : AppColors.red,
+        ),
+      );
+    } finally {
+      controller.dispose();
+    }
   }
 
   /// v5.12 (F2.5): applies the reminder switch through the shared
@@ -681,23 +688,28 @@ Future<void> _renameProfile(BuildContext context, AppState st, int slot,
     String Function(String) tr) async {
   final ctrl = TextEditingController(
       text: st.profileNames[slot] ?? '${tr('profileDefault')} $slot');
-  await showDialog<void>(
-    context: context,
-    builder: (dlg) => AlertDialog(
-      title: Text(tr('profileRename')),
-      content: TextField(controller: ctrl, autofocus: true),
-      actions: [
-        TextButton(
-            onPressed: () => Navigator.of(dlg).pop(),
-            child: Text(MaterialLocalizations.of(dlg).cancelButtonLabel)),
-        FilledButton(
-          onPressed: () {
-            st.renameProfile(slot, ctrl.text);
-            Navigator.of(dlg).pop();
-          },
-          child: Text(tr('profileRename')),
-        ),
-      ],
-    ),
-  );
+  // v5.17 (Phase-1 audit L-4): dispose the dialog-scoped controller.
+  try {
+    await showDialog<void>(
+      context: context,
+      builder: (dlg) => AlertDialog(
+        title: Text(tr('profileRename')),
+        content: TextField(controller: ctrl, autofocus: true),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.of(dlg).pop(),
+              child: Text(MaterialLocalizations.of(dlg).cancelButtonLabel)),
+          FilledButton(
+            onPressed: () {
+              st.renameProfile(slot, ctrl.text);
+              Navigator.of(dlg).pop();
+            },
+            child: Text(tr('profileRename')),
+          ),
+        ],
+      ),
+    );
+  } finally {
+    ctrl.dispose();
+  }
 }

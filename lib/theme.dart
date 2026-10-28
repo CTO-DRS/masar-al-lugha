@@ -254,13 +254,21 @@ class ChunkyButton extends StatelessWidget {
                     Icon(icon, color: tc, size: fs + 6),
                     const SizedBox(width: 8),
                   ],
-                  Text(
-                    label,
-                    style: TextStyle(
-                      color: tc,
-                      fontWeight: FontWeight.w800,
-                      fontSize: fs,
-                      letterSpacing: 0.2,
+                  // v5.17 (Phase-1 audit M-6): a long label overflowed the
+                  // button Row on 360dp phones (the most common width) —
+                  // the label now wraps inside the available width instead.
+                  Flexible(
+                    child: Text(
+                      label,
+                      style: TextStyle(
+                        color: tc,
+                        fontWeight: FontWeight.w800,
+                        fontSize: fs,
+                        letterSpacing: 0.2,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
