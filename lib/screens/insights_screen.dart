@@ -50,6 +50,8 @@ class _InsightsScreenState extends State<InsightsScreen> {
     // v5.12 (F2.1/F2.2/F2.4): mastery summary, calibration report and the
     // 7-day remediation queue — all computed on device by their engines.
     final mastery = st.masterySummary(st.course);
+    // v5.18 (Batch F): the six-state word breakdown (seen vs mastered etc.).
+    final stateCounts = st.masteryStateCounts(st.course);
     final calibration = Calibration.report(st.calibrationLog);
     final remediation = st.remediationVocab(st.course);
     final hasData = st.totalAnswers > 0;
@@ -90,7 +92,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                 _forecastCard(tr, st),
                 const SizedBox(height: 16),
                 // v5.12 (F2.1): the honest mastery gauge.
-                _masteryCard(context, tr, mastery),
+                _masteryCard(context, tr, mastery, stateCounts),
                 const SizedBox(height: 16),
                 // v5.12 (F2.2): predicted vs actual recall.
                 _calibrationCard(context, tr, calibration),
@@ -724,8 +726,8 @@ Widget _remediationCard(
 
 // ---------------- v5.12 (F2.1): mastery gauge ----------------
 
-Widget _masteryCard(
-    BuildContext context, String Function(String) tr, MasterySummary summary) {
+Widget _masteryCard(BuildContext context, String Function(String) tr,
+    MasterySummary summary, Map<String, int> stateCounts) {
   return _v512Card(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -801,6 +803,36 @@ Widget _masteryCard(
           tr('masteryEstimate'),
           style:
               TextStyle(fontSize: 11.5, color: context.mutedText, height: 1.4),
+        ),
+        const SizedBox(height: 12),
+        // v5.18 (Batch F): the six honest STATES with real counts — this is
+        // the seen-vs-mastered distinction the dashboards owe the learner.
+        // Zero-count states still render their label so the row is stable.
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            for (final (key, color) in const [
+              ('masteryNew', AppColors.border),
+              ('masteryLearning', AppColors.yellow),
+              ('masteryConsolidating', AppColors.blue),
+              ('masteryMastered', AppColors.green),
+              ('masteryNeedsReview', AppColors.orange),
+              ('masteryWeak', AppColors.red),
+            ])
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  '${tr(key)} ${stateCounts[key] ?? 0}',
+                  style: TextStyle(
+                      fontSize: 11, fontWeight: FontWeight.w800, color: color),
+                ),
+              ),
+          ],
         ),
       ],
     ),

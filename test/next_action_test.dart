@@ -105,8 +105,59 @@ void main() {
       expect(pick(due: 3, rem: 0, remain: 3).kind, 'lesson');
     });
 
+    // ===== v5.18 (Phase-2 Batch B2): the weak-words lane =====
+    test('6b. a real weak cluster earns the consolidation lane', () {
+      final a = NextBestAction.fromCounts(
+        dueCount: 3,
+        remediationCount: 0,
+        remainingInCurrentUnit: 3,
+        nextLessonFlat: 5,
+        weakCount: 5,
+      );
+      expect(a.kind, 'weakWords');
+      expect(a.params['n'], '5');
+      expect(a.titleKey, 'nbaWeakWordsTitle');
+      expect(a.whyKey, 'nbaWeakWordsWhy');
+    });
+
+    test('6c. a small weak cluster is one bad day, not a lane', () {
+      final a = NextBestAction.fromCounts(
+        dueCount: 3,
+        remediationCount: 0,
+        remainingInCurrentUnit: 3,
+        nextLessonFlat: 5,
+        weakCount: 3, // 3 < 4 threshold
+      );
+      expect(a.kind, isNot('weakWords'));
+    });
+
+    test('6d. remediation and due backlog outrank weak words', () {
+      final rem = NextBestAction.fromCounts(
+        dueCount: 0,
+        remediationCount: 1,
+        remainingInCurrentUnit: 3,
+        nextLessonFlat: 5,
+        weakCount: 9,
+      );
+      expect(rem.kind, 'remediation');
+      final due = NextBestAction.fromCounts(
+        dueCount: 8,
+        remediationCount: 0,
+        remainingInCurrentUnit: 3,
+        nextLessonFlat: 5,
+        weakCount: 9,
+      );
+      expect(due.kind, 'review');
+    });
+
     test('7. l10n keys derive mechanically for every kind', () {
-      for (final k in ['remediation', 'review', 'unitFinish', 'lesson']) {
+      for (final k in [
+        'remediation',
+        'review',
+        'weakWords',
+        'unitFinish',
+        'lesson'
+      ]) {
         final a = NextAction(k);
         expect(a.titleKey, 'nba${k[0].toUpperCase()}${k.substring(1)}Title');
         expect(a.whyKey, 'nba${k[0].toUpperCase()}${k.substring(1)}Why');

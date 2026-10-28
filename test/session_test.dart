@@ -65,8 +65,10 @@ void main() {
   test('session: weak words (missed, not due) fill the second segment', () {
     final pool = [_v('w1'), _v('w2'), _v('d')];
     final cards = {
-      'w1': _card(dueInDays: 3, now: now),
-      'w2': _card(dueInDays: 6, now: now),
+      // v5.18 (Batch B3): weak-segment cards must be genuinely weak —
+      // low stability + heavy difficulty keeps the mastery score under 60.
+      'w1': _card(dueInDays: 3, stability: 1, now: now),
+      'w2': _card(dueInDays: 6, stability: 1, now: now),
       'd': _card(dueInDays: -1, now: now),
     };
     final plan = SessionPlanner.plan(
@@ -121,8 +123,9 @@ void main() {
     final cards = {
       'd1': _card(dueInDays: -3, now: now),
       'd2': _card(dueInDays: -1, now: now),
-      'w1': _card(dueInDays: 4, now: now),
-      'w2': _card(dueInDays: 9, now: now),
+      // v5.18 (Batch B3): weak members are genuinely weak (low stability).
+      'w1': _card(dueInDays: 4, stability: 1, now: now),
+      'w2': _card(dueInDays: 9, stability: 1, now: now),
     };
     final plan = SessionPlanner.plan(
       pool: pool,
@@ -136,6 +139,48 @@ void main() {
     expect(plan.reviewCount, 2);
     expect(plan.weakCount, 2);
     expect(plan.newCount, 2);
+  });
+
+  test(
+      'session: a recovered word (old mistake, healthy memory) leaves the weak segment',
+      () {
+    // v5.18 (Batch B3): one mistake weeks ago on a card that has since
+    // grown a long stability no longer counts as weak — the score gate.
+    final pool = [_v('ok'), _v('w')];
+    final cards = {
+      'ok': _card(dueInDays: 3, stability: 40, reps: 12, now: now),
+      'w': _card(dueInDays: 5, stability: 1, now: now),
+    };
+    final plan = SessionPlanner.plan(
+      pool: pool,
+      cards: cards,
+      wordMistakes: {'ok': 1, 'w': 3},
+      newBudget: 5,
+      now: now,
+    );
+    expect(plan.weakCount, 1, reason: 'only the genuinely weak card stays');
+    expect(plan.queue.map((v) => v.id).toList(), ['w']);
+  });
+
+  test(
+      'session: a live remediation target stays weak even with a recovered score',
+      () {
+    // v5.18 (Batch B3): the 7-day window outranks the score — a word still
+    // lapsing on distinct days is a live trap regardless of its states.
+    final pool = [_v('trap')];
+    final cards = {
+      'trap': _card(dueInDays: 3, stability: 40, reps: 12, now: now)
+    };
+    final plan = SessionPlanner.plan(
+      pool: pool,
+      cards: cards,
+      wordMistakes: {'trap': 2},
+      remediationIds: {'trap'},
+      newBudget: 5,
+      now: now,
+    );
+    expect(plan.weakCount, 1);
+    expect(plan.queue.single.id, 'trap');
   });
 
   test('session: zero-mistake seen words land in no segment unless due', () {

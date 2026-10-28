@@ -61,6 +61,17 @@ class ConversationScenario {
   /// Keyword groups of the CURRENT step the user must satisfy.
   List<List<String>> acceptsFor(int stepIndex) =>
       stepIndex < steps.length ? steps[stepIndex].acceptAny : const [];
+
+  /// v5.18 (Phase-2 Batch D2): the ONE primary target of each step (the
+  /// first keyword of the step's first accept group), in step order. This
+  /// IS the practiced vocabulary/structures list the completion summary
+  /// shows — real data from the scenario, nothing invented. (A group can
+  /// list several accepted variants; the summary shows the first.)
+  List<String> get practicedKeywords => [
+        for (final s in steps)
+          if (s.acceptAny.isNotEmpty && s.acceptAny.first.isNotEmpty)
+            s.acceptAny.first.first,
+      ];
 }
 
 /// Provider contract — the ONLY seam a future AI provider implements.

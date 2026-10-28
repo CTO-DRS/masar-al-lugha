@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.17.0+42** (Phase-1 engineering foundation) — see the v5.17 section for the phase-1 foundation wave, the v5.16 section for the
+**Current release: v5.18.0+43** (Phase-2 learning engine & personalization) — see the v5.18 section for the phase-2 learning-engine wave, the v5.17 section for the phase-1 foundation wave, the v5.16 section for the
 content-depth quarter of the 12-month plan (F4.1-F4.5), the v5.15
 section for the UI/UX quarter (F3.1-F3.5), the v5.14.1 section
 for the reminder-delivery fix found in independent APK verification,
@@ -27,6 +27,7 @@ the v5.0 section for the German course (the fourth language).
 
 | Version | Theme |
 |---|---|
+| **v5.18** | **Phase-2 learning engine: six honest mastery states, weakWords NBA lane, honest weak-segment gating, grammar round inside lessons, error classification by exercise kind, reading comprehension questions, conversation objective/feedback/summary, audio resource hygiene, honest six-state stats, CI verify/release job split — 514 tests** |
 | **v5.17** | **Phase-1 engineering foundation: 3 HIGH + 5 MED integrity fixes (profile data bleed, lesson double-tap XP, pronunciation first-frame crash, failed-import healing, rating double-count), lazy IndexedStack tab state, 'فضاء مسار' design identity (31 WCAG-verified pairs), dictionary search memoization, 5 real 360dp overflows fixed, CI sign-check — 482 tests** |
 | v1.0 | Flutter app born: EN+UR, SRS flashcards, leveled lessons, gamification |
 | v2.0 | +170 words, picture rounds, fill-blank, true/false, dictionary tab, 16 badges |
@@ -1384,3 +1385,74 @@ fallback. Details: `docs/PHASE_1_DESIGN_SYSTEM_AR.md`.
   cosmetic, noted for the next release.
 - `action-gh-release@v2` is pinned by tag, not by commit SHA (supply-chain
   hardening candidate).
+
+## v5.18 — Phase-2 learning engine & personalization (SHIPPED — local, deterministic, testable)
+
+The user commissioned a Phase-2 arc: turn the collection of learning tools
+into one connected learning system — real personalization from real data,
+no ML theater, no invented statistics. Executed in batches on the
+`phase2/learning-engine` branch; every batch shipped with its regression
+tests before the next began.
+
+### What changed (by batch)
+
+- **Batch A (stability closure):** CI workflow split into a `verify` job
+  (read-only: content validator + format + analyze + full test suite) and a
+  `release` job (`contents: write`, depends on verify passing) — the two
+  privileges can no longer mix. Release notes body made version-neutral
+  (closes the phase-1 remainder). Gradle wrapper files, signing separation
+  (key.properties → release keystore, else explicit debug fallback) and
+  toolchain versions re-verified and documented.
+- **Batch B1 (mastery states):** `Mastery.stateKey` — six distinguishable,
+  explainable word states (new / learning / consolidating / mastered /
+  needs-review / weak-recurring) derived ONLY from the FSRS memory states
+  and the live remediation window. No new counters, no invented scores.
+- **Batch B2 (next action):** the priority ladder gains a weakWords lane
+  (threshold 4) between review and unit-finish — explainable, dismissible,
+  wired through the learn-path card with its own accent/icon/start action.
+- **Batch B3 (smart session):** the WEAK segment now requires real weakness
+  (live remediation target OR mastery score < 60) — a recovered word with an
+  old mistake leaves the segment on its own.
+- **Batch B4/D3 (grammar integration):** one grammar-drill round inside
+  lessons — deterministic per lesson id, CEFR-fitted (never above the
+  learner), taught pre-answer (the rule rides the hint), before the match
+  boss, capped, audio-mode skips by design. Grammar-screen drills now feed
+  the real stats (recordAnswer + 1 XP per correct, once-only).
+- **Batch C (error classification):** every scored mistake records its
+  exercise kind (`errorKinds`, bounded 300 words x 6 kinds, H-2
+  reset-before-apply in both load paths, strict import validation). The
+  error-analysis screen gains an honest patterns section: recurring (live
+  remediation target) vs transient, neutral encouraging copy, localized
+  kind labels.
+- **Batch D1 (reading comprehension):** 32 authored questions (2 per text,
+  all 16 texts, all four courses, A1..B2) — answerable from the text alone,
+  correct-index varied; a check-understanding section per text whose answers
+  enter the real stats (recordAnswer + 1 XP, once-only per question).
+- **Batch D2 (conversation):** scenario objective line (from its own role),
+  explicit corrective feedback when a reply misses the target structure, a
+  completion summary of the actually-practised keywords (tappable TTS) with
+  once-per-visit +5 XP.
+- **Batch E (audio hygiene):** TTS is stopped before the mic opens (the
+  recognizer hears the learner, not the app's own replay); pronunciation
+  practice feeds the real SRS via the honest hard self-rating; an honest
+  engine-disclosure line states recognition runs on the device's engine and
+  the app never uploads audio.
+- **Batch F (honest statistics):** the mastery card shows the six-state
+  word breakdown with real counts (seen vs mastered vs needs-review vs
+  recurring), zero-safe, per-course, profile-isolated by construction.
+- **Batch G (screen consistency):** the dictionary word chip now speaks the
+  same six mastery states as the insights dashboard — one vocabulary for
+  word state across screens.
+- **Batch H (quality):** SRS due-order/lapse-isolation invariant pinned;
+  full gates green; version 5.18.0+43.
+
+### Known remainders (honest)
+
+- Per-user FSRS parameter optimization is still out of scope (the
+  calibration report measures fit; the weights stay the published defaults).
+- Reading/conversation texts remain machine-authored pending human review
+  (pre-existing, documented in CONTENT_AUDIT).
+- The comprehension questions and grammar rounds are new content of the
+  same machine-authored class — same review caveat.
+- P-3 (root rebuild chain measurement) from phase 1 remains a
+  measure-first item; nothing was restructured blind this phase either.

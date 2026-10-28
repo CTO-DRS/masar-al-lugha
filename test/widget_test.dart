@@ -95,6 +95,12 @@ void main() {
           expect(e.options.contains(e.answer), isTrue);
           expect(e.audioText, isNotEmpty);
           break;
+        case ExerciseType.grammar:
+          // v5.18: a catalog drill — mcq-shaped, rule carried in the hint.
+          expect(e.options.length, greaterThanOrEqualTo(2));
+          expect(e.options.contains(e.answer), isTrue);
+          expect(e.hint, isNotEmpty);
+          break;
       }
     }
   });

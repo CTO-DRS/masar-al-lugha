@@ -144,7 +144,7 @@ class _DrillCardState extends State<_DrillCard> {
                 selected: _picked == i,
                 correct: answered && i == d.correct,
                 wrong: answered && _picked == i && i != d.correct,
-                onTap: answered ? null : () => setState(() => _picked = i),
+                onTap: answered ? null : () => _pick(i),
               ),
             ),
           if (answered) ...[
@@ -158,5 +158,16 @@ class _DrillCardState extends State<_DrillCard> {
         ],
       ),
     );
+  }
+
+  /// v5.18 (Phase-2 Batch D3): grammar drills now enter the REAL stats —
+  /// recordAnswer feeds accuracy/insights, a correct drill earns 1 XP (the
+  /// same rate as weak-words practice). The `answered` gate above makes a
+  /// drill score at most once — rebuilds and re-taps cannot double-count.
+  void _pick(int i) {
+    final st = AppScope.of(context);
+    setState(() => _picked = i);
+    st.recordAnswer(i == widget.drill.correct);
+    if (i == widget.drill.correct) st.addXp(1);
   }
 }

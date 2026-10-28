@@ -400,6 +400,30 @@ void main() {
       Srs.hintFor(c, Srs.easy, now: t0);
       expect(c.toJson().toString(), before);
     });
+
+    // v5.18 (Phase-2 Batch H): the brief pins "يحافظ على ترتيب الاستحقاق" —
+    // a lapse re-shows its card FIRST (the 10-minute step) and never moves
+    // ANY other card's due date. (Graduated intervals legitimately differ
+    // per rating — "easy" jumps further — so rating order is not due order;
+    // the pinned invariant is isolation, not monotonicity.)
+    test('a lapse re-queues only its own card first, touching nobody else',
+        () {
+      final cards = [fresh(), fresh(), fresh(), fresh()];
+      Srs.rate(cards[0], Srs.good, now: t0);
+      Srs.rate(cards[1], Srs.good, now: t0.add(const Duration(days: 1)));
+      Srs.rate(cards[2], Srs.easy, now: t0.add(const Duration(days: 2)));
+      Srs.rate(cards[3], Srs.good, now: t0.add(const Duration(days: 3)));
+      final duesBefore = cards.map((c) => c.dueEpochMs).toList();
+      // A lapse on the FIRST card pulls only THAT card back to now+10min;
+      // the others keep their due dates untouched.
+      Srs.rate(cards[0], Srs.again, now: t0.add(const Duration(days: 4)));
+      expect(cards[0].state, 'learning');
+      expect(cards[0].dueEpochMs, lessThan(cards[1].dueEpochMs),
+          reason: 'the lapsed card is due FIRST (10-minute step)');
+      expect(cards[1].dueEpochMs, duesBefore[1]);
+      expect(cards[2].dueEpochMs, duesBefore[2]);
+      expect(cards[3].dueEpochMs, duesBefore[3]);
+    });
   });
 
   group('JSON compatibility', () {

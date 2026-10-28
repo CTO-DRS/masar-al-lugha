@@ -195,6 +195,8 @@ class L {
       'pronMiss': 'لم أتعرّف عليها — جرّب في مكان هادئ',
       'pronUnavailable':
           'التعرف على الكلام غير متاح على هذا الجهاز — يمكنك الاستماع والتقليد بدلاً من ذلك',
+      'pronDeviceEngine':
+          'التعرف يعمل بمحرك جهازك وقد يعالج النظام الصوت داخلياً أو عبر خدمته — التطبيق نفسه لا يرفع صوتك لأي خادم',
       'grammarTitle': 'القواعد بالعربية',
       'grammarNone': 'لا توجد دروس قواعد لهذه اللغة بعد',
       'readingTitle': 'القراءة المتدرجة',
@@ -205,10 +207,17 @@ class L {
       'readingAddReview': 'أضفها للمراجعة',
       'readingAdded': 'أُضيفت الكلمة إلى قائمة المراجعة',
       'readingNotInCourse': 'هذه الكلمة ليست ضمن مفردات الكورس',
+      'readingCheckTitle': 'تحقق من فهمك — أجب من النص نفسه',
       'conversationTitle': 'مدرّب المحادثة',
       'conversationStep': 'محطة',
       'conversationHint': 'إجابة نموذجية',
       'conversationRestart': 'إعادة المحادثة',
+      'conversationGoal': 'هدف السيناريو: أكمل الحوار مع {r} حتى النهاية',
+      'conversationTryAgain':
+          'الرد لم يتضمن التعبير المطلوب — اطلب تلميحاً وحاول مرة أخرى',
+      'conversationSummaryTitle': 'الكلمات والتراكيب التي جرت ممارستها',
+      'conversationXpNote':
+          '+5 نقاط خبرة — أكملت السيناريو (انقر أي كلمة لتسمعها)',
       'conversationTypePlaceholder': 'اكتب ردك باللغة الهدف…',
       'conversationProviderLocal': 'يعمل بلا إنترنت — تقييم بالكلمات المفتاحية',
       'profilesTitle': 'الملفات الشخصية (على هذا الجهاز)',
@@ -391,7 +400,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.17.0',
+      'version': 'الإصدار 5.18.0',
       // v5.12 — learning engine (F2.1 mastery / F2.2 calibration /
       // F2.3 smart session / F2.4 remediation / F2.5 freeze + reminders)
       'masteryTitle': 'مستوى التمكن',
@@ -402,6 +411,11 @@ class L {
       'masteryEmerging': 'ناشئة',
       'masteryStrong': 'قوية',
       'masteryMastered': 'متمكنة',
+      // v5.18 (Batch F): the six-state breakdown labels
+      'masteryLearning': 'قيد التعلم',
+      'masteryConsolidating': 'قيد التثبيت',
+      'masteryNeedsReview': 'تحتاج مراجعة',
+      'masteryWeak': 'متكررة الخطأ',
       'calTitle': 'معايرة الجدولة (FSRS)',
       'calSubtitle': 'التنبؤ مقابل الواقع في مراجعاتك الفعلية',
       'calPredicted': 'التنبؤ',
@@ -443,6 +457,32 @@ class L {
           'الذاكرة أولًا: {n} بطاقة استحقاقها الجدول — نراجعها قبل أي درس جديد',
       'nbaUnitFinishTitle': 'أغلق الوحدة: درس واحد يبقى',
       'nbaUnitFinishWhy': 'درس واحد فقط يفصلك عن إتمام الوحدة — زخم الذروة',
+      'nbaWeakWordsTitle': 'تثبيت الكلمات ({n} كلمات)',
+      'nbaWeakWordsWhy':
+          '{n} كلمات رأيتها وما زال إتقانها منخفضًا — تمارين تثبيت هادئة ترفعها قبل متابعة الجديد',
+      'grammarPrompt': 'أكمل الجملة — القاعدة مذكورة أعلاه',
+      // v5.18 (Batch C): error patterns by exercise kind
+      'errorPatterns': 'أنماط الخطأ حسب نوع التمرين',
+      'errorPatternsHint':
+          'من إجاباتك الفعلية — نمط يمكنك التدرّب عليه أفضل من خطأ عابر',
+      'errorPatternsEmpty':
+          'لا أنماط مسجلة بعد — كل خطأ عابر حتى الآن، واصل التقدم!',
+      'errorRecurring': 'نمط متكرر',
+      'errorTransient': 'خطأ عابر',
+      'errorPatternTopWord': 'أكثر كلمة: {w}',
+      'kindMcq': 'اختيار المعنى',
+      'kindReverse': 'اختيار الكلمة',
+      'kindListen': 'استماع واختيار',
+      'kindBuild': 'تركيب الحروف/الكلمات',
+      'kindMatch': 'توصيل الأزواج',
+      'kindPicToWord': 'صورة إلى كلمة',
+      'kindWordToPic': 'كلمة إلى صورة',
+      'kindFillblank': 'إكمال الفراغ',
+      'kindTruefalse': 'صح أو خطأ',
+      'kindDictation': 'إملاء',
+      'kindListenComp': 'استماع تفهمي',
+      'kindGrammar': 'سؤال قاعدة',
+      'kindOther': 'تمرين آخر',
       'nbaLessonTitle': 'الدرس التالي',
       'nbaLessonWhy':
           'خطوتك التالية على المسار — خطوة واحدة واضحة بدل لوحة مزدحمة',
@@ -680,6 +720,8 @@ class L {
       'pronMiss': 'Could not recognize it — try a quiet place',
       'pronUnavailable':
           'Speech recognition is unavailable on this device — you can still listen and imitate',
+      'pronDeviceEngine':
+          'Recognition uses your device\'s own engine (the system may process audio on or off device) — the app itself never uploads your voice to any server',
       'grammarTitle': 'Grammar, explained in Arabic',
       'grammarNone': 'No grammar lessons for this language yet',
       'readingTitle': 'Leveled reading',
@@ -690,10 +732,18 @@ class L {
       'readingAddReview': 'Add to review',
       'readingAdded': 'Word added to your review queue',
       'readingNotInCourse': 'This word is not part of the course vocabulary',
+      'readingCheckTitle': 'Check your understanding — answer from the text',
       'conversationTitle': 'Conversation trainer',
       'conversationStep': 'Step',
       'conversationHint': 'Sample reply',
       'conversationRestart': 'Restart dialogue',
+      'conversationGoal':
+          'Scenario goal: carry the role-play with {r} to the end',
+      'conversationTryAgain':
+          'The reply did not carry the target structure — ask for a hint and retry',
+      'conversationSummaryTitle': 'Words and structures you practised',
+      'conversationXpNote':
+          '+5 XP — scenario complete (tap any word to hear it)',
       'conversationTypePlaceholder': 'Type your reply in the target language…',
       'conversationProviderLocal': 'Offline — keyword-based evaluation',
       'profilesTitle': 'Profiles (on this device)',
@@ -880,7 +930,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.17.0',
+      'version': 'Version 5.18.0',
       // v5.12 — learning engine
       'masteryTitle': 'Mastery',
       'masteryAvg': 'Average score',
@@ -891,6 +941,11 @@ class L {
       'masteryEmerging': 'Emerging',
       'masteryStrong': 'Strong',
       'masteryMastered': 'Mastered',
+      // v5.18 (Batch F): the six-state breakdown labels
+      'masteryLearning': 'Learning',
+      'masteryConsolidating': 'Consolidating',
+      'masteryNeedsReview': 'Needs review',
+      'masteryWeak': 'Recurring',
       'calTitle': 'Schedule calibration (FSRS)',
       'calSubtitle': 'Prediction vs reality across your real reviews',
       'calPredicted': 'Predicted',
@@ -938,6 +993,32 @@ class L {
       'nbaUnitFinishTitle': 'Close the unit: one lesson left',
       'nbaUnitFinishWhy':
           'Just one lesson stands between you and a finished unit — peak momentum',
+      'nbaWeakWordsTitle': 'Strengthen words ({n} words)',
+      'nbaWeakWordsWhy':
+          '{n} words you have seen are still low-mastery — calm practice lifts them before new material',
+      'grammarPrompt': 'Complete the sentence — the rule is shown above',
+      // v5.18 (Batch C): error patterns by exercise kind
+      'errorPatterns': 'Error patterns by exercise kind',
+      'errorPatternsHint':
+          'From your real answers — a pattern worth practising, not a one-off slip',
+      'errorPatternsEmpty':
+          'No patterns recorded yet — every miss so far was transient. Keep going!',
+      'errorRecurring': 'Recurring',
+      'errorTransient': 'Transient',
+      'errorPatternTopWord': 'Most missed: {w}',
+      'kindMcq': 'Pick the meaning',
+      'kindReverse': 'Pick the word',
+      'kindListen': 'Listen and choose',
+      'kindBuild': 'Build the word/sentence',
+      'kindMatch': 'Match the pairs',
+      'kindPicToWord': 'Picture to word',
+      'kindWordToPic': 'Word to picture',
+      'kindFillblank': 'Fill the blank',
+      'kindTruefalse': 'True or false',
+      'kindDictation': 'Dictation',
+      'kindListenComp': 'Listening comprehension',
+      'kindGrammar': 'Grammar question',
+      'kindOther': 'Other exercise',
       'nbaLessonTitle': 'Next lesson',
       'nbaLessonWhy':
           'Your next step on the path — one clear step instead of a crowded board',
@@ -991,3 +1072,22 @@ class L {
     return _strings[locale]?[key] ?? _strings['ar']?[key] ?? key;
   }
 }
+
+/// v5.18 (Phase-2 Batch C): stable l10n key for an exercise-kind name (the
+/// raw [ExerciseType.name] recorded in AppState.errorKinds). Unknown kinds
+/// fall back to a generic label so a future type can never crash the UI.
+String kindLabelKey(String kind) => switch (kind) {
+      'mcq' => 'kindMcq',
+      'reverse' => 'kindReverse',
+      'listen' => 'kindListen',
+      'build' => 'kindBuild',
+      'match' => 'kindMatch',
+      'picToWord' => 'kindPicToWord',
+      'wordToPic' => 'kindWordToPic',
+      'fillblank' => 'kindFillblank',
+      'truefalse' => 'kindTruefalse',
+      'dictation' => 'kindDictation',
+      'listenComp' => 'kindListenComp',
+      'grammar' => 'kindGrammar',
+      _ => 'kindOther',
+    };

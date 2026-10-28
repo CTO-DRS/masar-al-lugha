@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'pronunciation_screen.dart';
 
+import '../mastery.dart';
 import '../models.dart';
+import '../remediation.dart';
 import '../scope.dart';
 import '../theme.dart';
 import '../widgets/mascot.dart';
@@ -236,17 +238,28 @@ class _WordTileState extends State<_WordTile> {
     final v = widget.row.vocab;
     final color = _hexToColor(widget.row.unit.colorHex);
     final card = st.cardFor(v.id);
-    final state = card?.state ?? 'new';
-    final stateColor = state == 'review'
-        ? AppColors.green
-        : state == 'learning'
-            ? AppColors.orange
-            : AppColors.lockedDark;
-    final stateLabel = state == 'review'
-        ? context.tr('reviewCards')
-        : state == 'learning'
-            ? context.tr('learningCards')
-            : context.tr('newCards');
+    // v5.18 (Batch G): the dictionary chip now speaks the SAME six honest
+    // states as the insights dashboard (Mastery.stateKey over the FSRS
+    // states + the remediation window) instead of the raw scheduler state —
+    // one vocabulary for "where is this word" across every screen.
+    final state = Mastery.stateKey(
+      card,
+      remediationTarget: Remediation.isTarget(st.lapseLog, v.id),
+    );
+    final (stateColor, stateLabel) = switch (state) {
+      Mastery.stateMasteryLearning => (AppColors.yellow, 'masteryLearning'),
+      Mastery.stateMasteryConsolidating => (
+          AppColors.blue,
+          'masteryConsolidating'
+        ),
+      Mastery.stateMasteryMastered => (AppColors.green, 'masteryMastered'),
+      Mastery.stateMasteryNeedsReview => (
+          AppColors.orange,
+          'masteryNeedsReview'
+        ),
+      Mastery.stateMasteryWeak => (AppColors.red, 'masteryWeak'),
+      _ => (AppColors.lockedDark, 'newCards'),
+    };
 
     return GestureDetector(
       onTap: () => setState(() => expanded = !expanded),
@@ -383,7 +396,7 @@ class _WordTileState extends State<_WordTile> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        stateLabel,
+                        context.tr(stateLabel),
                         style: TextStyle(
                             color: stateColor,
                             fontSize: 9,

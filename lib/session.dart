@@ -1,4 +1,5 @@
-// Session orchestrator for Masar Al-Lugha (v5.12, plan feature F2.3).
+// Session orchestrator for Masar Al-Lugha (v5.12, plan feature F2.3;
+// v5.18 Phase-2 Batch B3 refines the WEAK segment).
 //
 // One place that answers the daily question "what should this session
 // contain, in which order, and why?" — composed from data the app already
@@ -8,8 +9,11 @@
 //   1. REVIEWS first: cards the schedule says are due now, most overdue
 //      first; ties break by lowest stability (shakiest memory first).
 //   2. WEAK second: seen-but-not-due words the learner has missed before
-//      (wordMistakes > 0), most-missed first — extra contact without
-//      disturbing the schedule.
+//      (wordMistakes > 0) AND whose memory is still genuinely weak —
+//      v5.18: a live remediation target OR a mastery score under 60.
+//      A single mistake from weeks ago on an otherwise-healthy card no
+//      longer pollutes the segment (it was never "weak" since).
+//      Most-missed first — extra contact without disturbing the schedule.
 //   3. NEW last: unseen words from completed lessons, capped by the
 //      remaining daily new-card budget (audit H3 keeps its teeth).
 // Each segment is capped so a session stays finishable. The caller gets
@@ -18,6 +22,7 @@
 // The engine is Flutter-free and unit-tested (test/session_test.dart).
 import 'dart:math' as math;
 
+import 'mastery.dart';
 import 'models.dart';
 
 /// One labeled slice of a session plan.
@@ -64,6 +69,9 @@ class SessionPlanner {
   ///
   /// [newBudget] is the caller's remaining daily new-card allowance
   /// (AppState.newCardsRemainingToday); the planner never exceeds it.
+  /// [remediationIds] is the live 7-day remediation window (vocab ids) —
+  /// v5.18 (Batch B3): its members stay in the weak segment even when
+  /// their mastery score has already recovered.
   /// [random] is accepted for interface parity but UNUSED: the plan is
   /// deterministic so tests and learners can always explain the order.
   static SessionPlan plan({
@@ -71,6 +79,7 @@ class SessionPlanner {
     required Map<String, CardData> cards,
     required Map<String, int> wordMistakes,
     required int newBudget,
+    Set<String> remediationIds = const {},
     int reviewCap = reviewCap,
     int weakCap = weakCap,
     int newCap = newCap,
@@ -90,7 +99,8 @@ class SessionPlanner {
         fresh.add(v); // unseen but earned — course order preserved
       } else if (c.dueEpochMs <= nowMs) {
         due.add(v);
-      } else if ((wordMistakes[v.id] ?? 0) > 0) {
+      } else if ((wordMistakes[v.id] ?? 0) > 0 &&
+          _isWeak(v.id, c, remediationIds, n)) {
         weak.add(v);
       }
     }
@@ -127,5 +137,15 @@ class SessionPlanner {
     if (cappedNew.isNotEmpty) segments.add(SessionSegment('segNew', cappedNew));
 
     return SessionPlan(segments);
+  }
+
+  /// v5.18 (Batch B3): the weakness test for a missed, not-due card — a
+  /// live remediation target, or a mastery score still under 60. Both
+  /// signals come from data the app already tracks; a card that recovered
+  /// (score >= 60, not lapsing anymore) leaves the segment on its own.
+  static bool _isWeak(
+      String vocabId, CardData c, Set<String> remediationIds, DateTime n) {
+    if (remediationIds.contains(vocabId)) return true;
+    return Mastery.wordScore(c, now: n) < 60;
   }
 }

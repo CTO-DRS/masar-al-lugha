@@ -11,7 +11,9 @@
 import 'dart:math';
 
 import 'distractors.dart';
+import 'grammar.dart';
 import 'models.dart';
+import 'path.dart';
 
 class ExerciseGen {
   // F1.1: re-seeded at every forLesson call (see _stableSeed). A static is
@@ -45,8 +47,58 @@ class ExerciseGen {
         plan = _classicPlan(lesson, confusions);
         break;
     }
-    return _balanced(_capped(plan), lesson.vocab, confusions,
+    // v5.18 (Phase-2 Batch B4): one grammar-drill round, only when the
+    // course catalog has a lesson at or below this lesson's CEFR band —
+    // the "قاعدة في الدرس" integration lane. Deterministic per lesson id;
+    // inserted BEFORE the match boss so the boss stays the finale, and
+    // subject to the same 14-round cap as every other round. Audio-first
+    // lessons SKIP the round: they are TTS-led, and a silent reading rule
+    // would break the mode's own invariant (pinned by distractors_test).
+    final balanced = _balanced(_capped(plan), lesson.vocab, confusions,
         mode: mode, cefr: cefr);
+    return mode == LessonMode.audio
+        ? balanced
+        : _withGrammarRound(balanced, lesson, cefr);
+  }
+
+  /// v5.18 (Batch B4): the per-lesson grammar round. Rules:
+  ///  - the course must have grammar lessons at or below the lesson's CEFR
+  ///    band (content that fits — never material above the learner);
+  ///  - the picked lesson + drill are a pure function of the lesson id, so
+  ///    the same lesson always drills the same rule (determinism contract);
+  ///  - the drill renders like an mcq, with the WHY carried in [Exercise.hint]
+  ///    (the rule reminder shown before answering — teach, then ask);
+  ///  - never created for an empty/odd plan, never after the match boss.
+  static List<Exercise> _withGrammarRound(
+      List<Exercise> plan, Lesson lesson, String cefr) {
+    if (plan.isEmpty || lesson.vocab.isEmpty) return plan;
+    final courseId = lesson.id.split('_').first;
+    if (courseId.length != 2) return plan;
+    final rank = PathEngine.cefrRank(cefr);
+    final pool = GrammarCatalog.forCourse(courseId)
+        .where((l) => PathEngine.cefrRank(l.level) <= rank)
+        .toList();
+    if (pool.isEmpty) return plan;
+    final gl = pool[_stableSeed('${lesson.id}|gr') % pool.length];
+    final drill =
+        gl.drills[_stableSeed('${lesson.id}|drill') % gl.drills.length];
+    final grammarEx = Exercise(
+      type: ExerciseType.grammar,
+      prompt: drill.prompt,
+      answer: drill.options[drill.correct],
+      options: drill.options,
+      vocab: lesson.vocab.first,
+      audioText: '', // no auto-speak: the prompt is a rule, not a word
+      hint: drill.explainAr,
+    );
+    final out = List<Exercise>.from(plan);
+    final matchIdx = out.indexWhere((e) => e.type == ExerciseType.match);
+    if (matchIdx >= 0) {
+      out.insert(matchIdx, grammarEx);
+    } else {
+      out.add(grammarEx);
+    }
+    return out;
   }
 
   /// FNV-1a over UTF-16 code units — stable across runs and devices
@@ -630,8 +682,9 @@ class ExerciseGen {
       Map<String, int> confusions) {
     switch (type) {
       case ExerciseType.mcq:
+      case ExerciseType.grammar: // v5.18: grammar rounds are built directly
         return Exercise(
-          type: type,
+          type: type == ExerciseType.grammar ? ExerciseType.mcq : type,
           prompt: v.target,
           answer: v.translationAr,
           options: _optionsFor(v, pool, confusions, meanings: true),

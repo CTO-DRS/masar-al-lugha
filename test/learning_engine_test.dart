@@ -7,6 +7,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:masar_al_lugha/app_state.dart';
 import 'package:masar_al_lugha/calibration.dart';
+import 'package:masar_al_lugha/mastery.dart';
 import 'package:masar_al_lugha/models.dart';
 import 'package:masar_al_lugha/remediation.dart';
 import 'package:masar_al_lugha/srs.dart';
@@ -289,5 +290,25 @@ void main() {
     expect(sum.averagePct, greaterThan(0));
     expect(st.masteryOf('w1'), greaterThan(0));
     expect(st.masteryOf('never-seen'), 0);
+  });
+
+  test('v5.18: masteryStateCounts carries all six keys and sums to total',
+      () async {
+    SharedPreferences.setMockInitialValues({});
+    final st = AppState();
+    st.courses['en'] = _course('en', ['w1', 'w2', 'w3']);
+    await st.load();
+    st.rateCard('w1', Srs.good);
+    final counts = st.masteryStateCounts(st.course);
+    expect(counts.length, 6, reason: 'all six state keys, even at zero');
+    expect(counts.values.fold<int>(0, (a, b) => a + b), 3,
+        reason: 'every course word lands in exactly one state');
+    expect(counts[Mastery.stateMasteryConsolidating], 1,
+        reason: 'a first good rating graduates to the review schedule '
+            '(consolidating until the score proves more)');
+    expect(counts[Mastery.stateMasteryLearning], 0,
+        reason: 'learning state is only for again/hard first steps');
+    expect(counts[Mastery.stateMasteryNew], 2,
+        reason: 'unseen words are new, never fake-progressed');
   });
 }

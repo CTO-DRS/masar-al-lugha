@@ -11,6 +11,7 @@ import '../pronunciation.dart';
 import '../pronunciation_pairs.dart';
 import '../scope.dart';
 import '../services/stt.dart';
+import '../srs.dart';
 import '../theme.dart';
 import '../widgets/mascot.dart';
 
@@ -105,6 +106,9 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
   }
 
   Future<void> _listen() async {
+    // Context is resolved ONCE at the top — every await below keeps a
+    // mounted guard, never a BuildContext across a gap.
+    final st = AppScope.of(context);
     if (_listening) {
       await _stt.stop();
       setState(() => _listening = false);
@@ -116,7 +120,11 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
       setState(() {});
       if (!_engineReady) return; // unavailable banner already visible
     }
-    final st = AppScope.of(context);
+    // v5.18 (Phase-2 Batch E): stop any ongoing TTS BEFORE the mic opens —
+    // the recognizer must hear the LEARNER, not the app's own replay of
+    // the same word (a real audio-resource conflict, not cosmetics).
+    final tts = AppScope.ttsOf(context);
+    await tts.stop();
     final locale = await _stt.localeFor(st.course.ttsLang);
     // v5.17 (Phase-1 audit M-3): the screen can close while the locale
     // query is in flight — never setState after dispose.
@@ -326,6 +334,22 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
                   icon: const Icon(Icons.volume_up, size: 20),
                   label: Text(tr('pronSpeakFirst')),
                 ),
+                // v5.18 (Batch E): the pronunciation practice feeds the REAL
+                // SRS — the same honest "hard" self-rating the reading
+                // screen uses, so practice here counts in review too.
+                const SizedBox(height: 6),
+                TextButton.icon(
+                  onPressed: () {
+                    AppScope.of(context).rateCard(_current.id, Srs.hard);
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(tr('readingAdded')),
+                      duration: const Duration(seconds: 2),
+                    ));
+                  },
+                  icon: const Icon(Icons.style, size: 18),
+                  label: Text(tr('readingAddReview')),
+                ),
               ],
             ),
           ),
@@ -369,6 +393,12 @@ class _PronunciationScreenState extends State<PronunciationScreen> {
                     fontSize: 13,
                     fontWeight: FontWeight.w800)),
           ],
+          const SizedBox(height: 8),
+          // v5.18 (Batch E): honest engine disclosure — the recognition is
+          // the DEVICE'S engine; the app itself never uploads audio.
+          Text(tr('pronDeviceEngine'),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: context.mutedText, fontSize: 11.5)),
           if (_score != null) ...[
             const SizedBox(height: 18),
             Container(

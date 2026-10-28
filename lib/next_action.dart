@@ -10,17 +10,22 @@
 // shuffle, no hidden scoring: each rule names its reason, and the card
 // shows that reason to the learner.
 //
-// Priority ladder (documented in the plan §F3.2, adapted honestly):
+// Priority ladder (documented in the plan §F3.2, adapted honestly; v5.18
+// Phase-2 Batch B2 adds the weak-words lane between review and momentum):
 //   1. REMEDIATION  — words forgotten on 2+ distinct days this week wait
 //      for nobody; repairing a live trap beats adding new load.
 //   2. REVIEW       — when the due backlog is REAL (>= threshold), FSRS
 //      health comes before new content.
-//   3. UNIT FINISH  — momentum: exactly one lesson left in the current
+//   3. WEAK WORDS   — no live traps and no real backlog, but a CLUSTER of
+//      seen words sits in the low-mastery band (v5.18): consolidation
+//      beats new load once the cluster is big enough to matter. Counted
+//      from Mastery.weakestSeen — the same data the Cards tab shows.
+//   4. UNIT FINISH  — momentum: exactly one lesson left in the current
 //      unit. (The plan's original 3rd lane was "unit story"; micro-
 //      stories are plan-Q1 F1.5 and are NOT shipped yet, so this wave
 //      substitutes the same "close the loop" energy with a unit-
 //      completion nudge. Honest adaptation, recorded in ROADMAP.)
-//   4. LESSON       — the default lane: the next unlocked, incomplete
+//   5. LESSON       — the default lane: the next unlocked, incomplete
 //      lesson. Always available, so the card can never dead-end
 //      (safe fallback: if even this is impossible, the caller shows the
 //      all-done state — the engine still returns 'lesson' and lets the
@@ -54,6 +59,12 @@ class NextBestAction {
   /// card keeps pointing forward.
   static const int reviewDueThreshold = 8;
 
+  /// v5.18 (Batch B2): the weak-words lane fires when at least this many
+  /// SEEN words sit in the low-mastery band. Below it the cluster is one
+  /// bad day, not a pattern — the default lesson lane keeps pointing
+  /// forward instead of nagging.
+  static const int weakWordsThreshold = 4;
+
   /// Plain-data snapshot the picker reasons over. Built by [inputs] from
   /// real app state; kept as a record so every rule is unit-testable
   /// without pumping a single widget.
@@ -63,6 +74,7 @@ class NextBestAction {
     required int remainingInCurrentUnit,
     required bool hasNextLesson,
     int? nextLessonFlat,
+    int weakCount = 0,
   }) {
     // 1. A live trap is repaired first.
     if (remediationCount > 0) {
@@ -72,13 +84,17 @@ class NextBestAction {
     if (dueCount >= reviewDueThreshold) {
       return NextAction('review', params: {'n': '$dueCount'});
     }
-    // 3. Momentum: the current unit is one lesson from done.
+    // 3. A real cluster of low-mastery words earns a consolidation lane.
+    if (weakCount >= weakWordsThreshold) {
+      return NextAction('weakWords', params: {'n': '$weakCount'});
+    }
+    // 4. Momentum: the current unit is one lesson from done.
     if (remainingInCurrentUnit == 1 &&
         hasNextLesson &&
         nextLessonFlat != null) {
       return NextAction('unitFinish', lessonFlat: nextLessonFlat);
     }
-    // 4. The always-available default (also the safe fallback).
+    // 5. The always-available default (also the safe fallback).
     return NextAction('lesson',
         lessonFlat: nextLessonFlat, params: {'n': '$dueCount'});
   }
@@ -86,14 +102,17 @@ class NextBestAction {
   /// Snapshot from real state. All arguments are plain data so this stays
   /// Flutter-free: [dueCount] from Insights.dueWithinDays(cards, 0),
   /// [remediationCount] = st.remediationVocab(course).length,
-  /// [remainingInCurrentUnit] = lessons left in the unit of the next
-  /// incomplete lesson (0 when there is no next lesson), [nextLessonFlat]
-  /// = flat index of the first unlocked incomplete lesson (null when none).
+  /// [weakCount] = seen words in the low-mastery band (Mastery.weakestSeen
+  /// below the emerging band), [remainingInCurrentUnit] = lessons left in
+  /// the unit of the next incomplete lesson (0 when there is no next
+  /// lesson), [nextLessonFlat] = flat index of the first unlocked
+  /// incomplete lesson (null when none).
   static NextAction fromCounts({
     required int dueCount,
     required int remediationCount,
     required int remainingInCurrentUnit,
     int? nextLessonFlat,
+    int weakCount = 0,
   }) {
     return pick(
       dueCount: dueCount,
@@ -101,6 +120,7 @@ class NextBestAction {
       remainingInCurrentUnit: remainingInCurrentUnit,
       hasNextLesson: nextLessonFlat != null,
       nextLessonFlat: nextLessonFlat,
+      weakCount: weakCount,
     );
   }
 }

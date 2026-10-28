@@ -79,4 +79,38 @@ void main() {
     expect(ReadingCatalog.byId('rd_en_morning'), isNotNull);
     expect(ReadingCatalog.byId('en_apple'), isNull);
   });
+
+  // ===== v5.18 (Phase-2 Batch D1): comprehension questions =====
+  group('comprehension questions (v5.18 Batch D1)', () {
+    test('every text carries exactly two well-formed questions', () {
+      for (final t in ReadingCatalog.texts) {
+        expect(t.questions.length, 2, reason: '${t.id} question count');
+        for (final q in t.questions) {
+          expect(q.options.length, greaterThanOrEqualTo(2), reason: t.id);
+          expect(q.options.toSet().length, q.options.length,
+              reason: '${t.id} options must be distinct');
+          expect(q.correct, inInclusiveRange(0, q.options.length - 1),
+              reason: '${t.id} correct index');
+          expect(q.promptAr.trim(), isNotEmpty, reason: t.id);
+        }
+      }
+    });
+
+    test('question prompts do not repeat within one text', () {
+      for (final t in ReadingCatalog.texts) {
+        final prompts = t.questions.map((q) => q.promptAr).toSet();
+        expect(prompts.length, t.questions.length, reason: t.id);
+      }
+    });
+
+    test('every course has questions (all four, A1..B2)', () {
+      for (final c in ['en', 'ur', 'fr', 'de']) {
+        final texts = ReadingCatalog.forCourse(c);
+        expect(texts.length, 4, reason: c);
+        for (final t in texts) {
+          expect(t.questions, isNotEmpty, reason: '$c/${t.id}');
+        }
+      }
+    });
+  });
 }
