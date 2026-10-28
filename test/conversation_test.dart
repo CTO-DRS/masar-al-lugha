@@ -95,4 +95,19 @@ void main() {
     expect(ConversationCatalog.byId('cv_en_cafe'), isNotNull);
     expect(ConversationCatalog.byId('en_apple'), isNull);
   });
+
+  // ===== v5.18 (Phase-2 Batch D2): the practiced-keywords summary =====
+  test('practicedKeywords exposes one primary target per step, in order', () {
+    for (final s in ConversationCatalog.scenarios) {
+      final keys = s.practicedKeywords;
+      expect(keys.length, s.steps.length, reason: s.id);
+      expect(keys.every((k) => k.trim().isNotEmpty), isTrue, reason: s.id);
+      // The summary is real data: each keyword IS a member of its step's
+      // first accept group (the primary target the provider checks).
+      for (var i = 0; i < s.steps.length; i++) {
+        expect(s.steps[i].acceptAny.first.contains(keys[i]), isTrue,
+            reason: '${s.id} step $i');
+      }
+    }
+  });
 }

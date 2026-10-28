@@ -21,6 +21,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   int _stepIndex = 0;
   bool _complete = false;
   bool _waitingReply = false;
+  bool _xpAwarded = false; // v5.18 (Batch D2): once-per-visit completion XP
   final List<ConversationMsg> _messages = [];
   final TextEditingController _input = TextEditingController();
   final ScrollController _scroll = ScrollController();
@@ -81,6 +82,21 @@ class _ConversationScreenState extends State<ConversationScreen> {
       _complete = result.scenarioComplete;
       _waitingReply = false;
     });
+    if (!result.accepted) {
+      // v5.18 (Batch D2): explicit corrective feedback — the reply did not
+      // carry the step's target structure. Honest, immediate, retryable.
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(context.tr('conversationTryAgain')),
+        duration: const Duration(seconds: 3),
+      ));
+    } else if (_complete && !_xpAwarded) {
+      // v5.18 (Batch D2): scenario completion earns XP exactly ONCE per
+      // screen visit — the guard makes restart-farming and rebuilds
+      // incapable of inflating it.
+      _xpAwarded = true;
+      AppScope.of(context).addXp(5);
+    }
     _scrollDown();
   }
 
@@ -91,6 +107,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
             duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
       }
     });
+  }
+
+  /// v5.18 (Batch D2): hear a practiced keyword in the target language.
+  Future<void> _speak(String text) async {
+    final st = AppScope.of(context);
+    final tts = AppScope.ttsOf(context);
+    await tts.setLanguage(st.course.ttsLang);
+    await tts.speak(text);
   }
 
   void _showHint() {
@@ -194,6 +218,26 @@ class _ConversationScreenState extends State<ConversationScreen> {
               ],
             ),
           ),
+          // v5.18 (Batch D2): the scenario's learning objective, derived
+          // from its own role — who the learner is role-playing with.
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 2, 16, 4),
+            child: Row(
+              children: [
+                Icon(Icons.flag, size: 14, color: AppColors.purple),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                      tr('conversationGoal')
+                          .replaceFirst('{r}', _scenario.roleAr),
+                      style: TextStyle(
+                          color: context.mutedText,
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700)),
+                ),
+              ],
+            ),
+          ),
           Divider(height: 1, color: context.line),
           // chat
           Expanded(
@@ -207,6 +251,60 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     padding: const EdgeInsets.only(top: 10),
                     child: Column(
                       children: [
+                        // v5.18 (Batch D2): a completion summary of what was
+                        // ACTUALLY practised — the scenario's own target
+                        // keywords, tappable to hear them.
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: context.card,
+                            borderRadius: BorderRadius.circular(16),
+                            border:
+                                Border.all(color: AppColors.green, width: 2),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(tr('conversationSummaryTitle'),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 14)),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 6,
+                                runSpacing: 6,
+                                children: [
+                                  for (final k in _scenario.practicedKeywords)
+                                    GestureDetector(
+                                      onTap: () => _speak(k),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.green
+                                              .withValues(alpha: 0.12),
+                                          borderRadius:
+                                              BorderRadius.circular(999),
+                                        ),
+                                        child: Text(k,
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w800)),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Text(tr('conversationXpNote'),
+                                  style: TextStyle(
+                                      color: context.mutedText,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w800)),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                         FilledButton.icon(
                           onPressed: _restart,
                           icon: const Icon(Icons.replay, size: 18),

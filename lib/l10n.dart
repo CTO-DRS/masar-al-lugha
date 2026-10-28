@@ -210,6 +210,12 @@ class L {
       'conversationStep': 'محطة',
       'conversationHint': 'إجابة نموذجية',
       'conversationRestart': 'إعادة المحادثة',
+      'conversationGoal': 'هدف السيناريو: أكمل الحوار مع {r} حتى النهاية',
+      'conversationTryAgain':
+          'الرد لم يتضمن التعبير المطلوب — اطلب تلميحاً وحاول مرة أخرى',
+      'conversationSummaryTitle': 'الكلمات والتراكيب التي جرت ممارستها',
+      'conversationXpNote':
+          '+5 نقاط خبرة — أكملت السيناريو (انقر أي كلمة لتسمعها)',
       'conversationTypePlaceholder': 'اكتب ردك باللغة الهدف…',
       'conversationProviderLocal': 'يعمل بلا إنترنت — تقييم بالكلمات المفتاحية',
       'profilesTitle': 'الملفات الشخصية (على هذا الجهاز)',
@@ -722,6 +728,13 @@ class L {
       'conversationStep': 'Step',
       'conversationHint': 'Sample reply',
       'conversationRestart': 'Restart dialogue',
+      'conversationGoal':
+          'Scenario goal: carry the role-play with {r} to the end',
+      'conversationTryAgain':
+          'The reply did not carry the target structure — ask for a hint and retry',
+      'conversationSummaryTitle': 'Words and structures you practised',
+      'conversationXpNote':
+          '+5 XP — scenario complete (tap any word to hear it)',
       'conversationTypePlaceholder': 'Type your reply in the target language…',
       'conversationProviderLocal': 'Offline — keyword-based evaluation',
       'profilesTitle': 'Profiles (on this device)',
