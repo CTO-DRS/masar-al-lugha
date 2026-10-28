@@ -22,7 +22,18 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int tab = 0;
 
-  void switchTab(int i) => setState(() => tab = i);
+  // v5.17 Phase-1 (audit D-1): the shell used to render `pages[tab]`, which
+  // UNMOUNTS the previous tab on every switch — scroll positions, the
+  // flashcards session queue and the dictionary search query were all lost.
+  // A lazy IndexedStack keeps every VISITED tab mounted (offscreen tabs are
+  // excluded from semantics and hit-testing) while never building an
+  // unvisited one, so startup cost stays the same as before.
+  final Set<int> _visited = {0};
+
+  void switchTab(int i) => setState(() {
+        tab = i;
+        _visited.add(i);
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +54,13 @@ class _HomeShellState extends State<HomeShell> {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaler: scaler),
       child: Scaffold(
-        body: pages[tab],
+        body: IndexedStack(
+          index: tab,
+          children: [
+            for (var i = 0; i < pages.length; i++)
+              _visited.contains(i) ? pages[i] : const SizedBox.shrink(),
+          ],
+        ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             border: Border(top: BorderSide(color: context.line, width: 2)),
@@ -51,7 +68,9 @@ class _HomeShellState extends State<HomeShell> {
           child: SafeArea(
             top: false,
             child: SizedBox(
-              height: 66,
+              // v5.17 (Phase-1 audit M-6): 66 clipped the nav pill by 3px on
+              // 360dp phones — 72 gives the labels room on every width.
+              height: 72,
               child: Row(
                 children: [
                   _navItem(
@@ -96,12 +115,15 @@ class _HomeShellState extends State<HomeShell> {
     final selected = tab == index;
     return Expanded(
       child: InkWell(
-        onTap: () => setState(() => tab = index),
+        // v5.17 (Phase-1 D-1 fix): MUST go through switchTab — the old
+        // inline setState never marked the tab visited, so the lazy
+        // IndexedStack showed a BLANK screen on first visit.
+        onTap: () => switchTab(index),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
               decoration: BoxDecoration(
                 color: selected
                     ? activeColor.withValues(alpha: 0.15)

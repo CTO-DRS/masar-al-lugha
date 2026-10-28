@@ -20,6 +20,7 @@ import 'package:masar_al_lugha/models.dart';
 import 'package:masar_al_lugha/scope.dart';
 import 'package:masar_al_lugha/theme.dart';
 import 'package:masar_al_lugha/screens/dictionary.dart';
+import 'package:masar_al_lugha/screens/home_shell.dart';
 import 'package:masar_al_lugha/screens/flashcards.dart';
 import 'package:masar_al_lugha/screens/lesson_screen.dart';
 import 'package:masar_al_lugha/screens/pronunciation_screen.dart';
@@ -427,6 +428,41 @@ void main() {
       await tester.pump();
       expect(find.text('Cat'), findsOneWidget);
       expect(find.text('Bird'), findsOneWidget);
+    });
+  });
+
+  group('D-1: tab state preservation (lazy IndexedStack)', () {
+    testWidgets('switching tabs keeps the dictionary search query',
+        (tester) async {
+      _usePhoneSurface(tester);
+      final st = await _state();
+      await tester.pumpWidget(_harness(st, const HomeShell()));
+      await tester.pump();
+      await tester.pump();
+
+      // Visit the dictionary tab first (lazy stack: unvisited tabs are not
+      // built yet), then type the query.
+      await tester.tap(find.text('القاموس'));
+      await tester.pump();
+      await tester.pump();
+      await tester.enterText(find.byType(TextField), 'Dog');
+      await tester.pump();
+
+      // Leave the dictionary tab…
+      await tester.tap(find.text('البطاقات'));
+      await tester.pump();
+      await tester.pump();
+      // …and come back. Before the fix the whole tab was unmounted and the
+      // query (plus scroll positions and card-session queues) was lost.
+      await tester.tap(find.text('القاموس'));
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.text('Cat'), findsNothing,
+          reason: 'the query must have survived the round-trip');
+      expect(find.textContaining('1 '), findsWidgets,
+          reason: 'filtered result count still shows one match');
+      await st.flush();
     });
   });
 }

@@ -717,10 +717,13 @@ class _HomeHero extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Text(tr('continueLearning'),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w900, fontSize: 16)),
-                const Spacer(),
+                // v5.17 (Phase-1 audit M-6): this hero row overflowed on
+                // 360dp phones — the label now wraps instead of clipping.
+                Expanded(
+                  child: Text(tr('continueLearning'),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w900, fontSize: 16)),
+                ),
                 Text(
                   '${tr('unitProgress')} $lessonsDone/${course.allLessons.length}',
                   style: TextStyle(
