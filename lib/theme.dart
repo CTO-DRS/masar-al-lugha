@@ -4,47 +4,53 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  // v5.17 Phase-1 identity ("فضاء مسار" — space + glass): electric cyan,
+  // aurora green and violet accents on deep-space dark surfaces, with a
+  // coordinated light variant. Every value below was verified against the
+  // WCAG AA policy in test/contrast_test.dart BEFORE landing (4.5:1 body,
+  // 3:1 large-text/icons — the audit math is in the Phase-1 report).
+  //
   // Brand palette (works on both light & dark surfaces).
-  static const green = Color(0xFF58CC02);
-  static const greenDark = Color(0xFF46A302);
-  static const greenLight = Color(0xFFD7FFB8);
-  static const blue = Color(0xFF1CB0F6);
-  static const blueDark = Color(0xFF1899D6);
-  static const blueLight = Color(0xFFDDF4FF);
+  static const green = Color(0xFF42E6A4);
+  static const greenDark = Color(0xFF12805A);
+  static const greenLight = Color(0xFFDDF9EC);
+  static const greenText = Color(0xFF12704E);
+  static const blue = Color(0xFF42E8F5);
+  static const blueDark = Color(0xFF0E7C8A);
+  static const blueLight = Color(0xFFDFF7FB);
+  static const blueText = Color(0xFF0B6B77);
   static const red = Color(0xFFFF4B4B);
   static const redDark = Color(0xFFEA2B2B);
-  static const redLight = Color(0xFFFFDFE0);
+  static const redLight = Color(0xFFFFE4E9);
   static const yellow = Color(0xFFFFC800);
   static const yellowDark = Color(0xFFE6A100);
   static const orange = Color(0xFFFF9600);
-  static const purple = Color(0xFFCE82FF);
+  static const purple = Color(0xFF9B7BFF);
 
-  // v5.15 (F3.3): text-safe shades of the brand hues for LIGHT surfaces.
-  // The vivid constants above stay for icons/borders/fills that carry no
-  // text; whenever a brand hue is the TEXT color on a light surface, use
-  // one of these (all >= 4.5:1 on white and on bgSoft).
-  static const greenText = Color(0xFF378200);
-  static const blueText = Color(0xFF0F76B4);
+  // Text-safe shades of the brand hues for LIGHT surfaces (v5.15 policy,
+  // values re-derived for the v5.17 identity): whenever a brand hue is the
+  // TEXT color on a light surface, use one of these (all >= 4.5:1 on white
+  // and on bgSoft — pinned in contrast_test.dart).
   static const orangeText = Color(0xFFA86200);
+  static const purpleText = Color(0xFF6E4FD8);
   // Light-only constants kept for the few places that predate v4.0.
-  // v5.15 (F3.3): inkLight/lockedDark deepened to pass WCAG AA — inkLight
-  // 4.95:1 on white (was 4.48), lockedDark 3.14:1 on the locked fill (icons).
-  static const ink = Color(0xFF3C3C3C);
-  static const inkLight = Color(0xFF707070);
-  static const border = Color(0xFFE5E5E5);
+  static const ink = Color(0xFF1A2233);
+  static const inkLight = Color(0xFF5A6579);
+  static const border = Color(0xFFE2E7F2);
   static const bg = Color(0xFFFFFFFF);
-  static const bgSoft = Color(0xFFF7F7F7);
-  static const locked = Color(0xFFE5E5E5);
+  static const bgSoft = Color(0xFFF4F6FB);
+  static const locked = Color(0xFFE5E8F0);
   static const lockedDark = Color(0xFF808080);
 
-  // Dark surface colors.
-  static const darkBg = Color(0xFF131F24);
-  static const darkCard = Color(0xFF1B2A32);
-  static const darkSoft = Color(0xFF22333C);
-  static const darkBorder = Color(0xFF37464F);
-  static const darkInk = Color(0xFFF1F7FB);
-  static const darkInkLight = Color(0xFF9DB2BC);
-  static const darkLocked = Color(0xFF3C5260);
+  // Dark surface colors — the space identity: near-black blue depths with
+  // the spec text #F4F7FF (contrast pinned in contrast_test.dart).
+  static const darkBg = Color(0xFF080B16);
+  static const darkCard = Color(0xFF10182B);
+  static const darkSoft = Color(0xFF182338);
+  static const darkBorder = Color(0xFF263452);
+  static const darkInk = Color(0xFFF4F7FF);
+  static const darkInkLight = Color(0xFFA9B4CE);
+  static const darkLocked = Color(0xFF2A3752);
 }
 
 /// Light/dark-aware semantic colors. Usage: `context.card`, `context.line`,

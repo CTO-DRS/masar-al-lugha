@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../scope.dart';
+import '../design_system.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 import 'dictionary.dart';
@@ -199,89 +200,93 @@ class TopStatsBar extends StatelessWidget implements PreferredSizeWidget {
   void _showCourseSwitcher(BuildContext context, AppState st) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: context.card,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+      // v5.17 Phase-1: the glass recipe (design_system.dart) paints the
+      // sheet itself; reduce-motion collapses it to a solid surface.
+      backgroundColor: Colors.transparent,
       builder: (ctx) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  ctx.tr('selectLanguage'),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 18,
+        return GlassSurface(
+          frosted: !st.reduceMotion,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    ctx.tr('selectLanguage'),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                ...st.courses.values.map((c) {
-                  final selected = c.id == st.courseId;
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(14),
-                      onTap: () {
-                        st.switchCourse(c.id);
-                        Navigator.pop(ctx);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: selected ? AppColors.greenLight : ctx.card,
-                          border: Border.all(
-                            color: selected ? AppColors.green : ctx.line,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(c.flag, style: const TextStyle(fontSize: 24)),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    st.uiLocale == 'ar' ? c.nameAr : c.nameEn,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 16,
-                                      color: selected
-                                          ? AppColors.greenDark
-                                          : ctx.bodyText,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    '${c.allVocab.length} ${ctx.tr('words')} · ${c.allLessons.length} ${ctx.tr('lessons')}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: ctx.mutedText,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                  const SizedBox(height: 16),
+                  ...st.courses.values.map((c) {
+                    final selected = c.id == st.courseId;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(14),
+                        onTap: () {
+                          st.switchCourse(c.id);
+                          Navigator.pop(ctx);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: selected ? AppColors.greenLight : ctx.card,
+                            border: Border.all(
+                              color: selected ? AppColors.green : ctx.line,
+                              width: 2,
                             ),
-                            if (selected)
-                              const Icon(
-                                Icons.check_circle,
-                                color: AppColors.green,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(c.flag,
+                                  style: const TextStyle(fontSize: 24)),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      st.uiLocale == 'ar' ? c.nameAr : c.nameEn,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 16,
+                                        color: selected
+                                            ? AppColors.greenDark
+                                            : ctx.bodyText,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      '${c.allVocab.length} ${ctx.tr('words')} · ${c.allLessons.length} ${ctx.tr('lessons')}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: ctx.mutedText,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                          ],
+                              if (selected)
+                                const Icon(
+                                  Icons.check_circle,
+                                  color: AppColors.green,
+                                ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
-              ],
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
         );

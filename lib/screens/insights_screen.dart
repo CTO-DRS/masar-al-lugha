@@ -613,7 +613,7 @@ Widget _retentionCard(
           children: [
             Icon(Icons.query_stats,
                 size: 18,
-                color: st.analyticsOptIn ? AppColors.green : Colors.grey),
+                color: st.analyticsOptIn ? AppColors.green : context.mutedText),
             const SizedBox(width: 8),
             Expanded(
               child: Text(tr('analyticsOptIn'),
