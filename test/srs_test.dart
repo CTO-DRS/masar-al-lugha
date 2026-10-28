@@ -406,8 +406,7 @@ void main() {
     // ANY other card's due date. (Graduated intervals legitimately differ
     // per rating — "easy" jumps further — so rating order is not due order;
     // the pinned invariant is isolation, not monotonicity.)
-    test('a lapse re-queues only its own card first, touching nobody else',
-        () {
+    test('a lapse re-queues only its own card first, touching nobody else', () {
       final cards = [fresh(), fresh(), fresh(), fresh()];
       Srs.rate(cards[0], Srs.good, now: t0);
       Srs.rate(cards[1], Srs.good, now: t0.add(const Duration(days: 1)));
