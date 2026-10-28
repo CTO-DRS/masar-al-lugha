@@ -447,6 +447,28 @@ class L {
       'nbaWeakWordsWhy':
           '{n} كلمات رأيتها وما زال إتقانها منخفضًا — تمارين تثبيت هادئة ترفعها قبل متابعة الجديد',
       'grammarPrompt': 'أكمل الجملة — القاعدة مذكورة أعلاه',
+      // v5.18 (Batch C): error patterns by exercise kind
+      'errorPatterns': 'أنماط الخطأ حسب نوع التمرين',
+      'errorPatternsHint':
+          'من إجاباتك الفعلية — نمط يمكنك التدرّب عليه أفضل من خطأ عابر',
+      'errorPatternsEmpty':
+          'لا أنماط مسجلة بعد — كل خطأ عابر حتى الآن، واصل التقدم!',
+      'errorRecurring': 'نمط متكرر',
+      'errorTransient': 'خطأ عابر',
+      'errorPatternTopWord': 'أكثر كلمة: {w}',
+      'kindMcq': 'اختيار المعنى',
+      'kindReverse': 'اختيار الكلمة',
+      'kindListen': 'استماع واختيار',
+      'kindBuild': 'تركيب الحروف/الكلمات',
+      'kindMatch': 'توصيل الأزواج',
+      'kindPicToWord': 'صورة إلى كلمة',
+      'kindWordToPic': 'كلمة إلى صورة',
+      'kindFillblank': 'إكمال الفراغ',
+      'kindTruefalse': 'صح أو خطأ',
+      'kindDictation': 'إملاء',
+      'kindListenComp': 'استماع تفهمي',
+      'kindGrammar': 'سؤال قاعدة',
+      'kindOther': 'تمرين آخر',
       'nbaLessonTitle': 'الدرس التالي',
       'nbaLessonWhy':
           'خطوتك التالية على المسار — خطوة واحدة واضحة بدل لوحة مزدحمة',
@@ -946,6 +968,28 @@ class L {
       'nbaWeakWordsWhy':
           '{n} words you have seen are still low-mastery — calm practice lifts them before new material',
       'grammarPrompt': 'Complete the sentence — the rule is shown above',
+      // v5.18 (Batch C): error patterns by exercise kind
+      'errorPatterns': 'Error patterns by exercise kind',
+      'errorPatternsHint':
+          'From your real answers — a pattern worth practising, not a one-off slip',
+      'errorPatternsEmpty':
+          'No patterns recorded yet — every miss so far was transient. Keep going!',
+      'errorRecurring': 'Recurring',
+      'errorTransient': 'Transient',
+      'errorPatternTopWord': 'Most missed: {w}',
+      'kindMcq': 'Pick the meaning',
+      'kindReverse': 'Pick the word',
+      'kindListen': 'Listen and choose',
+      'kindBuild': 'Build the word/sentence',
+      'kindMatch': 'Match the pairs',
+      'kindPicToWord': 'Picture to word',
+      'kindWordToPic': 'Word to picture',
+      'kindFillblank': 'Fill the blank',
+      'kindTruefalse': 'True or false',
+      'kindDictation': 'Dictation',
+      'kindListenComp': 'Listening comprehension',
+      'kindGrammar': 'Grammar question',
+      'kindOther': 'Other exercise',
       'nbaLessonTitle': 'Next lesson',
       'nbaLessonWhy':
           'Your next step on the path — one clear step instead of a crowded board',
@@ -999,3 +1043,22 @@ class L {
     return _strings[locale]?[key] ?? _strings['ar']?[key] ?? key;
   }
 }
+
+/// v5.18 (Phase-2 Batch C): stable l10n key for an exercise-kind name (the
+/// raw [ExerciseType.name] recorded in AppState.errorKinds). Unknown kinds
+/// fall back to a generic label so a future type can never crash the UI.
+String kindLabelKey(String kind) => switch (kind) {
+      'mcq' => 'kindMcq',
+      'reverse' => 'kindReverse',
+      'listen' => 'kindListen',
+      'build' => 'kindBuild',
+      'match' => 'kindMatch',
+      'picToWord' => 'kindPicToWord',
+      'wordToPic' => 'kindWordToPic',
+      'fillblank' => 'kindFillblank',
+      'truefalse' => 'kindTruefalse',
+      'dictation' => 'kindDictation',
+      'listenComp' => 'kindListenComp',
+      'grammar' => 'kindGrammar',
+      _ => 'kindOther',
+    };

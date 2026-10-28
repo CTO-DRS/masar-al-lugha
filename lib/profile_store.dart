@@ -115,6 +115,9 @@ class ProfileStore {
         s.calibrationLog = [];
         s.streakFreezes = 0;
         s.lastFreezeAwardMark = 0;
+        // v5.18 (Batch C): the error-kind classifier follows the same
+        // reset-before-apply rule (deterministic on old payloads).
+        s.errorKinds = {};
         s.xp = (j['xp'] as num?)?.toInt() ?? 0;
         s.streak = (j['streak'] as num?)?.toInt() ?? 0;
         // v4.8 records (additive, null-safe for old payloads).
@@ -166,6 +169,20 @@ class ProfileStore {
                       .map((e) => (e as num).toInt())
                       .toList()));
           s.answerLog.removeWhere((_, e) => e.length < 2);
+          // v5.18 (Batch C): error-kind classifier — bounded strict parse.
+          final ek = ins['errorKinds'];
+          if (ek is Map) {
+            ek.forEach((k, v) {
+              if (k is! String || v is! Map) return;
+              final kinds = <String, int>{};
+              v.forEach((kind, n) {
+                if (kind is! String || kind.isEmpty) return;
+                kinds[kind] = ((n as num?)?.toInt() ?? 0).clamp(0, 1 << 20);
+              });
+              kinds.removeWhere((_, n) => n <= 0);
+              if (kinds.isNotEmpty) s.errorKinds[k] = kinds;
+            });
+          }
           // v5.12 (F2.2): calibration samples — strict shape check, oldest
           // first; malformed entries are dropped, valid ones clamped.
           final cal = ins['calibration'];
@@ -305,6 +322,7 @@ class ProfileStore {
         'hourCorrect': s.hourCorrect,
         'answerLog': s.answerLog,
         'calibration': s.calibrationLog, // v5.12 F2.2
+        'errorKinds': s.errorKinds, // v5.18 Batch C
       },
       'lapseLog': s.lapseLog, // v5.12 F2.4
       'streakFreezes': s.streakFreezes, // v5.12 F2.5

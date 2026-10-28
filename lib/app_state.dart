@@ -113,6 +113,24 @@ class AppState extends ChangeNotifier {
   /// see Remediation). Records RECENT forgetting only, self-cleans.
   Map<String, List<int>> lapseLog = {};
 
+  // ---- v5.18 (Phase-2 Batch C): error classification ----
+
+  /// vocabId -> exercise-type name -> times answered wrong, collected from
+  /// the REAL scored-answer paths (the same events that count wordMistakes
+  /// and feed recordAnswer — never from repair/XP-neutral rounds). Bounded:
+  /// [_maxErrorKindWords] words × [_maxKindsPerWord] kinds per word, so the
+  /// persisted payload stays small forever. Feeds the error-patterns view
+  /// in the error-analysis screen: WHAT KIND of exercise keeps tripping the
+  /// learner up, and whether it is a live pattern (recurring) or a blip
+  /// (transient) via the remediation window.
+  Map<String, Map<String, int>> errorKinds = {};
+
+  /// Max words tracked in [errorKinds] (same spirit as Remediation's 200).
+  static const int maxErrorKindWords = 300;
+
+  /// Max distinct exercise kinds kept per word.
+  static const int _maxKindsPerWord = 6;
+
   /// F2.2 calibration rolling log of [predictedR-milli, recalled] pairs
   /// (bounded to Calibration.maxSamples — see Calibration).
   List<List<int>> calibrationLog = [];
@@ -356,6 +374,72 @@ class AppState extends ChangeNotifier {
   void recordWordMistake(String vocabId) {
     wordMistakes[vocabId] = (wordMistakes[vocabId] ?? 0) + 1;
     scheduleSave();
+  }
+
+  /// v5.18 (Batch C): classifies one REAL mistake by the exercise type that
+  /// produced it. Called ONLY from scored paths (the H-3 re-entry guards in
+  /// the lesson screen apply) — a repair round or a double-tap can never
+  /// inflate it. Bounded like the rest of the engine's logs.
+  void recordErrorKind(String vocabId, String kind) {
+    if (vocabId.isEmpty || kind.isEmpty) return;
+    var kinds = errorKinds[vocabId];
+    if (kinds == null) {
+      if (errorKinds.length >= maxErrorKindWords) _evictStalestKindWord();
+      kinds = <String, int>{};
+      errorKinds[vocabId] = kinds;
+    }
+    kinds[kind] = (kinds[kind] ?? 0) + 1;
+    if (kinds.length > _maxKindsPerWord) {
+      // Keep the most-missed kinds; ties break by key for determinism.
+      final keep = kinds.entries.toList()
+        ..sort((a, b) {
+          final byCount = b.value.compareTo(a.value);
+          if (byCount != 0) return byCount;
+          return a.key.compareTo(b.key);
+        });
+      errorKinds[vocabId] = {
+        for (final e in keep.take(_maxKindsPerWord)) e.key: e.value,
+      };
+    }
+    scheduleSave();
+  }
+
+  /// Evicts the word with the smallest total mistake tally (ties by id) —
+  /// the least-informative tracker loses its slot first.
+  void _evictStalestKindWord() {
+    String? stalest;
+    var stalestTotal = 1 << 30;
+    errorKinds.forEach((id, kinds) {
+      final total = kinds.values.fold(0, (a, b) => a + b);
+      if (total < stalestTotal ||
+          (total == stalestTotal &&
+              stalest != null &&
+              id.compareTo(stalest!) < 0)) {
+        stalest = id;
+        stalestTotal = total;
+      }
+    });
+    if (stalest != null) errorKinds.remove(stalest);
+  }
+
+  /// v5.18 (Batch C): kind totals over the CURRENT course's mistakes, most-
+  /// missed first, resolved against the course vocabulary. The second value
+  /// of each row is the count; only kinds with >= 1 miss in this course are
+  /// returned (foreign-course words never pollute the view).
+  List<MapEntry<String, int>> errorKindTotals([int limit = 5]) {
+    final ids = {for (final v in course.allVocab) v.id: true};
+    final totals = <String, int>{};
+    errorKinds.forEach((vocabId, kinds) {
+      if (!ids.containsKey(vocabId)) return;
+      kinds.forEach((kind, n) => totals[kind] = (totals[kind] ?? 0) + n);
+    });
+    final rows = totals.entries.toList()
+      ..sort((a, b) {
+        final byCount = b.value.compareTo(a.value);
+        if (byCount != 0) return byCount;
+        return a.key.compareTo(b.key);
+      });
+    return rows.take(limit.clamp(0, 12)).toList();
   }
 
   // ================= v4.4 local intelligence =================
@@ -989,6 +1073,9 @@ class AppState extends ChangeNotifier {
     calibrationLog = [];
     streakFreezes = 0;
     lastFreezeAwardMark = 0;
+    // v5.18 (Batch C): the error-kind classifier is per-profile progress
+    // too — the H-2 lesson applies (reset before switch/load, not merge).
+    errorKinds = {};
   }
 
   // ================= v5.10: local multi-profile slots ==================
@@ -1060,6 +1147,7 @@ class AppState extends ChangeNotifier {
           'hourTotal': hourTotal,
           'hourCorrect': hourCorrect,
           'answerLog': answerLog,
+          'errorKinds': errorKinds, // v5.18 Batch C
         },
         'favorites': favorites,
         'mascot': mascotId,
@@ -1190,6 +1278,26 @@ class AppState extends ChangeNotifier {
             k as String,
             ((v as List?) ?? []).map((e) => (e as num).toInt()).toList()));
         answerLog.removeWhere((_, e) => e.length < 2);
+        // v5.18 (Batch C): error-kind classifier — vocab ids validated,
+        // counts clamped, per-word kinds capped (same rules as recording).
+        errorKinds = {};
+        final ek = ins['errorKinds'];
+        if (ek is Map) {
+          ek.forEach((k, v) {
+            if (k is! String || !validVocabIds.contains(k) || v is! Map) {
+              return;
+            }
+            final kinds = <String, int>{};
+            v.forEach((kind, n) {
+              if (kind is! String || kind.isEmpty) return;
+              kinds[kind] = ((n as num?)?.toInt() ?? 0).clamp(0, 1 << 20);
+            });
+            if (kinds.isEmpty) return;
+            kinds.removeWhere((_, n) => n <= 0);
+            if (kinds.isEmpty) return;
+            errorKinds[k] = kinds;
+          });
+        }
       }
       favorites = ((p['favorites'] as Map?) ?? {}).map((k, v) => MapEntry(
           k as String, ((v as List?) ?? []).map((e) => e as String).toList()));

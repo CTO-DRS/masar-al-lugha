@@ -1134,6 +1134,8 @@ class _LessonScreenState extends State<LessonScreen> {
           if (leftWordId != null) {
             wordResults[leftWordId] = false;
             st.recordWordMistake(leftWordId);
+            // v5.18 (Batch C): classify the mistake by its exercise kind.
+            st.recordErrorKind(leftWordId, ex.type.name);
             // v4.4: wrong match -> the right-side text belongs to another
             // word; record the pair for the confusion engine.
             final rightId = _idByText[matchSelRight!];
@@ -1276,6 +1278,10 @@ class _LessonScreenState extends State<LessonScreen> {
         wordResults[ex.vocab.id] = false;
         if (!wasCorrect) {
           st.recordWordMistake(ex.vocab.id);
+          // v5.18 (Batch C): classify the mistake by its exercise kind —
+          // rides the same guarded scored path, so rebuilds/double-taps
+          // and XP-neutral repair rounds can never inflate it.
+          st.recordErrorKind(ex.vocab.id, ex.type.name);
           // v4.4: capture WHICH word was picked instead (when the chosen
           // option maps to a real corpus word). true/false answers and
           // emoji options never map, so they are excluded implicitly.
