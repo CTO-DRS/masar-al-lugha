@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.18.0+43** (Phase-2 learning engine & personalization) — see the v5.18 section for the phase-2 learning-engine wave, the v5.17 section for the phase-1 foundation wave, the v5.16 section for the
+**Current release: v5.19.0+44** (Phase-3 engineering hardening, security & release quality) — see the v5.19 section for the phase-3 hardening wave, the v5.18 section for the phase-2 learning-engine wave, the v5.17 section for the phase-1 foundation wave, the v5.16 section for the
 content-depth quarter of the 12-month plan (F4.1-F4.5), the v5.15
 section for the UI/UX quarter (F3.1-F3.5), the v5.14.1 section
 for the reminder-delivery fix found in independent APK verification,
@@ -1456,3 +1456,42 @@ tests before the next began.
   same machine-authored class — same review caveat.
 - P-3 (root rebuild chain measurement) from phase 1 remains a
   measure-first item; nothing was restructured blind this phase either.
+
+## v5.19 — Phase-3 engineering hardening, security & release quality (SHIPPED)
+
+Scope: audit-and-harden wave over the real v5.18.0+43 source — no new
+learning features by design; the priority was correctness, security,
+honest content, and a trustworthy release pipeline.
+
+- **Batch B (CI/security)**: machine-enforced CI policy
+  (`scripts/ci_policy_check.py`, runs first in the read-only verify job):
+  deny-all top permissions, verify = contents:read with no secrets,
+  release = contents:write + needs:verify, every action pinned to an
+  immutable commit SHA, no pull_request_target, releases never mutated
+  (tag-exists guard, overwrite_files removed). Production signing gate:
+  workflow_dispatch production mode FAILS when android/key.properties is
+  absent — a debug-signed artifact can never be presented as production.
+  Release bodies state the real signing status. Manifest: allowBackup=false
+  (offline-first privacy posture — learner progress must not leak into OS
+  cloud backups).
+- **Batch C (content)**: machine audit of 32 reading questions / 64 grammar
+  drills / 48 conversation steps. Fixed proven defects: correct-answer
+  positions were guessable (reading never used index 2/3, grammar 56% at
+  index 0) → deterministic re-seat with answer texts verified unchanged;
+  a Urdu conversation step rejected its own sample reply (oblique ہفتے
+  spelling) → keyword group added. Invariants pinned in
+  test/phase3_content_integrity_test.dart. 5 items on the human-review
+  list (model-assisted provisional pass) — see PHASE_3_CONTENT_REVIEW_AR.
+- **Batch J (l10n)**: tr('repairDone') was used but defined in neither
+  locale (raw-key leak on the repair-success button) → added ar/en.
+  Audit now: 467/467 keys, full parity, placeholder balance — PASS.
+- **Batches D/E/F/G/H (engine/data/skills/stats)**: verified against the
+  existing pinned suites (double-tap H-3, XP-once, M-4, H-2 profile
+  isolation, M-1 import rollback, SRS lapse-isolation, mastery bands,
+  pronunciation TTS/mic lifecycle + honest approx disclosure) — no new
+  defects found; evidence recorded in the phase-3 docs.
+- **Batch K (performance)**: no device/emulator in the build environment —
+  unit-level budgets (perf_budget_test) still pass; on-device measurements
+  documented as NOT TAKEN (see PHASE_3_PERFORMANCE_AR).
+- Gates: format clean, analyze clean, 516/516 tests PASS, content
+  validator PASS, CI policy check PASS.

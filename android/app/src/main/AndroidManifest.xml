@@ -10,7 +10,8 @@
     <application
         android:label="مسار اللغة"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false">
         <!-- v5.14.1 (F2.5 fix, found in independent APK verification): the
              plugin no longer injects these receivers, and without them a
              scheduled alarm cannot be delivered when the app process is
