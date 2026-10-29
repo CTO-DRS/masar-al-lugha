@@ -897,6 +897,10 @@ class ConversationCatalog {
             [
               ['اتوار'],
               ['ہفتہ'],
+              // v5.19 (phase-3 batch C): the oblique spelling ہفتے appears in
+              // this step's own sample reply — a learner typing the shown
+              // hint must not be rejected over orthography.
+              ['ہفتے'],
               ['مہینہ'],
               ['فوراً']
             ],
