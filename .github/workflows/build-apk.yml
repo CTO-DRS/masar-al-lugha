@@ -10,26 +10,35 @@ on:
         type: boolean
         default: false
 
-# Phase-3 (Batch B) policy, machine-enforced by scripts/ci_policy_check.py
-# which runs inside the read-only verify job:
+# CI policy, machine-enforced by scripts/ci_policy_check.py
+# which runs inside the read-only verify job (self-tested via --self-test):
 #
-# 1. least privilege      — top-level deny-all; verify is contents:read only;
-#                           only the release job (needs: verify) holds
-#                           contents:write because publishing requires it.
-# 2. pinned actions       — every `uses:` is pinned to an immutable commit
-#                           SHA (no floating major tags, incl. third-party).
-# 3. no accidental release— a GitHub Release is only created when the
-#                           version tag does NOT exist yet; existing
-#                           published releases are never overwritten.
-# 4. honest signing       — without key.properties the build is a
-#                           DEBUG-SIGNED TESTING BUILD and is labelled as
-#                           such everywhere it appears. The production mode
-#                           (workflow_dispatch input) FAILS when the
-#                           release signing config is absent — a debug
-#                           artifact can never be presented as production.
-# 5. no secrets in logs   — no step echoes secret values; when a production
-#                           keystore is introduced it must arrive via
-#                           encrypted secrets written to files without echo.
+#  1. least privilege      — top-level deny-all; verify is contents:read only;
+#                            only the release job (needs: verify) holds
+#                            contents:write because publishing requires it.
+#  2. pinned actions       — every `uses:` is pinned to an immutable commit
+#                            SHA (no floating major tags, incl. third-party).
+#  3. no accidental release— a GitHub Release is only created on a push to
+#                            main when the version tag does NOT exist yet;
+#                            published releases are never overwritten.
+#  4. honest signing       — without key.properties the build is a
+#                            DEBUG-SIGNED TESTING BUILD and is labelled as
+#                            such everywhere it appears. The production mode
+#                            (workflow_dispatch input) FAILS when the
+#                            release signing config is absent — a debug
+#                            artifact can never be presented as production.
+#  5. no secrets in logs   — no step echoes secret values; when a production
+#                            keystore is introduced it must arrive via
+#                            encrypted secrets written to files without echo.
+#  6. no persisted creds   — every checkout sets persist-credentials:false;
+#                            no step needs git credentials.
+#  7. trusted refs only    — the release job (contents:write) never runs from
+#                            workflow_dispatch on a non-main ref, and the
+#                            publish step only fires on a push to main.
+#  8. no shell injection   — values read from the repo (pubspec version) are
+#                            format-validated before use, and run: steps
+#                            consume event/step values via env, never
+#                            inline ${{ }} interpolation.
 
 permissions: {}
 
@@ -41,9 +50,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: CI policy check (machine-enforced)
-        run: python3 scripts/ci_policy_check.py
+        run: |
+          python3 scripts/ci_policy_check.py
+          python3 scripts/ci_policy_check.py --self-test
 
       - name: Set up JDK 17
         uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
@@ -78,14 +91,22 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    # Trusted-source restriction: the write-scoped job never executes from a
+    # workflow_dispatch on a non-main ref. Branch pushes may run it (artifact
+    # only), but the publish step below additionally requires a push to main.
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
     steps:
       - name: Checkout code
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Production signing gate
         id: signmode
+        env:
+          PROD_INPUT: ${{ inputs.production }}
         run: |
-          if [ "${{ inputs.production }}" = "true" ]; then
+          if [ "$PROD_INPUT" = "true" ]; then
             if [ -f android/key.properties ]; then
               echo "mode=production" >> "$GITHUB_OUTPUT"
               echo "Production signing config present."
@@ -120,15 +141,35 @@ jobs:
           echo "build=$BUILD" >> $GITHUB_OUTPUT
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
 
-      # Phase-3 (Batch B): never mutate an already-published release. If the
-      # version tag exists on the remote, the release step is skipped and the
-      # run only produces the downloadable CI artifact.
+      # Injection guard: the version comes from a file inside the repo. Before
+      # any run: step consumes it (ls-remote, cp, tag name), enforce the exact
+      # expected format — anything else fails the job outright.
+      - name: Validate version format
+        env:
+          APP_VERSION: ${{ steps.version.outputs.version }}
+          APP_BUILD: ${{ steps.version.outputs.build }}
+        run: |
+          if ! printf '%s' "$APP_VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::pubspec version '$APP_VERSION' does not match the required X.Y.Z format — refusing to continue."
+            exit 1
+          fi
+          if ! printf '%s' "$APP_BUILD" | grep -Eq '^[0-9]+$'; then
+            echo "::error::pubspec build '$APP_BUILD' is not a plain number — refusing to continue."
+            exit 1
+          fi
+          echo "Version format OK ($APP_VERSION+$APP_BUILD)."
+
+      # Never mutate an already-published release. If the version tag exists
+      # on the remote, the release step is skipped and the run only produces
+      # the downloadable CI artifact.
       - name: Check release tag existence
         id: tagcheck
+        env:
+          VERSION_TAG: ${{ steps.version.outputs.tag }}
         run: |
-          if git ls-remote --tags origin "refs/tags/${{ steps.version.outputs.tag }}" | grep -q "${{ steps.version.outputs.tag }}"; then
+          if git ls-remote --tags origin "refs/tags/$VERSION_TAG" | grep -q "$VERSION_TAG"; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "Tag ${{ steps.version.outputs.tag }} already published — release step will be skipped."
+            echo "Tag $VERSION_TAG already published — release step will be skipped."
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
@@ -159,13 +200,15 @@ jobs:
           retention-days: 30
 
       - name: Rename APK with version
+        env:
+          APP_VERSION: ${{ steps.version.outputs.version }}
         run: |
           mkdir -p release
-          cp build/app/outputs/flutter-apk/app-release.apk "release/masar-al-lugha-v${{ steps.version.outputs.version }}.apk"
+          cp build/app/outputs/flutter-apk/app-release.apk "release/masar-al-lugha-v$APP_VERSION.apk"
 
-      # Creates a GitHub Release ONLY when the version tag is new. The body
-      # always states the real signing status — a debug-signed build is
-      # explicitly labelled a testing build, never production.
+      # Creates a GitHub Release ONLY on a push to main when the version tag
+      # is new. The body always states the real signing status — a debug-signed
+      # build is explicitly labelled a testing build, never production.
       - name: Create GitHub Release with APK
         if: github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch' && steps.tagcheck.outputs.exists == 'false'
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
