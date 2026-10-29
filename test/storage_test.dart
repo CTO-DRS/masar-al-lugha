@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:masar_al_lugha/app_state.dart';
 import 'package:masar_al_lugha/models.dart';
+import 'package:masar_al_lugha/profile_store.dart';
 
 CardData _card(int i) => CardData(
       ease: 2.3 + (i % 10) / 20,
@@ -78,5 +79,85 @@ void main() {
     expect(encoded.length, lessThan(1 << 20));
     expect(
         encoded.length, greaterThan(100 << 10)); // sanity: really ~3000 cards
+  });
+
+  // Phase-3 round 2 (migration reality check): the v1->v2 payload migration
+  // in ProfileStore._migrateSchema was previously untested — these feed REAL
+  // old-shape payloads through the real load() path and prove no data loss.
+  test('pre-4.0 payload (no schema key) migrates losslessly to schema 2',
+      () async {
+    // A realistic pre-4.0 progress blob: no 'schema' key (defaults to v1),
+    // no lessonStars, no FSRS d/s/last fields on cards, none of the v5.x
+    // additive containers (insights/errorKinds/lapseLog/...).
+    const v1Payload = <String, dynamic>{
+      'xp': 123,
+      'streak': 4,
+      'dailyGoal': 20,
+      'cards': <String, dynamic>{
+        'en_u1_w1': <String, dynamic>{
+          'ease': 2.5,
+          'ivl': 3,
+          'due': 1700000000000,
+          'reps': 2,
+          'lapses': 0,
+          'state': 'review',
+        },
+        'en_u1_w2': <String, dynamic>{
+          'ease': 2.3,
+          'ivl': 0,
+          'due': 1700000100000,
+          'reps': 1,
+          'lapses': 1,
+          'state': 'learning',
+        },
+      },
+      'wordMistakes': <String, dynamic>{'en_u1_w2': 2},
+    };
+    SharedPreferences.setMockInitialValues(
+        <String, Object>{'progress_json_v1': jsonEncode(v1Payload)});
+
+    final st = AppState();
+    await st.load(); // must not throw on the old shape
+    expect(st.xp, 123, reason: 'xp must survive the migration');
+    expect(st.streak, 4, reason: 'streak must survive the migration');
+    expect(st.cards.length, 2, reason: 'both v1 cards must survive');
+    expect(st.cards['en_u1_w1']!.intervalDays, 3);
+    expect(st.cards['en_u1_w1']!.ease, 2.5);
+    expect(st.cards['en_u1_w2']!.lapses, 1);
+    expect(st.wordMistakes['en_u1_w2'], 2);
+    expect(st.lessonStars, isEmpty,
+        reason: 'v1 payload has no lessonStars — migration must default it');
+
+    // Saved back at the CURRENT schema with the same data.
+    await st.save();
+    final prefs = await SharedPreferences.getInstance();
+    final saved = jsonDecode(prefs.getString('progress_json_v1')!)
+        as Map<String, dynamic>;
+    expect(saved['schema'], ProfileStore.progressSchema,
+        reason: 'save() must stamp the current schema version');
+
+    // Round-trip through the migrated shape stays lossless.
+    final st2 = AppState();
+    await st2.load();
+    expect(st2.xp, 123);
+    expect(st2.streak, 4);
+    expect(st2.cards.length, 2);
+    expect(st2.cards['en_u1_w1']!.intervalDays, 3);
+    expect(st2.wordMistakes['en_u1_w2'], 2);
+  });
+
+  test('minimal old payload (schema: 1, nothing else) loads with safe defaults',
+      () async {
+    SharedPreferences.setMockInitialValues(<String, Object>{
+      'progress_json_v1': jsonEncode(<String, dynamic>{'schema': 1})
+    });
+    final st = AppState();
+    await st.load(); // must not throw
+    expect(st.xp, 0);
+    expect(st.streak, 0);
+    expect(st.cards, isEmpty);
+    expect(st.lessonStars, isEmpty);
+    expect(st.dailyGoal, 20,
+        reason: 'default daily goal applies on old payloads');
   });
 }
