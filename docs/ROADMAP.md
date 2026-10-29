@@ -1493,5 +1493,5 @@ honest content, and a trustworthy release pipeline.
 - **Batch K (performance)**: no device/emulator in the build environment —
   unit-level budgets (perf_budget_test) still pass; on-device measurements
   documented as NOT TAKEN (see PHASE_3_PERFORMANCE_AR).
-- Gates: format clean, analyze clean, 519/519 tests PASS, content
+- Gates: format clean, analyze clean, 516/516 tests PASS, content
   validator PASS, CI policy check PASS.
