@@ -28,6 +28,7 @@ class L {
       'repairFixIt': 'إصلاح سريع',
       'repairHintCta': 'فهمت — سؤال جديد',
       'repairRetryCta': 'فهمت — حاول مجدداً',
+      'repairDone': 'تم الإصلاح!',
       'repairHintPair': '{a} تعني «{am}»، وليست {b} («{bm}»)',
       'repairHintGeneric': 'انظر إلى المثال بتركيز ثم أعد المحاولة',
       'repairExample': 'مثال',
@@ -400,7 +401,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.18.0',
+      'version': 'الإصدار 5.19.0',
       // v5.12 — learning engine (F2.1 mastery / F2.2 calibration /
       // F2.3 smart session / F2.4 remediation / F2.5 freeze + reminders)
       'masteryTitle': 'مستوى التمكن',
@@ -552,6 +553,7 @@ class L {
       'repairFixIt': 'Quick fix',
       'repairHintCta': 'Got it — new question',
       'repairRetryCta': 'Got it — try again',
+      'repairDone': 'Repaired!',
       'repairHintPair': '{a} means "{am}" — not {b} ("{bm}")',
       'repairHintGeneric': 'Look closely at the example, then try again',
       'repairExample': 'Example',
@@ -930,7 +932,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.18.0',
+      'version': 'Version 5.19.0',
       // v5.12 — learning engine
       'masteryTitle': 'Mastery',
       'masteryAvg': 'Average score',
