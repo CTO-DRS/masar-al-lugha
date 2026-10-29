@@ -1,8 +1,14 @@
-gradle-wrapper.jar
+# Gradle wrapper files ARE tracked deliberately: a fresh clone / source
+# archive must be able to run `./gradlew` without depending on the Flutter
+# tool's auto-injection (which is how CI silently survived until now).
+# These three byte-match the official Flutter 3.47.7 gradle_wrapper artifact:
+#   gradlew              ec56c02543666d92d9ac5ae7fcc48f88ce4de0deb8b7f9b39928ca46f68c1b2b
+#   gradlew.bat          c13c6e91b9a517783976de213d46398c661ea9e17651376d7301e839eaedcc62
+#   gradle-wrapper.jar   16caeaf66d57a0d1d2087fef6a97efa62de8da69afa5b908f40db35afc4342da
+# The pinned Gradle version lives in gradle/wrapper/gradle-wrapper.properties.
+
 /.gradle
 /captures/
-/gradlew
-/gradlew.bat
 /local.properties
 GeneratedPluginRegistrant.java
 .cxx/
