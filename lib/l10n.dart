@@ -84,6 +84,9 @@ class L {
       'retentionTitle': 'الاستبقاء المستهدف (خوارزمية المراجعة)',
       'retentionHint':
           'نسبة التذكّر التي تهدف إليها الخوارزمية عند موعد كل مراجعة — نسبة أقل تعني فواصل أطول ومراجعات أقل، ونسبة أعلى تعني مراجعات أقرب وأكثر.',
+      'challengeTitle': 'وضع التحدٍّ (صعوبة عادلة)',
+      'challengeSub':
+          'تدخل مفردات شاهدتها سابقاً من وحدات مماثلة ضمن خيارات التمارين — أصعب قليلاً، لكن عادلة: لن يظهر لك كلمة لم تتعلمها بعد.',
       'slow': 'بطيء',
       'fast': 'سريع',
       'resetProgress': 'إعادة تعيين التقدم',
@@ -401,7 +404,7 @@ class L {
       'weekMomentum': 'نقاط آخر أسبوعين',
       'weekThis': 'هذا الأسبوع',
       'weekLast': 'الأسبوع الماضي',
-      'version': 'الإصدار 5.19.0',
+      'version': 'الإصدار 5.20.0',
       // v5.12 — learning engine (F2.1 mastery / F2.2 calibration /
       // F2.3 smart session / F2.4 remediation / F2.5 freeze + reminders)
       'masteryTitle': 'مستوى التمكن',
@@ -609,6 +612,9 @@ class L {
       'retentionTitle': 'Target retention (review algorithm)',
       'retentionHint':
           'The recall probability the scheduler aims for at each due date — lower means longer intervals and fewer reviews, higher means reviews come sooner and more often.',
+      'challengeTitle': 'Challenge mode (fair difficulty)',
+      'challengeSub':
+          'Words you have ALREADY seen from similar earlier units join the exercise options — a bit harder, but fair: a word you have not learned yet never appears.',
       'slow': 'Slow',
       'fast': 'Fast',
       'resetProgress': 'Reset progress',
@@ -932,7 +938,7 @@ class L {
       'weekMomentum': 'XP — last two weeks',
       'weekThis': 'This week',
       'weekLast': 'Last week',
-      'version': 'Version 5.19.0',
+      'version': 'Version 5.20.0',
       // v5.12 — learning engine
       'masteryTitle': 'Mastery',
       'masteryAvg': 'Average score',

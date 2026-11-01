@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../distractors.dart';
 import '../insights.dart';
 import '../mastery.dart';
 import '../models.dart';
@@ -50,6 +51,13 @@ class LearnPath extends StatelessWidget {
         mode: LessonMode.classic,
         cefr: course.units[_unitIndexOfFlat(course, action.lessonFlat!)].cefr,
         confusions: st.confusionPairs,
+        challengePool: st.challengeMode // F1.1b: empty in normal mode
+            ? Distractors.challengePool(
+                course: course,
+                lessonId: lesson.id,
+                seenIds: st.cards.keys.toSet(),
+              )
+            : const <Vocab>[],
       ));
     }
 

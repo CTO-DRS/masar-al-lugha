@@ -1,6 +1,6 @@
 # ROADMAP — Masar Al-Lugha
 
-**Current release: v5.19.0+44** (Phase-3 engineering hardening, security & release quality) — see the v5.19 section for the phase-3 hardening wave, the v5.18 section for the phase-2 learning-engine wave, the v5.17 section for the phase-1 foundation wave, the v5.16 section for the
+**Current release: v5.20.0+45** (Q1 closure: fair-difficulty challenge mode + the two v5.13 repair remainders) — see the v5.20 section for the challenge wave, the v5.19 section for the phase-3 hardening wave, the v5.18 section for the phase-2 learning-engine wave, the v5.17 section for the phase-1 foundation wave, the v5.16 section for the
 content-depth quarter of the 12-month plan (F4.1-F4.5), the v5.15
 section for the UI/UX quarter (F3.1-F3.5), the v5.14.1 section
 for the reminder-delivery fix found in independent APK verification,
@@ -27,6 +27,8 @@ the v5.0 section for the German course (the fourth language).
 
 | Version | Theme |
 |---|---|
+| **v5.20** | **Q1 closure: fair-difficulty challenge mode (F1.1b) — a Settings toggle feeds the seen prior-unit nearby-domain corpus into every distractor draw (priorities 1-3 untouched, random fill drawn from it first, unseen words provably never appear — Distractors.challengePool/challengeShare + WarmupRequest fingerprint); the repair hint step now AUTO-PLAYS the missed word's audio (open + every new cycle); match-boss repairs chain BACK-TO-BACK for every first-time missed word (was: only the first); additive challengeMode setting round-trips in both serializers — 518 → 539 tests (+21)** |
+| **v5.19** | **Phase-3 engineering hardening: machine-enforced CI policy (P1-P12), production signing gate, allowBackup=false, content integrity re-seat + Urdu keyword fix, l10n audit 467/467, 516 tests** |
 | **v5.18** | **Phase-2 learning engine: six honest mastery states, weakWords NBA lane, honest weak-segment gating, grammar round inside lessons, error classification by exercise kind, reading comprehension questions, conversation objective/feedback/summary, audio resource hygiene, honest six-state stats, CI verify/release job split — 514 tests** |
 | **v5.17** | **Phase-1 engineering foundation: 3 HIGH + 5 MED integrity fixes (profile data bleed, lesson double-tap XP, pronunciation first-frame crash, failed-import healing, rating double-count), lazy IndexedStack tab state, 'فضاء مسار' design identity (31 WCAG-verified pairs), dictionary search memoization, 5 real 360dp overflows fixed, CI sign-check — 482 tests** |
 | v1.0 | Flutter app born: EN+UR, SRS flashcards, leveled lessons, gamification |
@@ -1286,6 +1288,58 @@ mostly FR/DE conjugated examples) stay documented rather than silently
 rewritten; native-speaker review of the backfilled corpus rows is a
 human task the validator cannot replace; the plan's field-data KPIs
 (time-to-first-win, completion rates) still await real devices.
+
+## v5.20 — Q1 closure: fair difficulty + repair remainders (SHIPPED)
+
+Scope: the OPEN items of the 12-month plan's first quarter, executed from
+the documented remainders (the plan artifact itself was lost to a
+container reset — see the v5.16 honesty note). No new screens, no new
+content rows: one engine capability, two treatment-flow fixes.
+
+1. **F1.1b — fair-difficulty challenge mode**: a Settings toggle
+   (`challengeMode`, additive, OFF by default) that feeds
+   `Distractors.challengePool` into every exercise plan. The corpus is
+   built from the learner's OWN SEEN vocab (`reps > 0` cards) of units
+   that come BEFORE the lesson's unit — same domain first
+   (`PathEngine.domainOfUnit`), then a relax pass that never reaches
+   above the lesson's CEFR band — capped at 24 rows, course-ordered,
+   with string collisions against the lesson (target OR Arabic meaning)
+   dropped so every option has exactly one owner word. The extras enter
+   ONLY at distractor priority 4 (random fill, drawn BEFORE the lesson
+   pool) — the learner's confusion pairs (1+2) and look-alikes (3) are
+   never displaced, and an empty corpus consumes zero RNG draws, so a
+   normal-mode plan is byte-identical to v5.19's. Fairness is
+   test-pinned: no UNSEEN corpus word ever appears in any option on
+   either mode. The local KPI is `Distractors.challengeShare` (the
+   challenge counterpart of `confusionShare`): > 0 in challenge mode,
+   exactly 0 in normal mode. The warmup isolate fingerprint now covers
+   the corpus id list — a stale plan built for the other difficulty
+   mode is never served. Repair re-rolls and the quick-pick decoy draw
+   from the same corpus, so a challenge lesson stays consistently hard.
+2. **The repair hint step now HEARS the word** (v5.13 remainder): the
+   hint card auto-plays the missed word's audio when the repair opens
+   and on every new cycle — the TTS service itself gates on the audio
+   setting; simplified-audio users get it too (essential teaching
+   audio, not decoration).
+3. **Match-boss repairs chain back-to-back** (v5.13 remainder): a board
+   with SEVERAL first-time missed words used to repair only the FIRST
+   one (`_finishRepair` jumped straight to the next round, and the
+   mistake set was wiped by `_next`); the remaining words were counted
+   but never treated. Now `RepairEngine.nextMatchRepairWord` (pure,
+   board order, first-mistake rule respected) drives both
+   `_finishExercise` and `_finishRepair`, so every missed word gets its
+   repair chain in sequence.
+4. Suite: 518 → **539** tests (+21 in `test/fair_difficulty_test.dart`,
+   incl. the DistractorSource exhaustiveness guard updated to 6 with the
+   new `priorUnit` provenance). Version pin moved to v5.20.
+
+**Honest remainders (next waves):** the challenge-mode KPI (accuracy
+drop on confused pairs vs normal mode) still needs field data from the
+opt-in local analytics once devices run this build; the Q1 story lane
+(F1.5) stays open — its original spec was lost with the plan artifact
+and re-deriving it deserves its own wave, not a drive-by; C1-tail unit
+depth (a 4th lesson in the idiom/nuance/academic units) stays open from
+Q4; P-3 (root rebuild chain measurement) stays measure-first.
 
 ## Hard invariants (never break)
 

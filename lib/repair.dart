@@ -179,6 +179,19 @@ class RepairEngine {
     return mistakenThisSession.add(vocabId);
   }
 
+  /// F1.2 remainder (v5.20): the next match-mistake word that still deserves
+  /// its repair, or null when the board is done. [missed] is the caller's
+  /// insertion-ordered mistake set (Dart sets keep insertion order, i.e.
+  /// board order) and [repaired] the session's already-repaired words —
+  /// the first-mistake rule skips those. Pure and deterministic, so the
+  /// sequential repair chain is unit-testable without a widget.
+  static String? nextMatchRepairWord(Set<String> missed, Set<String> repaired) {
+    for (final id in missed) {
+      if (!repaired.contains(id)) return id;
+    }
+    return null;
+  }
+
   /// Where the failed question should be re-inserted so that at least
   /// [gap] other rounds play before it: the learner is leaving index
   /// [justLeft]; positions justLeft+1 .. justLeft+gap must be other rounds,
@@ -209,7 +222,9 @@ class RepairEngine {
   /// rule); [confusedWithId] the vocab the learner actually picked, when the
   /// wrong pick mapped to a real corpus word — the strongest hint material
   /// and the preferred quickPick decoy; [forMatch] switches the requeue to
-  /// the re-rolled round (see [RepairPlan.requeue]).
+  /// the re-rolled round (see [RepairPlan.requeue]); [challengePool] is the
+  /// F1.1b fair-difficulty corpus — re-rolls and the quick-pick decoy draw
+  /// from it too, so a challenge-mode lesson stays consistently hard.
   static RepairPlan buildPlan({
     required Exercise original,
     required Vocab word,
@@ -220,6 +235,7 @@ class RepairEngine {
     String? confusedWithId,
     bool forMatch = false,
     List<Vocab> courseVocab = const [],
+    List<Vocab> challengePool = const [],
   }) {
     final retryOriginalOnly = original.type == ExerciseType.dictation ||
         original.type == ExerciseType.listenComp;
@@ -238,6 +254,7 @@ class RepairEngine {
             confusions,
             avoid: avoid,
             seed: seedFor(original.vocab.id, word.id, 1),
+            challengePool: challengePool,
           );
 
     // Step 3 — the easier 2-option pick. Distractors.pick already prefers
@@ -256,6 +273,7 @@ class RepairEngine {
         count: 1,
         random: random,
         reserve: ExerciseGen.realWordReserve,
+        extraPool: challengePool, // F1.1b: empty in normal mode
       );
       final wrong = decoy.isEmpty ? _anyOther(pool, word, random) : decoy.first;
       final opts = meaningSide

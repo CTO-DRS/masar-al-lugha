@@ -355,6 +355,11 @@ void main() {
   });
 
   test('DistractorSource enum stays exhaustive for provenance audits', () {
-    expect(DistractorSource.values.length, 5);
+    // v5.20 (F1.1b) added priorUnit — the challenge-corpus provenance,
+    // audited by Distractors.challengeShare (excluded from
+    // confusionShare's confusion KPI by construction, never confusable
+    // data). Any FURTHER value needs the same conscious audit update.
+    expect(DistractorSource.values.length, 6);
+    expect(DistractorSource.values.last, DistractorSource.priorUnit);
   });
 }

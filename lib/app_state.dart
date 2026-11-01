@@ -67,6 +67,11 @@ class AppState extends ChangeNotifier {
   bool darkMode = false; // null-aware tri-state handled by settings UI
   bool reduceMotion = false;
   bool simplifiedAudio = false;
+
+  /// F1.1b (v5.20): fair-difficulty challenge mode — lesson distractors may
+  /// also come from the learner's OWN seen vocab of prior nearby-domain
+  /// units (Distractors.challengePool). Off by default; additive setting.
+  bool challengeMode = false;
   bool largerText = false;
 
   // v5.15 (F3.3 + F3.5): accessibility additions. simplifiedAudio speaks
@@ -327,6 +332,13 @@ class AppState extends ChangeNotifier {
 
   void setReduceMotion(bool on) {
     reduceMotion = on;
+    save();
+    notifyListeners();
+  }
+
+  /// F1.1b (v5.20): fair-difficulty challenge mode toggle.
+  void setChallengeMode(bool on) {
+    challengeMode = on;
     save();
     notifyListeners();
   }
@@ -1186,6 +1198,7 @@ class AppState extends ChangeNotifier {
         'settings': {
           'darkMode': darkMode,
           'reduceMotion': reduceMotion,
+          'challengeMode': challengeMode,
           'simplifiedAudio': simplifiedAudio,
           'largerText': largerText,
           'ttsEnabled': ttsEnabled,
@@ -1353,6 +1366,7 @@ class AppState extends ChangeNotifier {
       if (s is Map) {
         darkMode = (s['darkMode'] as bool?) ?? darkMode;
         reduceMotion = (s['reduceMotion'] as bool?) ?? reduceMotion;
+        challengeMode = (s['challengeMode'] as bool?) ?? challengeMode;
         simplifiedAudio = (s['simplifiedAudio'] as bool?) ?? simplifiedAudio;
         largerText = (s['largerText'] as bool?) ?? largerText;
         ttsEnabled = (s['ttsEnabled'] as bool?) ?? ttsEnabled;

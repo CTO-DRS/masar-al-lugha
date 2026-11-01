@@ -148,6 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // ---- v5.15 (F3.5) section 2/4: LEARNING ----
           if (_matches(tr, 'setSectionLearning', const [
             'retentionTitle',
+            'challengeTitle',
             'reminderSection',
             'reminderEnable',
           ])) ...[
@@ -186,6 +187,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onChanged: (v) => setState(() => st.setRetentionTarget(v)),
                 ),
               ],
+            ),
+            const SizedBox(height: 16),
+            // v5.20 (F1.1b): fair-difficulty challenge mode — the learner's
+            // own SEEN vocab from prior nearby-domain units joins the
+            // distractor pool. Off by default (byte-identical plans).
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+              decoration: BoxDecoration(
+                color: context.card,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: context.line, width: 2),
+              ),
+              child: Material(
+                type: MaterialType.transparency,
+                child: SwitchListTile(
+                  value: st.challengeMode,
+                  onChanged: (v) => setState(() => st.setChallengeMode(v)),
+                  activeThumbColor: AppColors.orange,
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(tr('challengeTitle'),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w800, fontSize: 14)),
+                  subtitle: Text(tr('challengeSub'),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: context.mutedText,
+                          height: 1.35)),
+                ),
+              ),
             ),
             const SizedBox(height: 16),
             // v5.12 (F2.5): local daily practice reminder — on-device only,

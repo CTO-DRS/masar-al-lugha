@@ -20,6 +20,12 @@ class ExerciseGen {
   // safe here because plan generation is synchronous within one isolate.
   static Random _rng = Random();
 
+  /// F1.1b (v5.20): the fair-difficulty challenge corpus for the CURRENT
+  /// forLesson/remake call — seen prior-unit vocab from nearby domains.
+  /// Set per call exactly like [_rng] (same isolate-synchronous safety);
+  /// empty in normal mode, which keeps every plan byte-identical.
+  static List<Vocab> _challengePool = const [];
+
   static const _fallbackEmojis = ['🎓', '🎨', '🎵', '⚽', '📚', '🌟'];
 
   /// Full exercise plan for a lesson in the requested style.
@@ -30,11 +36,16 @@ class ExerciseGen {
   ///    priorities 1 and 2 (learner's own pairs, then profile-level ones).
   ///  - [cefr]: the lesson unit's CEFR band — A2+ lessons get the
   ///    production floor (at least one dictation/build round).
+  ///  - [challengePool] (F1.1b, v5.20): the fair-difficulty corpus built
+  ///    by Distractors.challengePool — seen vocab of prior nearby-domain
+  ///    units. Empty (default, normal mode) changes nothing.
   static List<Exercise> forLesson(Lesson lesson,
       {LessonMode mode = LessonMode.classic,
       Map<String, int> confusions = const {},
-      String cefr = 'A1'}) {
+      String cefr = 'A1',
+      List<Vocab> challengePool = const []}) {
     _rng = Random(_stableSeed(lesson.id));
+    _challengePool = challengePool;
     final List<Exercise> plan;
     switch (mode) {
       case LessonMode.sentences:
@@ -645,6 +656,7 @@ class ExerciseGen {
       confusionPairs: confusions,
       random: _rng,
       reserve: realWordReserve,
+      extraPool: _challengePool, // F1.1b: empty in normal mode
     );
     final opts = <String>[answer];
     for (final c in picks) {
@@ -800,8 +812,11 @@ class ExerciseGen {
   /// meaning mcq when the filtered pool no longer supports a shown-word pair.
   static Exercise remake(
       Vocab v, ExerciseType type, List<Vocab> pool, Map<String, int> confusions,
-      {List<String> avoid = const [], int seed = 0}) {
+      {List<String> avoid = const [],
+      int seed = 0,
+      List<Vocab> challengePool = const []}) {
     _rng = Random(seed);
+    _challengePool = challengePool;
     final banned = avoid.toSet();
     final filtered = pool
         .where((x) =>
@@ -834,6 +849,7 @@ class ExerciseGen {
       confusionPairs: confusions,
       random: _rng,
       reserve: realWordReserve,
+      extraPool: _challengePool, // F1.1b: empty in normal mode
     );
     final opts = <String>[fieldOf(v), ...picks.map((p) => p.option)];
     opts.shuffle(_rng);

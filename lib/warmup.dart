@@ -34,12 +34,17 @@ class WarmupRequest {
   final String cefr;
   final Map<String, int> confusions;
 
+  /// F1.1b (v5.20): the fair-difficulty challenge corpus. Part of the plan
+  /// inputs — a warm plan built for the other difficulty mode is stale.
+  final List<Vocab> challengePool;
+
   const WarmupRequest({
     required this.lessonId,
     required this.lesson,
     required this.mode,
     required this.cefr,
     required this.confusions,
+    this.challengePool = const [],
   });
 
   /// A stable fingerprint of ALL inputs: if ANY of these changed since the
@@ -47,8 +52,12 @@ class WarmupRequest {
   String get fingerprint {
     final pairs = confusions.entries.toList()
       ..sort((a, b) => a.key.compareTo(b.key));
+    // F1.1b: the challenge corpus rides the fingerprint as its sorted id
+    // list (deterministic; the pool itself is built in course order).
+    final ids = challengePool.map((v) => v.id).toList()..sort();
     return '$lessonId|${mode.name}|$cefr|'
-        '${pairs.map((e) => '${e.key}>${e.value}').join(',')}';
+        '${pairs.map((e) => '${e.key}>${e.value}').join(',')}|'
+        '${ids.join(";")}';
   }
 }
 
@@ -63,6 +72,7 @@ class LessonWarmup {
       mode: req.mode,
       confusions: req.confusions,
       cefr: req.cefr,
+      challengePool: req.challengePool,
     );
   }
 

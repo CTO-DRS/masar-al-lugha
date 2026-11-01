@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../distractors.dart';
 import '../exercise_gen.dart';
 import '../l10n.dart';
 import '../mascot.dart';
@@ -47,6 +48,19 @@ class _LessonScreenState extends State<LessonScreen> {
   /// priorities 1+2, and A2+ lessons get the production floor.
   late final List<Exercise> exercises = _buildExercises();
 
+  /// F1.1b (v5.20): the fair-difficulty challenge corpus for THIS lesson —
+  /// seen vocab of prior nearby-domain units, only in challenge mode.
+  late final List<Vocab> _challengePool = () {
+    final st = AppScope.of(context);
+    return st.challengeMode
+        ? Distractors.challengePool(
+            course: st.course,
+            lessonId: widget.lesson.id,
+            seenIds: st.cards.keys.toSet(),
+          )
+        : const <Vocab>[];
+  }();
+
   List<Exercise> _buildExercises() {
     final st = AppScope.of(context);
     var cefr = 'A1';
@@ -66,10 +80,14 @@ class _LessonScreenState extends State<LessonScreen> {
       mode: widget.mode,
       cefr: cefr,
       confusions: st.confusionPairs,
+      challengePool: _challengePool,
     ));
     if (warm != null) return warm;
     return ExerciseGen.forLesson(widget.lesson,
-        mode: widget.mode, confusions: st.confusionPairs, cefr: cefr);
+        mode: widget.mode,
+        confusions: st.confusionPairs,
+        cefr: cefr,
+        challengePool: _challengePool);
   }
 
   int index = 0;
@@ -1594,6 +1612,7 @@ class _LessonScreenState extends State<LessonScreen> {
       card: st.cards[original.vocab.id],
       confusedWithId: _lastWrongPickId,
       courseVocab: st.course.allVocab,
+      challengePool: _challengePool, // F1.1b: empty in normal mode
       random: math.Random(RepairEngine.seedFor(
           widget.lesson.id, original.vocab.id, _repairedWords.length)),
     );
@@ -1609,6 +1628,20 @@ class _LessonScreenState extends State<LessonScreen> {
       _typed.clear();
       _matchMistakeIds.clear();
     });
+    // F1.2 remainder (v5.20): the hint step AUTO-PLAYS the missed word —
+    // hear it before re-reading the rule (TTS no-ops when audio is off).
+    _speakRepairWord();
+  }
+
+  /// F1.2 remainder (v5.20): speaks the repaired word's audio on the hint
+  /// step — the learner hears the word they got wrong, not just reads it.
+  /// The TTS service itself gates on the enabled setting; simplified-audio
+  /// users get it too (essential teaching audio, not decoration).
+  void _speakRepairWord() {
+    final tts = AppScope.ttsOf(context);
+    tts
+        .setLanguage(AppScope.of(context).course.ttsLang)
+        .then((_) => tts.speak(_repair!.plan.word.target));
   }
 
   /// Opens the repair for a word missed inside a match boss — the pairing
@@ -1625,6 +1658,7 @@ class _LessonScreenState extends State<LessonScreen> {
       card: st.cards[vocabId],
       confusedWithId: _lastWrongPickId,
       courseVocab: st.course.allVocab,
+      challengePool: _challengePool, // F1.1b: empty in normal mode
       forMatch: true, // requeue the re-rolled round, not the whole boss
       random: math.Random(RepairEngine.seedFor(
           widget.lesson.id, vocabId, _repairedWords.length)),
@@ -1640,6 +1674,7 @@ class _LessonScreenState extends State<LessonScreen> {
       placed = [];
       _typed.clear();
     });
+    _speakRepairWord(); // F1.2 remainder (v5.20): hear the missed word
   }
 
   /// Hint CTA -> show the step-2 question (and speak it when it is audio-led).
@@ -1702,6 +1737,10 @@ class _LessonScreenState extends State<LessonScreen> {
           break;
       }
     });
+    if (action == RepairAction.toHint) {
+      // F1.2 remainder (v5.20): each new cycle re-anchors the ear too.
+      _speakRepairWord();
+    }
     if (action == RepairAction.toReask || action == RepairAction.toQuickPick) {
       final audio = _repairEx!.audioText;
       if (audio.isNotEmpty) _speakIfNeeded();
@@ -1729,6 +1768,18 @@ class _LessonScreenState extends State<LessonScreen> {
     exercises.insert(
         RepairEngine.requeueIndex(justLeft: index, length: exercises.length),
         plan.requeue);
+    // F1.2 remainder (v5.20): a match boss with SEVERAL first-time missed
+    // words opens their repairs BACK-TO-BACK — previously only the first
+    // missed word was treated and the rest silently skipped. Board order
+    // (insertion-ordered set), first-mistake rule respected.
+    if (plan.original.type == ExerciseType.match && hearts > 0) {
+      final next =
+          RepairEngine.nextMatchRepairWord(_matchMistakeIds, _repairedWords);
+      if (next != null) {
+        _openRepairForMatchWord(next);
+        return;
+      }
+    }
     _next((k) => context.tr(k));
   }
 
@@ -1767,13 +1818,14 @@ class _LessonScreenState extends State<LessonScreen> {
   void _finishExercise() {
     // F1.2: a first-mistake word inside the match boss still gets its
     // repair — opened now that the pairing game is complete. The first
-    // missed word in board order goes (deterministic, no surprise).
+    // missed word in board order goes (deterministic, no surprise);
+    // v5.20 chains the remaining ones via _finishRepair.
     if (ex.type == ExerciseType.match && hearts > 0) {
-      for (final id in _matchMistakeIds) {
-        if (!_repairedWords.contains(id)) {
-          _openRepairForMatchWord(id);
-          return;
-        }
+      final id =
+          RepairEngine.nextMatchRepairWord(_matchMistakeIds, _repairedWords);
+      if (id != null) {
+        _openRepairForMatchWord(id);
+        return;
       }
     }
     if (isLast) {

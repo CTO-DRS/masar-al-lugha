@@ -250,6 +250,9 @@ class ProfileStore {
           s.darkMode = (settings['darkMode'] as bool?) ?? s.darkMode;
           s.reduceMotion =
               (settings['reduceMotion'] as bool?) ?? s.reduceMotion;
+          // v5.20 (F1.1b): fair-difficulty challenge mode (additive, off).
+          s.challengeMode =
+              (settings['challengeMode'] as bool?) ?? s.challengeMode;
           s.simplifiedAudio =
               (settings['simplifiedAudio'] as bool?) ?? s.simplifiedAudio;
           s.largerText = (settings['largerText'] as bool?) ?? s.largerText;
@@ -333,6 +336,7 @@ class ProfileStore {
       'settings': {
         'darkMode': s.darkMode,
         'reduceMotion': s.reduceMotion,
+        'challengeMode': s.challengeMode, // v5.20 F1.1b
         'simplifiedAudio': s.simplifiedAudio,
         'largerText': s.largerText,
         'ttsEnabled': s.ttsEnabled,

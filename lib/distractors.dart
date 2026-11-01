@@ -19,12 +19,16 @@
 //      slippery option worth probing against other targets too.
 //   3. similarity       — orthographic/phonetic look-alike (shared prefix
 //      or suffix with the tested string), the classic decoy.
-//   4. random           — seeded random fill from the remaining pool.
+//   4. random           — seeded random fill from the remaining pool; in
+//      F1.1b challenge mode this fill is drawn FIRST from the fair
+//      challenge corpus (seen prior-unit vocab of a nearby domain), then
+//      from the lesson pool.
 //   5. reserve          — last-resort real-word padding for tiny lessons
 //      (the v4.0 realWordReserve list, passed in by the generator).
 import 'dart:math' as math;
 
 import 'models.dart';
+import 'path.dart';
 
 /// Where a chosen distractor came from — the provenance behind the
 /// plan's KPI "distractor-from-confusion >= 40%".
@@ -34,6 +38,12 @@ enum DistractorSource {
   similarity,
   random,
   reserve,
+
+  /// F1.1b (v5.20): a decoy drawn from the fair-difficulty challenge
+  /// corpus — a word the learner has ALREADY SEEN in a prior unit of a
+  /// nearby domain. Only reachable when the caller passes an [extraPool]
+  /// (challenge mode); normal-mode plans never contain it.
+  priorUnit,
 }
 
 /// One chosen distractor: the option string, the vocab it came from
@@ -71,6 +81,15 @@ class Distractors {
   /// output. [reserve] is the caller's real-word padding for tiny pools
   /// (the generator passes ExerciseGen.realWordReserve; a bare pick pads
   /// with nothing and may return fewer than [count] options).
+  ///
+  /// F1.1b (v5.20): [extraPool] is the fair-difficulty challenge corpus
+  /// (seen prior-unit vocab, assembled by [challengePool]). Extras enter
+  /// ONLY at priority 4 — they never displace the learner's own confusion
+  /// pairs (1+2) or the classic look-alike decoys (3) — and they are drawn
+  /// BEFORE the remaining lesson pool, so a challenge-mode random slot
+  /// comes from nearby-domain learned material whenever one is available.
+  /// An empty [extraPool] (the default = normal mode) consumes no RNG
+  /// draws and leaves the output byte-identical to the v5.12–v5.19 pick.
   static List<DistractorChoice> pick({
     required Vocab target,
     required List<Vocab> pool,
@@ -79,6 +98,7 @@ class Distractors {
     int count = 3,
     math.Random? random,
     List<String> reserve = const [],
+    List<Vocab> extraPool = const [],
   }) {
     final rnd = random ?? math.Random();
     final correct = fieldOf(target);
@@ -161,6 +181,18 @@ class Distractors {
 
     // ---- Priority 4: seeded random fill from what is left.
     if (out.length < count) {
+      // F1.1b: challenge mode fills the random slots from the SEEN
+      // prior-unit corpus first (fair = the learner met every one of
+      // these words). An empty extraPool skips this loop without taking
+      // a single draw from [rnd] — normal mode stays byte-identical.
+      final extraRest = extraPool
+          .where((v) => v.id != target.id && !seen.contains(fieldOf(v)))
+          .toList()
+        ..shuffle(rnd);
+      for (final v in extraRest) {
+        if (out.length >= count) break;
+        tryAdd(v, DistractorSource.priorUnit);
+      }
       final rest = pool
           .where((v) => !seen.contains(fieldOf(v)) && v.id != target.id)
           .toList()
@@ -249,6 +281,140 @@ class Distractors {
     }
     if (total == 0) return 0;
     return confused / total;
+  }
+
+  /// F1.1b — the FAIR-DIFFICULTY challenge corpus for one lesson.
+  ///
+  /// Assembles up to [cap] vocab rows the learner has ALREADY SEEN
+  /// ([seenIds] = the profile's card ids) from units that come BEFORE the
+  /// lesson's unit, nearest domain first:
+  ///   pass 1 — prior units whose [PathEngine.domainOfUnit] equals the
+  ///            lesson unit's domain (the plan's "nearby-domain");
+  ///   pass 2 — only if pass 1 is thinner than [cap]: prior units of ANY
+  ///            domain whose CEFR band does not exceed the lesson's
+  ///            (never material above the learner).
+  ///
+  /// Fairness invariants (all test-enforced):
+  ///  - seen-only: a word without a card is never offered as a decoy;
+  ///  - prior-only: the lesson's own unit (and everything after it) is
+  ///    excluded — new material never leaks into the options;
+  ///  - no collisions: rows whose target OR Arabic meaning string equals
+  ///    a current-lesson row are dropped, so [challengeShare] can map an
+  ///    option string back to exactly one owner word;
+  ///  - deterministic: course order, lessons in order, first-come kept.
+  ///
+  /// The empty course / unknown lesson / no seen ids all yield `const []`.
+  static List<Vocab> challengePool({
+    required Course course,
+    required String lessonId,
+    required Set<String> seenIds,
+    int cap = 24,
+  }) {
+    if (cap <= 0 || seenIds.isEmpty) return const [];
+    var unitIdx = -1;
+    for (var i = 0; i < course.units.length; i++) {
+      if (course.units[i].lessons.any((l) => l.id == lessonId)) {
+        unitIdx = i;
+        break;
+      }
+    }
+    if (unitIdx <= 0) return const []; // no prior units to draw from
+    final unit = course.units[unitIdx];
+    final domain = PathEngine.domainOfUnit(unit);
+    final rank = PathEngine.cefrRank(unit.cefr);
+
+    // Strings owned by the CURRENT lesson — extras must never collide.
+    final lessonIds = <String>{};
+    final lessonTargets = <String>{};
+    for (final l in unit.lessons) {
+      for (final v in l.vocab) {
+        lessonIds.add(v.id);
+        lessonTargets.add(v.target);
+        lessonTargets.add(v.translationAr);
+      }
+    }
+
+    final out = <Vocab>[];
+    final usedIds = <String>{};
+    void collect(List<Unit> units) {
+      for (final u in units) {
+        for (final l in u.lessons) {
+          for (final v in l.vocab) {
+            if (out.length >= cap) return;
+            if (usedIds.contains(v.id) || lessonIds.contains(v.id)) continue;
+            if (!seenIds.contains(v.id)) continue; // fair = seen only
+            if (lessonTargets.contains(v.target) ||
+                lessonTargets.contains(v.translationAr)) {
+              continue;
+            }
+            usedIds.add(v.id);
+            out.add(v);
+          }
+        }
+      }
+    }
+
+    final prior = course.units.sublist(0, unitIdx);
+    collect(prior.where((u) => PathEngine.domainOfUnit(u) == domain).toList());
+    if (out.length < cap) {
+      collect(prior.where((u) => PathEngine.cefrRank(u.cefr) <= rank).toList());
+    }
+    return out;
+  }
+
+  /// F1.1b KPI — the share of audited distractor slots in [exercises]
+  /// that trace back to the challenge corpus ([extraPool]) rather than to
+  /// the lesson's own [pool]. The challenge-mode counterpart of
+  /// [confusionShare]: a slot counts when its option string maps to an
+  /// extra-pool word and to NO pool word (challengePool drops string
+  /// collisions, so the owner is unique). Audited types are the same set
+  /// as [confusionShare]; untyped rounds are excluded from both sides.
+  /// Normal mode (empty extras) is always exactly 0.
+  static double challengeShare({
+    required List<Exercise> exercises,
+    required List<Vocab> pool,
+    required List<Vocab> extraPool,
+  }) {
+    if (extraPool.isEmpty) return 0;
+    (Map<String, String>, Map<String, String>) index(List<Vocab> vocab) {
+      final byTarget = <String, String>{};
+      final byAr = <String, String>{};
+      for (final v in vocab) {
+        byTarget.putIfAbsent(v.target, () => v.id);
+        byAr.putIfAbsent(v.translationAr, () => v.id);
+      }
+      return (byTarget, byAr);
+    }
+
+    final (poolT, poolAr) = index(pool);
+    final (extraT, extraAr) = index(extraPool);
+
+    var total = 0;
+    var prior = 0;
+    for (final ex in exercises) {
+      final bool meanings;
+      switch (ex.type) {
+        case ExerciseType.mcq:
+          meanings = true;
+        case ExerciseType.reverse:
+        case ExerciseType.listen:
+        case ExerciseType.picToWord:
+        case ExerciseType.fillblank:
+          meanings = false;
+        default:
+          continue; // not audited (same exclusion list as confusionShare)
+      }
+      final poolIdx = meanings ? poolAr : poolT;
+      final extraIdx = meanings ? extraAr : extraT;
+      for (final o in ex.options) {
+        if (o == ex.answer) continue;
+        total++;
+        if (poolIdx.containsKey(o)) continue; // owned by the lesson pool
+        if (extraIdx.containsKey(o)) prior++;
+      }
+    }
+    if (total == 0) return 0;
+    return prior / total;
   }
 
   /// The other side of a confusion key when one side is [id], else null.
