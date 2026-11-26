@@ -101,12 +101,33 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Restore release signing (only when secrets are set)
+        env:
+          KS_B64: ${{ secrets.MASAR_KEYSTORE_BASE64 }}
+          KS_PASS: ${{ secrets.MASAR_KEYSTORE_PASSWORD }}
+          KS_ALIAS: ${{ secrets.MASAR_KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.MASAR_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > android/app/release.keystore
+            chmod 600 android/app/release.keystore
+            {
+              echo "storeFile=release.keystore"
+              echo "storePassword=$KS_PASS"
+              echo "keyAlias=$KS_ALIAS"
+              echo "keyPassword=$KEY_PASS"
+            } > android/key.properties
+            echo "Release keystore restored."
+          else
+            echo "Signing secrets not set: build stays debug-signed testing build."
+          fi
+
       - name: Production signing gate
         id: signmode
         env:
           PROD_INPUT: ${{ inputs.production }}
         run: |
-          if [ "$PROD_INPUT" = "true" ]; then
+          if [ "$PROD_INPUT" = "true" ] || [ -f android/key.properties ]; then
             if [ -f android/key.properties ]; then
               echo "mode=production" >> "$GITHUB_OUTPUT"
               echo "Production signing config present."
